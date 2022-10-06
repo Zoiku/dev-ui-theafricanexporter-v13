@@ -1,0 +1,16 @@
+.Countdown {
+  width: 100%;
+  font-weight: 600;
+}
+
+.countdown-table-container {
+  width: 100%;
+}
+
+.Countdown span:nth-child(1) {
+  margin-right: 5px;
+}
+
+.countdown-expired {
+  color: red;
+}

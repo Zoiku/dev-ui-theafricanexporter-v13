@@ -1,0 +1,78 @@
+footer {
+  min-height: 400px;
+  background: black;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  padding: 50px 80px;
+  display: flex;
+  position: relative;
+}
+
+footer > div {
+  margin-right: 100px;
+}
+
+footer > div > div:nth-child(1) {
+  font-size: x-large;
+  margin-bottom: 10px;
+}
+
+footer ul {
+  list-style-type: none;
+}
+
+footer ul li {
+  margin: 5px 0;
+  font-size: small;
+  color: #c5c5c5;
+  cursor: pointer;
+}
+
+footer ul li:hover {
+  color: white;
+}
+
+footer ul li::before {
+  content: "\2022";
+  color: #ee9b00;
+  font-weight: bold;
+  font-size: 15px;
+  display: inline-block;
+  width: 1em;
+  margin: 0 0.5em 0 0;
+}
+
+footer > div:nth-last-child(1) {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: small;
+  background: #161718;
+  padding: 15px 0px 15px 80px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1000px) {
+  footer {
+    padding: 40px 30px;
+    flex-direction: column;
+  }
+
+  footer > div {
+    margin-bottom: 30px;
+  }
+
+  footer > div:nth-last-child(2) {
+    margin-bottom: 100px;
+  }
+
+  footer > div:nth-last-child(1) {
+    position: absolute;
+    padding: 15px 0px 15px 30px;
+  }
+}

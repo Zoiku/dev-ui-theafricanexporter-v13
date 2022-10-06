@@ -1,0 +1,143 @@
+.Nav {
+  height: 100px;
+  padding: 0 20px;
+  border-bottom: 2px solid var(--tae-orange-lighter);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 29;
+}
+
+.no-sticky-Nav {
+  position: relative;
+}
+
+.Nav .Default {
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.Mobile-Nav {
+  display: none;
+}
+
+.Nav-logo-tae-container {
+  display: flex;
+  align-items: flex-end;
+  height: 70px;
+}
+
+.Nav-logo-tae-container img {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.logo-container {
+  height: 70px;
+}
+
+.logo-container img {
+  height: 100%;
+}
+
+.nav-links-container {
+  display: flex;
+}
+
+.nav-links-container li {
+  list-style-type: none;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+.nav-links-container li:nth-last-child(1) {
+  color: var(--tae-orange);
+}
+
+@media screen and (max-width: 1000px) {
+  .Nav .Default {
+    display: none;
+  }
+
+  .Nav {
+    height: 70px;
+    padding: 10px;
+  }
+
+  .Mobile-Nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .Mobile-Nav .Nav-logo-tae-container {
+    height: 60px;
+    width: 230px;
+  }
+
+  .Nav-logo-tae-container {
+    height: 60px;
+    width: 100px;
+  }
+
+  .Nav-logo-tae-container img {
+    height: 100%;
+  }
+
+  .logged-mobile-nav-logo-container {
+    display: flex;
+    align-items: center;
+    height: 30px;
+  }
+
+  .logged-mobile-nav-logo-container img {
+    height: 100%;
+  }
+
+  .hamburger-menu-links {
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px 15px 15px 0;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .hamburger-menu-links > span {
+    color: rgb(235, 235, 235);
+    font-weight: 500;
+  }
+
+  .hamburger-menu-links > span:nth-child(1) {
+    font-size: 30px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    display: none;
+  }
+
+  .hamburger-menu-links > span:nth-child(2) {
+    font-size: 26px;
+  }
+
+  .hamburger-menu-logo-container {
+    position: absolute;
+    bottom: -40px;
+    left: -20px;
+    opacity: 0.1;
+  }
+
+  .hamburger-menu-logo-container span {
+    font-size: 120px;
+    color: black;
+    font-weight: 700;
+  }
+}

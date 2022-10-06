@@ -1,0 +1,174 @@
+.Legal {
+  display: flex;
+  justify-content: center;
+}
+
+.Legal .large-large-large-heading {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.Legal .large-large-large-large-heading {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.Legal .large-large-large-large-large-heading {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 10px 0;
+}
+
+.section-sub-content-container {
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.section-sub-content-container a {
+  font-weight: 500;
+  color: black;
+}
+
+.sandpa-sub-section-containers {
+  margin-bottom: 20px;
+}
+
+.section-sub-content-container li {
+  margin: 8px 0 0 0;
+}
+
+.Legal .container {
+  width: 1200px;
+  padding: 30px 50px;
+  position: relative;
+  background-color: #fff;
+  display: flex;
+}
+
+.buyer-terms {
+  font-size: large;
+  font-weight: bolder;
+  margin: 25px 0 10px 0;
+}
+
+.toc span {
+  display: block;
+  font-weight: 500;
+}
+
+.Legal ul,
+ol {
+  margin-top: 5px;
+  margin-left: 30px;
+}
+
+.Legal .bold {
+  font-weight: bold;
+}
+
+.Legal .quick-links {
+  padding-top: 0px;
+  position: sticky;
+  width: 400px;
+  height: 290px;
+  top: 130px;
+}
+
+.Legal .quick-links ul {
+  margin: 0;
+}
+
+.section-containers {
+  width: 100%;
+}
+
+.Legal .quick-links li {
+  
+
+  list-style-type: none;
+  margin: 0 0 20px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: block;
+  font-weight: 500;
+}
+
+.Legal .quick-links a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Legal .quick-links li:hover {
+  margin-left: 10px;
+}
+
+.Legal .section-title {
+  padding-top: 10px;
+  font-size: 45px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.Legal .section-header {
+  margin-bottom: 20px;
+  font-size: 23px;
+  color: gray;
+}
+
+.Legal .section-content {
+  line-height: 27px;
+  text-align: justify;
+}
+
+.Legal section {
+  margin: 0 0 100px 0;
+}
+
+.active-link {
+  color: #ee9b00 !important;
+  font-weight: 500;
+  margin-left: 0px;
+}
+
+.active-link:hover {
+  margin: 0;
+}
+
+.section-content a {
+  color: black;
+  font-weight: 500;
+}
+
+.large-large-large-heading-special {
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.section-content li {
+  margin: 8px 0 0 0;
+}
+
+@media screen and (max-width: 1000px) {
+  .Legal .container {
+    width: 100%;
+    padding: 10px 20px;
+    position: relative;
+    background-color: #fff;
+    display: flex;
+  }
+
+  .Legal .quick-links {
+    padding-top: 20px;
+    position: sticky;
+    width: 300px;
+    height: 370px;
+    top: 0;
+    font-weight: 500;
+    display: none;
+  }
+
+  .about-section-primary-title {
+    font-size: 28px;
+  }
+}

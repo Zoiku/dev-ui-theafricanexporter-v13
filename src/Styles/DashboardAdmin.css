@@ -1,0 +1,146 @@
+.dashboard-salutation {
+  font-weight: bold;
+  font-size: x-large;
+  margin-right: 5px;
+}
+
+.dashboard-body-container {
+  margin: 30px 0;
+  display: grid;
+  gap: 10px;
+  grid-template-areas:
+    "item1 item2 item3"
+    "item4 item4 item3"
+    "item4 item4 item5"
+    "item6 item6 item6";
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.dashboard-body-container > div {
+  outline: 1px solid #c5c5c5;
+  border-radius: 5px;
+  padding: 20px;
+  position: relative;
+  background: white;
+}
+
+.dashboard-body-container > div:nth-child(1) {
+  background: var(--tae-blue-dark);
+  grid-area: item1;
+  height: 200px;
+  color: white;
+}
+
+.dashboard-body-container > div:nth-child(2) {
+  grid-area: item2;
+  height: 200px;
+}
+
+.dashboard-body-container > div:nth-child(3) {
+  grid-area: item3;
+  height: 400px;
+}
+
+.dashboard-body-container > div:nth-child(4) {
+  grid-area: item4;
+  height: 400px;
+}
+
+.dashboard-body-container > div:nth-child(5) {
+  grid-area: item5;
+  height: 200px;
+}
+
+.dashboard-body-container > div:nth-child(6) {
+  grid-area: item6;
+  height: 500px;
+}
+
+.dash-items-title-container {
+  margin: 0 0 10px 0;
+}
+
+.dash-items-title-container > div:nth-child(1) {
+  font-weight: 500;
+  font-size: larger;
+  margin-bottom: 4px;
+}
+
+.dash-items-title-container > div:nth-child(2) {
+  font-size: 12px;
+  color: gray;
+}
+
+.dash-item-category-chart-container {
+  height: 280px;
+}
+
+.dash-item-value-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.dashboard-body-container > div:nth-child(2) .dash-item-value-container {
+  right: 0;
+}
+
+.dash-item-value-container > div {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.dash-item-no-data-container {
+  color: gray
+}
+
+.dash-item-loading-container {
+  height: 200px;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  color: var(--tae-orange);
+}
+
+.Admin-DashBoard .swiper {
+  width: 100%;
+  height: 100%;
+  padding: 20px 20px 0 20px;
+}
+
+.Admin-DashBoard .swiper-pagination-bullet-active {
+  background: var(--tae-orange);
+}
+
+@media screen and (max-width: 1000px) {
+  .dashboard-salutation {
+    font-size: large;
+    margin: 20px 0;
+  }
+
+  .dashboard-body-container {
+    margin: 20px 0;
+    display: grid;
+    gap: 10px;
+    grid-template-areas:
+      "item1 item2"
+      "item5 item5"
+      "item3 item3"
+      "item4 item4"
+      "item6 item6";
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .dashboard-body-container {
+    grid-template-areas:
+      "item1 item1"
+      "item2 item2"
+      "item5 item5"
+      "item3 item3"
+      "item4 item4"
+      "item6 item6";
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,69 @@
+.Login {
+  min-height: calc(100vh - 300px);
+  display: grid;
+  place-content: center;
+  padding: 50px 0;
+}
+
+.login-form-container {
+  outline: 1px solid rgb(203, 203, 203);
+  min-height: 60vh;
+  border-radius: 5px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.login-form-container > div:nth-child(1) {
+  background: url("../Assets/background-3.png");
+  background-size: cover;
+  width: 60%;
+}
+
+.login-form-container > div:nth-child(2) {
+  width: 40%;
+  padding: 20px 40px;
+}
+
+.login-form-desc {
+  margin: 0 0 30px 0;
+}
+
+.login-form-desc > div {
+  margin: 0 0 10px 0;
+}
+
+.login-form-desc > div:nth-last-child(1) {
+  font-size: small;
+}
+
+.login-form-desc > div:nth-child(1) {
+  font-size: xx-large;
+  color: black;
+  font-weight: 700;
+}
+
+.captcha-container {
+  margin-top: 50px !important;
+  height: 70px;
+  border-radius: 5px;
+  background-color: #efefef;
+}
+
+@media screen and (max-width: 1000px) {
+  .login-form-container {
+    width: 100%;
+    height: auto;
+    outline: none;
+  }
+
+  .login-form-container > div:nth-child(1) {
+    width: 0%;
+  }
+
+  .login-form-container > div:nth-child(2) {
+    width: 100%;
+    padding: 20px;
+  }
+}

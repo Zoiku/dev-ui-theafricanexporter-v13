@@ -1,0 +1,41 @@
+.app-container {
+  display: flex;
+  justify-content: space-between;
+  min-height: calc(100vh - 100px);
+}
+
+.app-menu-container {
+  position: sticky;
+  width: 300px;
+}
+
+.app-body-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.app-body {
+  width: 1000px;
+  padding: 30px;
+}
+
+.app-bottom-navigation {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .app-menu-container {
+    display: none;
+  }
+
+  .app-body {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 200px;
+  }
+
+  .app-bottom-navigation {
+    display: block;
+  }
+}

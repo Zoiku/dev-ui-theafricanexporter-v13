@@ -1,0 +1,6 @@
+export const INPUTING = "INPUTTING";
+export const SEND_REQUEST = "SEND_REQUEST";
+export const REQUEST_SUCCESSFUL = "REQUEST_SUCCESSFUL";
+export const REQUEST_FAILED = "REQUEST_FAILED";
+export const CLEAR_FORM = "CLEAR_FORM";
+export const PUSH_FORM_DATA = "PUSH_FORM_DATA";

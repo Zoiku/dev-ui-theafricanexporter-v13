@@ -1,0 +1,84 @@
+.user-profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 150px !important;
+  height: 150px !important;
+  font-size: 50px !important;
+}
+
+.user-short-desc-container {
+  margin: 0 0 0 30px;
+}
+
+.user-short-desc-container div:nth-child(1) {
+  font-size: xx-large;
+  font-weight: 600;
+}
+
+.user-short-desc-container div:nth-child(2) {
+  color: gray;
+}
+
+.user-profile-sections-container {
+  margin: 40px 0 0 0;
+}
+
+.user-profile-section-title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: gray;
+}
+
+.user-profile-section-title::before {
+  content: "";
+  border-radius: 10px;
+  width: 5px;
+  height: 12px;
+  background: var(--tae-orange);
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.Settings-Page .form-controller-input-duo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Settings-Page .form-controller-input-duo > div {
+  width: 49%;
+}
+
+.Admin-Settings-Page .form-controller-input-duo > div {
+  width: 49%;
+}
+
+.Admin-Settings-Page .form-controller-input-duo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-button-controller-container {
+  display: flex;
+}
+
+.settings-button-controller {
+  margin-right: 20px !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .user-avatar {
+    width: 100px !important;
+    height: 100px !important;
+    font-size: 30px !important;
+  }
+
+  .user-short-desc-container div:nth-child(1) {
+    font-size: x-large;
+    font-weight: 600;
+  }
+}

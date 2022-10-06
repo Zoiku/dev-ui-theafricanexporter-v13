@@ -1,0 +1,46 @@
+.merchant-dashboard-body-container {
+  margin: 30px 0;
+  display: grid;
+  gap: 10px;
+  grid-template-areas:
+    "item1 item1 item3"
+    "item1 item1 item3"
+    "item2 item2 item3"
+    "item2 item2 item3";
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.merchant-dashboard-body-container > div {
+  outline: 1px solid #c5c5c5;
+  border-radius: 5px;
+  padding: 20px;
+  position: relative;
+}
+
+.merchant-dashboard-body-container > div:nth-child(1) {
+  grid-area: item1;
+  height: 500px;
+}
+
+.merchant-dashboard-body-container > div:nth-child(2) {
+  grid-area: item2;
+  height: 500px;
+}
+
+.merchant-dashboard-body-container > div:nth-child(3) {
+  grid-area: item3;
+  height: 1010px;
+}
+
+@media screen and (max-width: 1000px) {
+  .merchant-dashboard-body-container {
+    margin: 30px 0;
+    display: grid;
+    gap: 10px;
+    grid-template-areas:
+      "item1"
+      "item2"
+      "item3";
+    grid-template-columns: 1fr;
+  }
+}

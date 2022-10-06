@@ -1,0 +1,37 @@
+.Menu {
+  padding: 30px 20px;
+  height: 100%;
+}
+
+.menu-links-container {
+  position: relative;
+  position: sticky;
+  top: 130px;
+}
+
+.menu-links {
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+  color: black;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.menu-links-container .active {
+  background: var(--tae-orange);
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.menu-links-container .active::before {
+  content: "";
+  /* border-left: 5px solid white; */
+  height: 15px;
+  position: absolute;
+  left: -2px;
+  border-radius: 5px;
+  margin-top: 3px;
+}

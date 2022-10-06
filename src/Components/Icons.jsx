@@ -1,0 +1,12 @@
+export const DashboardIcon = () => <span className="material-symbols-rounded">apps</span>
+export const UsersIcon = () => <span className="material-symbols-rounded">group</span>
+export const RequestIcon = () => <span className="material-symbols-rounded">book</span>
+export const OrderIcon = () => <span className="material-symbols-rounded">description</span>
+export const SettingsIcon = () => <span className="material-symbols-rounded">settings</span>
+export const QuotationIcon = () => <span className="material-symbols-rounded">request_quote</span>
+export const HomeIcon = () => <span className="material-symbols-rounded">home</span>
+export const LoginIcon = () => <span className="material-symbols-rounded">login</span>
+export const RegisterIcon = () => <span className="material-symbols-rounded">how_to_reg</span>
+export const MerchantRegistationIcon = () => <span className="material-symbols-rounded">admin_panel_settings</span>
+export const BackIcon = () => <span className="material-symbols-rounded">arrow_back</span>
+export const LogoutIcon = () => <span className="material-symbols-rounded">logout</span>

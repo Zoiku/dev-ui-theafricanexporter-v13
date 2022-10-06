@@ -1,0 +1,48 @@
+.order-section-body {
+  margin-top: 20px;
+  font-size: small;
+}
+
+.progress-bar-container {
+  font-weight: 600;
+}
+
+.progress-bar-container > div {
+  margin: 0 0 0px 0;
+}
+
+.progress-bar-container > div:nth-last-child(1) {
+  margin: 0;
+}
+
+.progress-bar-container progress {
+  width: 100%;
+}
+
+.order-section-stepper-container {
+  margin-top: 30px;
+}
+
+.orders-confirmation-sections-container > section {
+  padding: 10px;
+  background: #efefef;
+  border-radius: 5px;
+  min-height: 150px;
+  margin-bottom: 10px;
+}
+
+.orders-confirmation-sections-container > section > div:nth-child(1) {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sales-and-purchase-agreement-container {
+  position: relative;
+}
+
+.sales-and-purchase-agreement-container
+  > div:nth-child(2)
+  > div:nth-last-child(1) {
+  position: absolute;
+  bottom: 15px;
+}

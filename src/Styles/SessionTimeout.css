@@ -1,0 +1,27 @@
+.SessionTimeoutContainer {
+  display: flex;
+  align-items: center;
+  background: var(--tae-orange-faded);
+  padding: 0 20px;
+  height: 50px;
+  font-weight: 600;
+  font-size: small;
+  justify-content: space-between;
+}
+
+.session-timeout {
+  display: flex;
+  align-items: center;
+}
+
+.session-timeout div:nth-child(1) {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  .session-timeout {
+    width: 80%;
+  }
+}

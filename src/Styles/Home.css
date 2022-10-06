@@ -1,0 +1,230 @@
+.tae-home-banner-container {
+  background: var(--tae-black);
+  display: grid;
+  place-content: center;
+}
+
+.tae-home-banner {
+  display: flex;
+  padding: 30px 0;
+}
+
+.tae-home-banner ul {
+  margin: 0 40px;
+  list-style-type: none;
+}
+
+.tae-home-banner ul li::before {
+  content: "\2022";
+  color: #ee9b00;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.tae-home-banner li {
+  color: white;
+  margin: 20px 0;
+  font-size: larger;
+}
+
+.tae-home-banner ul:nth-child(1) > li:nth-last-child(1) {
+  margin: 0 0 0 0;
+}
+
+.product-section-container {
+  background: var(--tae-orange-faded);
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 5px 0;
+  padding: 30px 0;
+}
+
+.product-section-container > div {
+  width: 48%;
+  height: 500px;
+}
+
+.specification-container {
+  display: grid;
+  place-content: center;
+}
+
+.specification-container div {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.specification-title {
+  font-size: xx-large;
+  font-weight: 700;
+}
+
+.specification-description-short {
+  font-size: x-large;
+  letter-spacing: 4px;
+  font-weight: 400;
+}
+
+.product-section-containers > section:nth-child(odd) > div:nth-child(1) {
+  order: 2;
+}
+
+.Home .swiper-container {
+  padding: 0 30px;
+}
+
+.Home .swiper {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--tae-black);
+}
+
+.Home .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  cursor: grab;
+}
+
+.Home .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.Home .swiper-button-next,
+.Home .swiper-button-prev {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+  right: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  color: #000 !important;
+  fill: black !important;
+  stroke: black !important;
+  transition: all 0.2s ease;
+}
+
+.Home .swiper-button-next::after,
+.Home .swiper-button-prev::after {
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.Home .swiper-pagination-bullet-active {
+  background-color: #fff !important;
+}
+
+.home-coming-soon-container {
+  background: var(--tae-orange-faded);
+  padding: 30px 0 50px;
+  margin: 5px 0 0 0;
+}
+
+.home-coming-soon-title {
+  font-size: xx-large;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 50px 0;
+}
+
+.coming-soon-card-container {
+  text-align: center;
+  margin: 0 10px;
+}
+
+.coming-soon-card-container img {
+  height: 350px;
+  border-radius: 5px;
+}
+
+.coming-soon-card-name {
+  font-weight: 600;
+}
+
+.specification-button-container-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .tae-home-banner {
+    flex-direction: column;
+  }
+
+  .product-section-container {
+    flex-direction: column;
+  }
+
+  .product-section-container > div {
+    width: 100%;
+  }
+
+  .product-section-container > div:nth-last-child(1) {
+    display: block;
+    text-align: center;
+    height: auto;
+    order: 3;
+    margin: 20px 0 0 0;
+    width: 100%;
+  }
+
+  .specification-button-container-mobile {
+    padding: 0 10px;
+  }
+
+  .specification-button-container-mobile > button {
+    width: 100%;
+  }
+
+  .product-section-container > div:nth-child(1) {
+    height: auto;
+  }
+
+  .product-section-container > div:nth-child(2) {
+    height: 300px;
+  }
+
+  .product-section-containers > section:nth-child(odd) > div:nth-child(2) {
+    order: 2;
+  }
+
+  .specification-container {
+    display: block;
+  }
+
+  .specification-container div {
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .specification-button-container {
+    display: none;
+  }
+
+  .Home .swiper-container {
+    padding: 0 10px;
+  }
+
+  .coming-soon-card-container img {
+    height: 200px;
+  }
+}
