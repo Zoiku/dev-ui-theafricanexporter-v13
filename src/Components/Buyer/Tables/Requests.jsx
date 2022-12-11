@@ -64,6 +64,7 @@ const Requests = () => {
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const [rows, setRows] = useState([]);
     const [rowsLoading, setRowsLoading] = useState(false);
+    const [pageSize, setPageSize] = useState(10);
     const [selectedRequestId, setSelectedRequestId] = useState(null);
     const selectRequest = (id) => setSelectedRequestId(id);
     const selectedRequest = rows && rows.find(row => row.id === selectedRequestId);
@@ -692,12 +693,13 @@ const Requests = () => {
                 className="standard-table"
                 checkboxSelection
                 disableSelectionOnClick
-                pageSize={10}
+                pageSize={pageSize}
                 rows={rows}
                 columns={columns}
                 pagination
                 density="compact"
                 rowsPerPageOptions={[10, 20, 30, 40, 50]}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                 loading={rowsLoading}
             />
         </div>

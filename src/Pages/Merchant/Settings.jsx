@@ -5,7 +5,9 @@ import Avatar from '@mui/material/Avatar';
 import { StyledBadge } from "../../Material/Avatar";
 import { SettingsPageUpdateButton, SettingsPageCancelButton, SettingsPageUpdateButtonSecondary } from "../../Material/Button";
 import { useEffect, useState, useReducer } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import AuthService from "../../Services/Auth";
+import { initUser } from "../../Redux/Features/Session";
 import InputLabel from '@mui/material/InputLabel';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,24 +22,24 @@ import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED, PUSH_FORM_D
 import MerchantService from "../../Services/Merchant";
 import { setAlert } from "../../Redux/Features/Alert.js";
 
-const Settings = () => {
+const Settings = ({ profile }) => {
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
     const theme = useTheme();
     const rootDispatch = useDispatch();
     const getFirstWord = (string) => string.split(' ').shift();
-    const { profile } = useSelector(state => state.session.user);
+
     const [updateProfileButton, setUpdateProfileButton] = useState(false);
     const toggleUpdate = (open) => (_event) => {
         setUpdateProfileButton(open);
     };
 
-    const refreshPage = () => {
-        window.location.reload(false);
-    }
+    const updateSuccess = (_profile) => {
+        rootDispatch(initUser(_profile));
+    };
 
     useEffect(() => {
         const filteredData = {
-            id: profile.user.id,
+            id: profile?.user?.id,
             companyIntroduction: profile?.company?.introduction,
             companyNoEmployees: profile?.company?.noOfEmployees,
             companyAddress: profile?.address,
@@ -53,6 +55,7 @@ const Settings = () => {
     const [selectedSubscriptions, setSelectedSubscription] = useState([]);
     const [subscriptions, setSubscriptions] = useState([]);
     const [products, setProducts] = useState([]);
+
     const handleMultipleSelectChange = (event) => {
         const { target: { value }, } = event;
         setSelectedSubscription(typeof value === 'string' ? value.split(',') : value,);
@@ -73,17 +76,11 @@ const Settings = () => {
             try {
                 const { errors, data } = await productService.getProducts(abortController.signal);
                 if (errors.length === 0) {
-                    const _products = data.data.data.map(data => {
-                        return {
-                            category: data.category.label,
-                            product: data.name
-                        };
-                    });
-
-                    setProducts(_products);
+                    const _products = data.data.data.map(data => { return { category: data.category.label, product: data.name }; });
                     const _subscriptions = _products.map(product => product.product);
-                    setSubscriptions(_subscriptions);
                     const _selectedSubscriptions = profile.subscription.map(subscription => subscription.product);
+                    setProducts(_products);
+                    setSubscriptions(_subscriptions);
                     setSelectedSubscription(_selectedSubscriptions);
                 }
             } catch (error) { }
@@ -97,6 +94,8 @@ const Settings = () => {
         e.preventDefault();
         dispatch({ type: SEND_REQUEST });
         const merchantService = new MerchantService();
+        const authService = new AuthService();
+
         state.payload.subscription = products.filter(product => selectedSubscriptions.includes(product.product));
 
         try {
@@ -104,8 +103,12 @@ const Settings = () => {
             if (errors.length === 0) {
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 handleSuccessfullRequest("Successfully updated your profile", 3000);
-                setUpdateProfileButton(false);
-                refreshPage();
+                const { errors, data } = await authService.getUserProfile();
+                if (errors.length === 0) {
+                    const updatedProfile = data.data.data[0];
+                    updateSuccess(updatedProfile);
+                    setUpdateProfileButton(false);
+                } else { }
             } else {
                 dispatch({ type: REQUEST_FAILED });
                 handleFailedRequest("Could not process your order", 5000);

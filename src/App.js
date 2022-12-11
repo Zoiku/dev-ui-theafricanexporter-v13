@@ -51,6 +51,7 @@ const App = () => {
     () => Object.fromEntries([...new URLSearchParams(search)]),
     [search]
   );
+  const { profile } = useSelector((state) => state.session.user);
   const { session } = useSelector((state) => state);
   const { alert } = useSelector((state) => state);
   const [openSnackBar, setOpenSnackBar] = useState(alert.active);
@@ -153,7 +154,10 @@ const App = () => {
               element={<MerchantQuotations />}
             />
             <Route path="/merchant/orders" element={<MerchantOrders />} />
-            <Route path="/merchant/settings" element={<MerchantSettings />} />
+            <Route
+              path="/merchant/settings"
+              element={<MerchantSettings profile={profile} />}
+            />
           </Route>
         </Route>
 

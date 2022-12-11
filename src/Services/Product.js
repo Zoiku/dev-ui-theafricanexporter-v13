@@ -17,4 +17,21 @@ export default class ProductService {
       data
     };
   }
+
+  async getProduct(signal, id) {
+    let data = null;
+    let errors = [];
+    const url = `/product/${id}`;
+
+    try {
+      data = await AxiosInstance().get(url, { signal });
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors,
+      data
+    };
+  }
 }

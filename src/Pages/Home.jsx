@@ -82,13 +82,13 @@ const Home = ({ session }) => {
                     products &&
                     products.length > 0 &&
                     products.map(product =>
-                        <section className="product-section-container">
+                        <section key={product.id} className="product-section-container">
                             <div className="specification-container">
                                 <div>
                                     <div className="specification-title">{product.name}</div>
                                     <div className="specification-description-short">{product.description}</div>
                                     <div className="specification-button-container">
-                                        <PrimaryButton variant="contained" disabled={session?.user?.role === "MERCHANT"} onClick={() => navigate(`/requestquote?product=${JSON.stringify(product)}`)}>Request Quotes</PrimaryButton>
+                                        <PrimaryButton variant="contained" disabled={session?.user?.role === "MERCHANT"} onClick={() => navigate(`/requestquote?pid=${product.id}`)}>Request Quotes</PrimaryButton>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ const Home = ({ session }) => {
                                 </Swiper>
                             </div>
                             <div className="specification-button-container-mobile">
-                                <PrimaryButton variant="contained" disabled={session?.user?.role === "MERCHANT"} fullWidth onClick={() => navigate(`/requestquote?product=${JSON.stringify(product)}`)}>Request Quotes</PrimaryButton>
+                                <PrimaryButton variant="contained" disabled={session?.user?.role === "MERCHANT"} fullWidth onClick={() => navigate(`/requestquote?pid=${product.id}`)}>Request Quotes</PrimaryButton>
                             </div>
                         </section>
                     )

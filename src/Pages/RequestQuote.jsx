@@ -1,6 +1,7 @@
 import "../Styles/RequestQuote.css"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
+import ProductService from "../Services/Product";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import Select from "@mui/material/Select";
@@ -46,16 +47,43 @@ const RequestQuote = ({ session }) => {
     const [countries, setCountries] = useState(null);
     const navigate = useNavigate();
     const { search } = useLocation();
-    const { product } = useMemo(() => Object.fromEntries([...new URLSearchParams(search)]), [search]);
-    const parsedProduct = useMemo(() => JSON.parse(product), [product]);
+    const { pid } = useMemo(() => Object.fromEntries([...new URLSearchParams(search)]), [search]);
+    const [parsedProduct, setParsedProduct] = useState({});
     const [openDrawer, setOpenDrawer] = useState(false);
     const toggleDrawer = (open) => (_event) => {
         setOpenDrawer(open);
     };
 
+    useEffect(() => {
+        const abortController = new AbortController();
+        const fetchData = async () => {
+            const productService = new ProductService();
+            try {
+                const { errors, data } = await productService.getProduct(abortController.signal, pid);
+                if (errors.length === 0) {
+                    const unfilteredData = data.data.data[0];
+                    const filteredData = {
+                        id: unfilteredData.id,
+                        description: unfilteredData.description,
+                        name: unfilteredData.name,
+                        speciesType: unfilteredData.species.type.label,
+                        species: unfilteredData.species.label,
+                        volume: unfilteredData.volume.value,
+                        volumeUnit: unfilteredData.volume.unit,
+                        origin: unfilteredData.origin.country,
+                        containerSize: unfilteredData.supportedShippingContainers[0].label
+                    }
+                    setParsedProduct(filteredData);
+                }
+            } catch (error) { }
+        }
+        pid && fetchData();
+        return () => abortController.abort();
+    }, [pid]);
+
     const handleChange = (e) => { dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value }); }
 
-    const removePendingQuote = async (e) => {
+    const removePendingQuote = async () => {
         const id = sessionStorage.getItem(`${parsedProduct.name}_pqid`);
         if (id) {
             const buyerService = new BuyerService();
@@ -87,13 +115,14 @@ const RequestQuote = ({ session }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch({ type: SEND_REQUEST });
-        state.payload.product = parsedProduct.id;
+        state.payload.product = pid;
         const buyerService = new BuyerService();
+
         try {
             if (isLogged) {
                 const { errors } = await buyerService.postQuote(state.payload);
                 if (errors.length === 0) {
-                    removePendingQuote(e);
+                    removePendingQuote();
                     dispatch({ type: REQUEST_SUCCESSFUL });
                     setOpenDrawer(false);
                     handleSuccessfullRequest("Request successful, merchants will respond shortly", 6000);
@@ -137,7 +166,7 @@ const RequestQuote = ({ session }) => {
     }
 
     const list = () => (
-        state.payload &&
+        state.payload && parsedProduct &&
         <Box
             component="form"
             role="presentation"
@@ -421,7 +450,7 @@ const RequestQuote = ({ session }) => {
                         </div>
                         <div className="request-quote-section-body select-input-form">
                             {
-                                SPECIFICATION_DETAILS[parsedProduct.name].map(specification =>
+                                parsedProduct && SPECIFICATION_DETAILS[parsedProduct.name]?.map(specification =>
                                     specification.name === "dryingLabel" ?
                                         <div>
                                             <div>Drying</div>

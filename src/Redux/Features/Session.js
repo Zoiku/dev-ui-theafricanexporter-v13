@@ -24,7 +24,7 @@ const sessionReducer = createSlice({
         user: {
           ...state.user,
           profile: {
-            ...state.profile,
+            ...state.user.profile,
             ...action.payload
           }
         }
