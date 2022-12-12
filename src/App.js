@@ -65,7 +65,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    redirect && rootDispatch(initPath(redirect));
+    if(redirect && session.isLogged) {
+      rootDispatch(initPath(redirect));
+    }
     // eslint-disable-next-line
   }, [redirect]);
 
