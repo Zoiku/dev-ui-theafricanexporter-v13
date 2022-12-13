@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer, useMemo } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "./Services/Auth";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -45,6 +45,7 @@ import {
 const App = () => {
   // eslint-disable-next-line
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const navigate = useNavigate();
   const rootDispatch = useDispatch();
   const { search } = useLocation();
   const { redirect } = useMemo(
@@ -65,7 +66,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    redirect && rootDispatch(initPath(redirect));
+    if (redirect) {
+      if (session.isLogged) {
+        navigate(redirect);
+      } else {
+        rootDispatch(initPath(redirect));
+      }
+    }
     // eslint-disable-next-line
   }, [redirect]);
 
