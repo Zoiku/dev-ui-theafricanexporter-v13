@@ -71,6 +71,7 @@ const App = () => {
         navigate(redirect);
       } else {
         rootDispatch(initPath(redirect));
+        navigate("/login");
       }
     }
     // eslint-disable-next-line
