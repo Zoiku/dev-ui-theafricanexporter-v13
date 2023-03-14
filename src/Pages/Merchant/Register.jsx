@@ -280,7 +280,6 @@ const Register = () => {
                     <Box sx={small}>
                         <div className="modal-title-container">
                             <div>Verify Account</div>
-                            <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
                         </div>
                         <div className="modal-body">
                             {list()}
@@ -298,7 +297,6 @@ const Register = () => {
                 >
                     <div className="drawer-title-container">
                         <div>Verify Account</div>
-                        <div><CloseIcon className="close-icon" onClick={toggleDrawer(false)} /></div>
                     </div>
 
                     <div className="drawer-body">
