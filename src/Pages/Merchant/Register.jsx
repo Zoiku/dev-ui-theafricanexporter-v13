@@ -19,7 +19,6 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Drawer from '@mui/material/Drawer';
-import CloseIcon from '@mui/icons-material/Close';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
@@ -30,7 +29,6 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { getStyles, MenuProps } from "../../Material/Select";
 import { useTheme } from "@mui/material/styles";
 import Modal from '@mui/material/Modal';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { small } from "../../Styles/Modal";
 
 const Register = () => {
@@ -59,9 +57,9 @@ const Register = () => {
         setShowPassword(prev => !prev);
     };
     const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer = (open) => (_event) => {
-        setOpenDrawer(open);
-    };
+    // const toggleDrawer = (open) => (_event) => {
+    //     setOpenDrawer(open);
+    // };
 
     // subscriptions
     const [selectedSubscriptions, setSelectedSubscription] = useState([]);
