@@ -104,10 +104,10 @@
 }
 
 .incoterm-settings-note-container {
-  border: 1px solid #c5c5c5;
   padding: 10px;
   border-radius: 5px;
-  font-size: small;
+  font-size: smaller;
+  background: var(--tae-orange-faded);
 }
 
 .incoterm-settings-note-container > div:nth-child(1) {
