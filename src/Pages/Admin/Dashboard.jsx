@@ -3,7 +3,7 @@ import SalesChart from "../../Components/Admin/Charts/Sales";
 import CategoriesChart from "../../Components/Admin/Charts/Categories";
 import OrdersTable from "../../Components/Admin/Tables/Orders";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper";
+import { Pagination } from "swiper";
 import Salutation from "../../Components/Salutation";
 import { useEffect } from "react";
 import AdminService from "../../Services/Admin";
@@ -164,14 +164,12 @@ const AdminDashboard = () => {
                 </div>
                 <Swiper
                     direction={"vertical"}
-                    autoplay={{
-                        delay: 2500,
-                    }}
+
                     loop={true}
                     pagination={{
                         clickable: true,
                     }}
-                    modules={[Pagination, Autoplay]}
+                    modules={[Pagination]}
                 >
                     <SwiperSlide>
                         <div className="dash-items-title-container">

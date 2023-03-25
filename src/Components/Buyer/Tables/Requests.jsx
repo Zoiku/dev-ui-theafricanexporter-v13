@@ -345,7 +345,7 @@ const Requests = () => {
                                     <div className="request-offer-body-container">
                                         <div>
                                             <div>Offer {offer.index}</div>
-                                            <div>{offer.merchant.firstName} {offer.merchant.lastName}</div>
+                                            <div>{offer.merchant.companyName}</div>
                                             <div>{offer.expiryDate}</div>
                                             <div>{offer.destination}</div>
                                         </div>
@@ -388,7 +388,7 @@ const Requests = () => {
                                         <th>Price/container</th>
                                         <th>Total price</th>
                                         {selectedOffer.terms === "CIF" && <th>Insurance</th>}
-                                        {selectedOffer.terms !== "FOB" && <th>Freight</th>}
+                                        {selectedOffer.terms !== "FOB" && <th>Total Freight</th>}
                                         <th>Total amount</th>
                                     </tr>
                                 </thead>

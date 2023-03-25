@@ -150,11 +150,11 @@ const UsersBuyer = () => {
                             <section>
                                 <div className="user-profile-section-title">Personal Details</div>
                                 <div className="form-controller-input-duo form-controller">
-                                    <TextField disabled value={selectedUser.firstName} fullWidth label="Full Name" variant="standard" />
-                                    <TextField disabled value={selectedUser.lastName} fullWidth label="Full Name" variant="standard" />
+                                    <TextField disabled value={selectedUser.firstName} size="small" fullWidth label="Full Name" variant="filled" />
+                                    <TextField disabled value={selectedUser.lastName} size="small" fullWidth label="Full Name" variant="filled" />
                                 </div>
                                 <div className="form-controller-input form-controller">
-                                    <TextField disabled value={selectedUser.email} fullWidth label="Email" variant="standard" />
+                                    <TextField disabled value={selectedUser.email} size="small" fullWidth label="Email" variant="filled" />
                                 </div>
                             </section>
                         </Box>

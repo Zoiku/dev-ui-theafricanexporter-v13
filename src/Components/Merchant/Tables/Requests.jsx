@@ -41,8 +41,8 @@ const NOTE_CIF = () => {
         <div>
             <div>Total Price: Price per container x Quantity</div>
             <div>Insurance: 1.5% of Cargo value (Total Price)</div>
-            <div>Freight: Freight rate x Quantity</div>
-            <div>Total Amount: Total Price + Insurance + Freight</div>
+            <div>Total Freight: Freight rate x Quantity</div>
+            <div>Total Amount: Total Price + Insurance + Total Freight</div>
         </div>
     )
 }
@@ -60,8 +60,8 @@ const NOTE_CFR = () => {
     return (
         <div>
             <div>Total Price: Price per container x Quantity</div>
-            <div>Freight: Freight rate x Quantity</div>
-            <div>Total Amount: Total Price + Freight</div>
+            <div>Total Freight: Freight rate x Quantity</div>
+            <div>Total Amount: Total Price + Total Freight</div>
         </div>
     )
 }
@@ -340,7 +340,7 @@ const Requests = () => {
                                             <th>Total price</th>
                                             {selectedRequest.terms === "CIF" && <th>Insurance</th>}
                                             {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <th>Freight Rate</th>}
-                                            {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <th>Freight</th>}
+                                            {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <th>Total Freight</th>}
                                             <th>Total amount</th>
                                         </tr>
                                     </thead>

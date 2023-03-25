@@ -170,7 +170,7 @@ const Quotations = () => {
                                             <th>Price/container</th>
                                             <th>Total price</th>
                                             {selectedQuote.terms === "CIF" && <th>Insurance</th>}
-                                            {(selectedQuote.terms === "CIF" || selectedQuote.terms === "CFR") && <th>Freight</th>}
+                                            {(selectedQuote.terms === "CIF" || selectedQuote.terms === "CFR") && <th>Total Freight</th>}
                                             <th>Total amount</th>
                                         </tr>
                                     </thead>

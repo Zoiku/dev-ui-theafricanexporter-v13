@@ -153,11 +153,11 @@ const UsersMerchant = () => {
                             <section>
                                 <div className="user-profile-section-title">Personal Details</div>
                                 <div className="form-controller-input-duo form-controller">
-                                    <TextField disabled value={selectedUser.user.firstName} fullWidth label="Full Name" variant="standard" />
-                                    <TextField disabled value={selectedUser.user.lastName} fullWidth label="Full Name" variant="standard" />
+                                    <TextField disabled value={selectedUser.user.firstName} size="small" fullWidth label="Full Name" variant="filled" />
+                                    <TextField disabled value={selectedUser.user.lastName} size="small" fullWidth label="Full Name" variant="filled" />
                                 </div>
                                 <div className="form-controller-input form-controller">
-                                    <TextField disabled value={selectedUser.email} fullWidth label="Email" variant="standard" />
+                                    <TextField disabled value={selectedUser.email} size="small" fullWidth label="Email" variant="filled" />
                                 </div>
                             </section>
 
@@ -166,21 +166,21 @@ const UsersMerchant = () => {
                                 <section>
                                     <div className="user-profile-section-title">Company Details</div>
                                     <div className="form-controller-input form-controller">
-                                        <TextField disabled value={selectedUser.company.introduction} multiline fullWidth type="text" label="Company Introduction" variant="standard" />
+                                        <TextField disabled value={selectedUser.company.introduction} multiline fullWidth type="text" label="Company Introduction" variant="filled" />
                                     </div>
                                     <div className="form-controller-input-duo form-controller">
-                                        <TextField disabled value={selectedUser.user.companyName} fullWidth label="Company Name" variant="standard" />
-                                        <TextField disabled value={selectedUser.address} fullWidth label="Company Address" variant="standard" />
+                                        <TextField disabled value={selectedUser.user.companyName} fullWidth label="Company Name" size="small" variant="filled" />
+                                        <TextField disabled value={selectedUser.address} fullWidth label="Company Address" size="small" variant="filled" />
                                     </div>
                                     <div className="form-controller-input-duo form-controller">
-                                        <TextField disabled value={new Date(selectedUser.type.createdOn).getFullYear()} fullWidth label="Company Year" variant="standard" />
-                                        <TextField disabled value={selectedUser.company.noOfEmployees} fullWidth label="Number of Employees" variant="standard" />
+                                        <TextField disabled value={new Date(selectedUser.type.createdOn).getFullYear()} size="small" fullWidth label="Company Year" variant="filled" />
+                                        <TextField disabled value={selectedUser.company.noOfEmployees} size="small" fullWidth label="Number of Employees" variant="filled" />
                                     </div>
                                     <div className="form-controller-input form-controller">
-                                        <TextField disabled value={selectedUser.businessType} fullWidth label="Business Type" variant="standard" />
+                                        <TextField disabled value={selectedUser.businessType} size="small" fullWidth label="Business Type" variant="filled" />
                                     </div>
                                     <div className="form-controller-input form-controller">
-                                        <TextField disabled value={selectedUser.company.supplyAbility} fullWidth label="Supply Ability" variant="standard" />
+                                        <TextField disabled value={selectedUser.company.supplyAbility} size="small" fullWidth label="Supply Ability" variant="filled" />
                                     </div>
                                 </section>
                             }

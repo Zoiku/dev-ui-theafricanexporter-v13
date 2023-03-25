@@ -237,12 +237,13 @@ const Orders = () => {
                         <div className="requests-section-title">Order Summary</div>
                         <div className="request-section-body">
                             {
-                                selectedOrder.status === "DELIVERED" &&
+                                ORDER_STATUS_STEPS[selectedOrder.status] > 2 &&
                                 <div>
                                     <span>Buyer:</span>
                                     <span>{selectedOrder?.user?.firstName ? selectedOrder?.user?.firstName : "--"} {selectedOrder?.user?.lastName}</span>
                                 </div>
                             }
+
                             <div>
                                 <span>Product:</span>
                                 <span>{selectedOrder.product}</span>
