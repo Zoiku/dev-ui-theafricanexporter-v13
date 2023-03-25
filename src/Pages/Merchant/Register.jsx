@@ -19,6 +19,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Drawer from '@mui/material/Drawer';
+import CloseIcon from '@mui/icons-material/Close';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
@@ -29,6 +30,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { getStyles, MenuProps } from "../../Material/Select";
 import { useTheme } from "@mui/material/styles";
 import Modal from '@mui/material/Modal';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { small } from "../../Styles/Modal";
 
 const Register = () => {
@@ -57,9 +59,9 @@ const Register = () => {
         setShowPassword(prev => !prev);
     };
     const [openDrawer, setOpenDrawer] = useState(false);
-    // const toggleDrawer = (open) => (_event) => {
-    //     setOpenDrawer(open);
-    // };
+    const toggleDrawer = (open) => (_event) => {
+        setOpenDrawer(open);
+    };
 
     // subscriptions
     const [selectedSubscriptions, setSelectedSubscription] = useState([]);
@@ -80,7 +82,7 @@ const Register = () => {
                     const _products = data.data.data.map(data => {
                         return {
                             category: data.category.label,
-                            name: data.name
+                            product: data.name
                         };
                     });
                     setProducts(_products);
@@ -102,7 +104,7 @@ const Register = () => {
             })
         }
         if (e.target.name === "category") {
-            const _subscriptions = products.filter(product => product.category === e.target.value).map(product => product.name);
+            const _subscriptions = products.filter(product => product.category === e.target.value).map(product => product.product);
             setSubscriptions(_subscriptions)
         }
         dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
@@ -121,8 +123,9 @@ const Register = () => {
             mobileNo: state.payload.countryCode ? `${state.payload.countryCode} ${state.payload.telephone}` : `${defaultCountryData.countryCode} ${state.payload.telephone}`,
             country: state.payload.country ? state.payload.country : defaultCountryData.country,
             role: "MERCHANT",
-            subscriptions: products.filter(product => selectedSubscriptions.includes(product.name))
+            subscriptions: products.filter(product => selectedSubscriptions.includes(product.product))
         };
+
         const authService = new AuthService();
         try {
             const { errors } = await authService.register(state.payload);
@@ -278,6 +281,7 @@ const Register = () => {
                     <Box sx={small}>
                         <div className="modal-title-container">
                             <div>Verify Account</div>
+                            <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
                         </div>
                         <div className="modal-body">
                             {list()}
@@ -295,6 +299,7 @@ const Register = () => {
                 >
                     <div className="drawer-title-container">
                         <div>Verify Account</div>
+                        <div><CloseIcon className="close-icon" onClick={toggleDrawer(false)} /></div>
                     </div>
 
                     <div className="drawer-body">
