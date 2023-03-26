@@ -111,7 +111,7 @@ const Settings = ({ profile }) => {
                 } else { }
             } else {
                 dispatch({ type: REQUEST_FAILED });
-                handleFailedRequest("Could not process your order", 5000);
+                handleFailedRequest("Could not process your request", 5000);
             }
         } catch (error) { }
     }
