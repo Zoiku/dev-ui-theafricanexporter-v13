@@ -8,7 +8,7 @@ import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../Reducers/Ac
 import AdminService from "../Services/Admin";
 import { clearAlerts } from "../Redux/Features/Alert.js"
 
-const handleGroupValidation = (users, dispatch, rootDispatch, setRefreshTable) => {
+const handleGroupValidation = (users, dispatch, rootDispatch, setRefreshTable, handleFailedActivate) => {
     dispatch({ type: SEND_REQUEST });
     const adminService = new AdminService();
     try {
@@ -16,6 +16,7 @@ const handleGroupValidation = (users, dispatch, rootDispatch, setRefreshTable) =
             const { errors } = await adminService.approveMerchant(user);
             if (errors.length > 0) {
                 dispatch({ type: REQUEST_FAILED });
+                handleFailedActivate("Could not process request, please try again", 3000);
             } else {
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 setRefreshTable(prev => !prev);
@@ -24,6 +25,7 @@ const handleGroupValidation = (users, dispatch, rootDispatch, setRefreshTable) =
         });
     } catch (error) {
         dispatch({ type: REQUEST_FAILED });
+        handleFailedActivate("Could not process request, please try again", 3000);
     }
 }
 
@@ -35,10 +37,10 @@ const Toolbar = () => {
     );
 }
 
-const CustomToolBar1 = (users, dispatch, rootDispatch, setRefreshTable, state) => {
+const CustomToolBar1 = (users, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate) => {
     return (
         <GridToolbarContainer>
-            <ValidateButton loading={state.requestState.loading} onClick={() => handleGroupValidation(users, dispatch, rootDispatch, setRefreshTable)} disabled={users?.length < 2 ? true : false} size='small' startIcon={<GroupAddIcon />} variant='text'>Group Validate</ValidateButton>
+            <ValidateButton loading={state.requestState.loading} onClick={() => handleGroupValidation(users, dispatch, rootDispatch, setRefreshTable, handleFailedActivate)} disabled={users?.length < 2 ? true : false} size='small' startIcon={<GroupAddIcon />} variant='text'>Group Validate</ValidateButton>
         </GridToolbarContainer>
     );
 }
