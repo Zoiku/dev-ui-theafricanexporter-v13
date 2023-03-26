@@ -79,7 +79,7 @@ html {
   backdrop-filter: blur(12.3px) !important;
   -webkit-backdrop-filter: blur(12.3px) !important;
   border-radius: 30px 30px 0 0 !important;
-  z-index: 10000000;
+  z-index: 100;
 }
 
 .close-icon {
