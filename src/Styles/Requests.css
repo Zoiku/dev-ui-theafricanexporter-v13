@@ -7,7 +7,7 @@
 }
 
 .requests-section-container section {
-  outline: 1px solid #c5c5c5;
+  outline: 1px solid #efefef;
   margin-bottom: 10px;
   border-radius: 5px;
   display: grid;
@@ -18,7 +18,7 @@
 }
 
 .requests-section-container section:hover {
-  outline: 2px solid #000;
+  background: var(--tae-orange-faded);
 }
 
 .requests-section-container section > div {

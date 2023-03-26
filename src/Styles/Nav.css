@@ -86,7 +86,6 @@
 
   .Nav-logo-tae-container {
     height: 60px;
-    width: 100px;
   }
 
   .Nav-logo-tae-container img {
@@ -96,7 +95,11 @@
   .logged-mobile-nav-logo-container {
     display: flex;
     align-items: center;
-    height: 30px;
+    height: 100%;
+  }
+
+  .admin-mobile-logo {
+    height: 80%;
   }
 
   .logged-mobile-nav-logo-container img {

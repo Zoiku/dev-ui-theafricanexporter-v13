@@ -61,7 +61,7 @@ const AdminNav = () => {
 
     return (
         <div className="Nav">
-            <div className="Nav-logo-tae-container logged-mobile-nav-logo-container">
+            <div className="Nav-logo-tae-container logged-mobile-nav-logo-container admin-mobile-logo">
                 <img onClick={handleRedirect} src={logo} alt="tae tae" />
             </div>
             <div>
@@ -69,7 +69,7 @@ const AdminNav = () => {
                     sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
                 >
                     <div style={{ fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
-                    <div style={{ margin: "auto 10px" }}>
+                    <div style={{ margin: "auto 0px" }}>
                         <Tooltip title="Unvalidated Users">
                             <IconButton className="notification-toggle-animation" onClick={() => console.log('')} aria-label="cart">
                                 <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>

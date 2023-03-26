@@ -76,6 +76,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--tae-orange-faded);
+  padding: 15px;
 }
 
 .quick-links-container > div {
@@ -83,8 +85,8 @@
 }
 
 .quick-links-container > div:nth-child(2) {
-  border-left: 1px solid #c5c5c5;
-  border-right: 1px solid #c5c5c5;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
 }
 
 @media screen and (max-width: 1000px) {
