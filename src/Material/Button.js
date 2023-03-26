@@ -277,3 +277,7 @@ export const SmallCancel = styled(LoadingButton)({
   },
   "&:focus": {}
 });
+
+export const TextButton = styled(LoadingButton)({
+  // fontWeight: 500
+});

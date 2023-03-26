@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import LinearProgress from '@mui/material/LinearProgress';
-import Toolbar from "../../../Material/Toolbar";
+import { CustomToolBar1 } from "../../../Material/Toolbar";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
@@ -37,10 +37,14 @@ const UsersMerchant = () => {
     const handlePageSizeChange = (size) => {
         setPaging({ ...paging, size: size })
     }
+    const handleMultipleSelect = (values) => {
+        setMultipleSelectedUsers(values);
+    }
 
     const [refreshTable, setRefreshTable] = useState(false);
     // eslint-disable-next-line
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+    const [selectedUsers, setMultipleSelectedUsers] = useState([]);
     const rootDispatch = useDispatch();
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -83,6 +87,25 @@ const UsersMerchant = () => {
         }
     }
 
+    const handleToggleActivate = async (id, status) => {
+        dispatch({ type: SEND_REQUEST });
+        const adminService = new AdminService();
+        try {
+            const { errors } = await adminService.toggleActivate(status, id);
+            if (errors.length > 0) {
+                dispatch({ type: REQUEST_FAILED });
+                handleFailedActivate("Could not process request, please try again", 3000);
+            } else {
+                dispatch({ type: REQUEST_SUCCESSFUL });
+                setRefreshTable(prev => !prev);
+                rootDispatch(clearAlerts());
+            }
+        } catch (error) {
+            dispatch({ type: REQUEST_FAILED });
+            handleFailedActivate("Could not process request, please try again", 3000);
+        }
+    }
+
     const handleFailedActivate = (message, timeOut) => {
         const payload = {
             severity: "error",
@@ -116,7 +139,8 @@ const UsersMerchant = () => {
         { field: "email", headerName: "Email", width: 70 },
         { field: "businessType", headerName: "Business Type", width: 70 },
         { field: "status", headerName: "Status", width: 90, renderCell: ({ row }) => row.status ? "Verified" : "Unverified" },
-        { field: "activated", headerName: "Activated", width: 90, renderCell: ({ row }) => <IOSSwitch checked={row.activated} /> },
+        { field: "isValidated", headerName: "Validated", width: 90, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading | row?.isValidated} onChange={() => handleApproveMerchant()} checked={row.isValidated} /> },
+        { field: "activated", headerName: "Activated", width: 90, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.id, row.activated)} checked={row.activated} /> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
@@ -214,9 +238,7 @@ const UsersMerchant = () => {
                     });
                     setRows(filteredData);
                 }
-            } catch (error) {
-                //
-            }
+            } catch (error) { }
             setRowsLoading(false);
         }
 
@@ -262,13 +284,6 @@ const UsersMerchant = () => {
                     <MenuItem onClick={toggleDrawer(true)}>
                         View
                     </MenuItem>
-                    {
-                        selectedUser &&
-                        !selectedUser.activated &&
-                        <MenuItem onClick={handleApproveMerchant}>
-                            Approve User
-                        </MenuItem>
-                    }
                     <MenuItem>
                         Flag User
                     </MenuItem>
@@ -297,10 +312,10 @@ const UsersMerchant = () => {
             </div>
 
             <DataGrid
-                components={{ Toolbar: Toolbar, LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Merchants" /> }}
+                components={{ Toolbar: () => CustomToolBar1(selectedUsers, dispatch, rootDispatch, setRefreshTable, state), LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Merchants" /> }}
                 className="standard-table"
                 checkboxSelection
-                disableSelectionOnClick
+                disableSelectionOnClicks
                 pageSize={paging.size}
                 rows={rows}
                 columns={columns}
@@ -312,6 +327,7 @@ const UsersMerchant = () => {
                 paginationMode="server"
                 onPageChange={handlePageChange}
                 onPageSizeChange={handlePageSizeChange}
+                onSelectionModelChange={handleMultipleSelect}
             />
         </div>
     )

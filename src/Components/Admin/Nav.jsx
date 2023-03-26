@@ -12,10 +12,18 @@ import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { StyledBadge } from "../../Material/Badge";
+import AdminService from "../../Services/Admin";
+import { useEffect } from "react";
+import { useReducer } from "react";
+import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../../Reducers/Actions";
+import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 
 const AdminNav = () => {
     const navigate = useNavigate();
     const rootDispatch = useDispatch();
+    const [unValidatedUsers, dispatchUnValidatedUsers] = useReducer(formReducer, INITIAL_STATE);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -31,6 +39,26 @@ const AdminNav = () => {
         navigate("/");
     };
 
+    useEffect(() => {
+        dispatchUnValidatedUsers({ type: SEND_REQUEST });
+        const abortController = new AbortController();
+        const fecthData = async () => {
+            const adminService = new AdminService();
+            try {
+                const { errors, data } = await adminService.getUnValidatedUsers(abortController.signal);
+                if (errors.length === 0) {
+                    dispatchUnValidatedUsers({ type: REQUEST_SUCCESSFUL, payload: { value: data?.data?.totalCount } });
+                } else {
+                    dispatchUnValidatedUsers({ type: REQUEST_FAILED, error: errors[0] });
+                }
+            } catch (error) { }
+        };
+
+        fecthData();
+        return () => abortController.abort();
+        // eslint-disable-next-line
+    }, []);
+
     return (
         <div className="Nav">
             <div className="Nav-logo-tae-container logged-mobile-nav-logo-container">
@@ -40,7 +68,14 @@ const AdminNav = () => {
                 <Box
                     sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
                 >
-                    <div style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
+                    <div style={{ fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
+                    <div style={{ margin: "auto 10px" }}>
+                        <Tooltip title="Unvalidated Users">
+                            <IconButton className="notification-toggle-animation" onClick={() => console.log('')} aria-label="cart">
+                                <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>
+                            </IconButton>
+                        </Tooltip>
+                    </div>
                     <Tooltip title="Account settings">
                         <IconButton
                             onClick={handleClick}

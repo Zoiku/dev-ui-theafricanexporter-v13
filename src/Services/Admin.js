@@ -152,6 +152,23 @@ export default class AdminService {
     };
   }
 
+  async getUnValidatedUsers(signal) {
+    let errors = [];
+    let data = null;
+    const url = "/merchants/unactivated/only";
+
+    try {
+      data = await AxiosInstance().get(url, { signal });
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors,
+      data
+    };
+  }
+
   async getOrders(signal, paging) {
     let errors = [];
     let data = null;
@@ -229,9 +246,9 @@ export default class AdminService {
     };
   }
 
-  async toggleActivate(email, status) {
+  async toggleActivate(status, id) {
     let errors = [];
-    const url = `/user/${email}/${!status}`;
+    const url = `/user/account/${!status}/${id}`;
 
     try {
       await AxiosInstance().patch(url);
@@ -246,7 +263,7 @@ export default class AdminService {
 
   async approveMerchant(id) {
     let errors = [];
-    const url = `/merchant/enable/${id}`;
+    const url = `/merchant/enable/true/${id}`;
 
     try {
       await AxiosInstance().patch(url);

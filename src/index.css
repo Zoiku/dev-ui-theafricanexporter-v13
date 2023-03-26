@@ -229,6 +229,28 @@ html {
   text-transform: capitalize;
 }
 
+.notification-toggle-animation:hover {
+  animation: wiggle .8s ease infinite;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  85% {
+    transform: rotate(5deg);
+  }
+  95% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .modal-container {
     display: none;
