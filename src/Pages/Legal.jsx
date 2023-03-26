@@ -549,7 +549,7 @@ const Legal = () => {
                                             <div className="large-large-large-large-large-heading">2.1.3 Bank Transfer.</div>
                                             <div>
                                                 Bank transfer is a method of electronic funds transfer from one person or entity to another. A Bank transfer can be made from one bank account to another bank account.
-                                                With this Payment Option, the Buyer is required to pay an initial deposit of thirty percent (30%) of the Total amount (including Freight and Insurance), with the remaining seventy percent (70%) paid after submitting shipping documents to the Buyer’s bank. The initial deposit will constitute Proof of Payment, before the Merchant(s) will be notified to commence fulfilment of the order. Afrigateway’s bank will act on its behalf regarding this Payment Option.
+                                                With this Payment Option, the Buyer is required to pay an initial deposit of ten percent (10%) of the Total amount (including Freight and Insurance), with the remaining ninety percent (90%) paid after submitting scanned copies of shipping documents to the Buyer. The initial deposit will constitute Proof of Payment, before the Merchant(s) will be notified to commence fulfilment of the order. Afrigateway’s bank will act on its behalf regarding this Payment Option.
                                             </div>
                                         </div>
                                     </div>

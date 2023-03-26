@@ -140,7 +140,7 @@ const About = () => {
                                                 content_copy
                                             </span></div>
                                         <div className="payment-option-text">
-                                            With this option, 10% of the total amount payable has to be deposited into an Escrow account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid via Bank transfer once documents have been submitted to the Buyer’s bank. The funds in the Escrow account will also be released into our account simultaneously.
+                                            With this option, 10% of the total amount payable has to be deposited into an Escrow account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid by Bank transfer once scanned copies of shipping douments have been sent to the Buyer. The funds in the Escrow account will also be released into our account simultaneously. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
                                             <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into an Escrow account.</div>
                                         </div>
                                     </div>
@@ -153,8 +153,8 @@ const About = () => {
                                                 account_balance
                                             </span></div>
                                         <div className="payment-option-text">
-                                            An initial deposit of 30% of the total amount payable has to be deposited into our account, before the Order will be fulfilled by the Merchant. The remaining amount (70%) will be transferred once documents have been submitted to the Buyer’s bank.
-                                            <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 30% of the total transaction amount into our Bank account.</div>
+                                            An initial deposit of 10% of the total amount payable has to be deposited into our account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid once scanned copies of shipping documents have been sent to the Buyer. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
+                                            <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into our Bank account.</div>
                                         </div>
                                     </div>
 

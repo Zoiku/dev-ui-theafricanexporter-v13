@@ -7,6 +7,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -17,7 +18,8 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
 );
 
 const Sales = ({ labels, values }) => {
@@ -26,6 +28,7 @@ const Sales = ({ labels, values }) => {
         maintainAspectRatio: false,
         scales: {
             yAxes: {
+                min: 0,
                 grid: {
                     drawBorder: true,
                     color: '#efefef',
@@ -38,7 +41,7 @@ const Sales = ({ labels, values }) => {
                 title: {
                     display: true,
                     text: "Quantity",
-                }
+                },
             },
             xAxes: {
                 grid: {
@@ -66,10 +69,11 @@ const Sales = ({ labels, values }) => {
         datasets: [
             {
                 data: values,
+                fill: true,
                 borderColor: '#ee9b00',
-                backgroundColor: '#ee9b00',
                 color: "#999",
-                lineTension: .2,
+                lineTension: 0,
+                backgroundColor: '#f9c09f39',
             }
         ],
     };

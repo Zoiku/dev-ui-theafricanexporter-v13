@@ -1,5 +1,5 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -8,12 +8,12 @@ const Categories = ({ labels, values }) => {
         {
             data: values,
             backgroundColor: [
-                '#efefef',
-                '#2eca455c',
+                '#ee9b0074',
+                '#ee9b00',
             ],
             borderColor: [
-                '#999',
-                '#2ECA45',
+                '#fff',
+                '#fff',
             ],
             borderWidth: 2,
         },
@@ -30,7 +30,7 @@ const Categories = ({ labels, values }) => {
     }
 
     return (
-        <Doughnut data={data} options={options} />
+        <Pie data={data} options={options} />
     )
 };
 

@@ -57,6 +57,17 @@ footer > div:nth-last-child(1) {
   font-weight: 500;
 }
 
+.footer-contact-container li {
+  display: flex;
+  align-items: center;
+}
+
+.footer-contact-container span:nth-child(1) {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
 @media screen and (max-width: 1000px) {
   footer {
     padding: 40px 30px;

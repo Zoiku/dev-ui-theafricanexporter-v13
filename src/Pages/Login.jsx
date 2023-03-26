@@ -17,8 +17,6 @@ const ROLES = {
     BUYER: "/",
 }
 
-// const toLowerCase = (string) => string.toLowerCase();
-
 const Login = () => {
     const navLinkStyle = {
         fontWeight: 700,
@@ -71,7 +69,6 @@ const Login = () => {
         if (session.isLogged) {
             const role = session.user.role;
             if (session.path) {
-                // const to = `/${toLowerCase(role)}/${session.path}`;
                 const to = session.path;
                 rootDispatch(clearPath());
                 navigate(to);

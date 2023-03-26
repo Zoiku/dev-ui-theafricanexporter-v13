@@ -1,6 +1,8 @@
 import "../Styles/Footer.css";
 import { NavLink } from "react-router-dom";
 import { contactEventTracker } from "./GoogleAnalytics"
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import EmailIcon from '@mui/icons-material/Email';
 
 const Footer = () => {
     const navStyle = {
@@ -44,9 +46,15 @@ const Footer = () => {
 
             <div>
                 <div>Contact</div>
-                <ul>
-                    <li onClick={handleMail}>hello@theafricanexporter.com</li>
-                    <li onClick={handleWhatsapp}>00233508556755</li>
+                <ul className="footer-contact-container">
+                    <li onClick={handleMail}>
+                        <span><EmailIcon fontSize="small" /></span>
+                        <span>hello@theafricanexporter.com</span>
+                    </li>
+                    <li onClick={handleWhatsapp}>
+                        <span><WhatsAppIcon fontSize="small" /></span>
+                        <span>00233508556755</span>
+                    </li>
                 </ul>
             </div>
 

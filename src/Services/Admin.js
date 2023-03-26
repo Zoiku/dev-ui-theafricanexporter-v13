@@ -64,12 +64,25 @@ export default class AdminService {
 
     try {
       data = await AxiosInstance().get(url, { signal });
-      const allMonths = data.data.data.map((request) =>
-        new Date(request.createdOn).toLocaleDateString("default", {
-          month: "long"
-        })
-      );
+      const allMonths = data.data.data.map((request) => {
+        const currentYear = new Date().getFullYear();
+        const requestYear = new Date(request.createdOn).getFullYear();
+        const months = [];
+        if (currentYear === requestYear) {
+          months.push(
+            new Date(request.createdOn).toLocaleDateString("default", {
+              month: "long"
+            })
+          );
+        }
+
+        return months;
+      });
+
       data = monthReduce(allMonths);
+      if (data.hasOwnProperty("")) {
+        delete data[""];
+      }
     } catch (error) {
       errors.push(error);
     }

@@ -158,7 +158,7 @@ const UsersMerchant = () => {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             variant="dot"
                         >
-                            <Avatar className="user-avatar" alt="User" src="/" />
+                            <Avatar className="user-avatar" alt={selectedUser.fullName} src="/" />
                         </StyledBadge>
                         <div className="user-short-desc-container">
                             <div>{selectedUser.fullName}</div>
