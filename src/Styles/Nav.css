@@ -80,30 +80,25 @@
   }
 
   .Mobile-Nav .Nav-logo-tae-container {
-    height: 60px;
+    height: 100%;
     width: 230px;
-  }
-
-  .Nav-logo-tae-container {
-    height: 60px;
   }
 
   .Nav-logo-tae-container img {
     height: 100%;
+    width: 100%;
   }
 
   .logged-mobile-nav-logo-container {
     display: flex;
     align-items: center;
+    width: 170px;
     height: 100%;
-  }
-
-  .admin-mobile-logo {
-    height: 80%;
   }
 
   .logged-mobile-nav-logo-container img {
     height: 100%;
+    width: 100%;
   }
 
   .hamburger-menu-links {

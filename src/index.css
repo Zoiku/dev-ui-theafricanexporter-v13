@@ -78,7 +78,8 @@ html {
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(12.3px) !important;
   -webkit-backdrop-filter: blur(12.3px) !important;
-  border-radius: 20px 20px 0 0 !important;
+  border-radius: 30px 30px 0 0 !important;
+  z-index: 10000000;
 }
 
 .close-icon {
@@ -230,7 +231,7 @@ html {
 }
 
 .notification-toggle-animation:hover {
-  animation: wiggle .8s ease infinite;
+  animation: wiggle 0.8s ease infinite;
 }
 
 @keyframes wiggle {
