@@ -40,7 +40,7 @@ const NOTE_CIF = () => {
     return (
         <div>
             <div>Total Price: Price per container x Quantity</div>
-            <div>Insurance: 1.5% of Cargo value (Total Price)</div>
+            <div>Insurance: 0.25% of Cargo value (Total Price)</div>
             <div>Total Freight: Freight rate x Quantity</div>
             <div>Total Amount: Total Price + Insurance + Total Freight</div>
         </div>
@@ -155,8 +155,8 @@ const Requests = () => {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
                     totalPrice: e.target.value * selectedRequest.quantity,
-                    insurance: ((0.015) * (e.target.value * selectedRequest.quantity)),
-                    totalAmount: (incotermSettings[index]?.freight && incotermSettings[index]?.insurance) ? ((0.015) * (e.target.value * selectedRequest.quantity)) + incotermSettings[index]?.freight + (e.target.value * selectedRequest.quantity) : 0
+                    insurance: ((0.0025) * (e.target.value * selectedRequest.quantity)),
+                    totalAmount: (incotermSettings[index]?.freight && incotermSettings[index]?.insurance) ? ((0.0025) * (e.target.value * selectedRequest.quantity)) + incotermSettings[index]?.freight + (e.target.value * selectedRequest.quantity) : 0
                 }
             } else if (e.target.name === "freightRate") {
                 incotermRef.current[index] = {
