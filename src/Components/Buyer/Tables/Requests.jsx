@@ -35,7 +35,6 @@ import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
 import { dialogStyle } from "../../../Styles/Dialog";
 
-
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
     TEAK_ROUND_LOGS: "Teak Round Logs",
@@ -325,7 +324,7 @@ const Requests = () => {
     );
 
     const listOffers = () => (
-        selectedOffers &&
+        !selectedOffers &&
         <Box role="presentation">
             <div className="requests-sections-body">
                 {
@@ -333,18 +332,27 @@ const Requests = () => {
                         selectedOffers.length > 0 ?
                         selectedOffers.map((offer, index) => {
                             return (
-                                <div key={index} className="request-section-offer-container">
-                                    <div className="request-offer-body-container">
-                                        <div>
-                                            <div>Offer {offer.index}</div>
-                                            <div>{offer.merchant.companyName}</div>
-                                            <div>{offer.expiryDate}</div>
-                                            <div>{offer.destination}</div>
-                                        </div>
-                                        <div>
-                                            <SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(offer)} variant="contained">View</SmallPrimary>
-                                        </div>
-                                    </div>
+                                <div key={index} className="incoterm-settings-table-container">
+                                    <table>
+                                        <thead>
+                                            <tr className="incoterm-setting-heading-container">
+                                                <th>Offer Number</th>
+                                                <th>Comapny</th>
+                                                <th>Date</th>
+                                                <th>Destination</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input value={offer.index} disabled /></td>
+                                                <td><input value={offer.merchant.companyName} disabled /></td>
+                                                <td><input value={offer.expiryDate} disabled /></td>
+                                                <td><input value={offer.destination} disabled /></td>
+                                                <td><SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(offer)} variant="contained">View</SmallPrimary></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             )
                         }) : <div>No offers yet</div>
