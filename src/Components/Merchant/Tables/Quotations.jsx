@@ -37,7 +37,7 @@ const Quotations = () => {
     }
 
     const columns = [
-        { field: "index", headerName: "#", width: 50 },
+        { field: "index", headerName: "Number", width: 50 },
         { field: "requestNo", headerName: "Request #", width: 100 },
         { field: "product", headerName: "Product", width: 200 },
         { field: "terms", headerName: "Terms", width: 70 },

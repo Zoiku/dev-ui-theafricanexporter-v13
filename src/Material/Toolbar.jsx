@@ -1,6 +1,8 @@
 import {
     GridToolbarContainer,
     GridToolbarExport,
+    GridToolbarQuickFilter,
+    GridToolbarFilterButton
 } from '@mui/x-data-grid';
 import { TextButton as ValidateButton } from "../Material/Button.js";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -31,16 +33,24 @@ const handleGroupValidation = (users, dispatch, rootDispatch, setRefreshTable, h
 
 const Toolbar = () => {
     return (
-        <GridToolbarContainer>
-            <GridToolbarExport />
+        <GridToolbarContainer sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+                <GridToolbarFilterButton />
+                <GridToolbarExport />
+            </div>
+            <GridToolbarQuickFilter />
         </GridToolbarContainer>
     );
 }
 
 const CustomToolBar1 = (users, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate) => {
     return (
-        <GridToolbarContainer>
-            <ValidateButton loading={state.requestState.loading} onClick={() => handleGroupValidation(users, dispatch, rootDispatch, setRefreshTable, handleFailedActivate)} disabled={users?.length < 2 ? true : false} size='small' startIcon={<GroupAddIcon />} variant='text'>Group Validate</ValidateButton>
+        <GridToolbarContainer sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+                <GridToolbarFilterButton />
+                <ValidateButton loading={state.requestState.loading} onClick={() => handleGroupValidation(users, dispatch, rootDispatch, setRefreshTable, handleFailedActivate)} disabled={users?.length < 2 ? true : false} size='small' startIcon={<GroupAddIcon />} variant='text'>Multi-Validate</ValidateButton>
+            </div>
+            <GridToolbarQuickFilter />
         </GridToolbarContainer>
     );
 }

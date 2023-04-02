@@ -7,7 +7,7 @@
 .dashboard-body-container {
   margin: 30px 0;
   display: grid;
-  gap: 10px;
+  gap: 5px;
   grid-template-areas:
     "item1 item2 item3"
     "item4 item4 item3"
@@ -25,10 +25,8 @@
 }
 
 .dashboard-body-container > div:nth-child(1) {
-  background: var(--tae-blue-dark);
   grid-area: item1;
   height: 200px;
-  color: white;
 }
 
 .dashboard-body-container > div:nth-child(2) {
@@ -75,19 +73,35 @@
   height: 280px;
 }
 
-.dash-item-value-container {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+.dashboard-body-container > div:nth-child(1) {
+  background: var(--tae-blue-dark);
+  color: white;
 }
 
-.dashboard-body-container > div:nth-child(2) .dash-item-value-container {
-  right: 0;
+.dashboard-body-container > div:nth-child(1) .dash-item-value-container {
+  width: 88%;
+}
+
+.admin-card-icon-container {
+  display: grid;
+  place-content: center;
+}
+
+.admin-card-icon-container > span {
+  font-size: 30px;
+}
+
+.dash-item-value-container {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 15px;
+  width: 100%;
 }
 
 .dash-item-value-container > div {
   font-size: xx-large;
-  font-weight: bold;
 }
 
 .dash-item-no-data-container {

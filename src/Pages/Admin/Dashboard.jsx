@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import { useReducer } from "react";
 import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../../Reducers/Actions";
+import { InactiveUser, PendingOrders, Delivered, Group } from "../../Components/Icons";
 
 const AdminDashboard = () => {
     const [merchantBuyerRatio, dispatchMerchantBuyerRatio] = useReducer(formReducer, INITIAL_STATE);
@@ -153,6 +154,9 @@ const AdminDashboard = () => {
                         <div>A positive merchant to buyers ratio should be at least 0.5</div>
                     </div>
                     <div className="dash-item-value-container">
+                        <div className="admin-card-icon-container">
+                            <Group />
+                        </div>
                         <div>
                             {
                                 !merchantBuyerRatio.requestState.error ?
@@ -177,6 +181,9 @@ const AdminDashboard = () => {
                             <div>Check the users tab to activate registered accounts</div>
                         </div>
                         <div className="dash-item-value-container">
+                            <div className="admin-card-icon-container">
+                                <InactiveUser />
+                            </div>
                             <div>
                                 {
                                     !unactivatedUsers.requestState.error ?
@@ -192,6 +199,9 @@ const AdminDashboard = () => {
                             <div>Check the orders tab to approve orders</div>
                         </div>
                         <div className="dash-item-value-container">
+                            <div className="admin-card-icon-container">
+                                <PendingOrders />
+                            </div>
                             <div>
                                 {
                                     !pendingOrders.requestState.error ?
@@ -207,6 +217,9 @@ const AdminDashboard = () => {
                             <div>Orders that have been delivered to buyers</div>
                         </div>
                         <div className="dash-item-value-container">
+                            <div className="admin-card-icon-container">
+                                <Delivered />
+                            </div>
                             <div>
                                 {
                                     !deliveredOrders.requestState.error ?

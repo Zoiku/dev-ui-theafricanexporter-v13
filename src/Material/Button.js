@@ -247,6 +247,34 @@ export const SmallSecondary = styled(LoadingButton)({
   "&:focus": {}
 });
 
+export const GenericSmall = styled(LoadingButton)({
+  boxShadow: "none",
+  textTransform: "none",
+  transition: "all 0.2s ease",
+  fontSize: "small",
+  padding: "10px",
+  lineHeight: 1.5,
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"'
+  ].join(","),
+  "&:hover": {
+    boxShadow: "none"
+  },
+  "&:active": {
+    boxShadow: "none"
+  },
+  "&:focus": {}
+});
+
 export const SmallCancel = styled(LoadingButton)({
   boxShadow: "none",
   textTransform: "none",

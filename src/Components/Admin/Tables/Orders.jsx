@@ -185,7 +185,7 @@ const Orders = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Request #", width: 100 },
+        { field: "index", headerName: "Order #", width: 100 },
         { field: "product", headerName: "Product", width: 200 },
         { field: "terms", headerName: "Terms", width: 70 },
         { field: "destination", headerName: "Destination", width: 100 },

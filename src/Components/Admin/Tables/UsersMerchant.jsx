@@ -312,7 +312,7 @@ const UsersMerchant = () => {
             </div>
 
             <DataGrid
-                components={{ Toolbar: () => CustomToolBar1(selectedUsers, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate), LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Merchants" /> }}
+                components={{ Toolbar: () => CustomToolBar1(selectedUsers, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate),  LoadingOverlay: LinearProgress,  NoRowsOverlay: () => <Overlay label="Merchants" /> }}
                 className="standard-table"
                 checkboxSelection
                 disableSelectionOnClick

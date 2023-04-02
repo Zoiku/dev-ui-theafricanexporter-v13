@@ -23,7 +23,6 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../../../Reducers/Actions";
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
-import { SmallSecondary, SmallPrimary } from "../../../Material/Button";
 import { setAlert } from "../../../Redux/Features/Alert.js"
 import Modal from '@mui/material/Modal';
 import { inAppStandard, inAppWider, inAppSmaller } from "../../../Styles/Modal";
@@ -34,7 +33,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
-import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
+import { GenericSecondary, GenericPrimaryButton, SmallSecondary, GenericSmall } from "../../../Material/Button";
 import { dialogStyle } from "../../../Styles/Dialog";
 import Stack from '@mui/material/Stack';
 import { NavLink } from "react-router-dom";
@@ -217,7 +216,7 @@ const Orders = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "#", width: 50 },
+        { field: "index", headerName: "Number", width: 50 },
         { field: "orderNo", headerName: "Order #", width: 100 },
         { field: "product", headerName: "Product", width: 200 },
         { field: "terms", headerName: "Terms", width: 70 },
@@ -470,8 +469,8 @@ const Orders = () => {
                 </div>
                 <div>
                     <Stack spacing={1}>
-                        <SmallPrimary onClick={toggleAcceptTerms(true)}>Accept</SmallPrimary>
-                        <SmallSecondary onClick={toggleAcceptTerms(false)}>Cancel</SmallSecondary>
+                        <GenericSmall variant="contained" onClick={toggleAcceptTerms(true)}>Accept</GenericSmall>
+                        <GenericSmall variant="outlined" color="error" onClick={toggleAcceptTerms(false)}>Cancel</GenericSmall>
                     </Stack>
                 </div>
             </div>

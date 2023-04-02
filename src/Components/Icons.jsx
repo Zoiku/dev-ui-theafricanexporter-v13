@@ -10,3 +10,7 @@ export const RegisterIcon = () => <span className="material-symbols-rounded">how
 export const MerchantRegistationIcon = () => <span className="material-symbols-rounded">admin_panel_settings</span>
 export const BackIcon = () => <span className="material-symbols-rounded">arrow_back</span>
 export const LogoutIcon = () => <span className="material-symbols-rounded">logout</span>
+export const InactiveUser = () => <span className="material-symbols-rounded">lock_person</span>
+export const PendingOrders = () => <span className="material-symbols-rounded">pending</span>
+export const Delivered = () => <span className="material-symbols-rounded">priority</span>
+export const Group = () => <span className="material-symbols-rounded">group</span>

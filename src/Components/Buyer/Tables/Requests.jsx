@@ -11,8 +11,6 @@ import Countdown from "../../Countdown";
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import { StyledBadge } from "../../../Material/Badge";
 import IconButton from '@mui/material/IconButton';
-import log from "../../../Assets/log.jpg";
-import log1 from "../../../Assets/log-1.jpg";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { useReducer } from "react";
@@ -41,11 +39,6 @@ import { dialogStyle } from "../../../Styles/Dialog";
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
     TEAK_ROUND_LOGS: "Teak Round Logs",
-}
-
-const IMAGES_TO_DISPLAY = {
-    "Teak Round Logs": log,
-    "Teak Square Logs": log1
 }
 
 const Requests = () => {
@@ -154,7 +147,7 @@ const Requests = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "#", width: 50 },
+        { field: "index", headerName: "Number", width: 50 },
         { field: "requestNo", headerName: "Request #", width: 100 },
         { field: "product", headerName: "Product", width: 200 },
         { field: "quantity", headerName: "Quantity", width: 90 },
@@ -341,7 +334,6 @@ const Requests = () => {
                         selectedOffers.map((offer, index) => {
                             return (
                                 <div key={index} className="request-section-offer-container">
-                                    <div><img src={IMAGES_TO_DISPLAY[offer.product]} alt="" /></div>
                                     <div className="request-offer-body-container">
                                         <div>
                                             <div>Offer {offer.index}</div>

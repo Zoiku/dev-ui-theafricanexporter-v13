@@ -1,6 +1,6 @@
 import AxiosInstance from "./AxiosInstance";
 
-export default class AdminService {
+export default class BuyerService {
   async getRequests(signal) {
     let errors = [];
     let data = null;

@@ -2,9 +2,12 @@ import "../Styles/Home.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import log from "../Assets/log.jpg";
-import log1 from "../Assets/log-1.jpg";
-import log2 from "../Assets/log-2.jpg";
+
+import teakround1 from "../Assets/photo_1_2023-04-02_09-47-11.jpg";
+import teakround2 from "../Assets/photo_2_2023-04-02_09-47-11.jpg";
+import teaksquare1 from "../Assets/photo_2_2023-04-01_08-18-17.jpg";
+import teaksquare2 from "../Assets/photo_5_2023-04-01_08-18-17.jpg";
+import comingsoon from "../Assets/log.jpg";
 import { PrimaryButton } from "../Material/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
@@ -15,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
 
 const IMAGES_TO_DISPLAY = {
-    "Teak Round Logs": log,
-    "Teak Square Logs": log1
+    "Teak Round Logs": [teakround1, teakround2],
+    "Teak Square Logs": [teaksquare1, teaksquare2]
 }
 
 const Home = ({ session }) => {
@@ -99,12 +102,13 @@ const Home = ({ session }) => {
                                     modules={[Pagination, Navigation]}
                                     className="mySwiper"
                                 >
-                                    <SwiperSlide>
-                                        <img src={IMAGES_TO_DISPLAY[product.name]} alt="" />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <img src={IMAGES_TO_DISPLAY[product.name]} alt="" />
-                                    </SwiperSlide>
+                                    {
+                                        IMAGES_TO_DISPLAY[product.name].map(src =>
+                                            <SwiperSlide>
+                                                <img src={src} alt="" />
+                                            </SwiperSlide>
+                                        )
+                                    }
                                 </Swiper>
                             </div>
                             <div className="specification-button-container-mobile">
@@ -120,43 +124,43 @@ const Home = ({ session }) => {
                 <Marquee className="coming-soon-marquee" gradient={false} pauseOnClick={true} speed={10} style={{ marginTop: 20 }}>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
                     <div className="coming-soon-card-container">
                         <div className="coming-soon-card-img">
-                            <img src={log2} alt="" />
+                            <img src={comingsoon} alt="" />
                         </div>
                         <div className="coming-soon-card-name">Special Log</div>
                     </div>
