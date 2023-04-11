@@ -324,7 +324,7 @@ const Requests = () => {
     );
 
     const listOffers = () => (
-        !selectedOffers &&
+        selectedOffers &&
         <Box role="presentation">
             <div className="requests-sections-body">
                 {

@@ -1,3 +1,15 @@
+export const inWebWider = {
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 800,
+  borderRadius: "5px",
+  overflow: "clip",
+  padding: 1,
+  outline: 0
+};
+
 export const inAppWide = {
   position: "relative",
   top: "50%",

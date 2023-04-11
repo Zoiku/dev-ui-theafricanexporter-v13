@@ -1,6 +1,7 @@
 import { useEffect, useState, useReducer, useMemo } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "./Services/Auth";
+// import Test from "./Test";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -180,6 +181,8 @@ const App = () => {
             <Route path="/buyer/settings" element={<BuyerSettings />} />
           </Route>
         </Route>
+
+        {/* <Route element={<Test />} path="/test" /> */}
       </Routes>
     </div>
   );
