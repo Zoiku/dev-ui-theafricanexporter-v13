@@ -24,10 +24,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
 
-import teakround1 from "../Assets/photo_1_2023-04-02_09-47-11.jpg";
-import teakround2 from "../Assets/photo_2_2023-04-02_09-47-11.jpg";
-import teaksquare1 from "../Assets/photo_2_2023-04-01_08-18-17.jpg";
-import teaksquare2 from "../Assets/photo_5_2023-04-01_08-18-17.jpg";
+import teakround1 from "../Assets/log.jpg";
+import teakround2 from "../Assets/log.jpg";
+import teaksquare1 from "../Assets/log.jpg";
+import teaksquare2 from "../Assets/log.jpg";
 
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
