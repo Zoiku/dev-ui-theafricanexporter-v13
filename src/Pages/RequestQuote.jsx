@@ -414,8 +414,8 @@ const RequestQuote = ({ session }) => {
                                 modules={[Pagination, Navigation]}
                                 className="mySwiper"
                             >
-                                {IMAGES_TO_DISPLAY[parsedProduct.name].map(src =>
-                                    <SwiperSlide>
+                                {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) =>
+                                    <SwiperSlide key={index}>
                                         <img src={src} alt="" />
                                     </SwiperSlide>
                                 )}
@@ -480,7 +480,7 @@ const RequestQuote = ({ session }) => {
                                         <div>
                                             <div>{specification.label}</div>
                                             <div className="select-input-form-with-units">
-                                                <TextField value={state.payload[specification.name] ? state.payload[specification.name] : ''} inputProps={specification.name !== "quantity" && { pattern: '[0-9+.-]{1,}' }} required onChange={handleChange} size="small" fullWidth type={specification.name === "quantity" && "number"} name={specification.name} label={specification.label} variant="outlined" />
+                                                <TextField value={state.payload[specification.name] ? state.payload[specification.name] : ''} inputProps={specification.name !== "quantity" && { pattern: '[0-9+.-]{1,}' }} required onChange={handleChange} size="small" fullWidth type={specification.name === "quantity" ? "number" : "text"} name={specification.name} label={specification.label} variant="outlined" />
                                                 {
                                                     specification.units &&
                                                     specification.units.length > 0 &&

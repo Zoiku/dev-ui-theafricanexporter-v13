@@ -104,8 +104,8 @@ const Home = ({ session }) => {
                                     className="mySwiper"
                                 >
                                     {
-                                        IMAGES_TO_DISPLAY[product.name].map(src =>
-                                            <SwiperSlide>
+                                        IMAGES_TO_DISPLAY[product.name].map((src, index) =>
+                                            <SwiperSlide key={index}>
                                                 <img src={src} alt="" />
                                             </SwiperSlide>
                                         )

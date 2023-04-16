@@ -308,7 +308,7 @@ const Orders = () => {
                     filteredData.map((order, index) => {
                         order.index = index + 1;
                         order.id = order._id;
-                        order.quantity = order.request.quotationProducts[0].specification.quantity;
+                        order.quantity = order.orderQuantity;
                         order.terms = order.request.buyerQuotationIncoterm.label;
                         order.containerSize = order.request.quotationProducts[0].product.supportedShippingContainers[0].label;
                         order.product = order.request.quotationProducts[0].product.name;

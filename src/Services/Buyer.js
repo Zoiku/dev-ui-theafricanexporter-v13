@@ -34,6 +34,22 @@ export default class BuyerService {
       data
     };
   }
+  async getOrderList(referenceCode) {
+    let errors = [];
+    let data = null;
+    const url = `/orders/reference/${referenceCode}`;
+
+    try {
+      data = await AxiosInstance().get(url);
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors,
+      data
+    };
+  }
 
   async getOrder(id) {
     let errors = [];

@@ -1,7 +1,6 @@
 import {
     GridToolbarContainer,
     GridToolbarExport,
-    GridToolbarQuickFilter,
     GridToolbarFilterButton
 } from '@mui/x-data-grid';
 import { TextButton as ValidateButton } from "../Material/Button.js";
@@ -38,7 +37,6 @@ const Toolbar = () => {
                 <GridToolbarFilterButton />
                 <GridToolbarExport />
             </div>
-            <GridToolbarQuickFilter />
         </GridToolbarContainer>
     );
 }
@@ -50,7 +48,6 @@ const CustomToolBar1 = (users, dispatch, rootDispatch, setRefreshTable, state, h
                 <GridToolbarFilterButton />
                 <ValidateButton loading={state.requestState.loading} onClick={() => handleGroupValidation(users, dispatch, rootDispatch, setRefreshTable, handleFailedActivate)} disabled={users?.length < 2 ? true : false} size='small' startIcon={<GroupAddIcon />} variant='text'>Multi-Validate</ValidateButton>
             </div>
-            <GridToolbarQuickFilter />
         </GridToolbarContainer>
     );
 }

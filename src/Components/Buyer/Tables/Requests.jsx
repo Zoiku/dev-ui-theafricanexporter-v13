@@ -23,7 +23,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import Modal from '@mui/material/Modal';
-import { inAppStandard, inAppWide } from "../../../Styles/Modal";
+import { inAppWide, inAppWider } from "../../../Styles/Modal";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Overlay from "../../../Material/Overlay";
 import Dialog from '@mui/material/Dialog';
@@ -41,6 +41,9 @@ const PRODUCTS = {
 }
 
 const Requests = () => {
+    const [requestedQuantity, setRequestedQuantity] = useState(0);
+    const [offerSelections, setOfferSelections] = useState([]);
+    const [canPlaceOrder, setCanPlaceOrder] = useState(false);
     const [viewOfferLoading, setViewOfferLoading] = useState(false);
     const rootDispatch = useDispatch();
     const [refreshTable, setRefreshTable] = useState(false);
@@ -57,6 +60,7 @@ const Requests = () => {
     const [rows, setRows] = useState([]);
     const [rowsLoading, setRowsLoading] = useState(false);
     const [pageSize, setPageSize] = useState(10);
+
     const [selectedRequestId, setSelectedRequestId] = useState(null);
     const selectRequest = (id) => setSelectedRequestId(id);
     const selectedRequest = rows && rows.find(row => row.id === selectedRequestId);
@@ -79,8 +83,20 @@ const Requests = () => {
     };
 
     const [selectedOffers, setSelectedOffers] = useState(null);
-    const handleSelectRequestOffers = (offers) => {
-        setSelectedOffers(offers);
+    const handleSelectRequestOffers = (offers, requestedQuantity) => {
+        setRequestedQuantity(requestedQuantity)
+        const _offers = offers.map((_offer) => {
+            return {
+                id: _offer?.id,
+                index: _offer?.index,
+                company: _offer?.merchant?.companyName,
+                expiryDate: _offer?.expiryDate,
+                destination: _offer?.destination,
+                quantity: _offer?.offerQuantity,
+                offer: _offer,
+            }
+        })
+        setSelectedOffers(_offers);
         setOpenDrawerOffers(true);
     };
     const [openDrawerOffers, setOpenDrawerOffers] = useState(false);
@@ -130,6 +146,33 @@ const Requests = () => {
         setAnchorEl(null);
     };
 
+    const handleMultipleSelect = (offeringIds) => {
+        const selections = selectedOffers.filter(offer => offeringIds.includes(offer.id))
+        const userSelection = selections.map(offer => {
+            return {
+                offerID: offer.id,
+                merchantID: offer.offer.merchant.id,
+                orderQuantity: offer.quantity
+            }
+        })
+
+        const handleRequestedQuantity = () => {
+            const totalSelectedOfferQuantity = userSelection.reduce((previousVal, currentVal) => {
+                return previousVal + currentVal.orderQuantity;
+            }, 0);
+
+            if (totalSelectedOfferQuantity === requestedQuantity) {
+                setCanPlaceOrder(true);
+                setOfferSelections(userSelection);
+            } else {
+                setCanPlaceOrder(false);
+                setOfferSelections([]);
+            }
+        }
+
+        handleRequestedQuantity();
+    }
+
     const More = ({ id }) => (
         <div>
             <Box sx={{ display: "flex", alignItems: "center", textAlign: "center", position: "relative" }}>
@@ -148,22 +191,28 @@ const Requests = () => {
     const columns = [
         { field: "index", headerName: "Number", width: 50 },
         { field: "requestNo", headerName: "Request #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
+        { field: "product", headerName: "Product", width: 150 },
         { field: "quantity", headerName: "Quantity", width: 90 },
         { field: "timeLeft", headerName: "TimeLeft", width: 100, renderCell: ({ row }) => <div> <Countdown endDate={row.expiryDate} /> </div> },
-        { field: "totalOffers", headerName: "Offers", width: 100, renderCell: ({ row }) => <div><IconButton onClick={() => handleSelectRequestOffers(row.offers)} aria-label="cart"><StyledBadge showZero badgeContent={row.offers.length} color="primary"><RequestQuoteIcon /></StyledBadge></IconButton></div> },
+        { field: "totalOffers", headerName: "Offers", width: 100, renderCell: ({ row }) => <div><IconButton onClick={() => handleSelectRequestOffers(row.offers, row.quantity)} aria-label="cart"><StyledBadge showZero badgeContent={row.offers.length} color="primary"><RequestQuoteIcon /></StyledBadge></IconButton></div> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
+    ];
+
+    const columnsOffers = [
+        { field: "index", headerName: "Offer #", width: 100 },
+        { field: "company", headerName: "Company", width: 180 },
+        { field: "expiryDate", headerName: "Date", width: 180 },
+        { field: "destination", headerName: "Destination", width: 150 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
+        { field: "more", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(row?.offer)} size="small" variant="contained">View</SmallPrimary> },
     ];
 
     const handleOrderSubmit = async () => {
         dispatch({ type: SEND_REQUEST });
-        state.payload = {
-            requestID: selectedOffer.requestId,
-            merchant: selectedOffer.merchant.id
-        }
         const buyerService = new BuyerService();
+
         try {
-            const { errors } = await buyerService.acceptOffer(state.payload);
+            const { errors } = await buyerService.acceptOffer(offerSelections);
             if (errors.length === 0) {
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 handleSuccessfullRequest("Your order was successfully placed", 3000);
@@ -326,38 +375,30 @@ const Requests = () => {
     const listOffers = () => (
         selectedOffers &&
         <Box role="presentation">
-            <div className="requests-sections-body">
-                {
-                    selectedOffers &&
-                        selectedOffers.length > 0 ?
-                        selectedOffers.map((offer, index) => {
-                            return (
-                                <div key={index} className="incoterm-settings-table-container">
-                                    <table>
-                                        <thead>
-                                            <tr className="incoterm-setting-heading-container">
-                                                <th>Offer Number</th>
-                                                <th>Comapny</th>
-                                                <th>Date</th>
-                                                <th>Destination</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input value={offer.index} disabled /></td>
-                                                <td><input value={offer.merchant.companyName} disabled /></td>
-                                                <td><input value={offer.expiryDate} disabled /></td>
-                                                <td><input value={offer.destination} disabled /></td>
-                                                <td><SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(offer)} variant="contained">View</SmallPrimary></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )
-                        }) : <div>No offers yet</div>
-                }
-            </div>
+            {
+                selectedOffers &&
+                    selectedOffers.length > 0 ?
+                    <div>
+                        <div className="offers-data-grid-container">
+                            <DataGrid
+                                components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
+                                className="offers-standard-table"
+                                checkboxSelection
+                                disableSelectionOnClick
+                                rows={selectedOffers}
+                                columns={columnsOffers}
+                                pagination
+                                density="compact"
+                                onSelectionModelChange={handleMultipleSelect}
+                            />
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                            <SmallSecondary disabled={!canPlaceOrder} loading={state.requestState.loading} onClick={handleOrderSubmit} variant="contained">Place Order</SmallSecondary>
+                        </div>
+                    </div>
+                    : <div>No offers yet</div>
+            }
         </Box>
     );
 
@@ -446,10 +487,6 @@ const Requests = () => {
                         </div>
                     }
                 </section>
-
-                <div>
-                    <SmallSecondary loading={state.requestState.loading} onClick={handleOrderSubmit} variant="contained">Place Order</SmallSecondary>
-                </div>
             </div>
         </Box>
     );
@@ -571,7 +608,7 @@ const Requests = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppStandard}>
+                    <Box sx={inAppWider}>
                         <div className="modal-title-container">
                             <div>View Offers</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawerOffers} /></div>

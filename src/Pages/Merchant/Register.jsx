@@ -414,7 +414,7 @@ const Register = () => {
                                     {
                                         products &&
                                         products.length > 0 &&
-                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}>{category}</MenuItem>)
+                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem sx={{ textTransform: "capitalize" }} key={category} value={category}>{category}</MenuItem>)
                                     }
                                 </Select>
                                 <FormHelperText sx={{ marginLeft: "20px" }}>

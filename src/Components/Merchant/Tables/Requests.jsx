@@ -12,6 +12,7 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer.js";
 import { REQUEST_FAILED, REQUEST_SUCCESSFUL, SEND_REQUEST } from "../../../Reducers/Actions";
+import TextField from '@mui/material/TextField';
 import { setAlert } from "../../../Redux/Features/Alert.js"
 import { useDispatch } from "react-redux";
 import { inAppWider } from "../../../Styles/Modal";
@@ -73,6 +74,7 @@ const INCOTERM_NOTES = {
 }
 
 const Requests = () => {
+    const [quantity, setQuantity] = useState(0);
     const [refreshTable, setRefreshTable] = useState(false);
     const rootDispatch = useDispatch();
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
@@ -121,6 +123,10 @@ const Requests = () => {
             setIncotermRows(prev => prev - 1);
         }
     };
+
+    const handleQuantityChange = (e) => {
+        setQuantity(e.target.value);
+    }
 
     const handleChange = (e, index, terms) => {
         incotermRef.current[index] = {
@@ -174,8 +180,9 @@ const Requests = () => {
         e.preventDefault();
         dispatch({ type: SEND_REQUEST });
         const merchantService = new MerchantService();
+
         try {
-            const payload = { incotermArray: incotermSettings, requestID: selectedRequestId }
+            const payload = { incotermArray: incotermSettings, requestID: selectedRequestId, quantity }
             const { errors } = await merchantService.postOffer(payload);
             if (errors.length === 0) {
                 dispatch({ type: REQUEST_SUCCESSFUL });
@@ -293,7 +300,7 @@ const Requests = () => {
                             }
                             <div>
                                 <span>Quantity:</span>
-                                <span>{selectedRequest.quantity} {selectedRequest.containerSize}</span>
+                                <span>{selectedRequest?.remainingQuantity} {selectedRequest.containerSize}</span>
                             </div>
                         </div>
                     </section>
@@ -352,7 +359,7 @@ const Requests = () => {
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="number" value={index + 1} disabled /></td>
                                                     {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="diameter" /></td>}
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="noOfPieces" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" name="cbm" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="cbm" /></td>
                                                     <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="price" /></td>
                                                     <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
                                                     {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
@@ -382,6 +389,15 @@ const Requests = () => {
                                     <span>remove last field</span>
                                 </div>
                             }
+                        </div>
+                    </section>
+
+                    <section>
+                        <div className="requests-section-title">Quantity</div>
+                        <div className="request-section-body">
+                            <div style={{ border: 0 }}>
+                                <TextField onChange={handleQuantityChange} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ width: "190px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="outlined" placeholder="eg 10-30" required />
+                            </div>
                         </div>
                     </section>
 
@@ -468,8 +484,8 @@ const Requests = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <GenericSecondary variant="text" onClick={handleCloseDialogConfirm}>Disagree</GenericSecondary>
-                        <GenericPrimaryButton variant="contained" loading={state.requestState.loading} onClick={handleSubmit}>Agree</GenericPrimaryButton>
+                        <GenericSecondary size="small" variant="text" onClick={handleCloseDialogConfirm}>Disagree</GenericSecondary>
+                        <GenericPrimaryButton size="small" variant="contained" loading={state.requestState.loading} onClick={handleSubmit}>Agree</GenericPrimaryButton>
                     </DialogActions>
                 </Dialog>
             </div>

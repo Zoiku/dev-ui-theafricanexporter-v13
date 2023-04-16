@@ -25,7 +25,7 @@ import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../.
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import { setAlert } from "../../../Redux/Features/Alert.js"
 import Modal from '@mui/material/Modal';
-import { inAppStandard, inAppWider, inAppSmaller } from "../../../Styles/Modal";
+import { inAppStandard, inAppWider, inAppSmaller, inAppWide } from "../../../Styles/Modal";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -33,7 +33,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
-import { GenericSecondary, GenericPrimaryButton, SmallSecondary, GenericSmall } from "../../../Material/Button";
+import { GenericSecondary, GenericPrimaryButton, GenericSmall, SmallPrimary, SmallSecondary } from "../../../Material/Button";
 import { dialogStyle } from "../../../Styles/Dialog";
 import Stack from '@mui/material/Stack';
 import { NavLink } from "react-router-dom";
@@ -112,12 +112,30 @@ const Orders = () => {
         setOpenDrawerPromptConfirm(false);
         setAcceptTerms(open);
     };
+
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const [anchorElOrderList, setAnchorElOrderList] = useState(null);
+    const openOrderList = Boolean(anchorElOrderList);
+
+
     const [refreshTable, setRefreshTable] = useState(false);
     const rootDispatch = useDispatch();
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+    const [rowsOrderList, setRowsOrderList] = useState({
+        loading: false,
+        request: {
+            error: {
+                status: false,
+                message: null
+            },
+            data: []
+        }
+    });
+
     const [rows, setRows] = useState([]);
     const [rowsLoading, setRowsLoading] = useState(false);
     const [pageSize, setPageSize] = useState(10);
@@ -127,6 +145,40 @@ const Orders = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const toggleDrawer = (open) => (_event) => {
         setOpenDrawer(open);
+    };
+
+    const [openOrderListDrawer, setOpenOrderListDrawer] = useState(false);
+    const toggleOrderListDrawer = () => (_event) => {
+        const getOrderList = async () => {
+            const buyerService = new BuyerService();
+            if (selectedOrder) {
+                try {
+                    setRowsOrderList({ ...rowsOrderList, loading: true, request: { ...rowsOrderList, data: [], error: { status: "false", message: null } } });
+                    const { data, errors } = await buyerService.getOrderList(selectedOrder.referenceCode);
+                    if (errors.length === 0) {
+                        const orderListData = data?.data?.data.map((data, index) => {
+                            return {
+                                ...data.data.data,
+                                id: data?._id,
+                                index: index + 1,
+                                status: data?.status,
+                                quantity: data?.orderQuantity,
+                                company: data?.user?.companyName,
+                                user: data?.user,
+                                destination: data?.request?.destination,
+                            }
+                        })
+
+                        // console.log(data.data.data);
+                        console.log(orderListData);
+                        setRowsOrderList({ ...rowsOrderList, loading: false, request: { error: { status: false, message: null }, data: [...orderListData] } });
+                    }
+                } catch (error) { }
+            }
+        }
+
+        getOrderList();
+        setOpenOrderListDrawer(open);
     };
 
     const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
@@ -148,10 +200,19 @@ const Orders = () => {
         setOpenDrawerPromptConfirm(open);
     };
 
+    const handleOrderListMoreAnchor = (event) => {
+        setAnchorElOrderList(event.currentTarget);
+    }
+
+    const handleCloseOrderListMoreAnchor = () => {
+        setAnchorElOrderList(null);
+    };
+
     const handleClick = (event, id) => {
         setAnchorEl(event.currentTarget);
         selectOrder(id);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -215,16 +276,71 @@ const Orders = () => {
         </div >
     );
 
+    const DataListMore = ({ id }) => (
+        <div>
+            <Box sx={{ display: "flex", alignItems: "center", textAlign: "center", position: "relative" }}>
+                <Tooltip title="More">
+                    <IconButton
+                        onClick={event => handleOrderListMoreAnchor(event, id)}
+                        size="small"
+                        aria-controls={open ? "account-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                    >
+                        <MoreHorizIcon />
+                    </IconButton>
+                </Tooltip>
+            </Box>
+        </div >
+    );
+
     const columns = [
         { field: "index", headerName: "Number", width: 50 },
         { field: "orderNo", headerName: "Order #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 70 },
+        { field: "product", headerName: "Product", width: 150 },
+        { field: "terms", headerName: "Terms", width: 100 },
         { field: "quantity", headerName: "Quantity", width: 90 },
-        { field: "timeLeft", headerName: "Time Left", width: 100, renderCell: ({ row }) => <div className="countdown-table-container"> <Countdown endDate={row.expiryDate} /> </div> },
-        { field: "status", headerName: "Status", width: 100 },
+        { field: "timeLeft", headerName: "Time Left", width: 150, renderCell: ({ row }) => <div className="countdown-table-container"> <Countdown endDate={row.expiryDate} /> </div> },
         { field: "action", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
+
+    const columnsOrderList = [
+        { field: "index", headerName: "Number", width: 80 },
+        { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "comapny", headerName: "Company Name", width: 150, renderCell: ({ row }) => console.log(row) },
+        { field: "company", headerName: "Company", width: 150 },
+        { field: "destination", headerName: "Destination", width: 150 },
+        { field: "status", headerName: "Status", width: 130 },
+        { field: "action", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><DataListMore id={row.id} /></div> },
+    ];
+
+    const listOpenOrderList = () => {
+        return (
+            <div>
+                <Box role="presentation">
+                    {
+                        <div>
+                            <div className="offers-data-grid-container">
+                                {
+                                    <DataGrid
+                                        components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
+                                        className="offers-standard-table"
+                                        rows={rowsOrderList.request.data}
+                                        columns={columnsOrderList}
+                                        checkboxSelection
+                                        disableSelectionOnClick
+                                        pagination
+                                        density="compact"
+                                        loading={rowsOrderList.loading}
+                                    />
+                                }
+                            </div>
+                        </div>
+                    }
+                </Box>
+            </div>
+        )
+    }
 
     const list = (stepperOrientation) => (
         selectedOrder &&
@@ -575,6 +691,27 @@ const Orders = () => {
 
             <div>
                 <Modal
+                    open={openOrderListDrawer}
+                    onClose={toggleOrderListDrawer(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    className="modal-container"
+                >
+                    <Box sx={inAppWider}>
+                        <div className="modal-title-container">
+                            <div>Order List</div>
+                            <div><CloseRoundedIcon onClick={toggleOrderListDrawer(false)} /></div>
+                        </div>
+
+                        <div className="modal-body">
+                            {listOpenOrderList("horizontal")}
+                        </div>
+                    </Box>
+                </Modal>
+            </div>
+
+            <div>
+                <Modal
                     open={openDrawerConfirm}
                     onClose={toggleDrawerConfirm(false)}
                     aria-labelledby="modal-modal-title"
@@ -604,7 +741,23 @@ const Orders = () => {
                     transformOrigin={{ horizontal: "right", vertical: "top" }}
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                    <MenuItem onClick={toggleDrawer(true)}>
+                    <MenuItem onClick={toggleOrderListDrawer(true)}>
+                        View
+                    </MenuItem>
+                </Menu>
+            </div>
+
+            <div>
+                <Menu
+                    anchorEl={anchorElOrderList}
+                    id="account-menu"
+                    open={openOrderList}
+                    onClose={handleCloseOrderListMoreAnchor}
+                    onClick={handleCloseOrderListMoreAnchor}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                    <MenuItem onClick={() => { }}>
                         View
                     </MenuItem>
                     {
@@ -657,6 +810,27 @@ const Orders = () => {
 
                     <div className="drawer-body">
                         {list("vertical")}
+                    </div>
+                </SwipeableDrawer>
+            </div>
+
+            <div>
+                <SwipeableDrawer
+                    className="drawer-container"
+                    variant="temporary"
+                    anchor="bottom"
+                    open={openOrderListDrawer}
+                    onOpen={toggleOrderListDrawer(true)}
+                    onClose={toggleOrderListDrawer(false)}
+                    disableBackdropTransition={!iOS} disableDiscovery={iOS}
+                >
+                    <div className="drawer-title-container">
+                        <div>Order List</div>
+                        <Puller />
+                    </div>
+
+                    <div className="drawer-body">
+                        {listOpenOrderList("vertical")}
                     </div>
                 </SwipeableDrawer>
             </div>

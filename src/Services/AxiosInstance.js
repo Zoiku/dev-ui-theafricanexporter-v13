@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = () => {
-  const url = "https://theafricanexporter.com/ms/api/v1";
- // const url = "http://localhost:3001/ms/api/v1";
+  const url = "https://dev-msafricanexporter-com.onrender.com/ms/api/v1/";
 
   let headers = {
     "Content-Type": "application/json",

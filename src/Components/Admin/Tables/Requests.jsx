@@ -208,6 +208,8 @@ const Requests = () => {
                         return 1;
                     })
                     setRows(filteredData);
+
+                    console.log(filteredData);
                 }
             } catch (error) {
                 //
@@ -264,7 +266,7 @@ const Requests = () => {
                 </SwipeableDrawer>
             </div>
 
-            <DataGrid
+            {/* <DataGrid
                 components={{ Toolbar: Toolbar, LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Requests" /> }}
                 className="standard-table"
                 checkboxSelection
@@ -280,7 +282,7 @@ const Requests = () => {
                 paginationMode="server"
                 onPageChange={handlePageChange}
                 onPageSizeChange={handlePageSizeChange}
-            />
+            /> */}
         </div>
     )
 }

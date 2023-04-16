@@ -234,6 +234,15 @@ html {
   animation: wiggle 0.8s ease infinite;
 }
 
+.offers-data-grid-container {
+  margin-bottom: 20px;
+  height: 250px !important;
+}
+
+.offers-standard-table {
+  height: 250px !important;
+}
+
 @keyframes wiggle {
   0% {
     transform: rotate(0deg);

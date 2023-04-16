@@ -228,7 +228,7 @@ const Quotations = () => {
                         quote.expiryDate = new Date(quote.request.expiryDate).toUTCString().slice(0, 25);
                         quote.product = quote.request.quotationProducts[0].product.name;
                         quote.terms = quote.request.buyerQuotationIncoterm.label;
-                        quote.quantity = quote.request.quotationProducts[0].specification.quantity;
+                        quote.quantity = quote.offerQuantity;
                         quote.diameter = quote.request.quotationProducts[0].specification.diameter;
                         quote.diameterUnit = quote.request.quotationProducts[0].specification.diameterUnit;
                         quote.drying = quote?.request?.quotationProducts[0]?.specification?.drying?.label;
