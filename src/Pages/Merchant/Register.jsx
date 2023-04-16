@@ -424,31 +424,35 @@ const Register = () => {
                         </div>
 
                         <div className="form-controller-input">
-                            <FormControl required fullWidth>
-                                <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
-                                <Select
-                                    labelId="demo-multiple-chip-label"
-                                    id="demo-multiple-chip"
-                                    multiple
-                                    value={selectedSubscriptions}
-                                    onChange={handleMultipleSelectChange}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Subscriptions" />}
-                                    MenuProps={MenuProps}
-                                >
-                                    {subscriptions.map((subscription) => (
-                                        <MenuItem
-                                            key={subscription}
-                                            value={subscription}
-                                            style={getStyles(subscription, subscriptions, theme)}
-                                        >
-                                            {subscription}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                                <FormHelperText sx={{ marginLeft: "20px" }}>
-                                    Select Subscriptions
-                                </FormHelperText>
-                            </FormControl>
+                            {
+                                state?.payload &&
+                                state?.payload?.category &&
+                                <FormControl required fullWidth>
+                                    <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-chip-label"
+                                        id="demo-multiple-chip"
+                                        multiple
+                                        value={selectedSubscriptions}
+                                        onChange={handleMultipleSelectChange}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Subscriptions" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {subscriptions.map((subscription) => (
+                                            <MenuItem
+                                                key={subscription}
+                                                value={subscription}
+                                                style={getStyles(subscription, subscriptions, theme)}
+                                            >
+                                                {subscription}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText sx={{ marginLeft: "20px" }}>
+                                        Select Subscriptions
+                                    </FormHelperText>
+                                </FormControl>
+                            }
                         </div>
 
                         <div>

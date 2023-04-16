@@ -336,6 +336,7 @@ const Requests = () => {
                                             <th>Number</th>
                                             {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <th>Diameter (cm)</th>}
                                             <th>Pieces/container</th>
+                                            <th>CBM/container</th>
                                             <th>Price/container</th>
                                             <th>Total price</th>
                                             {selectedRequest.terms === "CIF" && <th>Insurance</th>}
@@ -351,6 +352,7 @@ const Requests = () => {
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="number" value={index + 1} disabled /></td>
                                                     {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="diameter" /></td>}
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="noOfPieces" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" name="cbm" /></td>
                                                     <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="price" /></td>
                                                     <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
                                                     {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}

@@ -591,7 +591,7 @@ const RequestQuote = ({ session }) => {
                     </section>
 
                     <Stack spacing={2} direction="row">
-                        <GenericPrimaryButton type="submit" variant="contained">Post Quote</GenericPrimaryButton>
+                        <GenericPrimaryButton type="submit" variant="contained">Request Quote</GenericPrimaryButton>
                         <GenericSecondary onClick={() => navigate("/")} variant="text">Back</GenericSecondary>
                     </Stack>
                 </Box>

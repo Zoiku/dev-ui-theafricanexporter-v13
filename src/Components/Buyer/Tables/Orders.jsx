@@ -298,7 +298,7 @@ const Orders = () => {
     );
 
     const listConfirm = () => (
-        // selectedOrder &&
+        selectedOrder &&
         <Box
             role="presentation"
             component="form"
