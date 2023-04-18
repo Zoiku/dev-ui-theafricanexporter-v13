@@ -386,6 +386,7 @@ const RequestQuote = ({ session }) => {
                     variant="temporary"
                     anchor="bottom"
                     open={openDrawer}
+                    onOpen={toggleDrawer(true)}
                     onClose={toggleDrawer(false)}
                 >
                     <div className="drawer-title-container">
@@ -459,17 +460,17 @@ const RequestQuote = ({ session }) => {
                         </div>
                         <div className="request-quote-section-body select-input-form">
                             {
-                                parsedProduct && SPECIFICATION_DETAILS[parsedProduct.name]?.map(specification =>
+                                parsedProduct && SPECIFICATION_DETAILS[parsedProduct.name]?.map((specification, index) =>
                                     specification.name === "dryingLabel" ?
-                                        <div>
+                                        <div key={index}>
                                             <div>Drying</div>
                                             <div>
                                                 <FormControl required size="small" fullWidth>
                                                     <InputLabel id="demo-multiple-chip-label">Drying</InputLabel>
                                                     <Select value={state.payload[specification.name] ? state.payload[specification.name] : ''} onChange={handleChange} name={specification.name} label={specification.label}>
                                                         {
-                                                            specification.menu.map(menuItem =>
-                                                                <MenuItem key={menuItem} value={menuItem}>{menuItem}</MenuItem>
+                                                            specification.menu.map((menuItem, index) =>
+                                                                <MenuItem key={index} value={menuItem}>{menuItem}</MenuItem>
                                                             )
                                                         }
                                                     </Select>
@@ -477,15 +478,15 @@ const RequestQuote = ({ session }) => {
                                             </div>
                                         </div>
                                         :
-                                        <div>
+                                        <div key={index}>
                                             <div>{specification.label}</div>
                                             <div className="select-input-form-with-units">
-                                                <TextField value={state.payload[specification.name] ? state.payload[specification.name] : ''} inputProps={specification.name !== "quantity" && { pattern: '[0-9+.-]{1,}' }} required onChange={handleChange} size="small" fullWidth type={specification.name === "quantity" ? "number" : "text"} name={specification.name} label={specification.label} variant="outlined" />
+                                                <TextField value={state.payload[specification.name] ? state.payload[specification.name] : ''} inputProps={specification.name !== "quantity" ? { pattern: '[0-9+.-]{1,}' } : {}} required onChange={handleChange} size="small" fullWidth type={specification.name === "quantity" ? "number" : "text"} name={specification.name} label={specification.label} variant="outlined" />
                                                 {
                                                     specification.units &&
                                                     specification.units.length > 0 &&
-                                                    specification.units.map(specificationUnits =>
-                                                        <FormControl required key={specificationUnits.name} size="small" fullWidth>
+                                                    specification.units.map((specificationUnits, index) =>
+                                                        <FormControl required key={index} size="small" fullWidth>
                                                             <InputLabel>Units</InputLabel>
                                                             <Select value={state.payload[specificationUnits.name] ? state.payload[specificationUnits.name] : (specification.defaultUnit ? specification.defaultUnit : '')} key={specificationUnits.name} size="small" onChange={handleChange} name={specificationUnits.name} label="Units">
                                                                 {
@@ -545,8 +546,8 @@ const RequestQuote = ({ session }) => {
                                         <Select value={state.payload.destination ? state.payload.destination : ''} onChange={handleChange} required name="destination" label="Destination">
                                             {
                                                 countries &&
-                                                countries.map(country =>
-                                                    <MenuItem key={country.name} value={country.name}>
+                                                countries.map((country, index) =>
+                                                    <MenuItem key={index} value={country.name}>
                                                         <div style={{ display: "flex", alignItems: "center" }}><img style={{ marginRight: 10 }} alt={country.name} width={30} src={country.flags.svg} /> {country.name}</div>
                                                     </MenuItem>
                                                 )

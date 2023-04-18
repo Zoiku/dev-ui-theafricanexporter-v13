@@ -186,7 +186,6 @@ const Requests = () => {
                     const filteredData = data.data.data;
                     filteredData.map((request, index) => {
                         request.index = ((paging.size * paging.page) - (paging.size - index)) + 1;
-                        request.id = request._id;
                         request.product = request.quotationProducts[0].product.name;
                         request.terms = request.buyerQuotationIncoterm.label;
                         request.quantity = request.quotationProducts[0].specification.quantity;
@@ -208,12 +207,8 @@ const Requests = () => {
                         return 1;
                     })
                     setRows(filteredData);
-
-                    console.log(filteredData);
                 }
-            } catch (error) {
-                //
-            }
+            } catch (error) { }
             setRowsLoading(false);
         }
 
@@ -237,7 +232,7 @@ const Requests = () => {
                             <div>Request Details</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawer} /></div>
                         </div>
-                        
+
                         <div className="modal-body">
                             {list()}
                         </div>
@@ -266,7 +261,7 @@ const Requests = () => {
                 </SwipeableDrawer>
             </div>
 
-            {/* <DataGrid
+            <DataGrid
                 components={{ Toolbar: Toolbar, LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Requests" /> }}
                 className="standard-table"
                 checkboxSelection
@@ -282,7 +277,7 @@ const Requests = () => {
                 paginationMode="server"
                 onPageChange={handlePageChange}
                 onPageSizeChange={handlePageSizeChange}
-            /> */}
+            />
         </div>
     )
 }

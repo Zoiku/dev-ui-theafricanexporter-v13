@@ -185,10 +185,11 @@ const Orders = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Order #", width: 100 },
+        { field: "index", headerName: "Number", width: 80 },
+        { field: "orderNo", headerName: "Order #", width: 100 },
         { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 70 },
-        { field: "destination", headerName: "Destination", width: 100 },
+        { field: "terms", headerName: "Terms", width: 90 },
+        { field: "destination", headerName: "Destination", width: 140 },
         { field: "quantity", headerName: "Quantity", width: 90 },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
@@ -282,7 +283,7 @@ const Orders = () => {
                             <div> <ProgressBar status={selectedOrder.status} /> </div>
                         </div>
                         <div className="order-section-stepper-container">
-                            <Box fullWidth>
+                            <Box>
                                 <Stepper activeStep={ORDER_STATUS_STEPS[selectedOrder.status]} orientation={stepperOrientation}>
                                     {steps.map((step) => (
                                         <Step key={step.label}>
@@ -333,7 +334,7 @@ const Orders = () => {
                         order.volume = order?.request?.quotationProducts[0]?.product?.volume?.value;
                         order.volumeUnit = order?.request?.quotationProducts[0]?.product?.volume?.unit;
                         order.terms = order?.request?.buyerQuotationIncoterm?.label;
-                        order.quantity = order?.request?.quotationProducts[0]?.specification?.quantity;
+                        order.quantity = order?.orderQuantity;
                         order.createdOn = new Date(order.createdOn).toUTCString().slice(0, 16);
                         order.expiryDate = new Date(order?.request?.expiryDate).toUTCString().slice(0, 25);
                         order.shippingAddress = order?.orderPaymentDetails?.shippingAddress;
@@ -341,6 +342,7 @@ const Orders = () => {
                         order.paymentMode = order?.orderPaymentDetails?.orderPayment
                         return 1;
                     });
+
                     setRows(filteredData);
                 }
             } catch (error) { }

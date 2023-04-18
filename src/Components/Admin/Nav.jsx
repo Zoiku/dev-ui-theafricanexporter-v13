@@ -68,10 +68,10 @@ const AdminNav = () => {
                 <Box
                     sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
                 >
-                    <div style={{ fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
+                    <div className="nav-hello" style={{ fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
                     <div style={{ margin: "auto 0px" }}>
                         <Tooltip title="Unvalidated Users">
-                            <IconButton className="notification-toggle-animation" onClick={() => console.log('')} aria-label="cart">
+                            <IconButton className="notification-toggle-animation" aria-label="cart">
                                 <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>
                             </IconButton>
                         </Tooltip>

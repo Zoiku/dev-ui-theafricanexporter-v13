@@ -189,7 +189,7 @@ const Requests = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Number", width: 50 },
+        { field: "index", headerName: "Number", width: 80 },
         { field: "requestNo", headerName: "Request #", width: 100 },
         { field: "product", headerName: "Product", width: 150 },
         { field: "quantity", headerName: "Quantity", width: 90 },
@@ -199,7 +199,7 @@ const Requests = () => {
     ];
 
     const columnsOffers = [
-        { field: "index", headerName: "Offer #", width: 100 },
+        { field: "index", headerName: "Number", width: 80 },
         { field: "company", headerName: "Company", width: 180 },
         { field: "expiryDate", headerName: "Date", width: 180 },
         { field: "destination", headerName: "Destination", width: 150 },
@@ -609,12 +609,17 @@ const Requests = () => {
                     className="modal-container"
                 >
                     <Box sx={inAppWider}>
-                        <div className="modal-title-container">
+                        {/* <div className="modal-title-container">
                             <div>View Offers</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawerOffers} /></div>
-                        </div>
-
+                        </div> */}
+                        
                         <div className="modal-body">
+                            <div className="dash-items-title-container">
+                                <div>Offers List</div>
+                                <div>Complete list of all offers</div>
+                            </div>
+
                             {listOffers()}
                         </div>
                     </Box>
@@ -696,7 +701,7 @@ const Requests = () => {
                     disableBackdropTransition={!iOS} disableDiscovery={iOS}
                 >
                     <div className="drawer-title-container">
-                        <div>View Offers</div>
+                        <div>Offers List</div>
                         <Puller />
                     </div>
 

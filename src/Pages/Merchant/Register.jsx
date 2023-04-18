@@ -397,7 +397,7 @@ const Register = () => {
                         <div className="form-controller-input">
                             <FormControl required fullWidth>
                                 <InputLabel>Business Type</InputLabel>
-                                <Select name="typeLabel" label="Business Type" onChange={handleChange}>
+                                <Select value={state.payload?.typeLabel} name="typeLabel" label="Business Type" onChange={handleChange}>
                                     <MenuItem value="Manufacturer/Trader">Manufacturer/Trader</MenuItem>
                                     <MenuItem value="Trader">Trader</MenuItem>
                                 </Select>

@@ -25,7 +25,7 @@ import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../.
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import { setAlert } from "../../../Redux/Features/Alert.js"
 import Modal from '@mui/material/Modal';
-import { inAppStandard, inAppWider, inAppSmaller } from "../../../Styles/Modal";
+import { inAppStandard, inAppWider, inAppWide, inAppSmallest } from "../../../Styles/Modal";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -136,8 +136,17 @@ const Orders = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const selectOrder = (id) => setSelectedOrderId(id);
     const selectedOrder = rows && rows.find(row => row.id === selectedOrderId);
+
+    const [selectedOrderDetail, setSelectedOrderDetail] = useState({})
+
     const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer = (open) => (_event) => {
+    const toggleDrawer = (open, row) => (_event) => {
+        if (open) {
+            setSelectedOrderDetail(row);
+        } else {
+            setSelectedOrderDetail([]);
+        }
+
         setOpenDrawer(open);
     };
 
@@ -188,22 +197,25 @@ const Orders = () => {
     const handleConfirm = async (e) => {
         dispatch({ type: SEND_REQUEST });
         e.preventDefault();
-        const { id } = selectedOrder;
         const buyerService = new BuyerService();
-        try {
-            const { errors } = await buyerService.confirmOrder(id, state.payload);
-            if (errors.length === 0) {
-                dispatch({ type: REQUEST_SUCCESSFUL });
-                setRefreshTable(prev => !prev);
-                handleSuccessfullRequest("Merchant will commence fulfillment of your order once payment is confirmed", 3000);
-                handleCloseDialogConfirm();
-                setOpenDrawerConfirm(false);
-                state.payload = {};
-            } else {
-                dispatch({ type: REQUEST_FAILED });
-                handleFailedRequest("Could not process your request", 5000);
-            }
-        } catch (error) { }
+        const referenceCode = selectedOrder?.referenceCode;
+
+        if (referenceCode) {
+            try {
+                const { errors } = await buyerService.confirmOrder(referenceCode, state.payload);
+                if (errors.length === 0) {
+                    dispatch({ type: REQUEST_SUCCESSFUL });
+                    setRefreshTable(prev => !prev);
+                    handleSuccessfullRequest("Merchant will commence fulfillment of your order once payment is confirmed", 3000);
+                    handleCloseDialogConfirm();
+                    setOpenDrawerConfirm(false);
+                    state.payload = {};
+                } else {
+                    dispatch({ type: REQUEST_FAILED });
+                    handleFailedRequest("Could not process your request", 5000);
+                }
+            } catch (error) { }
+        }
     }
 
     const handleSuccessfullRequest = (message, timeOut) => {
@@ -259,8 +271,8 @@ const Orders = () => {
         { field: "quantity", headerName: "Quantity", width: 90 },
         { field: "company", headerName: "Company", width: 150 },
         { field: "destination", headerName: "Destination", width: 150 },
-        { field: "status", headerName: "Status", width: 130 },
-        { field: "action", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary onClick={toggleDrawer(true, row.status)} size="small" variant="contained">View</SmallPrimary> },
+        { field: "status", headerName: "Status", width: 160 },
+        { field: "action", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary onClick={toggleDrawer(true, row)} size="small" variant="contained">View</SmallPrimary> },
     ];
 
     const listOpenOrderList = () => {
@@ -303,39 +315,39 @@ const Orders = () => {
                         <div className="request-section-body">
                             <div>
                                 <span>Product:</span>
-                                <span>{selectedOrder.product}</span>
+                                <span>{selectedOrder?.product}</span>
                             </div>
                             <div>
                                 <span>Merchant:</span>
-                                <span>{selectedOrder.merchant.firstName} {selectedOrder.merchant.lastName}</span>
+                                <span>{selectedOrderDetail?.more?.merchant?.firstName} {selectedOrderDetail?.more?.merchant?.lastName}</span>
                             </div>
                             <div>
                                 <span>Company:</span>
-                                <span>{selectedOrder.merchant.companyName}</span>
+                                <span>{selectedOrderDetail?.more?.merchant?.companyName}</span>
                             </div>
                             <div>
                                 <span>Terms:</span>
-                                <span>{selectedOrder.terms}</span>
+                                <span>{selectedOrder?.terms}</span>
                             </div>
                             <div>
                                 <span>Quantity:</span>
-                                <span>{selectedOrder.quantity} {selectedOrder.containerSize}</span>
+                                <span>{selectedOrderDetail?.more?.orderQuantity} {selectedOrder?.containerSize}</span>
                             </div>
                             <div>
                                 <span>Requested Date:</span>
-                                <span>{selectedOrder.createdOn}</span>
+                                <span>{selectedOrder?.createdOn}</span>
                             </div>
                         </div>
                     </section>
 
                     <section>
                         <div className="requests-section-title">Track Order</div>
-                        {/* <div className="order-section-body">
-                            <div> <ProgressBar status={selectedOrder.status} /> </div>
+                        <div className="order-section-body">
+                            <div> <ProgressBar status={selectedOrderDetail?.more?.status} /> </div>
                         </div>
                         <div className="order-section-stepper-container">
                             <Box>
-                                <Stepper activeStep={ORDER_STATUS_STEPS[selectedOrder.status]} orientation={stepperOrientation}>
+                                <Stepper activeStep={ORDER_STATUS_STEPS[selectedOrderDetail?.more?.status]} orientation={stepperOrientation}>
                                     {steps.map((step) => (
                                         <Step key={step.label}>
                                             <StepLabel>
@@ -354,7 +366,7 @@ const Orders = () => {
                                     ))}
                                 </Stepper>
                             </Box>
-                        </div> */}
+                        </div>
                     </section>
                 </div>
             </div>
@@ -382,6 +394,7 @@ const Orders = () => {
                                 >
                                     <div className="radio-group-controller">
                                         <Radio
+                                            required
                                             size="small"
                                             value="Cash against documents (10%) Escrow deposit required"
                                         />
@@ -390,6 +403,7 @@ const Orders = () => {
 
                                     <div className="radio-group-controller">
                                         <Radio
+                                            required
                                             size="small"
                                             value="Letter of credit"
                                         />
@@ -398,6 +412,7 @@ const Orders = () => {
 
                                     <div className="radio-group-controller">
                                         <Radio
+                                            required
                                             size="small"
                                             value="Bank transfer"
                                         />
@@ -433,7 +448,7 @@ const Orders = () => {
             component="form"
         >
             <div className="requests-sections-body">
-                <div style={{ fontSize: "13px", height: "300px", marginBottom: 25, fontWeight: 500, overflowY: "auto" }} className="terms-and-conditions-container-order-confirmation">
+                <div style={{ fontSize: "small", height: "200px", marginBottom: 25, fontWeight: 500, overflowY: "auto" }} className="terms-and-conditions-container-order-confirmation">
                     <div>
                         This document is a binding legal agreement between the two parties, Buyer and Merchant, who are users (<b>Members</b>) on the websites and applications of Afrigateway Limited (collectively, <b>the Afrigateway Platform</b>). The Afrigateway Platform facilitates transactions between Members. Members who post requests for quotations are “<b>Buyers</b>” and Members who provide quotations to these requests are “<b>Merchants</b>”. The Buyers and Merchants also purchase and supply physical products requested and quoted for, respectively.
                         <div className="margin-bottom-20"></div>
@@ -533,8 +548,8 @@ const Orders = () => {
                 </div>
                 <div>
                     <Stack spacing={1}>
-                        <GenericSmall variant="contained" onClick={toggleAcceptTerms(true)}>Accept</GenericSmall>
-                        <GenericSmall variant="outlined" color="error" onClick={toggleAcceptTerms(false)}>Cancel</GenericSmall>
+                        <SmallPrimary variant="text" onClick={toggleAcceptTerms(true)}>Accept</SmallPrimary>
+                        <GenericSmall size="small" variant="text" color="error" onClick={toggleAcceptTerms(false)}>Cancel</GenericSmall>
                     </Stack>
                 </div>
             </div>
@@ -569,12 +584,12 @@ const Orders = () => {
                                 company: data?.merchant?.companyName,
                                 destination: data?.request?.destination,
                                 paymentDetails: data?.orderPaymentDetail,
+                                more: data
                             }
                         }))
                         return 1;
                     }));
 
-                    console.log(filteredData);
                     setRows(filteredData);
                 }
             } catch (error) { }
@@ -616,9 +631,9 @@ const Orders = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppSmaller}>
+                    <Box sx={inAppSmallest}>
                         <div className="modal-title-container">
-                            <div>Please read and accept the terms and conditions</div>
+                            <div style={{ fontSize: "smaller" }}>Please read and accept the terms and conditions</div>
                             <div><CloseRoundedIcon onClick={toggleDrawerPromptConfirm(false)} /></div>
                         </div>
 
@@ -637,7 +652,7 @@ const Orders = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppWider}>
+                    <Box sx={inAppWide}>
                         <div className="modal-title-container">
                             <div>Order Details</div>
                             <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
@@ -659,12 +674,16 @@ const Orders = () => {
                     className="modal-container"
                 >
                     <Box sx={inAppWider}>
-                        <div className="modal-title-container">
+                        {/* <div className="modal-title-container">
                             <div>Order List</div>
                             <div><CloseRoundedIcon onClick={toggleOrderListDrawer(false)} /></div>
-                        </div>
+                        </div> */}
 
                         <div className="modal-body">
+                            <div className="dash-items-title-container">
+                                <div>Order List</div>
+                                <div>Complete list of all orders</div>
+                            </div>
                             {listOpenOrderList("horizontal")}
                         </div>
                     </Box>

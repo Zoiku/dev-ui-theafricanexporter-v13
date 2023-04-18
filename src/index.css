@@ -103,6 +103,16 @@ html {
   border: none !important;
 }
 
+.offers-standard-table {
+  height: 250px !important;
+  border: none !important;
+}
+
+.offers-data-grid-container {
+  margin-bottom: 20px;
+  height: 250px !important;
+}
+
 .drawer-container {
   display: none;
 }
@@ -234,15 +244,6 @@ html {
   animation: wiggle 0.8s ease infinite;
 }
 
-.offers-data-grid-container {
-  margin-bottom: 20px;
-  height: 250px !important;
-}
-
-.offers-standard-table {
-  height: 250px !important;
-}
-
 @keyframes wiggle {
   0% {
     transform: rotate(0deg);
@@ -262,6 +263,10 @@ html {
 }
 
 @media screen and (max-width: 1000px) {
+  .nav-hello {
+    display: none;
+  }
+
   .modal-container {
     display: none;
   }

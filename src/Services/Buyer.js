@@ -183,9 +183,9 @@ export default class BuyerService {
     };
   }
 
-  async confirmOrder(id, payload) {
+  async confirmOrder(referenceCode, payload) {
     let errors = [];
-    const url = `/order/${id}/payment/details`;
+    const url = `/order/${referenceCode}/payment/details`;
 
     try {
       await AxiosInstance().put(url, payload);

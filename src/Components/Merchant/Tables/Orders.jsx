@@ -19,7 +19,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from '@mui/material/IconButton';
-import { inAppWider } from "../../../Styles/Modal";
+import { inAppWide } from "../../../Styles/Modal";
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Dialog from '@mui/material/Dialog';
@@ -269,7 +269,7 @@ const Orders = () => {
                             <div> <ProgressBar status={selectedOrder.status} /> </div>
                         </div>
                         <div className="order-section-stepper-container">
-                            <Box fullWidth>
+                            <Box>
                                 <Stepper activeStep={ORDER_STATUS_STEPS[selectedOrder.status]} orientation={stepperOrientation}>
                                     {steps.map((step) => (
                                         <Step key={step.label}>
@@ -377,7 +377,7 @@ const Orders = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppWider}>
+                    <Box sx={inAppWide}>
                         <div className="modal-title-container">
                             <div>Order Details</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawer} /></div>

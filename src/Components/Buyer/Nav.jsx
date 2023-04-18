@@ -40,7 +40,7 @@ const BuyerNav = ({ session }) => {
                 <Box
                     sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
                 >
-                    <div style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, {session.user?.profile?.firstName}</span> </div>
+                    <div className="nav-hello" style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, {session.user?.profile?.firstName}</span> </div>
                     <Tooltip title="Account settings">
                         <IconButton
                             onClick={handleClick}
