@@ -424,7 +424,7 @@ const Requests = () => {
                                 <thead>
                                     <tr className="incoterm-setting-heading-container">
                                         <th>Number</th>
-                                        {selectedOffer.terms !== "FOB" && <th>Diameter (cm)</th>}
+                                        {(selectedOffer.product === "Teak Round Logs" && selectedOffer.terms !== "FOB") && <th>Diameter (cm)</th>}
                                         <th>Pieces/container</th>
                                         <th>Price/container</th>
                                         <th>Total price</th>
@@ -440,10 +440,10 @@ const Requests = () => {
                                             selectedOffer?.incotermRows.map((incoterm, index) =>
                                                 <tr key={index + 1}>
                                                     <td><input disabled defaultValue={index + 1} /></td>
-                                                    {selectedOffer.terms !== "FOB" && <td><input defaultValue={incoterm.diameter} /></td>}
-                                                    <td><input defaultValue={incoterm.noOfPieces} /></td>
-                                                    <td><input defaultValue={incoterm.price} /></td>
-                                                    <td><input defaultValue={incoterm.totalPrice} /></td>
+                                                    {(selectedOffer.product === "Teak Round Logs" && selectedOffer.terms !== "FOB") && <td><input disabled defaultValue={incoterm.diameter} /></td>}
+                                                    <td><input disabled defaultValue={incoterm.noOfPieces} /></td>
+                                                    <td><input disabled defaultValue={incoterm.price} /></td>
+                                                    <td><input disabled defaultValue={incoterm.totalPrice} /></td>
                                                     {selectedOffer.terms === "CIF" && <td><input disabled defaultValue={incoterm.insurance} /></td>}
                                                     {selectedOffer.terms !== "FOB" && <td><input disabled defaultValue={incoterm.costOfFreight} /></td>}
                                                     <td><input disabled defaultValue={incoterm.totalAmount} /></td>

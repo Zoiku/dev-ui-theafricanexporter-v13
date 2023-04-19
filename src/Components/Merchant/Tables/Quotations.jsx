@@ -165,7 +165,7 @@ const Quotations = () => {
                                     <thead>
                                         <tr className="incoterm-setting-heading-container">
                                             <th>Number</th>
-                                            {(selectedQuote.terms === "CIF" || selectedQuote.terms === "CFR") && <th>Diameter (cm)</th>}
+                                            {(selectedQuote?.product === "Teak Round Logs" && selectedQuote?.terms !== "FOB") && <th>Diameter (cm)</th>}
                                             <th>Pieces/container</th>
                                             <th>Price/container</th>
                                             <th>Total price</th>
@@ -181,7 +181,7 @@ const Quotations = () => {
                                                 selectedQuote?.incotermRows.map((incoterm, index) =>
                                                     <tr key={index + 1}>
                                                         <td><input disabled value={index + 1} /></td>
-                                                        {(selectedQuote.terms === "CIF" || selectedQuote.terms === "CFR") && <td><input disabled name="diameter" value={incoterm.diameter} /></td>}
+                                                        {(selectedQuote?.product === "Teak Round Logs" && selectedQuote?.terms !== "FOB") && <td><input disabled name="diameter" value={incoterm.diameter} /></td>}
                                                         <td><input disabled name="noOfPieces" value={incoterm.noOfPieces} /></td>
                                                         <td><input disabled name="price" value={incoterm.price} /></td>
                                                         <td><input disabled name="totalPrice" value={incoterm.totalPrice} /></td>

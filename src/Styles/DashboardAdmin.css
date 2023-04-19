@@ -1,7 +1,6 @@
 .dashboard-salutation {
-  font-weight: bold;
+  font-weight: 700;
   font-size: x-large;
-  margin-right: 5px;
 }
 
 .dashboard-body-container {
@@ -129,7 +128,6 @@
 @media screen and (max-width: 1000px) {
   .dashboard-salutation {
     font-size: large;
-    margin: 20px 0;
   }
 
   .dashboard-body-container {

@@ -423,11 +423,11 @@ const Register = () => {
                             </FormControl>
                         </div>
 
-                        <div className="form-controller-input">
-                            {
-                                state?.payload &&
-                                state?.payload?.category &&
-                                <FormControl required fullWidth>
+                        {
+                            state?.payload &&
+                            state?.payload?.category &&
+                            <div className="form-controller-input">
+                                <FormControl className="something-cool" required fullWidth>
                                     <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
                                     <Select
                                         labelId="demo-multiple-chip-label"
@@ -452,8 +452,9 @@ const Register = () => {
                                         Select Subscriptions
                                     </FormHelperText>
                                 </FormControl>
-                            }
-                        </div>
+
+                            </div>
+                        }
 
                         <div>
                             <FormGroup>
