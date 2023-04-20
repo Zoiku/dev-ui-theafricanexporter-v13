@@ -151,8 +151,6 @@ html {
   padding: 20px;
 }
 
-/*  */
-
 .requests-time-remaining {
   font-weight: 700;
   color: var(--tae-orange);
@@ -180,7 +178,7 @@ html {
 }
 
 .form-controller-duo-input > div {
-  width: 48%;
+  width: 49%;
 }
 
 .requests-title-container {

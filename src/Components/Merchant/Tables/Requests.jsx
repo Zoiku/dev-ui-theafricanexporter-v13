@@ -343,12 +343,13 @@ const Requests = () => {
                                             <th>Number</th>
                                             {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <th>Diameter (cm)</th>}
                                             <th>Pieces/container</th>
-                                            <th>CBM/container</th>
+                                            <th>CBM</th>
+                                            <th>Price per CBM</th>
                                             <th>Price/container</th>
                                             <th>Total price</th>
                                             {selectedRequest.terms === "CIF" && <th>Insurance</th>}
-                                            {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <th>Freight Rate</th>}
-                                            {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <th>Total Freight</th>}
+                                            {(selectedRequest.terms !== "FOB") && <th>Freight Rate</th>}
+                                            {(selectedRequest.terms !== "FOB") && <th>Total Freight</th>}
                                             <th>Total amount</th>
                                         </tr>
                                     </thead>
@@ -360,11 +361,12 @@ const Requests = () => {
                                                     {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="diameter" /></td>}
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="noOfPieces" /></td>
                                                     <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="cbm" /></td>
-                                                    <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="price" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="pricePerCbm" /></td>
+                                                    <td><input placeholder="0" disabled required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="price" /></td>
                                                     <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
                                                     {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
-                                                    {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freightRate" /></td>}
-                                                    {(selectedRequest.terms === "CIF" || selectedRequest.terms === "CFR") && <td><input placeholder="0" required type="number" disabled value={incotermSettings[index]?.freight ? incotermSettings[index]?.freight : 0} onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freight" /></td>}
+                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freightRate" /></td>}
+                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" disabled value={incotermSettings[index]?.freight ? incotermSettings[index]?.freight : 0} onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freight" /></td>}
                                                     <td><input required type="number" disabled value={incotermSettings[index]?.totalAmount ? incotermSettings[index]?.totalAmount : 0} /></td>
                                                 </tr>
                                             )
@@ -396,7 +398,7 @@ const Requests = () => {
                         <div className="requests-section-title">Quantity</div>
                         <div className="request-section-body">
                             <div style={{ border: 0 }}>
-                                <TextField onChange={handleQuantityChange} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ width: "190px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="outlined" placeholder="eg 10-30" required />
+                                <TextField onChange={handleQuantityChange} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "150px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
                             </div>
                         </div>
                     </section>

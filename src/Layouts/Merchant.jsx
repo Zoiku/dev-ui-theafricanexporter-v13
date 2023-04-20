@@ -90,20 +90,17 @@ const MerchantLayout = ({ session }) => {
                 <div>Kindly fill in the following company details.</div>
             </div>
             <div className="form-controller-container">
-                <div className="form-controller-input">
-                    <TextField name="year" onChange={handleChange} fullWidth label="Year Established" variant="standard" />
+                <div className="form-controller-input form-controller-duo-input">
+                    <TextField name="year" onChange={handleChange} fullWidth label="Year Established" variant="outlined" />
+                    <TextField type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="Number of Employees" variant="outlined" />
                 </div>
 
                 <div className="form-controller-input">
-                    <TextField type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="Number of Employees" variant="standard" />
+                    <TextField type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "130px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="outlined" />
                 </div>
 
                 <div className="form-controller-input">
-                    <TextField type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "300px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="standard" />
-                </div>
-
-                <div className="form-controller-input">
-                    <TextField onChange={handleChange} multiline fullWidth label="Company History" name="introduction" variant="standard" />
+                    <TextField onChange={handleChange} multiline rows={10} fullWidth label="Company History" name="introduction" variant="outlined" />
                 </div>
             </div>
             <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
