@@ -44,3 +44,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.merchant-dash-container {
+  outline: 1px solid red;
+  margin: 30px 0;
+}

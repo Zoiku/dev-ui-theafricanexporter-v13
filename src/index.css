@@ -162,7 +162,7 @@ html {
 
 .registration-form-verification-code-container > div:nth-child(1) {
   font-size: x-large;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .registration-form-verification-code-container > div:nth-child(2) {
@@ -309,5 +309,9 @@ html {
     max-height: 80vh;
     overflow-y: scroll;
     padding: 15px;
+  }
+
+  .inAppDialog {
+    left: 0% !important;
   }
 }

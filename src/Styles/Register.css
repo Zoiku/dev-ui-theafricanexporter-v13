@@ -66,9 +66,7 @@
 }
 
 .registration-resend-container {
-  text-align: right;
-  font-weight: 600 !important;
-  font-size: 13px !important;
+  font-weight: 700 !important;
   color: var(--tae-gray);
 }
 
@@ -87,6 +85,107 @@
 .quick-links-container > div:nth-child(2) {
   border-left: 1px solid #efefef;
   border-right: 1px solid #efefef;
+}
+
+.otp-controller-container {
+  margin: 30px 0;
+}
+
+.otp-controller {
+  width: 100%;
+}
+
+.inputStyle {
+  border: 3px solid #efefef;
+  outline: 3px solid #efefef;
+  width: 50% !important;
+  background: #efefef;
+  margin: 0 5px !important;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  font-size: x-large;
+}
+
+.inputStyle:hover {
+  outline: 3px solid black !important;
+}
+
+.inputStyle:focus {
+  outline: 3px solid var(--tae-orange) !important;
+}
+
+.errorInputStyle {
+  width: 50% !important;
+  background: #efefef;
+  margin: 0 10px !important;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  font-size: large;
+  border: 2px solid red !important;
+  outline: 2px solid red !important;
+}
+
+.errorInputStyle:hover {
+  border: 2px solid red !important;
+  outline: 2px solid red !important;
+}
+
+.errorInputStyle:focus {
+  border: 2px solid red !important;
+  outline: 2px solid red !important;
+}
+
+.otp-password-container-container {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+
+.otp-content-container {
+  width: 300px;
+}
+
+.clip-art-image-container {
+  display: grid;
+  place-content: center;
+}
+
+.clip-art-image-container img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.otp-verification-text {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.otp-verification-text > div {
+  margin: 10px 0;
+}
+
+.otp-verification-text > div:nth-child(1) {
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.otp-verification-text > div:nth-child(2) {
+  font-size: small;
+  color: gray;
+}
+
+.bold-bold-bold {
+  font-weight: bold;
+  color: black;
+}
+
+.resend-otp-container {
+  margin: 30px 0;
+  text-align: center;
+  font-size: small;
 }
 
 @media screen and (max-width: 1000px) {
@@ -108,5 +207,9 @@
   .register-form-container > div:nth-child(2) {
     width: 100%;
     padding: 0;
+  }
+
+  .otp-drawer-body {
+    max-height: 100vh;
   }
 }

@@ -125,7 +125,7 @@ const Orders = () => {
     const approveOrder = async () => {
         const adminService = new AdminService();
         try {
-            const { errors } = await adminService.approveOrder(selectedOrderId);
+            const { errors } = await adminService.approveOrder(selectedOrder?.referenceCode);
             if (errors.length === 0) {
                 setRefreshTable(prev => !prev);
                 handleSuccessfullRequest("Success", 3000);

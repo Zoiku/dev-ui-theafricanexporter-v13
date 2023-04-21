@@ -34,7 +34,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton, GenericSmall, SmallPrimary, SmallSecondary } from "../../../Material/Button";
-import { dialogStyle } from "../../../Styles/Dialog";
+import { inAppDialog } from "../../../Styles/Dialog";
 import Stack from '@mui/material/Stack';
 import { NavLink } from "react-router-dom";
 import Overlay from "../../../Material/Overlay";
@@ -254,8 +254,6 @@ const Orders = () => {
         </div >
     );
 
-
-
     const columns = [
         { field: "index", headerName: "Number", width: 80 },
         { field: "orderNo", headerName: "Order #", width: 100 },
@@ -268,10 +266,11 @@ const Orders = () => {
 
     const columnsOrderList = [
         { field: "index", headerName: "Number", width: 80 },
+        { field: "orderNo", headerName: "Order #", width: 100 },
         { field: "company", headerName: "Company", width: 150 },
         { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "destination", headerName: "Destination", width: 150 },
-        { field: "status", headerName: "Status", width: 160 },
+        { field: "status", headerName: "Status", width: 140 },
         { field: "action", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary onClick={toggleDrawer(true, row)} size="small" variant="contained">View</SmallPrimary> },
     ];
 
@@ -290,8 +289,9 @@ const Orders = () => {
                                         columns={columnsOrderList}
                                         checkboxSelection
                                         disableSelectionOnClick
-                                        pagination
                                         density="compact"
+                                        pageSize={5}
+                                        rowsPerPageOptions={[5]}
                                     />
                                 }
                             </div>
@@ -583,7 +583,8 @@ const Orders = () => {
                                 quantity: data?.orderQuantity,
                                 company: data?.merchant?.companyName,
                                 destination: data?.request?.destination,
-                                paymentDetails: data?.orderPaymentDetail,
+                                paymentDetails: data?.orderPaymentDetails,
+                                orderNo: data?.orderNo,
                                 more: data
                             }
                         }))
@@ -608,7 +609,8 @@ const Orders = () => {
                     keepMounted
                     onClose={handleCloseDialogConfirm}
                     aria-describedby="alert-dialog-slide-description"
-                    sx={dialogStyle}
+                    sx={inAppDialog}
+                    className="inAppDialog"
                 >
                     <DialogTitle>{"Agree to accept the order?"}</DialogTitle>
                     <DialogContent>

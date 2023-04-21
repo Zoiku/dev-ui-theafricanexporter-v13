@@ -31,7 +31,7 @@ import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import { REQUEST_FAILED, REQUEST_SUCCESSFUL, SEND_REQUEST } from "../../../Reducers/Actions";
-import { dialogStyle } from "../../../Styles/Dialog";
+import { inAppDialog } from "../../../Styles/Dialog";
 import Overlay from "../../../Material/Overlay";
 
 const ORDER_STATUS_LEVELS = {
@@ -335,7 +335,8 @@ const Orders = () => {
                     keepMounted
                     onClose={handleCloseDialogConfirm}
                     aria-describedby="alert-dialog-slide-description"
-                    sx={dialogStyle}
+                    sx={inAppDialog}
+                    className="inAppDialog"
                 >
                     <DialogTitle>{"Agree to accept the order?"}</DialogTitle>
                     <DialogContent>

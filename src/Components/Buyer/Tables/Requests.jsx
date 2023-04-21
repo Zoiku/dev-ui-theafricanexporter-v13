@@ -33,7 +33,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
-import { dialogStyle } from "../../../Styles/Dialog";
+import { inAppDialog } from "../../../Styles/Dialog";
 
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
@@ -93,9 +93,11 @@ const Requests = () => {
                 expiryDate: _offer?.expiryDate,
                 destination: _offer?.destination,
                 quantity: _offer?.offerQuantity,
+                requestNo: _offer?.requestNo,
                 offer: _offer,
             }
         })
+
         setSelectedOffers(_offers);
         setOpenDrawerOffers(true);
     };
@@ -200,7 +202,8 @@ const Requests = () => {
 
     const columnsOffers = [
         { field: "index", headerName: "Number", width: 80 },
-        { field: "company", headerName: "Company", width: 150 },
+        { field: "requestNo", headerName: "Number", width: 100 },
+        { field: "company", headerName: "Company", width: 130 },
         { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "destination", headerName: "Destination", width: 150 },
         { field: "expiryDate", headerName: "Date", width: 150 },
@@ -375,30 +378,26 @@ const Requests = () => {
     const listOffers = () => (
         selectedOffers &&
         <Box role="presentation">
-            {
-                selectedOffers &&
-                    selectedOffers.length > 0 ?
-                    <div>
-                        <div className="offers-data-grid-container">
-                            <DataGrid
-                                components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
-                                className="offers-standard-table"
-                                checkboxSelection
-                                disableSelectionOnClick
-                                rows={selectedOffers}
-                                columns={columnsOffers}
-                                pagination
-                                density="compact"
-                                onSelectionModelChange={handleMultipleSelect}
-                            />
-                        </div>
+            <div>
+                <div className="offers-data-grid-container">
+                    <DataGrid
+                        components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
+                        className="offers-standard-table"
+                        checkboxSelection
+                        disableSelectionOnClick
+                        rows={selectedOffers}
+                        columns={columnsOffers}
+                        density="compact"
+                        onSelectionModelChange={handleMultipleSelect}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                    />
+                </div>
 
-                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                            <SmallSecondary disabled={!canPlaceOrder} loading={state.requestState.loading} onClick={handleOrderSubmit} variant="contained">Place Order</SmallSecondary>
-                        </div>
-                    </div>
-                    : <div>No offers yet</div>
-            }
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <SmallSecondary disabled={!canPlaceOrder} loading={state.requestState.loading} onClick={handleOrderSubmit} variant="contained">Place Order</SmallSecondary>
+                </div>
+            </div>
         </Box>
     );
 
@@ -425,6 +424,8 @@ const Requests = () => {
                                     <tr className="incoterm-setting-heading-container">
                                         <th>Number</th>
                                         {(selectedOffer.product === "Teak Round Logs" && selectedOffer.terms !== "FOB") && <th>Diameter (cm)</th>}
+                                        <th>CBM</th>
+                                        <th>Price per CBM</th>
                                         <th>Pieces/container</th>
                                         <th>Price/container</th>
                                         <th>Total price</th>
@@ -441,20 +442,24 @@ const Requests = () => {
                                                 <tr key={index + 1}>
                                                     <td><input disabled defaultValue={index + 1} /></td>
                                                     {(selectedOffer.product === "Teak Round Logs" && selectedOffer.terms !== "FOB") && <td><input disabled defaultValue={incoterm.diameter} /></td>}
-                                                    <td><input disabled defaultValue={incoterm.noOfPieces} /></td>
-                                                    <td><input disabled defaultValue={incoterm.price} /></td>
-                                                    <td><input disabled defaultValue={incoterm.totalPrice} /></td>
-                                                    {selectedOffer.terms === "CIF" && <td><input disabled defaultValue={incoterm.insurance} /></td>}
-                                                    {selectedOffer.terms !== "FOB" && <td><input disabled defaultValue={incoterm.costOfFreight} /></td>}
+                                                    <td><input disabled defaultValue={incoterm?.cbm} /></td>
+                                                    <td><input disabled defaultValue={incoterm?.cbmprice} /></td>
+                                                    <td><input disabled defaultValue={incoterm?.noOfPieces} /></td>
+                                                    <td><input disabled defaultValue={incoterm?.price} /></td>
+                                                    <td><input disabled defaultValue={incoterm?.totalPrice} /></td>
+                                                    {selectedOffer.terms === "CIF" && <td><input disabled defaultValue={incoterm?.insurance} /></td>}
+                                                    {selectedOffer.terms !== "FOB" && <td><input disabled defaultValue={incoterm?.costOfFreight} /></td>}
                                                     <td><input disabled defaultValue={incoterm.totalAmount} /></td>
                                                 </tr>
                                             ) :
                                             <tr>
                                                 <td><input disabled defaultValue="--" /></td>
                                                 {selectedOffer.terms !== "FOB" && <td><input disabled defaultValue="--" /></td>}
-                                                <td><input disabled name="noOfPieces" defaultValue="--" /></td>
-                                                <td><input disabled name="price" value="--" /></td>
-                                                <td><input disabled name="totalPrice" value="--" /></td>
+                                                <td><input disabled defaultValue="--" /></td>
+                                                <td><input disabled defaultValue="--" /></td>
+                                                <td><input disabled defaultValue="--" /></td>
+                                                <td><input disabled value="--" /></td>
+                                                <td><input disabled value="--" /></td>
                                                 {selectedOffer.terms === "CIF" && <td><input disabled defaultValue="--" /></td>}
                                                 {selectedOffer.terms !== "FOB" && <td><input disabled defaultValue="--" /></td>}
                                                 <td><input disabled defaultValue="--" /></td>
@@ -564,7 +569,8 @@ const Requests = () => {
                     keepMounted
                     onClose={handleCloseDialogConfirm}
                     aria-describedby="alert-dialog-slide-description"
-                    sx={dialogStyle}
+                    sx={inAppDialog}
+                    className="inAppDialog"
                 >
                     <DialogTitle>{"Repost request?"}</DialogTitle>
                     <DialogContent>
@@ -613,7 +619,7 @@ const Requests = () => {
                             <div>View Offers</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawerOffers} /></div>
                         </div>
-                        
+
                         <div className="modal-body">
                             <div className="dash-items-title-container">
                                 <div>Offers List</div>

@@ -165,7 +165,9 @@ const Quotations = () => {
                                         <tr className="incoterm-setting-heading-container">
                                             <th>Number</th>
                                             {(selectedQuote?.product === "Teak Round Logs" && selectedQuote?.terms !== "FOB") && <th>Diameter (cm)</th>}
-                                            <th>Pieces/container</th>
+                                            <th>CBM</th>
+                                            <th>Price per CBM</th>
+                                            <th>No of Pieces</th>
                                             <th>Price/container</th>
                                             <th>Total price</th>
                                             {selectedQuote.terms === "CIF" && <th>Insurance</th>}
@@ -181,6 +183,8 @@ const Quotations = () => {
                                                     <tr key={index + 1}>
                                                         <td><input disabled value={index + 1} /></td>
                                                         {(selectedQuote?.product === "Teak Round Logs" && selectedQuote?.terms !== "FOB") && <td><input disabled name="diameter" value={incoterm.diameter} /></td>}
+                                                        <td><input disabled name="cbm" value={incoterm?.cbm} /></td>
+                                                        <td><input disabled name="cbmprice" value={incoterm?.cbmprice} /></td>
                                                         <td><input disabled name="noOfPieces" value={incoterm.noOfPieces} /></td>
                                                         <td><input disabled name="price" value={incoterm.price} /></td>
                                                         <td><input disabled name="totalPrice" value={incoterm.totalPrice} /></td>
@@ -192,6 +196,7 @@ const Quotations = () => {
                                                 <tr>
                                                     <td><input disabled value="--" /></td>
                                                     {(selectedQuote.terms === "CIF" || selectedQuote.terms === "CFR") && <td><input disabled name="diameter" value="--" /></td>}
+                                                    <td><input disabled name="cbm" value="--" /></td>
                                                     <td><input disabled name="noOfPieces" value="--" /></td>
                                                     <td><input disabled name="price" value="--" /></td>
                                                     <td><input disabled name="totalPrice" value="--" /></td>

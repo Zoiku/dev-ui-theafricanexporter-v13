@@ -13,6 +13,10 @@ const Dashboard = ({ session }) => {
                 <Salutation name={user?.profile?.user?.firstName} />
             </div>
 
+            {/* <div className="merchant-dash-container">
+                <div className="merchant-dash"></div>
+            </div> */}
+
             <div className="merchant-dashboard-body-container">
                 <div>
                     <div className="dash-items-title-container">

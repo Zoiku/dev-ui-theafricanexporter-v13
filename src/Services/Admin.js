@@ -289,9 +289,9 @@ export default class AdminService {
     };
   }
 
-  async approveOrder(id) {
+  async approveOrder(referenceCode) {
     let errors = [];
-    const url = `/order/confirm/${id}`;
+    const url = `/order/confirm/${referenceCode}`;
 
     try {
       await AxiosInstance().patch(url);

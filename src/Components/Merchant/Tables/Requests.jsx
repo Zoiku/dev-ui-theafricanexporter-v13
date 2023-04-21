@@ -25,7 +25,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
-import { dialogStyle } from "../../../Styles/Dialog";
+import { inAppDialog } from "../../../Styles/Dialog";
 
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
@@ -153,16 +153,15 @@ const Requests = () => {
             };
         }
 
-
         if (terms === "FOB") {
             if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
-                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
-                    totalAmount: incotermSettings[index]?.price ? ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) : 0
+                    price: incotermSettings[index]?.cbmprice ? (e.target.value * incotermSettings[index]?.cbmprice) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbmprice) * quantity,
+                    totalAmount: incotermSettings[index]?.price ? ((e.target.value * incotermSettings[index]?.cbmprice) * quantity) : 0
                 }
-            } else if (e.target.name === "pricePerCbm") {
+            } else if (e.target.name === "cbmprice") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
                     price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
@@ -174,11 +173,11 @@ const Requests = () => {
             if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
-                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
-                    totalAmount: incotermSettings[index]?.freight ? + ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) + (incotermSettings[index]?.freight) : 0
+                    price: incotermSettings[index]?.cbmprice ? (e.target.value * incotermSettings[index]?.cbmprice) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbmprice) * quantity,
+                    totalAmount: incotermSettings[index]?.freight ? + ((e.target.value * incotermSettings[index]?.cbmprice) * quantity) + (incotermSettings[index]?.freight) : 0
                 }
-            } else if (e.target.name === "pricePerCbm") {
+            } else if (e.target.name === "cbmprice") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
                     price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
@@ -196,12 +195,12 @@ const Requests = () => {
             if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
-                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
-                    insurance: ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) * (0.0025),
-                    totalAmount: incotermSettings[index]?.freight ? (((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) * (0.0025)) + ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) + (incotermSettings[index]?.freight) : 0
+                    price: incotermSettings[index]?.cbmprice ? (e.target.value * incotermSettings[index]?.cbmprice) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbmprice) * quantity,
+                    insurance: ((e.target.value * incotermSettings[index]?.cbmprice) * quantity) * (0.0025),
+                    totalAmount: incotermSettings[index]?.freight ? (((e.target.value * incotermSettings[index]?.cbmprice) * quantity) * (0.0025)) + ((e.target.value * incotermSettings[index]?.cbmprice) * quantity) + (incotermSettings[index]?.freight) : 0
                 }
-            } else if (e.target.name === "pricePerCbm") {
+            } else if (e.target.name === "cbmprice") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
                     price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
@@ -415,7 +414,7 @@ const Requests = () => {
                                                     {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="diameter" /></td>}
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="noOfPieces" /></td>
                                                     <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="cbm" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="pricePerCbm" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="cbmprice" /></td>
                                                     <td><input placeholder="0" disabled required type="number" name="price" value={incotermSettings[index]?.price ? incotermSettings[index]?.price : 0} /></td>
                                                     <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
                                                     {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
@@ -522,7 +521,8 @@ const Requests = () => {
                     keepMounted
                     onClose={handleCloseDialogConfirm}
                     aria-describedby="alert-dialog-slide-description"
-                    sx={dialogStyle}
+                    sx={inAppDialog}
+                    className="inAppDialog"
                 >
                     <DialogTitle>{"Agree to post the offer?"}</DialogTitle>
                     <DialogContent>

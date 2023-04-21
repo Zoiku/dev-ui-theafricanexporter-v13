@@ -7,13 +7,24 @@ export const inWebWider = {
   borderRadius: "5px",
   overflow: "clip",
   padding: 1,
-  outline: 0
+  outline: 0,
+  background: "white"
+};
+
+export const fillScreen = {
+  position: "relative",
+  width: "100%",
+  height: "100vh",
+  overflow: "clip",
+  padding: 1,
+  outline: 0,
+  background: "white"
 };
 
 export const inAppWide = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 700,
   background: "white",
@@ -26,7 +37,7 @@ export const inAppWide = {
 export const inAppWider = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 900,
   background: "white",
@@ -39,55 +50,54 @@ export const inAppWider = {
 export const inAppStandard = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 600,
   background: "white",
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };
 
 export const inAppSmall = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 500,
   background: "white",
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };
 
 export const inAppSmaller = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 450,
   background: "white",
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };
 
 export const inAppSmallest = {
   position: "relative",
   top: "50%",
-  left: "59%",
+  left: "58.3%",
   transform: "translate(-50%, -50%)",
   width: 400,
   background: "white",
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };
-
 
 export const standard = {
   position: "relative",
@@ -99,7 +109,7 @@ export const standard = {
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };
 
 export const small = {
@@ -112,5 +122,5 @@ export const small = {
   borderRadius: "5px",
   outline: 0,
   maxHeight: "500px",
-  overflowY: "auto",
+  overflowY: "auto"
 };

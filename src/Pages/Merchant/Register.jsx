@@ -19,7 +19,6 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Drawer from '@mui/material/Drawer';
-import CloseIcon from '@mui/icons-material/Close';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
@@ -30,8 +29,9 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { getStyles, MenuProps } from "../../Material/Select";
 import { useTheme } from "@mui/material/styles";
 import Modal from '@mui/material/Modal';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { small } from "../../Styles/Modal";
+import { fillScreen } from "../../Styles/Modal";
+import OtpInput from 'react-otp-input';
+import successImg from "../../Assets/Capture.JPG";
 
 const Register = () => {
     const navLinkStyle = {
@@ -59,9 +59,6 @@ const Register = () => {
         setShowPassword(prev => !prev);
     };
     const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer = (open) => (_event) => {
-        setOpenDrawer(open);
-    };
 
     // subscriptions
     const [selectedSubscriptions, setSelectedSubscription] = useState([]);
@@ -107,6 +104,7 @@ const Register = () => {
             const _subscriptions = products.filter(product => product.category === e.target.value).map(product => product.product);
             setSubscriptions(_subscriptions)
         }
+
         dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
     };
 
@@ -240,7 +238,7 @@ const Register = () => {
             try {
                 const { data } = await axios.get("https://restcountries.com/v2/all", { signal: abortController.signal });
                 setCountries(data);
-            } catch (error) {}
+            } catch (error) { }
         }
         fetchData();
         return () => abortController.abort();
@@ -252,18 +250,42 @@ const Register = () => {
             role="presentation"
             onSubmit={handleCodeVerification}
             autoComplete="off"
+            className="otp-password-container-container"
         >
-            <div className="registration-form-verification-code-container">
-                <div>Almost Done!</div>
-                <div>We've sent the code to <span style={{ color: "#ee9b00", fontWeight: 500 }}>{state.payload.email}</span></div>
-            </div>
-            <div className="form-controller-container">
-                <div className="form-controller-input">
-                    <TextField required error={state.requestState.error !== null} InputProps={{ endAdornment: <IconButton disabled={resendCodeTimerInterval.current} className="registration-resend-container" onClick={handleResend} size="small">resend ({resendCodeTimer.minutes > 10 ? resendCodeTimer.minutes : `0${resendCodeTimer.minutes}`}m {resendCodeTimer.seconds > 10 ? resendCodeTimer.seconds : `0${resendCodeTimer.seconds}`}s )</IconButton> }} name="verificationCode" onChange={handleChange} fullWidth label="Enter Code" variant="standard" />
-                    <span style={{ fontSize: "12px", color: "gray" }}>Verify with code and activate your account</span>
+            <div className="otp-content-container">
+                <div className="otp-password-container">
+                    <div className="clip-art-image-container">
+                        <img src={successImg} alt="" />
+                    </div>
+
+                    <div className="otp-verification-text">
+                        <div>OTP Verification</div>
+                        <div>Enter the code sent to <span className="bold-bold-bold">{state.payload?.email}</span></div>
+                    </div>
                 </div>
+
+                <div className="otp-controller-container">
+                    <div className="otp-controller">
+                        <OtpInput
+                            numInputs={5}
+                            placeholder="00000"
+                            renderInput={(props) => <input {...props} />}
+                            onChange={(e) => handleManualChange("verificationCode", e)}
+                            inputStyle={state.requestState?.error !== null ? "errorInputStyle" : "inputStyle"}
+                            shouldAutoFocus={true}
+                            name="verificationCode"
+                            value={state.payload?.verificationCode}
+                        />
+                    </div>
+                </div>
+
+                <div className="resend-otp-container">
+                    <div>Didn't recieve OTP, <span disabled={resendCodeTimerInterval.current} className="registration-resend-container" onClick={handleResend} size="small">resend ({resendCodeTimer.minutes > 10 ? resendCodeTimer.minutes : `0${resendCodeTimer.minutes}`}m {resendCodeTimer.seconds > 10 ? resendCodeTimer.seconds : `0${resendCodeTimer.seconds}`}s )</span></div>
+                </div>
+
+                <div><PrimaryButton disabled={state.payload?.verificationCode?.length === 5 ? false : true} loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Verify</PrimaryButton></div>
+
             </div>
-            <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Verify</PrimaryButton></div>
         </Box >
     );
 
@@ -276,11 +298,11 @@ const Register = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={small}>
-                        <div className="modal-title-container">
+                    <Box sx={fillScreen}>
+                        {/* <div className="modal-title-container">
                             <div>Verify Account</div>
                             <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
-                        </div>
+                        </div> */}
                         <div className="modal-body">
                             {list()}
                         </div>
@@ -295,12 +317,7 @@ const Register = () => {
                     anchor="bottom"
                     open={openDrawer}
                 >
-                    <div className="drawer-title-container">
-                        <div>Verify Account</div>
-                        <div><CloseIcon className="close-icon" onClick={toggleDrawer(false)} /></div>
-                    </div>
-
-                    <div className="drawer-body">
+                    <div className="drawer-body otp-drawer-body">
                         {list()}
                     </div>
                 </Drawer>
