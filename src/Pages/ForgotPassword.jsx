@@ -111,7 +111,7 @@ const ForgotPassword = () => {
             <div className="forgot-password-form-container">
                 <div className="left-container">
                     <NavLink className="go-back-container" style={navLinkStyle} to="/login">
-                        <div><ArrowBackIcon sx={{ fontSize: 18 }} /></div>
+                        <div><ArrowBackIcon sx={{ fontSize: 18, fontWeight: 600 }} /></div>
                         <div>Back to Login</div>
                     </NavLink>
                     <div className="forgot-password-form-desc">
@@ -160,7 +160,6 @@ const ForgotPassword = () => {
                                 <PrimaryButton loading={state.requestState.loading} variant="contained" type="submit">Update Password</PrimaryButton>
                             </Box>
                     }
-
 
                 </div>
                 <div className="right-container"></div>

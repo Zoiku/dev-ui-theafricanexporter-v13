@@ -40,7 +40,8 @@ const TYPE = {
 const NOTE_CIF = () => {
     return (
         <div>
-            <div>Total Price: Price per container x Quantity</div>
+            <div>Price per Container: CBM x Price per CBM</div>
+            <div>Total Price: Price per Container x Quantity</div>
             <div>Insurance: 0.25% of Cargo value (Total Price)</div>
             <div>Total Freight: Freight rate x Quantity</div>
             <div>Total Amount: Total Price + Insurance + Total Freight</div>
@@ -51,7 +52,8 @@ const NOTE_CIF = () => {
 const NOTE_FOB = () => {
     return (
         <div>
-            <div>Total Price: Price per container * Quantity</div>
+            <div>Price per Container: CBM x Price per CBM</div>
+            <div>Total Price: Price per Container x Quantity</div>
             <div>Total Amount: Total price</div>
         </div>
     )
@@ -60,7 +62,8 @@ const NOTE_FOB = () => {
 const NOTE_CFR = () => {
     return (
         <div>
-            <div>Total Price: Price per container x Quantity</div>
+            <div>Price per Container: CBM x Price per CBM</div>
+            <div>Total Price: Price per Container x Quantity</div>
             <div>Total Freight: Freight rate x Quantity</div>
             <div>Total Amount: Total Price + Total Freight</div>
         </div>
@@ -109,6 +112,7 @@ const Requests = () => {
         incotermRef.current = [];
         setIncotermSettings([]);
         setSelectedRequestId(null);
+        setQuantity(0);
     }
 
     const handlePaginationChange = (_event, value) => {
@@ -124,51 +128,92 @@ const Requests = () => {
         }
     };
 
-    const handleQuantityChange = (e) => {
-        setQuantity(e.target.value);
-    }
+    const handleChange = (e, index) => {
+        const terms = selectedRequest?.terms;
+        if (e.target.name === "quantity") {
+            setQuantity(e.target.value);
+            incotermRef.current.map(incoterm => {
+                incoterm.totalPrice = incoterm?.price ? incoterm.price * e.target.value : 0
+                if (terms === "CIF") {
+                    incoterm.insurance = incoterm?.price ? (incoterm.price * e.target.value) * 0.0025 : 0
+                    incoterm.freight = incoterm?.freightRate ? (e.target.value * incoterm?.freightRate) : 0
+                    incoterm.totalAmount = incoterm?.freight ? ((incoterm?.price * e.target.value) * 0.0025) + (incoterm?.price * e.target.value) + (e.target.value * incoterm?.freightRate) : 0
+                } else if (terms === "FOB") {
+                    incoterm.totalAmount = incoterm?.price ? incoterm.price * e.target.value : 0
+                } else if (terms === "CFR") {
+                    incoterm.freight = incoterm?.freightRate ? (e.target.value * incoterm?.freightRate) : 0
+                    incoterm.totalAmount = incoterm?.freight ? (incoterm?.price * e.target.value) + (e.target.value * incoterm?.freightRate) : 0
+                }
+                return 1;
+            })
+        } else {
+            incotermRef.current[index] = {
+                ...incotermRef.current[index],
+                [e.target.name]: e.target.value,
+            };
+        }
 
-    const handleChange = (e, index, terms) => {
-        incotermRef.current[index] = {
-            ...incotermRef.current[index],
-            [e.target.name]: e.target.value,
-        };
 
         if (terms === "FOB") {
-            if (e.target.name === "price") {
+            if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    totalPrice: e.target.value * selectedRequest.quantity,
-                    totalAmount: e.target.value * selectedRequest.quantity
+                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
+                    totalAmount: incotermSettings[index]?.price ? ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) : 0
+                }
+            } else if (e.target.name === "pricePerCbm") {
+                incotermRef.current[index] = {
+                    ...incotermRef.current[index],
+                    price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbm) * quantity,
+                    totalAmount: incotermSettings[index]?.price ? ((e.target.value * incotermSettings[index]?.cbm) * quantity) : 0
                 }
             }
         } else if (terms === "CFR") {
-            if (e.target.name === "price") {
+            if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    totalPrice: e.target.value * selectedRequest.quantity,
-                    totalAmount: incotermSettings[index]?.freight ? (e.target.value * selectedRequest.quantity) + incotermSettings[index]?.freight : 0
+                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
+                    totalAmount: incotermSettings[index]?.freight ? + ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) + (incotermSettings[index]?.freight) : 0
+                }
+            } else if (e.target.name === "pricePerCbm") {
+                incotermRef.current[index] = {
+                    ...incotermRef.current[index],
+                    price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbm) * quantity,
+                    totalAmount: incotermSettings[index]?.freight ? ((e.target.value * incotermSettings[index]?.cbm) * quantity) + (incotermSettings[index]?.freight) : 0
                 }
             } else if (e.target.name === "freightRate") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    freight: e.target.value * selectedRequest.quantity,
-                    totalAmount: incotermSettings[index]?.totalPrice ? e.target.value * selectedRequest.quantity + incotermSettings[index].totalPrice : 0
+                    freight: (e.target.value * quantity),
+                    totalAmount: incotermSettings[index]?.price ? (e.target.value * quantity) + (incotermSettings[index].totalPrice) : 0
                 }
             }
         } else if (terms === "CIF") {
-            if (e.target.name === "price") {
+            if (e.target.name === "cbm") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    totalPrice: e.target.value * selectedRequest.quantity,
-                    insurance: ((0.0025) * (e.target.value * selectedRequest.quantity)),
-                    totalAmount: (incotermSettings[index]?.freight && incotermSettings[index]?.insurance) ? ((0.0025) * (e.target.value * selectedRequest.quantity)) + incotermSettings[index]?.freight + (e.target.value * selectedRequest.quantity) : 0
+                    price: incotermSettings[index]?.pricePerCbm ? (e.target.value * incotermSettings[index]?.pricePerCbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.pricePerCbm) * quantity,
+                    insurance: ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) * (0.0025),
+                    totalAmount: incotermSettings[index]?.freight ? (((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) * (0.0025)) + ((e.target.value * incotermSettings[index]?.pricePerCbm) * quantity) + (incotermSettings[index]?.freight) : 0
+                }
+            } else if (e.target.name === "pricePerCbm") {
+                incotermRef.current[index] = {
+                    ...incotermRef.current[index],
+                    price: incotermSettings[index]?.cbm ? (e.target.value * incotermSettings[index]?.cbm) : 0,
+                    totalPrice: (e.target.value * incotermSettings[index]?.cbm) * quantity,
+                    insurance: ((e.target.value * incotermSettings[index]?.cbm) * quantity) * (0.0025),
+                    totalAmount: incotermSettings[index]?.freight ? ((e.target.value * incotermSettings[index]?.cbm) * quantity) * (0.0025) + ((e.target.value * incotermSettings[index]?.cbm) * quantity) + (incotermSettings[index]?.freight) : 0
                 }
             } else if (e.target.name === "freightRate") {
                 incotermRef.current[index] = {
                     ...incotermRef.current[index],
-                    freight: e.target.value * selectedRequest.quantity,
-                    totalAmount: incotermSettings[index]?.totalPrice ? (e.target.value * selectedRequest.quantity) + incotermSettings[index].insurance + incotermSettings[index].totalPrice : 0
+                    freight: (e.target.value * quantity),
+                    totalAmount: incotermSettings[index]?.price ? (e.target.value * quantity) + (incotermSettings[index].insurance) + (incotermSettings[index].totalPrice) : 0
                 }
             }
         }
@@ -334,6 +379,15 @@ const Requests = () => {
                     </section>
 
                     <section>
+                        <div className="requests-section-title">Quantity</div>
+                        <div className="request-section-body">
+                            <div style={{ border: 0 }}>
+                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
                         <div className="requests-section-title">Incoterm</div>
                         <div>
                             <div className="incoterm-settings-table-container">
@@ -357,16 +411,16 @@ const Requests = () => {
                                         {
                                             Array.from(Array(incotermRows)).map((_row, index) =>
                                                 <tr key={index + 1}>
-                                                    <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="number" value={index + 1} disabled /></td>
-                                                    {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="diameter" /></td>}
-                                                    <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="noOfPieces" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="cbm" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="pricePerCbm" /></td>
-                                                    <td><input placeholder="0" disabled required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="price" /></td>
-                                                    <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
-                                                    {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
-                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freightRate" /></td>}
-                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" disabled value={incotermSettings[index]?.freight ? incotermSettings[index]?.freight : 0} onChange={(e) => handleChange(e, index, selectedRequest.terms)} name="freight" /></td>}
+                                                    <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="number" value={index + 1} disabled /></td>
+                                                    {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="diameter" /></td>}
+                                                    <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="noOfPieces" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="cbm" /></td>
+                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="pricePerCbm" /></td>
+                                                    <td><input placeholder="0" disabled required type="number" name="price" value={incotermSettings[index]?.price ? incotermSettings[index]?.price : 0} /></td>
+                                                    <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
+                                                    {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
+                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index)} name="freightRate" /></td>}
+                                                    {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" disabled value={incotermSettings[index]?.freight ? incotermSettings[index]?.freight : 0} onChange={(e) => handleChange(e, index)} name="freight" /></td>}
                                                     <td><input required type="number" disabled value={incotermSettings[index]?.totalAmount ? incotermSettings[index]?.totalAmount : 0} /></td>
                                                 </tr>
                                             )
@@ -386,20 +440,11 @@ const Requests = () => {
                             </div>
                             {
                                 incotermRows > 1 &&
-                                <div onClick={() => handleIncotermSize(TYPE.DECREASE)}>
+                                <div className={incotermRows > 1 ? "something-cool" : ""} onClick={() => handleIncotermSize(TYPE.DECREASE)}>
                                     <span><RemoveCircleOutlineRoundedIcon /></span>
                                     <span>remove last field</span>
                                 </div>
                             }
-                        </div>
-                    </section>
-
-                    <section>
-                        <div className="requests-section-title">Quantity</div>
-                        <div className="request-section-body">
-                            <div style={{ border: 0 }}>
-                                <TextField onChange={handleQuantityChange} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "150px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
-                            </div>
                         </div>
                     </section>
 

@@ -187,9 +187,9 @@ const Orders = () => {
     const columns = [
         { field: "index", headerName: "Number", width: 80 },
         { field: "orderNo", headerName: "Order #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 90 },
-        { field: "destination", headerName: "Destination", width: 140 },
+        { field: "product", headerName: "Product", width: 150 },
+        { field: "terms", headerName: "Terms", width: 100 },
+        { field: "destination", headerName: "Destination", width: 100 },
         { field: "quantity", headerName: "Quantity", width: 90 },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];

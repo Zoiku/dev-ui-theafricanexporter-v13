@@ -4,7 +4,6 @@ import logo from "../Assets/logo.png";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { stack as Menu } from 'react-burger-menu';
 import { useState } from "react";
-import { LoginIcon, MerchantRegistationIcon, HomeIcon, RegisterIcon, LogoutIcon, DashboardIcon } from "./Icons";
 import { useDispatch } from "react-redux";
 import { endSession } from "../Redux/Features/Session";
 
@@ -44,22 +43,18 @@ const Nav = ({ session }) => {
                 <div className="Nav-logo-tae-container">
                     <img onClick={handleRedirect} src={logo} alt="" />
                 </div>
-
                 {
                     session.isLogged ?
                         <Menu isOpen={openMenu} width={"100%"}>
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/">
-                                <HomeIcon />
                                 <span>Home</span>
                             </NavLink>
 
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to={ROLE_PATH[session.user.role]}>
-                                <DashboardIcon />
                                 <span>Dashboard</span>
                             </NavLink>
 
                             <div onClick={handleLogout(false)} className="hamburger-menu-links">
-                                <LogoutIcon />
                                 <span>Exit Application</span>
                             </div>
 
@@ -70,22 +65,18 @@ const Nav = ({ session }) => {
                         :
                         <Menu isOpen={openMenu} width={"100%"}>
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/">
-                                <HomeIcon />
                                 <span>Home</span>
                             </NavLink>
 
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/login">
-                                <LoginIcon />
                                 <span>Login</span>
                             </NavLink>
 
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/buyer/register">
-                                <RegisterIcon />
                                 <span>Create Account</span>
                             </NavLink>
 
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/merchant/register">
-                                <MerchantRegistationIcon />
                                 <span>Become A Merchant</span>
                             </NavLink>
 

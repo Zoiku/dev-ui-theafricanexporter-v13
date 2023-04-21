@@ -198,9 +198,7 @@ const Register = () => {
             try {
                 const { data } = await axios.get("https://restcountries.com/v2/all", { signal: abortController.signal });
                 setCountries(data);
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) { }
         }
         fetchData();
         return () => abortController.abort();

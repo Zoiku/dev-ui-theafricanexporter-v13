@@ -1,8 +1,8 @@
 .bm-burger-button {
   position: relative;
   display: inline-block;
-  width: 30px;
-  height: 20px;
+  width: 20px;
+  height: 15px;
 }
 
 /* Color/shape of burger icon bars */
@@ -38,7 +38,7 @@
 /* General sidebar styles */
 .bm-menu {
   background: var(--tae-orange);
-  padding: 2.5em 1.5em 0;
+  padding: 2em 0;
 }
 
 /* Morph shape necessary with bubble or elastic */

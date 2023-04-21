@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: center;
   background: var(--tae-orange-faded);
-  padding: 15px;
+  padding: 20px;
 }
 
 .quick-links-container > div {
@@ -90,6 +90,11 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .Register {
+    padding: 15px;
+    display: block;
+  }
+
   .register-form-container {
     width: 100%;
     height: auto;
@@ -102,6 +107,6 @@
 
   .register-form-container > div:nth-child(2) {
     width: 100%;
-    padding: 20px;
+    padding: 0;
   }
 }

@@ -37,14 +37,13 @@ const Quotations = () => {
     }
 
     const columns = [
-        { field: "index", headerName: "Number", width: 50 },
         { field: "requestNo", headerName: "Request #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 70 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
-        { field: "expiryDate", headerName: "Date", width: 100 },
+        { field: "product", headerName: "Product", width: 150 },
+        { field: "terms", headerName: "Terms", width: 100 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
+        { field: "expiryDate", headerName: "Date", width: 150 },
         { field: "timeLeft", headerName: "Time Left", width: 100, renderCell: ({ row }) => <div className="countdown-table-container"> <Countdown endDate={row.expiryDate} /> </div> },
-        { field: "action", headerName: "", width: 90, renderCell: ({ row }) => <SmallPrimary onClick={() => selectQuote(row.id)}>View</SmallPrimary> },
+        { field: "action", headerName: "", width: 100, renderCell: ({ row }) => <SmallPrimary onClick={() => selectQuote(row.id)}>View</SmallPrimary> },
     ];
 
     useEffect(() => {
@@ -225,7 +224,7 @@ const Quotations = () => {
                         quote.index = index + 1;
                         quote.id = quote._id;
                         quote.requestNo = quote.request.requestNo;
-                        quote.expiryDate = new Date(quote.request.expiryDate).toUTCString().slice(0, 25);
+                        quote.expiryDate = new Date(quote.request.expiryDate).toUTCString().slice(0, 16);
                         quote.product = quote.request.quotationProducts[0].product.name;
                         quote.terms = quote.request.buyerQuotationIncoterm.label;
                         quote.quantity = quote.offerQuantity;

@@ -108,12 +108,12 @@ const UsersBuyer = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Number", width: 100 },
-        { field: "fullName", headerName: "Full Name", width: 200 },
-        { field: "email", headerName: "Email", width: 70 },
-        { field: "joinedSince", headerName: "Joined Since", width: 70 },
-        { field: "status", headerName: "Status", width: 90, renderCell: ({ row }) => row.status ? "Verified" : "Unverified" },
-        { field: "activated", headerName: "Activated", width: 90, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.email, row.activated)} checked={row.activated} /> },
+        { field: "index", headerName: "Number", width: 80 },
+        { field: "fullName", headerName: "Full Name", width: 150 },
+        { field: "email", headerName: "Email", width: 100 },
+        { field: "joinedSince", headerName: "Joined Since", width: 150 },
+        { field: "status", headerName: "Status", width: 100, renderCell: ({ row }) => <IOSSwitch disabled checked={row.status} /> },
+        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.email, row.activated)} checked={row.activated} /> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
@@ -121,9 +121,6 @@ const UsersBuyer = () => {
         selectedUser &&
         <Box role="presentation" >
             <div className="users-sections-body">
-                <div className="users-title-container">
-                    <div></div>
-                </div>
                 <div className="users-sections-container">
                     <div className="user-profile-container">
                         <StyledBadge
@@ -178,7 +175,7 @@ const UsersBuyer = () => {
                     filteredData.map((user, index) => {
                         user.index = ((paging.size * paging.page) - (paging.size - index)) + 1;
                         user.fullName = `${user.firstName} ${user.lastName}`;
-                        user.joinedSince = new Date(user.createdOn).toUTCString().slice(0, 25);
+                        user.joinedSince = new Date(user.createdOn).toUTCString().slice(0, 16);
                         user.status = user.isVerified;
                         user.activated = user.enabled;
                         return 1;

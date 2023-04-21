@@ -60,7 +60,6 @@ const Login = () => {
             }
         } catch (error) {
             dispatch({ type: REQUEST_FAILED, error: error });
-            console.log(error)
             handleFailedRequest(error, 5000);
         }
     }

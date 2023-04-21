@@ -192,7 +192,7 @@ const Requests = () => {
         { field: "index", headerName: "Number", width: 80 },
         { field: "requestNo", headerName: "Request #", width: 100 },
         { field: "product", headerName: "Product", width: 150 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "timeLeft", headerName: "TimeLeft", width: 100, renderCell: ({ row }) => <div> <Countdown endDate={row.expiryDate} /> </div> },
         { field: "totalOffers", headerName: "Offers", width: 100, renderCell: ({ row }) => <div><IconButton onClick={() => handleSelectRequestOffers(row.offers, row.quantity)} aria-label="cart"><StyledBadge showZero badgeContent={row.offers.length} color="primary"><RequestQuoteIcon /></StyledBadge></IconButton></div> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
@@ -200,10 +200,10 @@ const Requests = () => {
 
     const columnsOffers = [
         { field: "index", headerName: "Number", width: 80 },
-        { field: "company", headerName: "Company", width: 180 },
-        { field: "expiryDate", headerName: "Date", width: 180 },
-        { field: "destination", headerName: "Destination", width: 150 },
+        { field: "company", headerName: "Company", width: 150 },
         { field: "quantity", headerName: "Quantity", width: 100 },
+        { field: "destination", headerName: "Destination", width: 150 },
+        { field: "expiryDate", headerName: "Date", width: 150 },
         { field: "more", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(row?.offer)} size="small" variant="contained">View</SmallPrimary> },
     ];
 
@@ -609,10 +609,10 @@ const Requests = () => {
                     className="modal-container"
                 >
                     <Box sx={inAppWider}>
-                        {/* <div className="modal-title-container">
+                        <div className="modal-title-container">
                             <div>View Offers</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawerOffers} /></div>
-                        </div> */}
+                        </div>
                         
                         <div className="modal-body">
                             <div className="dash-items-title-container">

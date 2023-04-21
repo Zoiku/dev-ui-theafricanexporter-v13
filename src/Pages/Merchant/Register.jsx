@@ -191,7 +191,7 @@ const Register = () => {
                 handleVerificationFailed("Could not verify code", 5000);
                 dispatch({ type: REQUEST_FAILED, error: "Could not verify code" });
             }
-        } catch (_error) { }
+        } catch (error) { }
     }
 
     const handleVerificationSuccessfull = (message, timeOut) => {
@@ -240,9 +240,7 @@ const Register = () => {
             try {
                 const { data } = await axios.get("https://restcountries.com/v2/all", { signal: abortController.signal });
                 setCountries(data);
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) {}
         }
         fetchData();
         return () => abortController.abort();

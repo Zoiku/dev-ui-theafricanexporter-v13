@@ -134,13 +134,13 @@ const UsersMerchant = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Number", width: 100 },
-        { field: "fullName", headerName: "Full Name", width: 200 },
-        { field: "email", headerName: "Email", width: 70 },
-        { field: "businessType", headerName: "Business Type", width: 70 },
-        { field: "status", headerName: "Status", width: 90, renderCell: ({ row }) => row.status ? "Verified" : "Unverified" },
-        { field: "isValidated", headerName: "Validated", width: 90, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading | row?.isValidated} onChange={() => handleApproveMerchant()} checked={row.isValidated} /> },
-        { field: "activated", headerName: "Activated", width: 90, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.id, row.activated)} checked={row.activated} /> },
+        { field: "index", headerName: "Number", width: 80 },
+        { field: "fullName", headerName: "Full Name", width: 150 },
+        { field: "email", headerName: "Email", width: 100 },
+        { field: "businessType", headerName: "Business Type", width: 130 },
+        { field: "status", headerName: "Status", width: 100, renderCell: ({ row }) => <IOSSwitch disabled checked={row.status} /> },
+        { field: "isValidated", headerName: "Validated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading | row?.isValidated} onChange={() => handleApproveMerchant()} checked={row.isValidated} /> },
+        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.id, row.activated)} checked={row.activated} /> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
@@ -148,9 +148,6 @@ const UsersMerchant = () => {
         selectedUser &&
         <Box role="presentation" >
             <div className="users-sections-body">
-                <div className="users-title-container">
-                    <div></div>
-                </div>
                 <div className="users-sections-container">
                     <div className="user-profile-container">
                         <StyledBadge
@@ -312,7 +309,7 @@ const UsersMerchant = () => {
             </div>
 
             <DataGrid
-                components={{ Toolbar: () => CustomToolBar1(selectedUsers, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate),  LoadingOverlay: LinearProgress,  NoRowsOverlay: () => <Overlay label="Merchants" /> }}
+                components={{ Toolbar: () => CustomToolBar1(selectedUsers, dispatch, rootDispatch, setRefreshTable, state, handleFailedActivate), LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Merchants" /> }}
                 className="standard-table"
                 checkboxSelection
                 disableSelectionOnClick

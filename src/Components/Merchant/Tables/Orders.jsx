@@ -19,7 +19,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from '@mui/material/IconButton';
-import { inAppWide } from "../../../Styles/Modal";
+import { inAppWider } from "../../../Styles/Modal";
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Dialog from '@mui/material/Dialog';
@@ -215,13 +215,13 @@ const Orders = () => {
     );
 
     const columns = [
-        { field: "index", headerName: "Number", width: 50 },
+        { field: "index", headerName: "Number", width: 80 },
         { field: "orderNo", headerName: "Order #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 70 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "product", headerName: "Product", width: 150 },
+        { field: "terms", headerName: "Terms", width: 100 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "timeLeft", headerName: "TimeLeft", width: 100, renderCell: ({ row }) => <div> <Countdown endDate={row.expiryDate} /> </div> },
-        { field: "status", headerName: "Status", width: 90 },
+        { field: "status", headerName: "Status", width: 100 },
         { field: "action", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
@@ -377,7 +377,7 @@ const Orders = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppWide}>
+                    <Box sx={inAppWider}>
                         <div className="modal-title-container">
                             <div>Order Details</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawer} /></div>

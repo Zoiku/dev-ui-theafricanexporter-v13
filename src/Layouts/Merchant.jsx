@@ -16,7 +16,7 @@ import { setAlert } from "../Redux/Features/Alert.js"
 import CloseIcon from '@mui/icons-material/Close';
 import { endSession } from "../Redux/Features/Session";
 import MerchantService from "../Services/Merchant";
-import { inAppStandard } from "../Styles/Modal";
+import { inAppSmall } from "../Styles/Modal";
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
@@ -91,19 +91,19 @@ const MerchantLayout = ({ session }) => {
             </div>
             <div className="form-controller-container">
                 <div className="form-controller-input form-controller-duo-input">
-                    <TextField name="year" onChange={handleChange} fullWidth label="Year Established" variant="outlined" />
-                    <TextField type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="Number of Employees" variant="outlined" />
+                    <TextField size="small" name="year" onChange={handleChange} fullWidth label="Year Established" variant="outlined" />
+                    <TextField size="small" type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="Number of Employees" variant="outlined" />
                 </div>
 
                 <div className="form-controller-input">
-                    <TextField type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "130px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="outlined" />
+                    <TextField size="small" type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "130px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="outlined" />
                 </div>
 
                 <div className="form-controller-input">
-                    <TextField onChange={handleChange} multiline rows={10} fullWidth label="Company History" name="introduction" variant="outlined" />
+                    <TextField size="small" rows={3} onChange={handleChange} multiline fullWidth label="Company History" name="introduction" variant="outlined" />
                 </div>
             </div>
-            <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
+            <div><PrimaryButton size="small" loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
         </Box>
     );
 
@@ -116,7 +116,7 @@ const MerchantLayout = ({ session }) => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppStandard}>
+                    <Box sx={inAppSmall}>
                         <div className="modal-title-container">
                             <div>Complete Company Profile</div>
                             <div><CloseRoundedIcon onClick={handleLogout(false)} /></div>

@@ -61,36 +61,6 @@ const AdminNav = () => {
 
     return (
         <div className="Nav">
-            <div className="Nav-logo-tae-container logged-mobile-nav-logo-container admin-mobile-logo">
-                <img onClick={handleRedirect} src={logo} alt="tae tae" />
-            </div>
-            <div>
-                <Box
-                    sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
-                >
-                    <div className="nav-hello" style={{ fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
-                    <div style={{ margin: "auto 0px" }}>
-                        <Tooltip title="Unvalidated Users">
-                            <IconButton className="notification-toggle-animation" aria-label="cart">
-                                <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                    <Tooltip title="Account settings">
-                        <IconButton
-                            onClick={handleClick}
-                            size="small"
-                            sx={{ ml: .5 }}
-                            aria-controls={open ? "account-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                        >
-                            <Avatar src="/" alt="Admin" sx={{ background: "#ee9b00" }}>
-                            </Avatar>
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            </div>
             <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
@@ -107,6 +77,68 @@ const AdminNav = () => {
                     Logout
                 </MenuItem>
             </Menu>
+
+            <div className="Mobile-Nav">
+                <div className="Nav-logo-tae-container">
+                    <img onClick={handleRedirect} src={logo} alt="" />
+                </div>
+                <div>
+                    <Box
+                        sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
+                    >
+                        <Tooltip sx={{ marginRight: .5 }} title="Unvalidated Users">
+                            <IconButton className="notification-toggle-animation" aria-label="cart">
+                                <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                onClick={handleClick}
+                                size="small"
+                                sx={{ ml: .5 }}
+                                aria-controls={open ? "account-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                            >
+                                <Avatar src="/" sx={{ background: "#ee9b00" }}>
+                                </Avatar>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </div>
+            </div>
+
+            <div className="Default">
+                <div className="logo-container">
+                    <img style={{ cursor: "pointer" }} onClick={handleRedirect} src={logo} alt="tae logo" />
+                </div>
+                <div>
+                    <Box
+                        sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
+                    >
+                        <div className="nav-hello" style={{ marginRight: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, Admin</span> </div>
+                        <Tooltip title="Unvalidated Users">
+                            <IconButton className="notification-toggle-animation" aria-label="cart">
+                                <StyledBadge max={10} showZero badgeContent={unValidatedUsers.requestState.data?.value ? unValidatedUsers.requestState.data?.value : 0} color="primary"><NotificationsIcon /></StyledBadge>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                onClick={handleClick}
+                                size="small"
+                                sx={{ ml: .5 }}
+                                aria-controls={open ? "account-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                            >
+                                <Avatar src="/" sx={{ background: "#ee9b00" }}>
+                                </Avatar>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </div>
+            </div>
         </div>
     )
 }

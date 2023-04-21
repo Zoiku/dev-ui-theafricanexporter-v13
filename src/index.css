@@ -148,7 +148,7 @@ html {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
 }
 
 .requests-time-remaining {
@@ -286,7 +286,6 @@ html {
   .drawer-container {
     position: relative;
     display: block;
-    height: 100%;
   }
 
   .drawer-title-container {
@@ -307,6 +306,8 @@ html {
   }
 
   .drawer-body {
+    max-height: 80vh;
+    overflow-y: scroll;
     padding: 15px;
   }
 }

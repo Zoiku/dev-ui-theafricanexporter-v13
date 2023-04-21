@@ -48,11 +48,12 @@ const Requests = () => {
     }
 
     const columns = [
-        { field: "index", headerName: "Request #", width: 100 },
-        { field: "product", headerName: "Product", width: 200 },
-        { field: "terms", headerName: "Terms", width: 70 },
+        { field: "index", headerName: "Number", width: 80 },
+        { field: "requestNo", headerName: "Request #", width: 100 },
+        { field: "product", headerName: "Product", width: 150 },
+        { field: "terms", headerName: "Terms", width: 100 },
         { field: "destination", headerName: "Destination", width: 100 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "timeLeft", headerName: "Time Left", width: 100, renderCell: ({ row }) => <div className="countdown-table-container"> <Countdown endDate={row.expiryDate} /> </div> },
         { field: "action", headerName: "", width: 90, renderCell: ({ row }) => <SmallPrimary onClick={() => selectRequest(row.id)}>View</SmallPrimary> },
     ];

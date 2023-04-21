@@ -20,7 +20,7 @@ const About = () => {
         <div className="About">
             <div className="container">
                 <div className="quick-links">
-                    <span style={{ marginBottom: 20, fontSize: 30, display: "block" }}>Quick Links</span>
+                    <span style={{ marginBottom: 20, fontSize: 30, fontWeight: 600, display: "block" }}>Quick Links</span>
                     <ul>
                         <li><a href="#company" className={activeLink === "company" ? "active-link" : ""}>Company</a></li>
                         <li><a href="#how-it-works" className={activeLink === "how-it-works" ? "active-link" : ""}>How It Works</a></li>

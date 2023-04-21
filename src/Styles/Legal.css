@@ -127,12 +127,8 @@ ol {
 
 .active-link {
   color: #ee9b00 !important;
-  font-weight: 500;
+  font-weight: 700;
   margin-left: 0px;
-}
-
-.active-link:hover {
-  margin: 0;
 }
 
 .section-content a {

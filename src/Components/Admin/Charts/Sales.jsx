@@ -78,7 +78,7 @@ const Sales = ({ labels, values }) => {
         ],
     };
     return (
-        <Line height={300} options={options} data={data} />
+        <Line className='salesChart' height={300} options={options} data={data} />
     );
 }
 

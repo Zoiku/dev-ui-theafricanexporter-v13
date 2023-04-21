@@ -33,29 +33,6 @@ const BuyerNav = ({ session }) => {
 
     return (
         <div className="Nav">
-            <div className="Nav-logo-tae-container logged-mobile-nav-logo-container">
-                <img onClick={handleRedirect} src={logo} alt="tae tae" />
-            </div>
-            <div>
-                <Box
-                    sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
-                >
-                    <div className="nav-hello" style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, {session.user?.profile?.firstName}</span> </div>
-                    <Tooltip title="Account settings">
-                        <IconButton
-                            onClick={handleClick}
-                            size="small"
-                            sx={{ ml: .5 }}
-                            aria-controls={open ? "account-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                        >
-                            <Avatar src="/" alt={session.user?.profile?.firstName} sx={{ background: "#ee9b00" }}>
-                            </Avatar>
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            </div>
             <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
@@ -72,6 +49,58 @@ const BuyerNav = ({ session }) => {
                     Logout
                 </MenuItem>
             </Menu>
+
+            <div className="Mobile-Nav">
+                <div className="Nav-logo-tae-container">
+                    <img onClick={handleRedirect} src={logo} alt="" />
+                </div>
+                <div>
+                    <Box
+                        sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
+                    >
+                        <div className="nav-hello" style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, {session.user?.profile?.firstName}</span> </div>
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                onClick={handleClick}
+                                size="small"
+                                sx={{ ml: .5 }}
+                                aria-controls={open ? "account-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                            >
+                                <Avatar src="/" alt={session.user?.profile?.firstName} sx={{ background: "#ee9b00" }}>
+                                </Avatar>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </div>
+            </div>
+
+            <div className="Default">
+                <div className="logo-container">
+                    <img style={{ cursor: "pointer" }} onClick={handleRedirect} src={logo} alt="tae logo" />
+                </div>
+                <div>
+                    <Box
+                        sx={{ display: "flex", alignItems: "center", textAlign: "center", textTransform: "capitalize" }}
+                    >
+                        <div className="nav-hello" style={{ marginLeft: 10, fontWeight: 650, fontSize: 14 }}><span>Hello, {session.user?.profile?.firstName}</span> </div>
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                onClick={handleClick}
+                                size="small"
+                                sx={{ ml: .5 }}
+                                aria-controls={open ? "account-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                            >
+                                <Avatar src="/" alt={session.user?.profile?.firstName} sx={{ background: "#ee9b00" }}>
+                                </Avatar>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </div>
+            </div>
         </div>
     )
 }

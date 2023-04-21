@@ -25,7 +25,7 @@ import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../.
 import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import { setAlert } from "../../../Redux/Features/Alert.js"
 import Modal from '@mui/material/Modal';
-import { inAppStandard, inAppWider, inAppWide, inAppSmallest } from "../../../Styles/Modal";
+import { inAppStandard, inAppWider, inAppSmallest } from "../../../Styles/Modal";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -257,19 +257,19 @@ const Orders = () => {
 
 
     const columns = [
-        { field: "index", headerName: "Number", width: 50 },
+        { field: "index", headerName: "Number", width: 80 },
         { field: "orderNo", headerName: "Order #", width: 100 },
         { field: "product", headerName: "Product", width: 150 },
         { field: "terms", headerName: "Terms", width: 100 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "timeLeft", headerName: "Time Left", width: 150, renderCell: ({ row }) => <div className="countdown-table-container"> <Countdown endDate={row.expiryDate} /> </div> },
         { field: "action", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
     const columnsOrderList = [
         { field: "index", headerName: "Number", width: 80 },
-        { field: "quantity", headerName: "Quantity", width: 90 },
         { field: "company", headerName: "Company", width: 150 },
+        { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "destination", headerName: "Destination", width: 150 },
         { field: "status", headerName: "Status", width: 160 },
         { field: "action", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary onClick={toggleDrawer(true, row)} size="small" variant="contained">View</SmallPrimary> },
@@ -652,7 +652,7 @@ const Orders = () => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppWide}>
+                    <Box sx={inAppWider}>
                         <div className="modal-title-container">
                             <div>Order Details</div>
                             <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
@@ -674,10 +674,10 @@ const Orders = () => {
                     className="modal-container"
                 >
                     <Box sx={inAppWider}>
-                        {/* <div className="modal-title-container">
+                        <div className="modal-title-container">
                             <div>Order List</div>
                             <div><CloseRoundedIcon onClick={toggleOrderListDrawer(false)} /></div>
-                        </div> */}
+                        </div>
 
                         <div className="modal-body">
                             <div className="dash-items-title-container">

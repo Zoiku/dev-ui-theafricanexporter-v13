@@ -15,7 +15,7 @@ const Legal = () => {
         <div className="Legal">
             <div className="container">
                 <div className="quick-links">
-                    <span style={{ marginBottom: 20, fontSize: 30, display: "block" }}>Quick Links</span>
+                    <span style={{ marginBottom: 20, fontSize: 30, fontWeight: 600, display: "block" }}>Quick Links</span>
                     <ul>
                         <li><a href="#tos" className={activeLink === "tos" | activeLink.substring(0, 3) === "tos" ? "active-link" : ""}>Terms of Service</a></li>
                         <li><a href="#payment-tos" className={activeLink === "payment-tos" | activeLink.substring(0, 3) === "pos" ? "active-link" : ""}>Payment Terms</a></li>
@@ -425,7 +425,7 @@ const Legal = () => {
                                         Afrigateway provides payments services to Members posting requests, providing quotes, supplying physical products and other current and future services provided via the Afrigateway Platform. These payment services may include (if available) the following (collectively, “<b>Payment Services</b>”):
                                         <div className="margin-bottom-10"></div>
                                         <ul>
-                                            <li>Collecting payments from Buyers (“<b>Payin</b>”), using the payment option  chosen during the process of confirming their Orders, such as bank account or Escrow account (“<b>Payment Option</b>”);</li>
+                                            <li>Collecting payments from Buyers (“<b>Paying</b>”), using the payment option  chosen during the process of confirming their Orders, such as bank account or Escrow account (“<b>Payment Option</b>”);</li>
                                             <li>Effecting payments to Merchants (“<b>Payout</b>”) to a financial instrument associated with their Afrigateway account, such as a bank account (“<b>Payout Method</b>”);</li>
                                             <li>Effecting payments to a third-party service provided designated by a Merchant.</li>
                                         </ul>
