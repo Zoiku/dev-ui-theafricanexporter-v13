@@ -113,7 +113,7 @@ const Home = ({ session }) => {
                                 </Swiper>
                             </div>
                             <div className="specification-button-container-mobile">
-                                <PrimaryButton variant="contained" disabled={session?.user.role === "BUYER" ? false : true} fullWidth onClick={() => navigate(`/requestquote?pid=${product.id}`)}>Request Quotes</PrimaryButton>
+                                <PrimaryButton variant="contained" disabled={session?.user?.role === "MERCHANT" | session?.user?.role === "ADMIN" ? true : false} fullWidth onClick={() => navigate(`/requestquote?pid=${product.id}`)}>Request Quotes</PrimaryButton>
                             </div>
                         </section>
                     )
