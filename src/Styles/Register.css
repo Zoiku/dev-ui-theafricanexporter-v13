@@ -65,9 +65,13 @@
   margin: 0 10px 0 0;
 }
 
-.registration-resend-container {
-  font-weight: 700 !important;
-  color: var(--tae-gray);
+.registration-resend-container-not-active {
+  color: rgba(93, 93, 93, 0.331);
+  pointer-events: none;
+}
+
+.registration-resend-container-active {
+  color: var(--tae-orange);
 }
 
 .quick-links-container {
@@ -169,7 +173,7 @@
 
 .bold-bold-bold {
   font-weight: bold;
-  color: black;
+  color: var(--tae-orange);
 }
 
 .resend-otp-container {

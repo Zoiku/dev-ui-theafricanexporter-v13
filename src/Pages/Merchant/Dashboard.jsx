@@ -4,16 +4,126 @@ import Orders from "../../Components/Merchant/Tables/Orders";
 import ChartSales from "../../Components/Charts/Sales";
 import ChartCategories from "../../Components/Charts/Categories";
 import { Groups, Cash, ProductsSold } from "../../Components/Icons";
+import { useEffect } from "react";
+import MerchantService from "../../Services/Merchant";
+import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
+import CircularProgress from '@mui/material/CircularProgress';
+import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../../Reducers/Actions";
+import { useReducer } from "react";
+
+const addCommas = (num) => {
+    const str = num.toString();
+    if (str.length <= 3) {
+        return str;
+    } else {
+        return addCommas(str.slice(0, -3)) + ',' + str.slice(-3);
+    }
+}
 
 const Dashboard = ({ session }) => {
     const { user } = session;
+    const [customerCount, dispatchCustomerCount] = useReducer(formReducer, INITIAL_STATE);
+    const [deliveredOrdersCount, dispatchDeliveredOrdersCount] = useReducer(formReducer, INITIAL_STATE);
+    const [categoriesData, dispatchCategoriesData] = useReducer(formReducer, INITIAL_STATE);
+    const [salesAmount, dispatchSalesAmount] = useReducer(formReducer, INITIAL_STATE);
+    const [salesData, dispatchSalesData] = useReducer(formReducer, INITIAL_STATE);
 
-    const testData = {
-        salesLabel: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
-        salesValues: [5, 10, 0, 11, 2, 20, 3, 25, 4, 30, 5, 35],
-        catLabels: ["Teak Round Logs", "Teak Square Logs"],
-        catValues: [30, 100],
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatchCustomerCount({ type: SEND_REQUEST });
+            const merchantService = new MerchantService();
+            try {
+                const { data, errors } = await merchantService.getCustomersCount();
+                if (errors.length === 0) {
+                    const { totalCount } = data.data;
+                    dispatchCustomerCount({ type: REQUEST_SUCCESSFUL, payload: { value: totalCount } });
+                } else {
+                    dispatchCustomerCount({ type: REQUEST_FAILED });
+                }
+            } catch (error) {
+                dispatchCustomerCount({ type: REQUEST_FAILED });
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatchDeliveredOrdersCount({ type: SEND_REQUEST });
+            const merchantService = new MerchantService();
+            try {
+                const { data, errors } = await merchantService.getDeliveredOrders();
+                if (errors.length === 0) {
+                    const { totalCount } = data.data;
+                    dispatchDeliveredOrdersCount({ type: REQUEST_SUCCESSFUL, payload: { value: totalCount } });
+                } else {
+                    dispatchDeliveredOrdersCount({ type: REQUEST_FAILED });
+                }
+            } catch (error) {
+                dispatchDeliveredOrdersCount({ type: REQUEST_FAILED });
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatchCategoriesData({ type: SEND_REQUEST });
+            const merchantService = new MerchantService();
+            try {
+                const { data, errors } = await merchantService.getCateogriesCount();
+                if (errors.length === 0) {
+                    dispatchCategoriesData({ type: REQUEST_SUCCESSFUL, payload: data })
+                } else {
+                    dispatchCategoriesData({ type: REQUEST_FAILED });
+                }
+            } catch (error) {
+                dispatchCategoriesData({ type: REQUEST_FAILED });
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatchSalesAmount({ type: SEND_REQUEST });
+            const merchantService = new MerchantService();
+            try {
+                const { data, errors } = await merchantService.getTotalSalesAmount();
+                if (errors.length === 0) {
+                    dispatchSalesAmount({ type: REQUEST_SUCCESSFUL, payload: { value: addCommas(data) } })
+                } else {
+                    dispatchSalesAmount({ type: REQUEST_FAILED });
+                }
+            } catch (error) {
+                dispatchSalesAmount({ type: REQUEST_FAILED });
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatchSalesData({ type: SEND_REQUEST });
+            const merchantService = new MerchantService();
+            try {
+                const { data, errors } = await merchantService.getSales();
+                if (errors.length === 0) {
+                    dispatchSalesData({ type: REQUEST_SUCCESSFUL, payload: data })
+                } else {
+                    dispatchSalesData({ type: REQUEST_FAILED });
+                }
+            } catch (error) {
+                dispatchSalesData({ type: REQUEST_FAILED });
+            }
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div className="Merchant-Dashboard">
@@ -26,17 +136,16 @@ const Dashboard = ({ session }) => {
                     <div className="merchantCardsContainer">
                         <div className="merchantCards">
                             <div className="merchantCardTextContent">
-                                <div>Customers</div>
-                                <div>0</div>
-                            </div>
-                            <div className="merchantCardBackgroundIcons">
-                                <Groups />
-                            </div>
-                        </div>
-                        <div className="merchantCards">
-                            <div className="merchantCardTextContent">
                                 <div>Sales</div>
-                                <div>$0</div>
+                                <div>${
+                                    !salesAmount.requestState.error ?
+                                        salesAmount.requestState.loading ?
+                                            <CircularProgress size="small" color="inherit" />
+                                            :
+                                            salesAmount.requestState.data?.value
+                                        :
+                                        <div className="dash-item-no-data-container">...</div>
+                                }</div>
                             </div>
                             <div className="merchantCardBackgroundIcons">
                                 <Cash />
@@ -44,8 +153,37 @@ const Dashboard = ({ session }) => {
                         </div>
                         <div className="merchantCards">
                             <div className="merchantCardTextContent">
-                                <div>Delivered Products</div>
-                                <div>0</div>
+                                <div>Customers</div>
+                                <div>
+                                    {
+                                        !customerCount.requestState.error ?
+                                            customerCount.requestState.loading ?
+                                                <CircularProgress size="small" color="inherit" />
+                                                :
+                                                customerCount.requestState.data?.value
+                                            :
+                                            <div className="dash-item-no-data-container">...</div>
+                                    }
+                                </div>
+                            </div>
+                            <div className="merchantCardBackgroundIcons">
+                                <Groups />
+                            </div>
+                        </div>
+                        <div className="merchantCards">
+                            <div className="merchantCardTextContent">
+                                <div>Delivered Orders</div>
+                                <div>
+                                    {
+                                        !deliveredOrdersCount.requestState.error ?
+                                            deliveredOrdersCount.requestState.loading ?
+                                                <CircularProgress size="small" color="inherit" />
+                                                :
+                                                deliveredOrdersCount.requestState.data?.value
+                                            :
+                                            <div className="dash-item-no-data-container">...</div>
+                                    }
+                                </div>
                             </div>
                             <div className="merchantCardBackgroundIcons">
                                 <ProductsSold />
@@ -56,11 +194,20 @@ const Dashboard = ({ session }) => {
                     <div className="merchantDashboardGridContainer">
                         <div className="merchantDashboardGrid merchantDashboardGrid01">
                             <div className="dash-items-title-container">
-                                <div>Monthly Sales</div>
+                                <div>Your Monthly Sales</div>
                                 <div>Trends on the revenue generated per month</div>
                             </div>
                             <div className="merchantGridContainer">
-                                <ChartSales labels={testData.salesLabel} values={testData.salesValues} yAxesLabel={"Amount"} xAxesLabel={"Month"} />
+                                {
+                                    !salesData.requestState.error ?
+                                        salesData.requestState.loading ?
+                                            <CircularProgress size="small" color="inherit" />
+                                            :
+                                            <ChartSales xAxesLabel={"Months"} yAxesLabel={"Quantity"} labels={Object.keys(salesData.requestState.data)} values={Object.values(salesData.requestState.data)} />
+                                        :
+                                        <div className="dash-item-no-data-container">...</div>
+                                }
+
                             </div>
                         </div>
 
@@ -78,11 +225,19 @@ const Dashboard = ({ session }) => {
 
                         <div className="merchantDashboardGrid merchantDashboardGrid03">
                             <div className="dash-items-title-container">
-                                <div>Top Catergories</div>
+                                <div>Your  Top Catergories</div>
                                 <div>Trends on the mostly requested product</div>
                             </div>
                             <div className="merchantGridContainer">
-                                <ChartCategories labels={testData.catLabels} values={testData.catValues} />
+                                {
+                                    !categoriesData.requestState.error ?
+                                        categoriesData.requestState.loading ?
+                                            <CircularProgress size="small" color="inherit" />
+                                            :
+                                            <ChartCategories labels={Object.keys(categoriesData.requestState.data)} values={Object.values(categoriesData.requestState.data)} />
+                                        :
+                                        <div className="dash-item-no-data-container">...</div>
+                                }
                             </div>
                         </div>
                     </div>

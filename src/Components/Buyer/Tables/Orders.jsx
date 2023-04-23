@@ -110,9 +110,10 @@ const ProgressBar = ({ status }) => {
 
 const navLinkStyle = {
     fontWeight: 600,
-    color: "black",
+    color: "blue",
     textDecoration: "underline",
-    cursor: "pointer"
+    cursor: "pointer",
+    fontSize: "small"
 }
 
 const Orders = () => {
@@ -433,7 +434,7 @@ const Orders = () => {
                         <div>
                             <div style={navLinkStyle} onClick={toggleDrawerPromptConfirm(true)}>Click to open sales and purchase agreement</div>
                             <div>
-                                <SmallSecondary disabled={!acceptTerms} type="submit" loading={state.requestState.loading} variant="contained">Confirm Order</SmallSecondary>
+                                <SmallSecondary disabled={!acceptTerms} type="submit" variant="contained">Confirm Order</SmallSecondary>
                             </div>
                         </div>
                     </section>
@@ -682,11 +683,7 @@ const Orders = () => {
                         </div>
 
                         <div className="modal-body">
-                            <div className="dash-items-title-container">
-                                <div>Order List</div>
-                                <div>Complete list of all orders</div>
-                            </div>
-                            {listOpenOrderList("horizontal")}
+                            {listOpenOrderList()}
                         </div>
                     </Box>
                 </Modal>

@@ -2,7 +2,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import LinearProgress from '@mui/material/LinearProgress';
 import Toolbar from "../../../Material/Toolbar";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
+import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import Box from '@mui/material/Box';
 import { Puller } from "../../../Material/Drawer";
 import AdminService from "../../../Services/Admin";
@@ -21,6 +22,15 @@ import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { inAppWider } from "../../../Styles/Modal";
 import Overlay from "../../../Material/Overlay";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Transition } from "../../../Material/Dialog";
+import { inAppDialog } from "../../../Styles/Dialog";
+import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
+import { SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../../../Reducers/Actions";
 
 const ORDER_STATUS_LEVELS = {
     RECEIVED: 10,
@@ -87,6 +97,8 @@ const ProgressBar = ({ status }) => {
 };
 
 const Orders = () => {
+    const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+
     const [paging, setPaging] = useState({
         page: 1,
         size: 10,
@@ -122,27 +134,73 @@ const Orders = () => {
         setAnchorEl(null);
     };
 
+    const [openDrawerConfirmApprove, setOpenDialogConfirmApprove] = useState(false);
+    const handleClickOpenDialogConfirmApprove = (e) => {
+        e.preventDefault();
+        setOpenDialogConfirmApprove(true);
+    };
+    const handleCloseDialogConfirmApprove = () => {
+        setOpenDialogConfirmApprove(false);
+    };
+
+    const [openDrawerConfirmShipped, setOpenDialogConfirmShipped] = useState(false);
+    const handleClickOpenDialogConfirmShipped = (e) => {
+        e.preventDefault();
+        setOpenDialogConfirmShipped(true);
+    };
+    const handleCloseDialogConfirmShipped = () => {
+        setOpenDialogConfirmShipped(false);
+    };
+
+    const [openDrawerConfirmDelivered, setOpenDialogConfirmDelivered] = useState(false);
+    const handleClickOpenDialogConfirmDelivered = (e) => {
+        e.preventDefault();
+        setOpenDialogConfirmDelivered(true);
+    };
+    const handleCloseDialogConfirmDelivered = () => {
+        setOpenDialogConfirmDelivered(false);
+    };
+
+    const handleStatusUpdate = (updateType, status) => {
+        if (updateType === "approve") {
+            approveOrder();
+        } else if (updateType === "update") {
+            updateOrder(status);
+        }
+    }
+
     const approveOrder = async () => {
+        dispatch({ type: SEND_REQUEST });
         const adminService = new AdminService();
         try {
             const { errors } = await adminService.approveOrder(selectedOrder?.referenceCode);
             if (errors.length === 0) {
+                dispatch({ type: REQUEST_SUCCESSFUL });
                 setRefreshTable(prev => !prev);
-                handleSuccessfullRequest("Order status updated successfully", 3000);
+                handleCloseDialogConfirmApprove()
+                handleSuccessfullRequest("Order approved successfully", 3000);
             } else {
+                dispatch({ type: REQUEST_FAILED });
+                handleCloseDialogConfirmApprove();
                 handleFailedRequest("Could not process your order", 5000);
             }
         } catch (error) { }
     }
 
     const updateOrder = async (status) => {
+        dispatch({ type: SEND_REQUEST });
         const adminService = new AdminService();
         try {
             const { errors } = await adminService.updateOrder(selectedOrderId, status);
             if (errors.length === 0) {
+                dispatch({ type: REQUEST_SUCCESSFUL });
                 setRefreshTable(prev => !prev);
+                status === "SHIPPED" && handleCloseDialogConfirmShipped();
+                status === "DELIVERED" && handleCloseDialogConfirmDelivered();
                 handleSuccessfullRequest("Order status updated successfully", 3000);
             } else {
+                status === "SHIPPED" && handleCloseDialogConfirmShipped();
+                status === "DELIVERED" && handleCloseDialogConfirmDelivered();
                 handleFailedRequest("Could not process your order", 5000);
             }
         } catch (error) { }
@@ -191,6 +249,7 @@ const Orders = () => {
         { field: "terms", headerName: "Terms", width: 100 },
         { field: "destination", headerName: "Destination", width: 100 },
         { field: "quantity", headerName: "Quantity", width: 90 },
+        { field: "status", headerName: "Status", width: 100 },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 
@@ -357,6 +416,75 @@ const Orders = () => {
     return (
         <div className="Orders-Table">
             <div>
+                <Dialog
+                    open={openDrawerConfirmApprove}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleCloseDialogConfirmApprove}
+                    aria-describedby="alert-dialog-slide-description"
+                    sx={inAppDialog}
+                    className="inAppDialog"
+                >
+                    <DialogTitle>{"Agree to update the approve order?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            Do you agree to approve this order?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <GenericSecondary variant="text" onClick={handleCloseDialogConfirmApprove}>Disagree</GenericSecondary>
+                        <GenericPrimaryButton variant="contained" loading={state.requestState.loading} onClick={() => handleStatusUpdate("approve")}>Agree</GenericPrimaryButton>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+            <div>
+                <Dialog
+                    open={openDrawerConfirmShipped}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleCloseDialogConfirmShipped}
+                    aria-describedby="alert-dialog-slide-description"
+                    sx={inAppDialog}
+                    className="inAppDialog"
+                >
+                    <DialogTitle>{"Agree to update the status order?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            Do you agree to update this order?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <GenericSecondary variant="text" onClick={handleCloseDialogConfirmShipped}>Disagree</GenericSecondary>
+                        <GenericPrimaryButton variant="contained" loading={state.requestState.loading} onClick={() => handleStatusUpdate("update", "SHIPPED")}>Agree</GenericPrimaryButton>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+            <div>
+                <Dialog
+                    open={openDrawerConfirmDelivered}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleCloseDialogConfirmDelivered}
+                    aria-describedby="alert-dialog-slide-description"
+                    sx={inAppDialog}
+                    className="inAppDialog"
+                >
+                    <DialogTitle>{"Agree to update the status order?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            Do you agree to update this order?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <GenericSecondary variant="text" onClick={handleCloseDialogConfirmDelivered}>Disagree</GenericSecondary>
+                        <GenericPrimaryButton variant="contained" loading={state.requestState.loading} onClick={() => handleStatusUpdate("update", "DELIVERED")}>Agree</GenericPrimaryButton>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+            <div>
                 <Modal
                     open={openDrawer}
                     onClose={toggleDrawer(false)}
@@ -395,21 +523,21 @@ const Orders = () => {
                         <div>
                             {
                                 selectedOrder.status === "AWAITING PROOF OF PAYMENT" &&
-                                <MenuItem onClick={() => approveOrder()}>
+                                <MenuItem onClick={handleClickOpenDialogConfirmApprove}>
                                     Approve
                                 </MenuItem>
                             }
 
                             {
                                 selectedOrder.status === "PROOF OF PAYMENT APPROVED" &&
-                                <MenuItem onClick={() => updateOrder("SHIPPED")}>
+                                <MenuItem onClick={handleClickOpenDialogConfirmShipped}>
                                     Shipped
                                 </MenuItem>
                             }
 
                             {
                                 selectedOrder.status === "SHIPPED" &&
-                                <MenuItem onClick={() => updateOrder("DELIVERED")}>
+                                <MenuItem onClick={handleClickOpenDialogConfirmDelivered}>
                                     Delivered
                                 </MenuItem>
                             }

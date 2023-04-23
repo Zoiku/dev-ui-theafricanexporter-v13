@@ -377,7 +377,7 @@ const Requests = () => {
                         <div className="requests-section-title">Quantity</div>
                         <div className="request-section-body">
                             <div style={{ border: 0 }}>
-                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
+                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder={`Allowed maximum: ${selectedRequest?.quantity}`} required />
                             </div>
                         </div>
                     </section>

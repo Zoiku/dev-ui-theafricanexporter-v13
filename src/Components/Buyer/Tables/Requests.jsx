@@ -202,7 +202,7 @@ const Requests = () => {
 
     const columnsOffers = [
         { field: "index", headerName: "Number", width: 80 },
-        { field: "requestNo", headerName: "Number", width: 100 },
+        { field: "requestNo", headerName: "Request #", width: 100 },
         { field: "company", headerName: "Company", width: 130 },
         { field: "quantity", headerName: "Quantity", width: 100 },
         { field: "destination", headerName: "Destination", width: 150 },
@@ -614,16 +614,11 @@ const Requests = () => {
                 >
                     <Box sx={inAppWider}>
                         <div className="modal-title-container">
-                            <div>View Offers</div>
+                            <div>Offers List</div>
                             <div><CloseRoundedIcon onClick={handleCloseDrawerOffers} /></div>
                         </div>
 
                         <div className="modal-body">
-                            <div className="dash-items-title-container">
-                                <div>Offers List</div>
-                                <div>Complete list of all offers</div>
-                            </div>
-
                             {listOffers()}
                         </div>
                     </Box>
