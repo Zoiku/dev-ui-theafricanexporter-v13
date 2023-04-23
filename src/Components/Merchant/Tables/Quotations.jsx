@@ -81,10 +81,6 @@ const Quotations = () => {
                                 <span>Container size:</span>
                                 <span>{selectedQuote.containerSize}</span>
                             </div>
-                            <div>
-                                <span>Volume per container:</span>
-                                <span>{selectedQuote.volume} {selectedQuote.volumeUnit}</span>
-                            </div>
                         </div>
                     </section>
 

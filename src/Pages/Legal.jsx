@@ -43,7 +43,6 @@ const Legal = () => {
                             activeLink === "tos-miscellaneous"
 
                             ?
-
                             <section id="tos">
                                 <div className="about-section-primary-title">Terms of Service</div>
                                 <div className="section-content">
@@ -1111,8 +1110,11 @@ const Legal = () => {
                                 <div>
                                     <div className="large-large-large-heading">8. CHANGES TO THIS PRIVACY POLICY</div>
                                     <div>
-                                        We reserve the right to modify this Privacy Policy at any time in accordance with applicable law. If we do so, we will post the revised Privacy Policy and update the “Last Updated” date at the top. In case of material changes, we will also provide you with notice of the modification by email at least thirty (30) days before the effective date. If you disagree with the revised Privacy Policy, you can cancel your Account. If you do not cancel your Account before the date the revised Privacy Policy becomes effective, your continued access to or use of the Afrigateway Platform will be subject to the revised Privacy Policy.                                    </div>
+                                        We reserve the right to modify this Privacy Policy at any time in accordance with applicable law. If we do so, we will post the revised Privacy Policy and update the “Last Updated” date at the top. In case of material changes, we will also provide you with notice of the modification by email at least thirty (30) days before the effective date. If you disagree with the revised Privacy Policy, you can cancel your Account. If you do not cancel your Account before the date the revised Privacy Policy becomes effective, your continued access to or use of the Afrigateway Platform will be subject to the revised Privacy Policy.
+                                    </div>
                                 </div>
+                                
+                                <br />
 
                                 <div>
                                     <div className="large-large-large-heading">9. CONTACT INFORMATION</div>
@@ -1131,13 +1133,12 @@ const Legal = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </section>
                     }
 
                     {
                         activeLink === "cookie-policy" &&
-                        <section id="cookie-policy">
+                        <section id="">
                             <div className="about-section-primary-title">Afrigateway Cookie Policy</div>
                             <div className="section-content">
                                 <div>

@@ -14,3 +14,6 @@ export const InactiveUser = () => <span className="material-symbols-rounded">loc
 export const PendingOrders = () => <span className="material-symbols-rounded">pending</span>
 export const Delivered = () => <span className="material-symbols-rounded">priority</span>
 export const Group = () => <span className="material-symbols-rounded">group</span>
+export const Groups = () => <span className="material-symbols-rounded">diversity_3</span>
+export const Cash = () => <span className="material-symbols-rounded">payments</span>
+export const ProductsSold = () => <span className="material-symbols-rounded">inventory_2</span>

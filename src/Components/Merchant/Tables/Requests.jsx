@@ -302,10 +302,6 @@ const Requests = () => {
                                 <span>Container size:</span>
                                 <span>{selectedRequest.containerSize}</span>
                             </div>
-                            <div>
-                                <span>Volume per container:</span>
-                                <span>{selectedRequest.volume} {selectedRequest.volumeUnit}</span>
-                            </div>
                         </div>
                     </section>
 
@@ -344,7 +340,7 @@ const Requests = () => {
                             }
                             <div>
                                 <span>Quantity:</span>
-                                <span>{selectedRequest?.remainingQuantity} {selectedRequest.containerSize}</span>
+                                <span>{selectedRequest?.quantity} {selectedRequest.containerSize}</span>
                             </div>
                         </div>
                     </section>
@@ -381,7 +377,7 @@ const Requests = () => {
                         <div className="requests-section-title">Quantity</div>
                         <div className="request-section-body">
                             <div style={{ border: 0 }}>
-                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.remainingQuantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
+                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder="eg 10-30" required />
                             </div>
                         </div>
                     </section>

@@ -1,6 +1,6 @@
 import "../../Styles/DashboardAdmin.css";
-import SalesChart from "../../Components/Admin/Charts/Sales";
-import CategoriesChart from "../../Components/Admin/Charts/Categories";
+import SalesChart from "../../Components/Charts/Sales";
+import CategoriesChart from "../../Components/Charts/Categories";
 import OrdersTable from "../../Components/Admin/Tables/Orders";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -253,7 +253,7 @@ const AdminDashboard = () => {
                     <div>
                         {
                             salesChartData.requestState.error === null ?
-                                salesChartData.requestState.loading ? <div className="dash-item-loading-container"><CircularProgress color="inherit" /></div> : <SalesChart labels={Object.keys(salesChartData.requestState.data)} values={Object.values(salesChartData.requestState.data)} />
+                                salesChartData.requestState.loading ? <div className="dash-item-loading-container"><CircularProgress color="inherit" /></div> : <SalesChart yAxesLabel={"Quantity"} xAxesLabel={"Month"} labels={Object.keys(salesChartData.requestState.data)} values={Object.values(salesChartData.requestState.data)} />
                                 : <div className="dash-item-no-data-container">No data</div>
                         }
                     </div>

@@ -139,8 +139,8 @@ const UsersMerchant = () => {
         { field: "email", headerName: "Email", width: 100 },
         { field: "businessType", headerName: "Business Type", width: 130 },
         { field: "status", headerName: "Status", width: 100, renderCell: ({ row }) => <IOSSwitch disabled checked={row.status} /> },
-        { field: "isValidated", headerName: "Validated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading | row?.isValidated} onChange={() => handleApproveMerchant()} checked={row.isValidated} /> },
-        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.id, row.activated)} checked={row.activated} /> },
+        { field: "isValidated", headerName: "Validated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state?.requestState.loading | row?.isValidated ? true : false} onChange={() => handleApproveMerchant()} checked={row.isValidated} /> },
+        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading ? true : false} onChange={() => handleToggleActivate(row.id, row.activated)} checked={row.activated} /> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 

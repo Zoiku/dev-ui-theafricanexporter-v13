@@ -204,13 +204,6 @@ const RequestQuote = ({ session }) => {
 
                     <div>
                         <div>
-                            <span>Volume per Container: </span>
-                            <span>{parsedProduct.volume} {parsedProduct.volumeUnit}</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
                             <span>Origin: </span>
                             <span>{parsedProduct.origin}</span>
                         </div>
@@ -441,7 +434,6 @@ const RequestQuote = ({ session }) => {
                             <div>Types of Species: {parsedProduct.speciesType}</div>
                             <div>Container size: {parsedProduct.containerSize}</div>
                             <div>Species: {parsedProduct.species}</div>
-                            <div>Volume per Container: {parsedProduct.volume} {parsedProduct.volumeUnit}</div>
                             <div>Origin: {parsedProduct.origin}</div>
                         </div>
                     </section>

@@ -113,7 +113,7 @@ const UsersBuyer = () => {
         { field: "email", headerName: "Email", width: 100 },
         { field: "joinedSince", headerName: "Joined Since", width: 150 },
         { field: "status", headerName: "Status", width: 100, renderCell: ({ row }) => <IOSSwitch disabled checked={row.status} /> },
-        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading} onChange={() => handleToggleActivate(row.email, row.activated)} checked={row.activated} /> },
+        { field: "activated", headerName: "Activated", width: 100, renderCell: ({ row }) => <IOSSwitch disabled={state.requestState.loading ? true : false} onChange={() => handleToggleActivate(row.email, row.activated)} checked={row.activated} /> },
         { field: "more", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];
 

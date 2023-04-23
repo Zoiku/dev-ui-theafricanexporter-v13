@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import { Puller } from "../../../Material/Drawer";
 import AdminService from "../../../Services/Admin";
+import BuyerService from "../../../Services/Buyer";
 import Countdown from "../../Countdown";
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -95,10 +96,6 @@ const Requests = () => {
                                 <span>Container size:</span>
                                 <span>{selectedRequest.containerSize}</span>
                             </div>
-                            <div>
-                                <span>Volume per container:</span>
-                                <span>{selectedRequest.volume} {selectedRequest.volumeUnit}</span>
-                            </div>
                         </div>
                     </section>
 
@@ -169,6 +166,74 @@ const Requests = () => {
                             </div>
                         </div>
                     </section>
+
+                    {
+                        selectedRequest.offers.length > 0 &&
+                        <section>
+                            <div>
+                                <div className="requests-section-title admin-requests-section-title">Incoterm (s)</div>
+                                {selectedRequest.offers.map((offer, index) =>
+                                    <div key={index} className="incoterm-table-offers-admin">
+                                        <div>
+                                            Company <>{index + 1}</>: {offer?.merchant?.companyName}
+                                        </div>
+                                        <div className="incoterm-settings-table-container admin-incoterm-settings-table-container">
+                                            <table>
+                                                <thead>
+                                                    <tr className="incoterm-setting-heading-container">
+                                                        <th>Number</th>
+                                                        {(selectedRequest.product === "Teak Round Logs" && selectedRequest.terms !== "FOB") && <th>Diameter (cm)</th>}
+                                                        <th>CBM</th>
+                                                        <th>Price per CBM</th>
+                                                        <th>Pieces/container</th>
+                                                        <th>Price/container</th>
+                                                        <th>Total price</th>
+                                                        {selectedRequest.terms === "CIF" && <th>Insurance</th>}
+                                                        {selectedRequest.terms !== "FOB" && <th>Total Freight</th>}
+                                                        <th>Total amount</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    {
+                                                        offer.incotermRows.length > 0 ?
+                                                            offer.incotermRows.map((incoterm, index) =>
+                                                                <tr key={index + 1}>
+                                                                    <td><input disabled defaultValue={index + 1} /></td>
+                                                                    {(selectedRequest.product === "Teak Round Logs" && selectedRequest.terms !== "FOB") && <td><input disabled defaultValue={incoterm.diameter} /></td>}
+                                                                    <td><input disabled defaultValue={incoterm?.cbm} /></td>
+                                                                    <td><input disabled defaultValue={incoterm?.cbmprice} /></td>
+                                                                    <td><input disabled defaultValue={incoterm?.noOfPieces} /></td>
+                                                                    <td><input disabled defaultValue={incoterm?.price} /></td>
+                                                                    <td><input disabled defaultValue={incoterm?.totalPrice} /></td>
+                                                                    {selectedRequest.terms === "CIF" && <td><input disabled defaultValue={incoterm?.insurance} /></td>}
+                                                                    {selectedRequest.terms !== "FOB" && <td><input disabled defaultValue={incoterm?.costOfFreight} /></td>}
+                                                                    <td><input disabled defaultValue={incoterm.totalAmount} /></td>
+                                                                </tr>
+                                                            ) :
+                                                            <tr>
+                                                                <td><input disabled defaultValue="--" /></td>
+                                                                {selectedRequest.terms !== "FOB" && <td><input disabled defaultValue="--" /></td>}
+                                                                <td><input disabled defaultValue="--" /></td>
+                                                                <td><input disabled defaultValue="--" /></td>
+                                                                <td><input disabled defaultValue="--" /></td>
+                                                                <td><input disabled value="--" /></td>
+                                                                <td><input disabled value="--" /></td>
+                                                                {selectedRequest.terms === "CIF" && <td><input disabled defaultValue="--" /></td>}
+                                                                {selectedRequest.terms !== "FOB" && <td><input disabled defaultValue="--" /></td>}
+                                                                <td><input disabled defaultValue="--" /></td>
+                                                            </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                )
+                                }
+                            </div>
+                        </section>
+                    }
+
                 </div>
             </div>
         </Box>
@@ -179,13 +244,14 @@ const Requests = () => {
         const fetchData = async () => {
             setRowsLoading(true);
             const adminService = new AdminService();
+            const buyerService = new BuyerService();
             try {
                 const { page, size } = paging;
                 const { data, errors } = await adminService.getRequests(abortController.signal, { page, size });
                 if (errors.length === 0) {
                     setPaging({ ...paging, totalCount: data.data.totalCount });
                     const filteredData = data.data.data;
-                    filteredData.map((request, index) => {
+                    await Promise.all(filteredData.map(async (request, index) => {
                         request.index = ((paging.size * paging.page) - (paging.size - index)) + 1;
                         request.product = request.quotationProducts[0].product.name;
                         request.terms = request.buyerQuotationIncoterm.label;
@@ -205,8 +271,15 @@ const Requests = () => {
                         request.containerSize = request.quotationProducts[0].product.supportedShippingContainers[0].label;
                         request.volume = request.quotationProducts[0].product.volume.value;
                         request.volumeUnit = request.quotationProducts[0].product.volume.unit;
+                        request.offers = (await (await buyerService.getOffers(request.id)).data.data.data).map((offer) => {
+                            return {
+                                incotermRows: offer.buyerQuotationRequestIncoterm,
+                                merchant: offer.merchant
+                            }
+                        });
                         return 1;
-                    })
+                    }))
+
                     setRows(filteredData);
                 }
             } catch (error) { }

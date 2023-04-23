@@ -128,7 +128,7 @@ const Orders = () => {
             const { errors } = await adminService.approveOrder(selectedOrder?.referenceCode);
             if (errors.length === 0) {
                 setRefreshTable(prev => !prev);
-                handleSuccessfullRequest("Success", 3000);
+                handleSuccessfullRequest("Order status updated successfully", 3000);
             } else {
                 handleFailedRequest("Could not process your order", 5000);
             }
@@ -141,7 +141,7 @@ const Orders = () => {
             const { errors } = await adminService.updateOrder(selectedOrderId, status);
             if (errors.length === 0) {
                 setRefreshTable(prev => !prev);
-                handleSuccessfullRequest("Success", 3000);
+                handleSuccessfullRequest("Order status updated successfully", 3000);
             } else {
                 handleFailedRequest("Could not process your order", 5000);
             }

@@ -90,7 +90,6 @@ const Register = () => {
             if (errors.length === 0) {
                 setOpenDrawer(true);
                 dispatch({ type: REQUEST_SUCCESSFUL });
-                handleSuccessfulRequest("Successful", 5000);
                 initCounddown();
             } else {
                 dispatch({ type: REQUEST_FAILED, error: errors[0].response.data.message });
@@ -142,7 +141,7 @@ const Register = () => {
             const { errors } = await authService.verifyCode(verificationCode, email, role);
             if (errors.length === 0) {
                 setOpenDrawer(false);
-                handleVerificationSuccessfull("Success", 3000);
+                handleVerificationSuccessfull("Account created and activated successfully", 3000);
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 navigate("/login");
             } else {
@@ -179,14 +178,14 @@ const Register = () => {
         rootDispatch(setAlert(payload));
     };
 
-    const handleSuccessfulRequest = (message, timeOut) => {
-        const payload = {
-            severity: "success",
-            message,
-            timeOut
-        }
-        rootDispatch(setAlert(payload));
-    };
+    // const handleSuccessfulRequest = (message, timeOut) => {
+    //     const payload = {
+    //         severity: "success",
+    //         message,
+    //         timeOut
+    //     }
+    //     rootDispatch(setAlert(payload));
+    // };
 
     const toggleConsent = () => {
         setConsent(prev => !prev);
@@ -227,7 +226,7 @@ const Register = () => {
                 <div className="otp-controller-container">
                     <div className="otp-controller">
                         <OtpInput
-                            numInputs={5}
+                            numInputs={6}
                             placeholder="00000"
                             renderInput={(props) => <input {...props} />}
                             onChange={(e) => handleManualChange("verificationCode", e)}
@@ -243,7 +242,7 @@ const Register = () => {
                     <div>Didn't recieve OTP, <span disabled={resendCodeTimerInterval.current} className="registration-resend-container" onClick={handleResend} size="small">resend ({resendCodeTimer.minutes > 10 ? resendCodeTimer.minutes : `0${resendCodeTimer.minutes}`}m {resendCodeTimer.seconds > 10 ? resendCodeTimer.seconds : `0${resendCodeTimer.seconds}`}s )</span></div>
                 </div>
 
-                <div><PrimaryButton disabled={state.payload?.verificationCode?.length === 5 ? false : true} loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Verify</PrimaryButton></div>
+                <div><PrimaryButton disabled={state.payload?.verificationCode?.length === 6 ? false : true} loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Verify</PrimaryButton></div>
 
             </div>
         </Box >

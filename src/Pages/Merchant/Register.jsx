@@ -33,6 +33,8 @@ import { fillScreen } from "../../Styles/Modal";
 import OtpInput from 'react-otp-input';
 import successImg from "../../Assets/Capture.JPG";
 
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
 const Register = () => {
     const navLinkStyle = {
         color: "var(--tae-orange)",
@@ -78,7 +80,7 @@ const Register = () => {
                 if (errors.length === 0) {
                     const _products = data.data.data.map(data => {
                         return {
-                            category: data.category.label,
+                            category: capitalizeFirstLetter(String(data.category.label).toLowerCase()),
                             product: data.name
                         };
                     });
@@ -182,7 +184,7 @@ const Register = () => {
             const { errors } = await authService.verifyCode(verificationCode, email, role);
             if (errors.length === 0) {
                 setOpenDrawer(false);
-                handleVerificationSuccessfull("Success", 3000);
+                handleVerificationSuccessfull("Account created and activated successfully", 3000);
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 navigate("/login");
             } else {
@@ -267,7 +269,7 @@ const Register = () => {
                 <div className="otp-controller-container">
                     <div className="otp-controller">
                         <OtpInput
-                            numInputs={5}
+                            numInputs={6}
                             placeholder="00000"
                             renderInput={(props) => <input {...props} />}
                             onChange={(e) => handleManualChange("verificationCode", e)}
@@ -283,7 +285,7 @@ const Register = () => {
                     <div>Didn't recieve OTP, <span disabled={resendCodeTimerInterval.current} className="registration-resend-container" onClick={handleResend} size="small">resend ({resendCodeTimer.minutes > 10 ? resendCodeTimer.minutes : `0${resendCodeTimer.minutes}`}m {resendCodeTimer.seconds > 10 ? resendCodeTimer.seconds : `0${resendCodeTimer.seconds}`}s )</span></div>
                 </div>
 
-                <div><PrimaryButton disabled={state.payload?.verificationCode?.length === 5 ? false : true} loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Verify</PrimaryButton></div>
+                <div><PrimaryButton disabled={state.payload?.verificationCode?.length === 6 ? false : true} loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%", fontSiz: "small" }}>Verify</PrimaryButton></div>
 
             </div>
         </Box >
@@ -299,10 +301,6 @@ const Register = () => {
                     className="modal-container"
                 >
                     <Box sx={fillScreen}>
-                        {/* <div className="modal-title-container">
-                            <div>Verify Account</div>
-                            <div><CloseRoundedIcon onClick={toggleDrawer(false)} /></div>
-                        </div> */}
                         <div className="modal-body">
                             {list()}
                         </div>
@@ -429,7 +427,7 @@ const Register = () => {
                                     {
                                         products &&
                                         products.length > 0 &&
-                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem sx={{ textTransform: "capitalize" }} key={category} value={category}>{category}</MenuItem>)
+                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}> {category} </MenuItem>)
                                     }
                                 </Select>
                                 <FormHelperText sx={{ marginLeft: "20px" }}>

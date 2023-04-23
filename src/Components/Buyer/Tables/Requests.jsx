@@ -296,10 +296,7 @@ const Requests = () => {
                                 <span>Container size:</span>
                                 <span>{selectedRequest.containerSize}</span>
                             </div>
-                            <div>
-                                <span>Volume per container:</span>
-                                <span>{selectedRequest.volume} {selectedRequest.volumeUnit}</span>
-                            </div>
+
                         </div>
                     </section>
 
@@ -471,6 +468,7 @@ const Requests = () => {
                         <div className="incoterm-settings-table-note-container">Kindly note that all prices are quoted in ($)</div>
                     </div>
                 </section>
+                
                 <section className="request-offer-company-profile-section">
                     <div>
                         <div>Company Profile</div>

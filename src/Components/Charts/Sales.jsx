@@ -22,7 +22,7 @@ ChartJS.register(
     Filler
 );
 
-const Sales = ({ labels, values }) => {
+const Sales = ({ labels, values, yAxesLabel, xAxesLabel }) => {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -40,7 +40,7 @@ const Sales = ({ labels, values }) => {
                 },
                 title: {
                     display: true,
-                    text: "Quantity",
+                    text: yAxesLabel,
                 },
             },
             xAxes: {
@@ -54,7 +54,7 @@ const Sales = ({ labels, values }) => {
                 },
                 title: {
                     display: true,
-                    text: "Month",
+                    text: xAxesLabel,
                 }
             }
         },

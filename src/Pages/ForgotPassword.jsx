@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { PrimaryButton } from "../Material/Button";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AuthService from "../Services/Auth";
 import { useEffect, useReducer, useState, useMemo } from "react";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
@@ -14,6 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPassword = () => {
     const navLinkStyle = {
@@ -111,8 +111,8 @@ const ForgotPassword = () => {
             <div className="forgot-password-form-container">
                 <div className="left-container">
                     <NavLink className="go-back-container" style={navLinkStyle} to="/login">
-                        <div><ArrowBackIcon sx={{ fontSize: 18, fontWeight: 600 }} /></div>
-                        <div>Back to Login</div>
+                        <ArrowBackIosIcon className="go-back-container-items" />
+                        <div className="go-back-container-items">Login</div>
                     </NavLink>
                     <div className="forgot-password-form-desc">
                         <div>Reset Password ?</div>

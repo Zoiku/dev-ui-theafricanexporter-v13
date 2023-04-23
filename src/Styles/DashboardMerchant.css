@@ -1,4 +1,4 @@
-.merchant-dashboard-body-container {
+/* .merchant-dashboard-body-container {
   margin: 30px 0;
   display: grid;
   gap: 10px;
@@ -34,19 +34,98 @@
 
 @media screen and (max-width: 1000px) {
   .merchant-dashboard-body-container {
-    margin: 30px 0;
-    display: grid;
-    gap: 10px;
     grid-template-areas:
       "item1"
       "item2"
       "item3";
     grid-template-columns: 1fr;
   }
+} */
+
+.merchantDashboardBodyContainer {
+  margin: 30px 0;
 }
 
+.merchantCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 120px;
+  gap: 10px;
+}
 
-.merchant-dash-container {
-  outline: 1px solid red;
+.merchantCards {
+  background: #d88c00;
+  height: 100%;
+  border-radius: 5px;
+  position: relative;
+  color: white;
+  padding: 10px;
+  display: grid;
+  align-content: center;
+  overflow: clip;
+}
+
+.merchantCards:hover .merchantCardBackgroundIcons {
+  transform: scale(1.2);
+  opacity: 0.2;
+}
+
+.merchantCardTextContent > div:nth-child(1) {
+  font-weight: 600;
+  font-size: large;
+}
+
+.merchantCardTextContent > div:nth-child(2) {
+  color: #e4e4e4;
+}
+
+.merchantCardBackgroundIcons {
+  position: absolute;
+  bottom: -70px;
+  right: -40px;
+  opacity: 0.05;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.merchantCardBackgroundIcons > span {
+  font-size: 190px;
+  transform: rotate(-10deg);
+  color: black;
+}
+
+.merchantDashboardGridContainer {
   margin: 30px 0;
+  display: grid;
+  grid-template-areas:
+    "item1 item1 item3"
+    "item2 item2 item2";
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.merchantDashboardGrid {
+  outline: 1px solid #efefef;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.merchantDashboardGrid01 {
+  grid-area: item1;
+  width: 100%;
+  height: 400px;
+}
+
+.merchantDashboardGrid02 {
+  grid-area: item2;
+}
+
+.merchantDashboardGrid03 {
+  grid-area: item3;
+  width: 100%;
+  height: 400px;
+}
+
+.merchantGridContainer {
+  height: 80%;
 }

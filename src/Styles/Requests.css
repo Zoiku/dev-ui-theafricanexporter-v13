@@ -251,6 +251,30 @@
   font-weight: 600;
 }
 
+.incoterm-table-offers-admin {
+  margin: 0 0 20px 0;
+}
+
+.incoterm-table-offers-admin > div:nth-child(1) {
+  font-size: small;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+}
+
+.incoterm-table-offers-admin > div:nth-child(1)::before {
+  content: "\039f	";
+  margin: 0 10px 0 0;
+  color: var(--tae-orange);
+}
+
+.admin-incoterm-settings-table-container {
+  margin: 0;
+}
+
+.admin-requests-section-title {
+  margin-bottom: 20px;
+}
+
 @media screen and (max-width: 1000px) {
   .request-offer-body-container > div:nth-child(1) > div {
     border-bottom: 1px solid #efefef;

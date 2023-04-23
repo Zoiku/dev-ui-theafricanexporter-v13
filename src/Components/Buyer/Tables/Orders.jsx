@@ -79,7 +79,7 @@ const steps = [
     },
     {
         label: "Order Approved",
-        description: "Your order is pending approvial",
+        description: "Your order is pending approval",
     },
     {
         label: "Processing",

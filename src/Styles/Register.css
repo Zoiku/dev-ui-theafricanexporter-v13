@@ -104,11 +104,11 @@
   padding: 10px;
   border-radius: 5px;
   transition: all 0.2s ease;
-  font-size: x-large;
+  font-size: large;
 }
 
 .inputStyle:hover {
-  outline: 3px solid black !important;
+  outline: 3px solid gray !important;
 }
 
 .inputStyle:focus {
@@ -116,25 +116,15 @@
 }
 
 .errorInputStyle {
+  border: 1px solid red;
+  outline: 1px solid red;
   width: 50% !important;
   background: #efefef;
-  margin: 0 10px !important;
+  margin: 0 5px !important;
   padding: 10px;
   border-radius: 5px;
   transition: all 0.2s ease;
   font-size: large;
-  border: 2px solid red !important;
-  outline: 2px solid red !important;
-}
-
-.errorInputStyle:hover {
-  border: 2px solid red !important;
-  outline: 2px solid red !important;
-}
-
-.errorInputStyle:focus {
-  border: 2px solid red !important;
-  outline: 2px solid red !important;
 }
 
 .otp-password-container-container {
@@ -144,7 +134,7 @@
 }
 
 .otp-content-container {
-  width: 300px;
+  width: 350px;
 }
 
 .clip-art-image-container {
