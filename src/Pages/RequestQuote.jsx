@@ -26,8 +26,8 @@ import PageLoadingAnimation from "../Components/PageLoadingAnimation";
 
 import teakround1 from "../Assets/log.jpg";
 import teakround2 from "../Assets/log.jpg";
-import teaksquare1 from "../Assets/log.jpg";
-import teaksquare2 from "../Assets/log.jpg";
+import teaksquare1 from "../Assets/log-1.24e2cbd33e776623f99e.jpg";
+import teaksquare2 from "../Assets/log-1.24e2cbd33e776623f99e.jpg";
 
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';

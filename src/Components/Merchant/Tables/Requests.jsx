@@ -26,6 +26,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
 import { inAppDialog } from "../../../Styles/Dialog";
+import NoRowsOverlay from "../../../Material/Overlay";
 
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
@@ -593,7 +594,11 @@ const Requests = () => {
                                 </div>
                             </div>
                             :
-                            <div className="dash-item-no-data-container">You have no requests at this time</div>
+                            <div className="dash-item-no-chart-data-container dash-item-no-chart-data-container-request">
+                                <div className="dash-item-no-chart-data">
+                                    <NoRowsOverlay textColor={"inherit"} label={"Requests"} />
+                                </div>
+                            </div>
                 }
             </div>
         </div>

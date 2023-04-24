@@ -73,8 +73,12 @@
 }
 
 .dashboard-body-container > div:nth-child(1) {
-  background: var(--tae-blue-dark);
+  background: #d88c00;
   color: white;
+}
+
+.dashboard-body-container > div:nth-child(1) .dash-items-title-container > div:nth-child(2) {
+  color: rgba(255, 255, 255, 0.867);
 }
 
 .dashboard-body-container > div:nth-child(1) .dash-item-value-container {
@@ -104,7 +108,8 @@
 }
 
 .dash-item-no-data-container {
-  color: gray
+  color: gray;
+  font-size: small;
 }
 
 .dash-item-loading-container {

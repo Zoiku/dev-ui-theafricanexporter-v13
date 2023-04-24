@@ -37,7 +37,7 @@ const MerchantLayout = ({ session }) => {
             if (errors.length === 0) {
                 rootDispatch(initCompany(state.payload));
                 dispatch({ type: REQUEST_SUCCESSFUL });
-                handleSuccessfulRequest("Success", 3000);
+                handleSuccessfulRequest("Company details updated successfully", 3000);
                 setOpenDrawer(false);
             } else {
                 dispatch({ type: REQUEST_FAILED });

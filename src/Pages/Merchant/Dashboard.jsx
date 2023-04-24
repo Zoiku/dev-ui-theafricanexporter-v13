@@ -10,6 +10,7 @@ import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import CircularProgress from '@mui/material/CircularProgress';
 import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../../Reducers/Actions";
 import { useReducer } from "react";
+import empty from "../../Assets/Croods - Chart.png";
 
 const addCommas = (num) => {
     const str = num.toString();
@@ -203,7 +204,15 @@ const Dashboard = ({ session }) => {
                                         <div className="circular-progress-container"><CircularProgress size={20} color="inherit" /></div>
                                         :
                                         !salesData.requestState.error ?
-                                            <ChartSales xAxesLabel={"Months"} yAxesLabel={"Quantity"} labels={Object.keys(salesData.requestState.data)} values={Object.values(salesData.requestState.data)} />
+                                            Object.keys(salesData.requestState.data).length > 0 ?
+                                                <ChartSales xAxesLabel={"Months"} yAxesLabel={"Quantity"} labels={Object.keys(salesData.requestState.data)} values={Object.values(salesData.requestState.data)} />
+                                                :
+                                                <div className="dash-item-no-chart-data-container">
+                                                    <div className="dash-item-no-chart-data">
+                                                        <img src={empty} alt="" />
+                                                        <div>Complete an order to update this chart</div>
+                                                    </div>
+                                                </div>
                                             :
                                             <div className="dash-item-no-data-container">...</div>
                                 }
@@ -226,7 +235,7 @@ const Dashboard = ({ session }) => {
                         <div className="merchantDashboardGrid merchantDashboardGrid03">
                             <div className="dash-items-title-container">
                                 <div>Your  Top Catergories</div>
-                                <div>Trends on the mostly requested product</div>
+                                <div>Trends on your mostly requested product</div>
                             </div>
                             <div className="merchantGridContainer">
                                 {
@@ -234,7 +243,15 @@ const Dashboard = ({ session }) => {
                                         <div className="circular-progress-container"><CircularProgress size={20} color="inherit" /></div>
                                         :
                                         !categoriesData.requestState.error ?
-                                            <ChartCategories labels={Object.keys(categoriesData.requestState.data)} values={Object.values(categoriesData.requestState.data)} />
+                                            Object.keys(categoriesData.requestState.data).length > 0 ?
+                                                <ChartCategories labels={Object.keys(categoriesData.requestState.data)} values={Object.values(categoriesData.requestState.data)} />
+                                                :
+                                                <div className="dash-item-no-chart-data-container">
+                                                    <div className="dash-item-no-chart-data">
+                                                        <img src={empty} alt="" />
+                                                        <div>Complete an order to update this chart</div>
+                                                    </div>
+                                                </div>
                                             :
                                             <div className="dash-item-no-data-container">...</div>
                                 }

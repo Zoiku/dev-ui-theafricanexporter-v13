@@ -79,7 +79,7 @@ const Register = () => {
                 if (errors.length === 0) {
                     const _products = data.data.data.map(data => {
                         return {
-                            category: capitalizeFirstLetter(String(data.category.label).toLowerCase()),
+                            category: data.category.label,
                             product: data.name
                         };
                     });
@@ -131,7 +131,6 @@ const Register = () => {
             if (errors.length === 0) {
                 setOpenDrawer(true);
                 dispatch({ type: REQUEST_SUCCESSFUL });
-                handleSuccessfulRequest("Successful", 5000);
                 initCounddown();
             } else {
                 dispatch({ type: REQUEST_FAILED, error: errors[0].response.data.message });
@@ -214,15 +213,6 @@ const Register = () => {
     const handleFailedRequest = (message, timeOut) => {
         const payload = {
             severity: "error",
-            message,
-            timeOut
-        }
-        rootDispatch(setAlert(payload));
-    };
-
-    const handleSuccessfulRequest = (message, timeOut) => {
-        const payload = {
-            severity: "success",
             message,
             timeOut
         }
@@ -420,7 +410,7 @@ const Register = () => {
                                     {
                                         products &&
                                         products.length > 0 &&
-                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}> {category} </MenuItem>)
+                                        [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}> {capitalizeFirstLetter(String(category).toLowerCase())} </MenuItem>)
                                     }
                                 </Select>
                                 <FormHelperText sx={{ marginLeft: "20px" }}>

@@ -22,6 +22,8 @@ import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED, PUSH_FORM_D
 import MerchantService from "../../Services/Merchant";
 import { setAlert } from "../../Redux/Features/Alert.js";
 
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
 const Settings = ({ profile }) => {
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
     const theme = useTheme();
@@ -208,7 +210,7 @@ const Settings = ({ profile }) => {
                                         {
                                             products &&
                                             products.length > 0 &&
-                                            [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}>{category}</MenuItem>)
+                                            [...new Set(products.map(product => product.category))].map(category => <MenuItem key={category} value={category}>{capitalizeFirstLetter(String(category).toLowerCase())}</MenuItem>)
                                         }
                                     </Select>
                                 </FormControl>
