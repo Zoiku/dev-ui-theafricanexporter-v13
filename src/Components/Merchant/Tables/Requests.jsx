@@ -41,11 +41,11 @@ const TYPE = {
 const NOTE_CIF = () => {
     return (
         <div>
-            <div>Price per Container: CBM x Price per CBM</div>
-            <div>Total Price: Price per Container x Quantity</div>
-            <div>Insurance: 0.25% of Cargo value (Total Price)</div>
-            <div>Total Freight: Freight rate x Quantity</div>
-            <div>Total Amount: Total Price + Insurance + Total Freight</div>
+            <div><strong className="bold-note">Price per Container</strong>: CBM x Price per CBM</div>
+            <div><strong className="bold-note">Total Price</strong>: Price per Container x Quantity</div>
+            <div><strong className="bold-note">Insurance</strong>: 0.25% of Cargo value (Total Price)</div>
+            <div><strong className="bold-note">Total Freight</strong>: Freight rate x Quantity</div>
+            <div><strong className="bold-note">Total Amount</strong>: Total Price + Insurance + Total Freight</div>
         </div>
     )
 }
@@ -53,9 +53,9 @@ const NOTE_CIF = () => {
 const NOTE_FOB = () => {
     return (
         <div>
-            <div>Price per Container: CBM x Price per CBM</div>
-            <div>Total Price: Price per Container x Quantity</div>
-            <div>Total Amount: Total price</div>
+            <div><strong className="bold-note">Price per Container</strong>: CBM x Price per CBM</div>
+            <div><strong className="bold-note">Total Price</strong>: Price per Container x Quantity</div>
+            <div><strong className="bold-note">Total Amount</strong>: Total price</div>
         </div>
     )
 }
@@ -63,10 +63,10 @@ const NOTE_FOB = () => {
 const NOTE_CFR = () => {
     return (
         <div>
-            <div>Price per Container: CBM x Price per CBM</div>
-            <div>Total Price: Price per Container x Quantity</div>
-            <div>Total Freight: Freight rate x Quantity</div>
-            <div>Total Amount: Total Price + Total Freight</div>
+            <div><strong className="bold-note">Price per Container</strong>: CBM x Price per CBM</div>
+            <div><strong className="bold-note">Total Price</strong>: Price per Container x Quantity</div>
+            <div><strong className="bold-note">Total Freight</strong>: Freight rate x Quantity</div>
+            <div><strong className="bold-note">Total Amount</strong>: Total Price + Total Freight</div>
         </div>
     )
 }
@@ -366,7 +366,7 @@ const Requests = () => {
 
                     <section>
                         <div className="requests-section-title">Request Settings</div>
-                        <div className="request-section-body">
+                        <div className="request-section-body request-section-body-validity">
                             <div>
                                 <span>Validity:</span>
                                 <span>{selectedRequest.validity} days</span>
@@ -374,17 +374,13 @@ const Requests = () => {
                         </div>
                     </section>
 
-                    <section>
-                        <div className="requests-section-title">Quantity</div>
-                        <div className="request-section-body">
-                            <div style={{ border: 0 }}>
-                                <TextField onChange={(e) => handleChange(e)} helperText="Kindly note that quantity is fixed for all incoterm rows" InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 }, endAdornment: <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", fontSize: "small", width: "180px", textAlign: "right", color: "gray" }}>20ft per Container</div> }} fullWidth size="small" name="quantity" type="number" variant="standard" placeholder={`Allowed maximum: ${selectedRequest?.quantity}`} required />
-                            </div>
-                        </div>
-                    </section>
+                    <hr style={{ margin: "60px 0" }} />
 
                     <section>
-                        <div className="requests-section-title">Incoterm</div>
+                        <div className="requests-section-title">PLEASE PROVIDE YOUR QUOTE FOR THIS REQUEST</div>
+                        <div style={{ border: 0, margin: "20px 0" }}>
+                            <TextField onChange={(e) => handleChange(e)} helperText={<strong>Kindly indicate the quantity you can supply for this request</strong>} InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 } }} size="small" label="Quantity" name="quantity" type="number" variant="filled" placeholder={`Allowed maximum: ${selectedRequest?.quantity}`} required />
+                        </div>
                         <div>
                             <div className="incoterm-settings-table-container">
                                 <table>
@@ -410,8 +406,8 @@ const Requests = () => {
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="number" value={index + 1} disabled /></td>
                                                     {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="diameter" /></td>}
                                                     <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="noOfPieces" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="cbm" /></td>
-                                                    <td><input placeholder="eg 40-50" required type="number" onChange={(e) => handleChange(e, index)} name="cbmprice" /></td>
+                                                    <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index)} name="cbm" /></td>
+                                                    <td><input placeholder="0" required type="number" onChange={(e) => handleChange(e, index)} name="cbmprice" /></td>
                                                     <td><input placeholder="0" disabled required type="number" name="price" value={incotermSettings[index]?.price ? incotermSettings[index]?.price : 0} /></td>
                                                     <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="totalPrice" value={incotermSettings[index]?.totalPrice ? incotermSettings[index]?.totalPrice : 0} /></td>
                                                     {selectedRequest.terms === "CIF" && <td><input placeholder="0" required type="number" disabled onChange={(e) => handleChange(e, index)} name="insurance" value={incotermSettings[index]?.insurance ? incotermSettings[index]?.insurance : 0} /></td>}
