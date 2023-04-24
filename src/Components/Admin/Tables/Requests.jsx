@@ -171,7 +171,7 @@ const Requests = () => {
                         selectedRequest.offers.length > 0 &&
                         <section>
                             <div>
-                                <div className="requests-section-title admin-requests-section-title">Incoterm (s)</div>
+                                {/* <div className="requests-section-title admin-requests-section-title">Incoterm (s)</div> */}
                                 {selectedRequest.offers.map((offer, index) =>
                                     <div key={index} className="incoterm-table-offers-admin">
                                         <div>

@@ -153,7 +153,7 @@ const Quotations = () => {
                     </section>
 
                     <section>
-                        <div className="requests-section-title">Incoterm</div>
+                        {/* <div className="requests-section-title">Incoterm</div> */}
                         <div>
                             <div className="incoterm-settings-table-container">
                                 <table>

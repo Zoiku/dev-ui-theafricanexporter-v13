@@ -414,7 +414,7 @@ const Requests = () => {
 
                 <section>
                     <div>
-                        <div className="requests-section-title">Incoterm</div>
+                        {/* <div className="requests-section-title">Incoterm</div> */}
                         <div className="incoterm-settings-table-container">
                             <table>
                                 <thead>
