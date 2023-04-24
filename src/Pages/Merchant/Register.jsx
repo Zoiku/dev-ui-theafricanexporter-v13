@@ -31,14 +31,13 @@ import { useTheme } from "@mui/material/styles";
 import Modal from '@mui/material/Modal';
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from 'react-otp-input';
-import successImg from "../../Assets/Capture.JPG";
+import successImg from "../../Assets/Charco - Good Job.png";
 
 const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
 const Register = () => {
     const navLinkStyle = {
         color: "var(--tae-orange)",
-        textDecoration: "none",
         fontSize: "small",
         fontWeight: 700,
     };
@@ -338,10 +337,8 @@ const Register = () => {
                         autoComplete="off"
                         onSubmit={handleSubmit}
                     >
-                        <div className="form-controller-input">
+                        <div className="form-controller-duo-input">
                             <TextField required helperText="Enter your First Name" fullWidth onChange={handleChange} type="text" name="firstName" label="First Name" variant="outlined" />
-                        </div>
-                        <div className="form-controller-input">
                             <TextField required helperText="Enter your Last Name" fullWidth onChange={handleChange} type="text" name="lastName" label="Last Name" variant="outlined" />
                         </div>
                         <div className="form-controller-input">
@@ -368,9 +365,6 @@ const Register = () => {
                         <div className="form-controller-input">
                             <TextField required helperText="Enter your Company Name" fullWidth onChange={handleChange} type="text" name="companyName" label="Company Name" variant="outlined" />
                         </div>
-                        <div className="form-controller-input">
-                            <TextField required helperText="Enter Your Compay Address" fullWidth onChange={handleChange} type="text" name="address" label="Address" variant="outlined" />
-                        </div>
 
                         <div className="form-controller-input">
                             <FormControl required fullWidth>
@@ -391,23 +385,24 @@ const Register = () => {
                             </FormControl>
                         </div>
 
-                        <div className="form-controller-input">
+                        <div className="form-controller-duo-input">
+                            <TextField required helperText="Enter Your Compay Address" fullWidth onChange={handleChange} type="text" name="address" label="Address" variant="outlined" />
                             <TextField required helperText="Enter the City/Town of your Company" fullWidth onChange={handleChange} type="text" name="city" label="City/Town" variant="outlined" />
                         </div>
 
-                        <div className="form-controller-duo-input">
-                            <div>
-                                <Select fullWidth disabled value={state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}>
-                                    <MenuItem value={state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}>+{state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}</MenuItem>
-                                </Select>
-                                <FormHelperText sx={{ marginLeft: "20px" }}>
-                                    Country Code
-                                </FormHelperText>
-                            </div>
-                            <TextField required helperText="8-15 characters (without 0 prefix)" onChange={handleChange} inputProps={{ pattern: '[^0][0-9]{8,15}' }} name="telephone" label="Phone Number" variant="outlined" />
+                        <div className="form-controller-input">
+                            <TextField InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        +{state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}
+                                    </InputAdornment>
+                                ),
+                            }}
+                                fullWidth required helperText="8-15 characters (without 0 prefix)" onChange={handleChange} inputProps={{ pattern: '[^0][0-9]{8,15}' }} name="telephone" label="Phone Number" variant="outlined"
+                            />
                         </div>
 
-                        <div className="form-controller-input">
+                        <div className="form-controller-duo-input">
                             <FormControl required fullWidth>
                                 <InputLabel>Business Type</InputLabel>
                                 <Select value={state.payload?.typeLabel} name="typeLabel" label="Business Type" onChange={handleChange}>
@@ -418,9 +413,7 @@ const Register = () => {
                                     Select the Business Type
                                 </FormHelperText>
                             </FormControl>
-                        </div>
 
-                        <div className="form-controller-input">
                             <FormControl required fullWidth>
                                 <InputLabel>Category</InputLabel>
                                 <Select name="category" label="Category" onChange={handleChange}>
@@ -465,7 +458,6 @@ const Register = () => {
                                         Select Subscriptions
                                     </FormHelperText>
                                 </FormControl>
-
                             </div>
                         }
 

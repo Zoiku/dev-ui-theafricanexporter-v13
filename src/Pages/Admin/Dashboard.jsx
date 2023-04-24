@@ -159,9 +159,11 @@ const AdminDashboard = () => {
                         </div>
                         <div>
                             {
-                                !merchantBuyerRatio.requestState.error ?
-                                    merchantBuyerRatio.requestState.loading ? <div className="primary-tae-color"><CircularProgress size="small" color="inherit" /></div> : merchantBuyerRatio.requestState?.data?.value
-                                    : <div className="dash-item-no-data-container">...</div>
+                                merchantBuyerRatio.requestState.loading ?
+                                    <CircularProgress size={20} color="inherit" />
+                                    :
+                                    !merchantBuyerRatio.requestState.error ? merchantBuyerRatio.requestState?.data?.value
+                                        : <div className="dash-item-no-data-container">...</div>
                             }
                         </div>
                     </div>
@@ -186,9 +188,12 @@ const AdminDashboard = () => {
                             </div>
                             <div>
                                 {
-                                    !unactivatedUsers.requestState.error ?
-                                        unactivatedUsers.requestState.loading ? <CircularProgress size="small" color="inherit" /> : unactivatedUsers.requestState.data?.value
-                                        : <div className="dash-item-no-data-container">...</div>
+                                    unactivatedUsers.requestState.loading ?
+                                        <CircularProgress size={20} color="inherit" />
+                                        :
+                                        !unactivatedUsers.requestState.error ?
+                                            unactivatedUsers.requestState.data?.value
+                                            : <div className="dash-item-no-data-container">...</div>
                                 }
                             </div>
                         </div>
@@ -204,9 +209,12 @@ const AdminDashboard = () => {
                             </div>
                             <div>
                                 {
-                                    !pendingOrders.requestState.error ?
-                                        pendingOrders.requestState.loading ? <CircularProgress size="small" color="inherit" /> : pendingOrders.requestState.data?.value
-                                        : <div className="dash-item-no-data-container">...</div>
+                                    pendingOrders.requestState.loading ?
+                                        <CircularProgress size={20} color="inherit" />
+                                        :
+                                        !pendingOrders.requestState.error ?
+                                            pendingOrders.requestState.data?.value
+                                            : <div className="dash-item-no-data-container">...</div>
                                 }
                             </div>
                         </div>
@@ -222,9 +230,12 @@ const AdminDashboard = () => {
                             </div>
                             <div>
                                 {
-                                    !deliveredOrders.requestState.error ?
-                                        deliveredOrders.requestState.loading ? <CircularProgress size="small" color="inherit" /> : deliveredOrders.requestState.data?.value
-                                        : <div className="dash-item-no-data-container">...</div>
+                                    deliveredOrders.requestState.loading ?
+                                        <CircularProgress size={20} color="inherit" />
+                                        :
+                                        !deliveredOrders.requestState.error ?
+                                            deliveredOrders.requestState.data?.value
+                                            : <div className="dash-item-no-data-container">...</div>
                                 }
                             </div>
                         </div>
@@ -238,9 +249,12 @@ const AdminDashboard = () => {
                     </div>
                     <div className="dash-item-category-chart-container">
                         {
-                            categoriesChartData.requestState.error === null ?
-                                categoriesChartData.requestState.loading ? <div className="dash-item-loading-container"><CircularProgress color="inherit" /></div> : <CategoriesChart labels={Object.keys(categoriesChartData.requestState.data)} values={Object.values(categoriesChartData.requestState.data)} />
-                                : <div className="dash-item-no-data-container">No data</div>
+                            categoriesChartData.requestState.loading ?
+                                <div className="circular-progress-container"><CircularProgress size={20} color="inherit" /></div>
+                                :
+                                !categoriesChartData.requestState.error ?
+                                    <CategoriesChart labels={Object.keys(categoriesChartData.requestState.data)} values={Object.values(categoriesChartData.requestState.data)} />
+                                    : <div className="dash-item-no-data-container">No data</div>
                         }
                     </div>
                 </div>
@@ -252,9 +266,12 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                         {
-                            salesChartData.requestState.error === null ?
-                                salesChartData.requestState.loading ? <div className="dash-item-loading-container"><CircularProgress color="inherit" /></div> : <SalesChart yAxesLabel={"Quantity"} xAxesLabel={"Month"} labels={Object.keys(salesChartData.requestState.data)} values={Object.values(salesChartData.requestState.data)} />
-                                : <div className="dash-item-no-data-container">No data</div>
+                            salesChartData.requestState.loading ?
+                                <div className="dash-item-loading-container"><CircularProgress size={20} color="inherit" /></div>
+                                :
+                                !salesChartData.requestState.error ?
+                                    <SalesChart yAxesLabel={"Quantity"} xAxesLabel={"Month"} labels={Object.keys(salesChartData.requestState.data)} values={Object.values(salesChartData.requestState.data)} />
+                                    : <div className="dash-item-no-data-container">No data</div>
                         }
                     </div>
                 </div>

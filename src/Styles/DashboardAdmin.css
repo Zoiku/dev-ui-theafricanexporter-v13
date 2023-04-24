@@ -108,7 +108,7 @@
 }
 
 .dash-item-loading-container {
-  height: 200px;
+  height: 400px;
   width: 100%;
   display: grid;
   place-content: center;

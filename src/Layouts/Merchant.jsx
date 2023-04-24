@@ -9,16 +9,16 @@ import TextField from '@mui/material/TextField';
 import Drawer from '@mui/material/Drawer';
 import { useDispatch } from "react-redux";
 import { initCompany } from "../Redux/Features/Session"
-import { PrimaryButton } from "../Material/Button";
+import { PrimaryButton, TextButton } from "../Material/Button";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js"
-import CloseIcon from '@mui/icons-material/Close';
 import { endSession } from "../Redux/Features/Session";
 import MerchantService from "../Services/Merchant";
-import { inAppSmall } from "../Styles/Modal";
+import { fillScreen } from "../Styles/Modal";
 import Modal from '@mui/material/Modal';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import successImg from "../Assets/Charco - Launch.png";
+import Tooltip from '@mui/material/Tooltip';
 
 const MerchantLayout = ({ session }) => {
     const { user } = session;
@@ -84,26 +84,43 @@ const MerchantLayout = ({ session }) => {
             role="presentation"
             component="form"
             onSubmit={handleSubmit}
+            className="otp-password-container-container"
         >
-            <div className="registration-form-verification-code-container">
-                <div>Almost Done!</div>
-                <div>Kindly fill in the following company details.</div>
-            </div>
-            <div className="form-controller-container">
-                <div className="form-controller-input form-controller-duo-input">
-                    <TextField size="small" name="year" onChange={handleChange} fullWidth label="Year Established" variant="outlined" />
-                    <TextField size="small" type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="Number of Employees" variant="outlined" />
-                </div>
+            <div className="otp-content-container">
+                <div>
+                    <div className="clip-art-image-container">
+                        <img src={successImg} alt="" />
+                    </div>
 
-                <div className="form-controller-input">
-                    <TextField size="small" type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "130px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="outlined" />
-                </div>
+                    <div className="registration-form-verification-code-container">
+                        <div>Almost Done!</div>
+                        <div>Kindly fill in the following company details.</div>
+                    </div>
 
-                <div className="form-controller-input">
-                    <TextField size="small" rows={3} onChange={handleChange} multiline fullWidth label="Company History" name="introduction" variant="outlined" />
+                    <div className="form-controller-container">
+                        <div className="form-controller-input form-controller-duo-input">
+                            <TextField inputProps={{ pattern: ".{4}" }} required name="year" onChange={handleChange} fullWidth label="Year Established" variant="outlined" />
+                            <TextField inputProps={{ min: 1 }} required type="number" name="noOfEmployees" onChange={handleChange} fullWidth label="No Employees" variant="outlined" />
+                        </div>
+
+                        <div className="form-controller-input">
+                            <TextField inputProps={{ min: 1 }} required type="number" onChange={handleChange} InputProps={{ endAdornment: <div style={{ width: "130px", textAlign: "right", fontSize: "12px", color: "gray" }}>20ft per month</div> }} fullWidth label="Supply Ability" name="supplyAbility" variant="outlined" />
+                        </div>
+
+                        <div className="form-controller-input">
+                            <TextField required rows={3} onChange={handleChange} multiline fullWidth label="Company History" name="introduction" variant="outlined" />
+                        </div>
+                    </div>
+
+                    <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
+
+                    <div style={{ margin: "10px 0 0 0" }}>
+                        <Tooltip title="Clicking skip will automatically log you out" placement="right-end">
+                            <TextButton onClick={handleLogout(true)} size="small" variant="text" color="error">Skip</TextButton>
+                        </Tooltip>
+                    </div>
                 </div>
             </div>
-            <div><PrimaryButton size="small" loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
         </Box>
     );
 
@@ -116,11 +133,7 @@ const MerchantLayout = ({ session }) => {
                     aria-describedby="modal-modal-description"
                     className="modal-container"
                 >
-                    <Box sx={inAppSmall}>
-                        <div className="modal-title-container">
-                            <div>Complete Company Profile</div>
-                            <div><CloseRoundedIcon onClick={handleLogout(false)} /></div>
-                        </div>
+                    <Box sx={fillScreen}>
                         <div className="modal-body">
                             {list()}
                         </div>
@@ -135,11 +148,7 @@ const MerchantLayout = ({ session }) => {
                     anchor="bottom"
                     open={openDrawer}
                 >
-                    <div className="drawer-title-container">
-                        <div>Complete Company Profile</div>
-                        <div><CloseIcon className="close-icon" onClick={handleLogout(false)} /></div>
-                    </div>
-                    <div className="drawer-body">
+                    <div className="drawer-body otp-drawer-body">
                         {list()}
                     </div>
                 </Drawer>

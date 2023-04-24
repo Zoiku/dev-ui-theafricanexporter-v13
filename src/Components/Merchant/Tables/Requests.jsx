@@ -575,7 +575,7 @@ const Requests = () => {
             </div>
             <div>
                 {
-                    rowsLoading ? <div className="dash-item-loading-container"> <CircularProgress color="inherit" /></div> :
+                    rowsLoading ? <div className="dash-item-loading-container"> <CircularProgress color="inherit" size={20} /></div> :
                         rows &&
                             rows.length > 0 ?
                             <div className="requests-section-container">

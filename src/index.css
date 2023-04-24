@@ -245,6 +245,18 @@ html {
   animation: dropping 0.5s ease-in-out forwards;
 }
 
+.circular-progress-container {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  color: var(--tae-orange);
+}
+
+.circular-progress-container-left-align {
+  justify-content: flex-start;
+  color: white;
+}
+
 @keyframes dropping {
   from {
     top: -30px;
@@ -305,7 +317,7 @@ html {
   }
 
   .drawer-body {
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: scroll;
     padding: 15px;
   }

@@ -73,10 +73,12 @@
 .merchantCardTextContent > div:nth-child(1) {
   font-weight: 600;
   font-size: large;
+  padding: 0 0 10px 0;
+  color: #efefefad;
 }
 
 .merchantCardTextContent > div:nth-child(2) {
-  color: #e4e4e4;
+  color: white;
 }
 
 .merchantCardBackgroundIcons {
@@ -148,3 +150,4 @@
     grid-template-columns: 1fr;
   }
 }
+

@@ -27,12 +27,11 @@ import { useNavigate, NavLink } from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from 'react-otp-input';
-import successImg from "../../Assets/Capture.JPG";
+import successImg from "../../Assets/Charco - High Five.png";
 
 const Register = () => {
     const navLinkStyle = {
         color: "var(--tae-orange)",
-        textDecoration: "none",
         fontSize: "small",
         fontWeight: 700,
     };
@@ -55,7 +54,6 @@ const Register = () => {
         setShowPassword(prev => !prev);
     }
     const [openDrawer, setOpenDrawer] = useState(false);
-
 
     const handleChange = (e) => {
         if (e.target.name === "country") {
@@ -286,10 +284,8 @@ const Register = () => {
                         autoComplete="off"
                         onSubmit={handleSubmit}
                     >
-                        <div className="form-controller-input">
+                        <div className="form-controller-duo-input">
                             <TextField required helperText="Enter your First Name" fullWidth onChange={handleChange} type="text" name="firstName" label="First Name" variant="outlined" />
-                        </div>
-                        <div className="form-controller-input">
                             <TextField required helperText="Enter your Last Name" fullWidth onChange={handleChange} type="text" name="lastName" label="Last Name" variant="outlined" />
                         </div>
                         <div className="form-controller-input">
@@ -336,16 +332,16 @@ const Register = () => {
                             </FormControl>
                         </div>
 
-                        <div className="form-controller-duo-input">
-                            <div>
-                                <Select fullWidth disabled value={state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}>
-                                    <MenuItem value={state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}>+{state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}</MenuItem>
-                                </Select>
-                                <FormHelperText sx={{ marginLeft: "20px" }}>
-                                    Country Code
-                                </FormHelperText>
-                            </div>
-                            <TextField required helperText="8-15 characters (without 0 prefix)" onChange={handleChange} inputProps={{ pattern: '[^0][0-9]{8,15}' }} name="telephone" label="Phone Number" variant="outlined" />
+                        <div className="form-controller-input">
+                            <TextField InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        +{state.payload.countryCode ? state.payload.countryCode : defaultCountryData.countryCode}
+                                    </InputAdornment>
+                                ),
+                            }}
+                                fullWidth required helperText="8-15 characters (without 0 prefix)" onChange={handleChange} inputProps={{ pattern: '[^0][0-9]{8,15}' }} name="telephone" label="Phone Number" variant="outlined"
+                            />
                         </div>
 
                         <div>

@@ -137,14 +137,14 @@ const Dashboard = ({ session }) => {
                         <div className="merchantCards">
                             <div className="merchantCardTextContent">
                                 <div>Sales</div>
-                                <div>${
-                                    !salesAmount.requestState.error ?
-                                        salesAmount.requestState.loading ?
-                                            <CircularProgress size="small" color="inherit" />
-                                            :
-                                            salesAmount.requestState.data?.value
+                                <div>{
+                                    salesAmount.requestState.loading ?
+                                        <div className="circular-progress-container circular-progress-container-left-align"><CircularProgress size={20} color="inherit" /></div>
                                         :
-                                        <div className="dash-item-no-data-container">...</div>
+                                        !salesAmount.requestState.error ?
+                                            "$" + salesAmount.requestState.data?.value
+                                            :
+                                            <div className="dash-item-no-data-container">...</div>
                                 }</div>
                             </div>
                             <div className="merchantCardBackgroundIcons">
@@ -156,13 +156,13 @@ const Dashboard = ({ session }) => {
                                 <div>Customers</div>
                                 <div>
                                     {
-                                        !customerCount.requestState.error ?
-                                            customerCount.requestState.loading ?
-                                                <CircularProgress size="small" color="inherit" />
-                                                :
-                                                customerCount.requestState.data?.value
+                                        customerCount.requestState.loading ?
+                                            <div className="circular-progress-container circular-progress-container-left-align"><CircularProgress size={20} color="inherit" /></div>
                                             :
-                                            <div className="dash-item-no-data-container">...</div>
+                                            !customerCount.requestState.error ?
+                                                customerCount.requestState.data?.value
+                                                :
+                                                <div className="dash-item-no-data-container">...</div>
                                     }
                                 </div>
                             </div>
@@ -175,13 +175,13 @@ const Dashboard = ({ session }) => {
                                 <div>Delivered Orders</div>
                                 <div>
                                     {
-                                        !deliveredOrdersCount.requestState.error ?
-                                            deliveredOrdersCount.requestState.loading ?
-                                                <CircularProgress size="small" color="inherit" />
-                                                :
-                                                deliveredOrdersCount.requestState.data?.value
+                                        deliveredOrdersCount.requestState.loading ?
+                                            <div className="circular-progress-container circular-progress-container-left-align"><CircularProgress size={20} color="inherit" /></div>
                                             :
-                                            <div className="dash-item-no-data-container">...</div>
+                                            !deliveredOrdersCount.requestState.error ?
+                                                deliveredOrdersCount.requestState.data?.value
+                                                :
+                                                <div className="dash-item-no-data-container">...</div>
                                     }
                                 </div>
                             </div>
@@ -195,17 +195,17 @@ const Dashboard = ({ session }) => {
                         <div className="merchantDashboardGrid merchantDashboardGrid01">
                             <div className="dash-items-title-container">
                                 <div>Your Monthly Sales</div>
-                                <div>Trends on the revenue generated per month</div>
+                                <div>Trends on the orders delivered per month</div>
                             </div>
                             <div className="merchantGridContainer">
                                 {
-                                    !salesData.requestState.error ?
-                                        salesData.requestState.loading ?
-                                            <CircularProgress size="small" color="inherit" />
-                                            :
-                                            <ChartSales xAxesLabel={"Months"} yAxesLabel={"Quantity"} labels={Object.keys(salesData.requestState.data)} values={Object.values(salesData.requestState.data)} />
+                                    salesData.requestState.loading ?
+                                        <div className="circular-progress-container"><CircularProgress size={20} color="inherit" /></div>
                                         :
-                                        <div className="dash-item-no-data-container">...</div>
+                                        !salesData.requestState.error ?
+                                            <ChartSales xAxesLabel={"Months"} yAxesLabel={"Quantity"} labels={Object.keys(salesData.requestState.data)} values={Object.values(salesData.requestState.data)} />
+                                            :
+                                            <div className="dash-item-no-data-container">...</div>
                                 }
 
                             </div>
@@ -230,13 +230,13 @@ const Dashboard = ({ session }) => {
                             </div>
                             <div className="merchantGridContainer">
                                 {
-                                    !categoriesData.requestState.error ?
-                                        categoriesData.requestState.loading ?
-                                            <CircularProgress size="small" color="inherit" />
-                                            :
-                                            <ChartCategories labels={Object.keys(categoriesData.requestState.data)} values={Object.values(categoriesData.requestState.data)} />
+                                    categoriesData.requestState.loading ?
+                                        <div className="circular-progress-container"><CircularProgress size={20} color="inherit" /></div>
                                         :
-                                        <div className="dash-item-no-data-container">...</div>
+                                        !categoriesData.requestState.error ?
+                                            <ChartCategories labels={Object.keys(categoriesData.requestState.data)} values={Object.values(categoriesData.requestState.data)} />
+                                            :
+                                            <div className="dash-item-no-data-container">...</div>
                                 }
                             </div>
                         </div>
