@@ -123,6 +123,11 @@
   justify-content: flex-start;
 }
 
+.tiles-icon img {
+  width: 100%;
+  height: 100%;
+}
+
 .tiles-icon span {
   font-size: 300px;
   font-weight: 100;

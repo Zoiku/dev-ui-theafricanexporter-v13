@@ -7,6 +7,11 @@ import howitworks2 from "../Assets/2.png";
 import howitworks3 from "../Assets/3.png";
 import howitworks4 from "../Assets/4.png";
 
+import globe from "../Assets/Hands - Earth.png";
+import travel from "../Assets/Charco - Travel International.png";
+import we from "../Assets/The Movement - Your World.png";
+import trees from "../Assets/Allura - Trees.png";
+
 const About = () => {
     const location = useLocation();
     const [activeLink, setActiveLink] = useState("");
@@ -37,36 +42,40 @@ const About = () => {
                             <div className="section-content">
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        <span className="material-symbols-rounded globe floating-animation">
+                                        {/* <span className="material-symbols-rounded globe floating-animation">
                                             language
-                                        </span>
+                                        </span> */}
+                                        <img src={globe} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">TheAfricanExporter.com</span> is a B2B marketplace connecting Global buyers directly to wholesale exporters of Agro – based products in Africa.</div>
                                 </div>
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        <span className="material-symbols-rounded">
+                                        {/* <span className="material-symbols-rounded">
                                             diversity_2
-                                        </span>
+                                        </span> */}
+                                        <img src={travel} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Our raison d’etre</span> is to champion and facilitate the diversification of Africa’s exports through a fanatical focus on Agro – based products.</div>
                                 </div>
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        <span className="material-symbols-rounded">
+                                        {/* <span className="material-symbols-rounded">
                                             forest
-                                        </span>
+                                        </span> */}
+                                        <img src={trees} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Africa</span>with its enormous natural resources and a population of 1.2 people contributes a paltry 3% to global trade. Intra – continental trade is only 17%, compared with 59% for Asia and 68% for Europe.</div>
                                 </div>
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        <span className="material-symbols-rounded">
+                                        {/* <span className="material-symbols-rounded">
                                             crisis_alert
-                                        </span>
+                                        </span> */}
+                                        <img src={we} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">We</span>are on an avowed mission to rewrite Africa’s narrative, thereby exponentially increasing intra – continental trade as well as its contribution to global trade.</div>
                                 </div>
