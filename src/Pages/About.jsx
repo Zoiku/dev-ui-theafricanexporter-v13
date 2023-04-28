@@ -42,9 +42,6 @@ const About = () => {
                             <div className="section-content">
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        {/* <span className="material-symbols-rounded globe floating-animation">
-                                            language
-                                        </span> */}
                                         <img src={globe} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">TheAfricanExporter.com</span> is a B2B marketplace connecting Global buyers directly to wholesale exporters of Agro – based products in Africa.</div>
@@ -52,9 +49,6 @@ const About = () => {
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        {/* <span className="material-symbols-rounded">
-                                            diversity_2
-                                        </span> */}
                                         <img src={travel} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Our raison d’etre</span> is to champion and facilitate the diversification of Africa’s exports through a fanatical focus on Agro – based products.</div>
@@ -62,9 +56,6 @@ const About = () => {
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        {/* <span className="material-symbols-rounded">
-                                            forest
-                                        </span> */}
                                         <img src={trees} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Africa</span>with its enormous natural resources and a population of 1.2 people contributes a paltry 3% to global trade. Intra – continental trade is only 17%, compared with 59% for Asia and 68% for Europe.</div>
@@ -72,9 +63,6 @@ const About = () => {
 
                                 <div className="company-tiles-container">
                                     <div className="tiles-icon">
-                                        {/* <span className="material-symbols-rounded">
-                                            crisis_alert
-                                        </span> */}
                                         <img src={we} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">We</span>are on an avowed mission to rewrite Africa’s narrative, thereby exponentially increasing intra – continental trade as well as its contribution to global trade.</div>
@@ -139,18 +127,20 @@ const About = () => {
                             ?
                             <section id="payment-options">
                                 <div className="about-section-primary-title">Any of the following <span className="special-text-style">Payment Options</span> are accepted</div>
-                                <div className="section-content" style={{ marginTop: 30 }}>
-
+                                <div className="section-content">
                                     <div id="payment-options-cash-against-document" className="payment-section-container non-alternate">
                                         <div className="payment-option-title-container">Documentary Collections
                                             <div style={{ fontSize: "small", color: "#efefef" }}>( Cash against Document )</div>
                                             <br />
                                             <span className="material-symbols-rounded">
                                                 content_copy
-                                            </span></div>
+                                            </span>
+                                        </div>
                                         <div className="payment-option-text">
-                                            With this option, 10% of the total amount payable has to be deposited into an Escrow account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid by Bank transfer once scanned copies of shipping douments have been sent to the Buyer. The funds in the Escrow account will also be released into our account simultaneously. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
-                                            <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into an Escrow account.</div>
+                                            <div>
+                                                With this option, 10% of the total amount payable has to be deposited into an Escrow account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid by Bank transfer once scanned copies of shipping douments have been sent to the Buyer. The funds in the Escrow account will also be released into our account simultaneously. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
+                                                <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into an Escrow account.</div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -160,10 +150,13 @@ const About = () => {
                                             <br />
                                             <span className="material-symbols-rounded">
                                                 account_balance
-                                            </span></div>
+                                            </span>
+                                        </div>
                                         <div className="payment-option-text">
-                                            An initial deposit of 10% of the total amount payable has to be deposited into our account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid once scanned copies of shipping documents have been sent to the Buyer. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
-                                            <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into our Bank account.</div>
+                                            <div>
+                                                An initial deposit of 10% of the total amount payable has to be deposited into our account, before the Order will be fulfilled by the Merchant. The remaining amount (90%) will be paid once scanned copies of shipping documents have been sent to the Buyer. Once 100% payment has been recieved, original copies of the shipping documents will be sent via courier to the Buyer.
+                                                <div className="proof-of-payment-update">Proof of payment will constitute the Buyer depositing 10% of the total transaction amount into our Bank account.</div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -173,10 +166,13 @@ const About = () => {
                                             <br />
                                             <span className="material-symbols-rounded">
                                                 receipt
-                                            </span></div>
+                                            </span>
+                                        </div>
                                         <div className="payment-option-text">
-                                            We only accept Irrevocable Letters of Credit with payment at Sight.
-                                            <div className="proof-of-payment-update">Proof of payment will constitute the receipt and confirmation of the Buyer’s Letter of Credit by our Bank.</div>
+                                            <div>
+                                                We only accept Irrevocable Letters of Credit with payment at Sight.
+                                                <div className="proof-of-payment-update">Proof of payment will constitute the receipt and confirmation of the Buyer’s Letter of Credit by our Bank.</div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -186,13 +182,16 @@ const About = () => {
                                             <br />
                                             <span className="material-symbols-rounded">
                                                 account_balance_wallet
-                                            </span></div>
+                                            </span>
+                                        </div>
                                         <div className="payment-option-text">
-                                            <div><span>Company Name</span>: <span style={{ fontWeight: 500 }}>AFRIGATEWAY LIMITED</span></div>
-                                            <div><span>Branch Name</span>: <span style={{ fontWeight: 500 }}>FIDELITY BANK GHANA</span></div>
-                                            <div><span>Bank Account Number</span>: <span style={{ fontWeight: 500 }}>1951191585112</span></div>
-                                            <div><span>Bank Branch</span>: <span style={{ fontWeight: 500 }}>HAATSO</span></div>
-                                            <div><span>Swift Code</span>: <span style={{ fontWeight: 500 }}>FBLIGHAC</span></div>
+                                            <div>
+                                                <div><span>Company Name</span>: <span style={{ fontWeight: 500 }}>AFRIGATEWAY LIMITED</span></div>
+                                                <div><span>Branch Name</span>: <span style={{ fontWeight: 500 }}>FIDELITY BANK GHANA</span></div>
+                                                <div><span>Bank Account Number</span>: <span style={{ fontWeight: 500 }}>1951191585112</span></div>
+                                                <div><span>Bank Branch</span>: <span style={{ fontWeight: 500 }}>HAATSO</span></div>
+                                                <div><span>Swift Code</span>: <span style={{ fontWeight: 500 }}>FBLIGHAC</span></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

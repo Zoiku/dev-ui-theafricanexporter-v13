@@ -223,7 +223,7 @@ html {
 }
 
 .request-section-body-validity > div {
-  /* border: none; */
+  border: none;
 }
 
 .request-section-body > div > span {
@@ -262,7 +262,7 @@ html {
 }
 
 .bold-note {
-  font-weight: 800 !important;
+  font-weight: 700 !important;
 }
 
 @keyframes dropping {

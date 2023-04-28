@@ -79,7 +79,7 @@ const steps = [
     },
     {
         label: "Delivered",
-        description: "Your order is being delivery.",
+        description: "Your order is being delivered.",
     },
 ];
 
@@ -191,7 +191,7 @@ const Orders = () => {
         dispatch({ type: SEND_REQUEST });
         const adminService = new AdminService();
         try {
-            const { errors } = await adminService.updateOrder(selectedOrderId, status);
+            const { errors } = await adminService.updateOrder(selectedOrder?.referenceCode, status);
             if (errors.length === 0) {
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 setRefreshTable(prev => !prev);

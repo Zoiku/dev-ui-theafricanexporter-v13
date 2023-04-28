@@ -234,8 +234,8 @@ const Dashboard = ({ session }) => {
 
                         <div className="merchantDashboardGrid merchantDashboardGrid03">
                             <div className="dash-items-title-container">
-                                <div>Your  Top Catergories</div>
-                                <div>Trends on your mostly requested product</div>
+                                <div>Categories per Delivery</div>
+                                <div>Trends on your most delivered products</div>
                             </div>
                             <div className="merchantGridContainer">
                                 {

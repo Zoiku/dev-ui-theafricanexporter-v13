@@ -112,7 +112,7 @@
 }
 
 .incoterm-settings-note-container > div:nth-child(1) {
-  font-weight: 700;
+  font-weight: 800 !important;
 }
 
 .incoterm-settings-note-container > div:nth-child(2) {
@@ -259,12 +259,19 @@
   font-size: small;
   text-transform: capitalize;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .incoterm-table-offers-admin > div:nth-child(1)::before {
-  content: "\039f	";
+  content: "";
   margin: 0 10px 0 0;
+  border-left: 5px solid var(--tae-orange);
+  height: 5px;
   color: var(--tae-orange);
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
 }
 
 .admin-incoterm-settings-table-container {
@@ -277,6 +284,12 @@
 
 .dash-item-no-chart-data-container-request {
   height: 400px;
+}
+
+.adornment-label-container {
+  padding: 10px;
+  display: flex;
+  align-content: center;
 }
 
 @media screen and (max-width: 1000px) {

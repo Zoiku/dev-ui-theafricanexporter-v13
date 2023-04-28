@@ -151,7 +151,7 @@ const AdminDashboard = () => {
                 <div>
                     <div className="dash-items-title-container">
                         <div>Merchant to Buyer Ratio</div>
-                        <div>A positive merchant to buyers ratio should be at least 0.5</div>
+                        <div>A positive merchant to buyers ratio should be at least 1:5</div>
                     </div>
                     <div className="dash-item-value-container">
                         <div className="admin-card-icon-container">
@@ -244,8 +244,8 @@ const AdminDashboard = () => {
 
                 <div>
                     <div className="dash-items-title-container" style={{ marginBottom: 20 }}>
-                        <div>Requests per Categories</div>
-                        <div>Requests per product categories</div>
+                        <div>Categories per Request</div>
+                        <div>Trends on the most requested products</div>
                     </div>
                     <div className="dash-item-category-chart-container">
                         {

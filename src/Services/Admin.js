@@ -1,5 +1,23 @@
 import AxiosInstance from "./AxiosInstance";
 
+const calculateRatio = (a, b) => {
+  if (b !== 0) {
+    const gcd = calculateGCD(a, b);
+    const ratio = `${a / gcd}:${b / gcd}`;
+    return ratio;
+  } else {
+    throw new Error("Cannot divide by zero.");
+  }
+};
+
+const calculateGCD = (a, b) => {
+  if (b === 0) {
+    return a;
+  } else {
+    return calculateGCD(b, a % b);
+  }
+};
+
 const reduce = (array) => {
   const count = {};
   for (const element of array) {
@@ -248,7 +266,10 @@ export default class AdminService {
       const buyers = await AxiosInstance().get(buyersUrl, {
         signal
       });
-      data = (merchants.data.totalCount / buyers.data.totalCount).toFixed(2);
+
+      let merchantCount = Number(merchants.data.totalCount);
+      let buyerCount = Number(buyers.data.totalCount);
+      data = calculateRatio(merchantCount, buyerCount);
     } catch (error) {
       errors.push(error);
     }

@@ -182,7 +182,7 @@ const Register = () => {
             const { errors } = await authService.verifyCode(verificationCode, email, role);
             if (errors.length === 0) {
                 setOpenDrawer(false);
-                handleVerificationSuccessfull("Account created and activated successfully", 3000);
+                handleVerificationSuccessfull("Account created successfully, please wait while you account is being activated", 3000);
                 dispatch({ type: REQUEST_SUCCESSFUL });
                 navigate("/login");
             } else {
@@ -396,7 +396,7 @@ const Register = () => {
                             <FormControl required fullWidth>
                                 <InputLabel>Business Type</InputLabel>
                                 <Select value={state.payload?.typeLabel} name="typeLabel" label="Business Type" onChange={handleChange}>
-                                    <MenuItem value="Manufacturer/Trader">Manufacturer/Trader</MenuItem>
+                                    <MenuItem value="Manufacturer/Producer">Manufacturer/Producer</MenuItem>
                                     <MenuItem value="Trader">Trader</MenuItem>
                                 </Select>
                                 <FormHelperText sx={{ marginLeft: "20px" }}>

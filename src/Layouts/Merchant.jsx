@@ -9,16 +9,16 @@ import TextField from '@mui/material/TextField';
 import Drawer from '@mui/material/Drawer';
 import { useDispatch } from "react-redux";
 import { initCompany } from "../Redux/Features/Session"
-import { PrimaryButton, TextButton } from "../Material/Button";
+import { PrimaryButton } from "../Material/Button";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js"
-import { endSession } from "../Redux/Features/Session";
+// import { endSession } from "../Redux/Features/Session";
 import MerchantService from "../Services/Merchant";
 import { fillScreen } from "../Styles/Modal";
 import Modal from '@mui/material/Modal';
 import successImg from "../Assets/Charco - Launch.png";
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 
 const MerchantLayout = ({ session }) => {
     const { user } = session;
@@ -64,10 +64,10 @@ const MerchantLayout = ({ session }) => {
         rootDispatch(setAlert(payload));
     };
 
-    const handleLogout = () => (open) => {
-        setOpenDrawer(open);
-        rootDispatch(endSession());
-    };
+    // const handleLogout = () => (open) => {
+    //     setOpenDrawer(open);
+    //     rootDispatch(endSession());
+    // };
 
     useEffect(() => {
         if (user.hasOwnProperty('profile')) {
@@ -114,11 +114,11 @@ const MerchantLayout = ({ session }) => {
 
                     <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
 
-                    <div style={{ margin: "10px 0 0 0" }}>
+                    {/* <div style={{ margin: "10px 0 0 0" }}>
                         <Tooltip title="Clicking skip will automatically log you out" placement="right-end">
                             <TextButton onClick={handleLogout(true)} size="small" variant="text" color="error">Skip</TextButton>
                         </Tooltip>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </Box>

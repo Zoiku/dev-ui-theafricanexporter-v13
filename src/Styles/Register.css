@@ -86,11 +86,6 @@
   padding: 0 8px;
 }
 
-.quick-links-container > div:nth-child(2) {
-  border-left: 1px solid #efefef;
-  border-right: 1px solid #efefef;
-}
-
 .otp-controller-container {
   margin: 30px 0;
 }

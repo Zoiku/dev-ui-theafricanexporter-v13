@@ -24,16 +24,37 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
 
-import teakround1 from "../Assets/log.jpg";
-import teakround2 from "../Assets/log.jpg";
-import teaksquare1 from "../Assets/log-1.24e2cbd33e776623f99e.jpg";
-import teaksquare2 from "../Assets/log-1.24e2cbd33e776623f99e.jpg";
-
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { standard } from "../Styles/Modal";
 import { Puller } from "../Material/Drawer";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+
+import tr11 from "../Assets/Logs/t11.jpg";
+import tr12 from "../Assets/Logs/t12.jpg";
+import tr13 from "../Assets/Logs/t13.jpg";
+import tr14 from "../Assets/Logs/t14.jpg";
+import tr15 from "../Assets/Logs/t15.jpg";
+import tr16 from "../Assets/Logs/t16.jpg";
+import tr17 from "../Assets/Logs/t17.jpg";
+import tr18 from "../Assets/Logs/t18.jpg";
+import tr19 from "../Assets/Logs/t19.jpg";
+import tr20 from "../Assets/Logs/t20.jpg";
+import tre from "../Assets/Logs/te.jpg";
+import tre1 from "../Assets/Logs/te1.jpg";
+import tre2 from "../Assets/Logs/te2.jpg";
+import tre3 from "../Assets/Logs/te4.jpg";
+
+import ts1 from "../Assets/Logs/t1.jpg";
+import ts2 from "../Assets/Logs/t2.jpg";
+import ts3 from "../Assets/Logs/t3.jpg";
+import ts4 from "../Assets/Logs/t4.jpg";
+import ts5 from "../Assets/Logs/t5.jpg";
+import ts6 from "../Assets/Logs/t6.jpg";
+import ts7 from "../Assets/Logs/t7.jpg";
+import ts8 from "../Assets/Logs/t8.jpg";
+import ts9 from "../Assets/Logs/t9.jpg";
+import ts10 from "../Assets/Logs/t10.jpg";
 
 const SPECIFICATION_DETAILS = {
     "Teak Round Logs": [{ name: "length", label: "Length", units: [{ name: "lengthUnit", values: ["cm", "m"] }] }, { name: "diameter", label: "Diameter", defaultUnit: "cm", units: [{ name: "diameterUnit", values: ["cm"] }] }, { name: "quantity", label: "Quantity", defaultUnit: "20ft Container", units: [{ name: "quantityUnit", values: ["20ft Container"] }] }],
@@ -41,8 +62,8 @@ const SPECIFICATION_DETAILS = {
 };
 
 const IMAGES_TO_DISPLAY = {
-    "Teak Round Logs": [teakround1, teakround2],
-    "Teak Square Logs": [teaksquare1, teaksquare2]
+    "Teak Round Logs": [tr11, tr13, tr15, tr17, tre, tre1, tre2, tre3],
+    "Teak Square Logs": [ts2, ts4, ts5, ts7, ts8, ts10]
 }
 
 const RequestQuote = ({ session }) => {
