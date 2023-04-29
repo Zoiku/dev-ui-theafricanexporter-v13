@@ -265,6 +265,13 @@ html {
   font-weight: 700 !important;
 }
 
+.selected-quantities-offers {
+  text-align: right;
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  font-size: small;
+}
+
 @keyframes dropping {
   from {
     top: -30px;

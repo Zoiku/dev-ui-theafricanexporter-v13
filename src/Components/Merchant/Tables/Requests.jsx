@@ -493,7 +493,9 @@ const Requests = () => {
                         request.volumeUnit = request.quotationProducts[0].product.volume.unit;
                         request.createdOn = new Date(request.createdOn).toUTCString().slice(0, 25);
                         return 1;
-                    })
+                    });
+
+                    filteredData.sort((a, b) => b.requestNo - a.requestNo); 
                     setRows(filteredData);
                 }
             } catch (error) { }

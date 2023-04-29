@@ -235,6 +235,7 @@ const Register = () => {
         return () => abortController.abort();
     }, []);
 
+
     const list = () => (
         <Box
             component="form"
@@ -457,7 +458,8 @@ const Register = () => {
                             </FormGroup>
                         </div>
 
-                        <div className="captcha-container"></div>
+                        <div className="captcha-container">
+                        </div>
 
                         <PrimaryButton disabled={!consent} type="submit" variant="contained" loading={state.requestState.loading}>Sign up</PrimaryButton>
 

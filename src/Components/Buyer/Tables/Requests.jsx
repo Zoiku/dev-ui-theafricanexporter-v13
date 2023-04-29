@@ -41,6 +41,7 @@ const PRODUCTS = {
 }
 
 const Requests = () => {
+    const [totalSelected, setTotalSelected] = useState(0);
     const [requestedQuantity, setRequestedQuantity] = useState(0);
     const [offerSelections, setOfferSelections] = useState([]);
     const [canPlaceOrder, setCanPlaceOrder] = useState(false);
@@ -162,6 +163,8 @@ const Requests = () => {
             const totalSelectedOfferQuantity = userSelection.reduce((previousVal, currentVal) => {
                 return previousVal + currentVal.orderQuantity;
             }, 0);
+
+            setTotalSelected(totalSelectedOfferQuantity);
 
             if (totalSelectedOfferQuantity === requestedQuantity) {
                 setCanPlaceOrder(true);
@@ -377,6 +380,7 @@ const Requests = () => {
         <Box role="presentation">
             <div>
                 <div className="offers-data-grid-container">
+                    <div className="selected-quantities-offers">{`[${totalSelected} / ${requestedQuantity} selected quantity]`}</div>
                     <DataGrid
                         components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
                         className="offers-standard-table"
@@ -468,7 +472,7 @@ const Requests = () => {
                         <div className="incoterm-settings-table-note-container">Kindly note that all prices are quoted in ($)</div>
                     </div>
                 </section>
-                
+
                 <section className="request-offer-company-profile-section">
                     <div>
                         <div>Company Profile</div>

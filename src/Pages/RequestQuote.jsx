@@ -23,7 +23,7 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
-
+import ProgressiveImage from "react-progressive-graceful-image";
 import Modal from '@mui/material/Modal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { standard } from "../Styles/Modal";
@@ -55,6 +55,7 @@ import ts7 from "../Assets/Logs/t7.jpg";
 import ts8 from "../Assets/Logs/t8.jpg";
 import ts9 from "../Assets/Logs/t9.jpg";
 import ts10 from "../Assets/Logs/t10.jpg";
+
 
 const SPECIFICATION_DETAILS = {
     "Teak Round Logs": [{ name: "length", label: "Length", units: [{ name: "lengthUnit", values: ["cm", "m"] }] }, { name: "diameter", label: "Diameter", defaultUnit: "cm", units: [{ name: "diameterUnit", values: ["cm"] }] }, { name: "quantity", label: "Quantity", defaultUnit: "20ft Container", units: [{ name: "quantityUnit", values: ["20ft Container"] }] }],
@@ -431,7 +432,15 @@ const RequestQuote = ({ session }) => {
                             >
                                 {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) =>
                                     <SwiperSlide key={index}>
-                                        <img src={src} alt="" />
+                                        <ProgressiveImage src={src} >
+                                            {(src, loading) => (
+                                                <img
+                                                    className={`image${loading ? " loading" : " loaded"}`}
+                                                    src={src}
+                                                    alt=""
+                                                />
+                                            )}
+                                        </ProgressiveImage>
                                     </SwiperSlide>
                                 )}
                             </Swiper>

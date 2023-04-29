@@ -162,6 +162,7 @@
   margin: 0 5px;
   position: relative;
   overflow: clip;
+  height: 300px;
 }
 
 .coming-soon-card-container img {

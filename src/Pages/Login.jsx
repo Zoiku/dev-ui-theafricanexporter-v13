@@ -96,7 +96,7 @@ const Login = () => {
                         onSubmit={handleSubmit}
                     >
                         <TextField required error={state.requestState.error != null} onChange={handleChange} type="email" name="username" label="Email" variant="outlined" />
-                        <TextField required InputProps={{ endAdornment: <div style={{ width: "180px", textAlign: "right", background: "inherit" }}><NavLink style={navLinkStyle2} to="/forgotpassword">Forgot Password?</NavLink></div> }} error={state.requestState.error != null} onChange={handleChange} type="password" name="password" label="Password" variant="outlined" />
+                        <TextField required InputProps={{ endAdornment: <div style={{ width: "180px", textAlign: "right" }}><NavLink style={navLinkStyle2} to="/forgotpassword">Forgot Password?</NavLink></div> }} error={state.requestState.error != null} onChange={handleChange} type="password" name="password" label="Password" variant="outlined" />
                         <div style={{ fontSize: "small", color: "gray" }}>
                             <span>Don't have an account? </span>
                             <span><NavLink style={navLinkStyle} to="/buyer/register">Click here to register</NavLink></span>

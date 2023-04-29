@@ -40,11 +40,14 @@ import { useState, useEffect } from "react";
 import ProductService from "../Services/Product";
 import { useNavigate } from "react-router-dom";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
+import ProgressiveImage from "react-progressive-graceful-image";
 
 const IMAGES_TO_DISPLAY = {
     "Teak Round Logs": [tr11, tr13, tr15, tr17, tre, tre1, tre2, tre3],
     "Teak Square Logs": [ts2, ts4, ts5, ts7, ts8, ts10]
 }
+
+const COMING_SOON = ["Tali", "Denya", "Senya", "Mahogany", "Wawa", "Koto", "Iroko", "Azobe"]
 
 const Home = ({ session }) => {
     const [products, setProducts] = useState(null);
@@ -130,7 +133,15 @@ const Home = ({ session }) => {
                                         {
                                             IMAGES_TO_DISPLAY[product.name].map((src, index) =>
                                                 <SwiperSlide key={index}>
-                                                    <img src={src} alt="" />
+                                                    <ProgressiveImage src={src} >
+                                                        {(src, loading) => (
+                                                            <img
+                                                                className={`image${loading ? " loading" : " loaded"}`}
+                                                                src={src}
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                    </ProgressiveImage>
                                                 </SwiperSlide>
                                             )
                                         }
@@ -147,54 +158,22 @@ const Home = ({ session }) => {
                 <div className="home-coming-soon-container">
                     <div className="home-coming-soon-title">Coming Soon</div>
                     <Marquee className="coming-soon-marquee" gradient={false} pauseOnClick={true} speed={10} style={{ marginTop: 20 }}>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
+                        {COMING_SOON.map((product, index) =>
+                            <div key={index} className="coming-soon-card-container">
+                                <div className="coming-soon-card-img">
+                                    <ProgressiveImage>
+                                        {(_src, loading) => (
+                                            <img
+                                                className={`image${loading ? " loading" : " loaded"}`}
+                                                src={comingsoon}
+                                                alt={product}
+                                            />
+                                        )}
+                                    </ProgressiveImage>
+                                </div>
+                                <div className="coming-soon-card-name">{product}</div>
                             </div>
-                            <div className="coming-soon-card-name">Tali</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Denya</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Senya</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Mahogany</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Wawa</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Koto</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Iroko</div>
-                        </div>
-                        <div className="coming-soon-card-container">
-                            <div className="coming-soon-card-img">
-                                <img src={comingsoon} alt="" />
-                            </div>
-                            <div className="coming-soon-card-name">Azobe</div>
-                        </div>
+                        )}
                     </Marquee>
                 </div>
             </div>
