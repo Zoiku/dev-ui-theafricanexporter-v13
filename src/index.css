@@ -47,9 +47,8 @@ html {
   -webkit-backdrop-filter: blur(12.3px) !important;
 }
 
-.Mui-selected {
+.css-16o16h3-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: var(--tae-orange) !important;
-  font-weight: 500;
 }
 
 .MuiTabs-indicator {

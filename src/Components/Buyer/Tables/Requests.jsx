@@ -204,11 +204,9 @@ const Requests = () => {
     ];
 
     const columnsOffers = [
-        { field: "index", headerName: "Number", width: 80 },
-        { field: "requestNo", headerName: "Request #", width: 100 },
-        { field: "company", headerName: "Company", width: 130 },
-        { field: "quantity", headerName: "Quantity", width: 100 },
-        { field: "destination", headerName: "Destination", width: 150 },
+        { field: "index", headerName: "Number", width: 150 },
+        { field: "company", headerName: "Company", width: 200 },
+        { field: "quantity", headerName: "Quantity", width: 150 },
         { field: "expiryDate", headerName: "Date", width: 150 },
         { field: "more", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(row?.offer)} size="small" variant="contained">View</SmallPrimary> },
     ];
