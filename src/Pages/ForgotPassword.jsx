@@ -110,10 +110,12 @@ const ForgotPassword = () => {
         <div className="Forgot-Password">
             <div className="forgot-password-form-container">
                 <div className="left-container">
-                    <NavLink className="go-back-container" style={navLinkStyle} to="/login">
-                        <ArrowBackIosIcon className="go-back-container-items" />
-                        <div className="go-back-container-items">Login</div>
-                    </NavLink>
+                    <div className="go-back-container">
+                        <NavLink className="go-back" style={navLinkStyle} to="/login">
+                            <span className="go-back-items"><ArrowBackIosIcon sx={{ fontSize: "medium" }} /></span>
+                            <span className="go-back-items">Login</span>
+                        </NavLink>
+                    </div>
                     <div className="forgot-password-form-desc">
                         <div>Reset Password ?</div>
                         <div>Kindly enter your email address to reset password</div>

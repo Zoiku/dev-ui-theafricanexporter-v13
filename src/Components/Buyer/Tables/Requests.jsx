@@ -40,6 +40,16 @@ const PRODUCTS = {
     TEAK_ROUND_LOGS: "Teak Round Logs",
 }
 
+const selectedQuantityStatus = (total, requested) => {
+    if (total === requested) {
+        return "good-selected"
+    } else if (total > requested) {
+        return "bad-selected"
+    } else {
+        return "default-selected"
+    }
+}
+
 const Requests = () => {
     const [totalSelected, setTotalSelected] = useState(0);
     const [requestedQuantity, setRequestedQuantity] = useState(0);
@@ -208,7 +218,7 @@ const Requests = () => {
         { field: "company", headerName: "Company", width: 200 },
         { field: "quantity", headerName: "Quantity", width: 150 },
         { field: "expiryDate", headerName: "Date", width: 150 },
-        { field: "more", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary loading={viewOfferLoading} onClick={() => handleSelectRequestOffer(row?.offer)} size="small" variant="contained">View</SmallPrimary> },
+        { field: "more", headerName: "", width: 80, renderCell: ({ row }) => <SmallPrimary disabled={viewOfferLoading} onClick={() => handleSelectRequestOffer(row?.offer)} size="small" variant="contained">View</SmallPrimary> },
     ];
 
     const handleOrderSubmit = async () => {
@@ -378,7 +388,10 @@ const Requests = () => {
         <Box role="presentation">
             <div>
                 <div className="offers-data-grid-container">
-                    <div className="selected-quantities-offers">{`[${totalSelected} / ${requestedQuantity} selected quantity]`}</div>
+                    <div className="selected-quantities-offers">
+                        <div>{"(*)"} Select offers to match requested quantity</div>
+                        <div className={selectedQuantityStatus(totalSelected, requestedQuantity)}>{`[${totalSelected} / ${requestedQuantity} selected quantity]`}</div>
+                    </div>
                     <DataGrid
                         components={{ LoadingOverlay: LinearProgress, NoRowsOverlay: () => <Overlay label="Offers" /> }}
                         className="offers-standard-table"

@@ -7,6 +7,21 @@ const setSessionToken = (token) => {
 };
 
 export default class AuthService {
+  async isLoggedBefore(id) {
+    let errors = [];
+    const url = `/user/logged/${id}`;
+
+    try {
+      await AxiosInstance().patch(url);
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors
+    };
+  }
+
   async register(payload) {
     let errors = [];
     const url = "/users";

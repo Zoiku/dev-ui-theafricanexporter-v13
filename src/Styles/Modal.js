@@ -11,6 +11,17 @@ export const inWebWider = {
   background: "white"
 };
 
+export const inWebTut = {
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 900,
+  borderRadius: "5px",
+  outline: 0,
+  background: "white"
+};
+
 export const fillScreen = {
   position: "relative",
   width: "100%",

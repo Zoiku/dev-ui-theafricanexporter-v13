@@ -1,4 +1,3 @@
-import "../../Styles/Users.css";
 import UsersBuyer from "../../Components/Admin/Tables/UsersBuyer";
 import UsersMerchant from "../../Components/Admin/Tables/UsersMerchant";
 import Tabs from '@mui/material/Tabs';

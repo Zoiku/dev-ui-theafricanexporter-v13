@@ -29,10 +29,10 @@ const Nav = ({ session }) => {
     const handleRedirect = () => {
         navigate("/");
     };
-    const toggleMenu = () => (open) => {
+    const toggleMenu = (open) => () => {
         setOpenMenu(open);
     };
-    const handleLogout = () => (open) => {
+    const handleLogout = (open) => () => {
         setOpenMenu(open);
         rootDispatch(endSession());
     };

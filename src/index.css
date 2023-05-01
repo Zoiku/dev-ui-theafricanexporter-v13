@@ -265,10 +265,23 @@ html {
 }
 
 .selected-quantities-offers {
-  text-align: right;
-  margin: 0 0 5px 0;
-  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 15px 0;
   font-size: small;
+  font-weight: bold;
+}
+
+.good-selected {
+  color: var(--tae-orange);
+}
+
+.bad-selected {
+  color: red;
+}
+
+.default-selected {
+  color: gray;
 }
 
 @keyframes dropping {

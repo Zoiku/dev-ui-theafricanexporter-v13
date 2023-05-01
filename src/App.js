@@ -1,7 +1,6 @@
 import { useEffect, useState, useReducer, useMemo } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "./Services/Auth";
-// import Test from "./Test";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -94,7 +93,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     session.isLogged && fetchData();
@@ -182,7 +181,9 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* <Route element={<Test />} path="/test" /> */}
+        <Route element={<DefaultLayout session={session} />}>
+          <Route path="*" element={<Home session={session} />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -13,18 +13,18 @@ import { PrimaryButton } from "../Material/Button";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import { INPUTING, SEND_REQUEST, REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js"
-// import { endSession } from "../Redux/Features/Session";
 import MerchantService from "../Services/Merchant";
 import { fillScreen } from "../Styles/Modal";
 import Modal from '@mui/material/Modal';
-import successImg from "../Assets/Charco - Launch.png";
-// import Tooltip from '@mui/material/Tooltip';
+import successImg from "../Assets/Charco - Good Job.png";
+import Tutorial from "../Components/Tutorial";
 
 const MerchantLayout = ({ session }) => {
     const { user } = session;
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
     const rootDispatch = useDispatch();
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [notLoggedBefore, setNotLoggedBefore] = useState(false);
 
     const handleChange = (e) => { dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value }); }
 
@@ -64,10 +64,13 @@ const MerchantLayout = ({ session }) => {
         rootDispatch(setAlert(payload));
     };
 
-    // const handleLogout = () => (open) => {
-    //     setOpenDrawer(open);
-    //     rootDispatch(endSession());
-    // };
+    useEffect(() => {
+        if (!user?.profile?.user.isLogged) {
+            setNotLoggedBefore(false);
+        }else {
+            setNotLoggedBefore(true);
+        }
+    }, [user]);
 
     useEffect(() => {
         if (user.hasOwnProperty('profile')) {
@@ -76,7 +79,6 @@ const MerchantLayout = ({ session }) => {
                 setOpenDrawer(true);
             }
         }
-
     }, [user]);
 
     const list = () => (
@@ -113,62 +115,60 @@ const MerchantLayout = ({ session }) => {
                     </div>
 
                     <div><PrimaryButton loading={state.requestState.loading} type="submit" variant="contained" sx={{ width: "100%" }}>Complete Profile</PrimaryButton></div>
-
-                    {/* <div style={{ margin: "10px 0 0 0" }}>
-                        <Tooltip title="Clicking skip will automatically log you out" placement="right-end">
-                            <TextButton onClick={handleLogout(true)} size="small" variant="text" color="error">Skip</TextButton>
-                        </Tooltip>
-                    </div> */}
                 </div>
             </div>
         </Box>
     );
 
     return (
-        <div className="Merchant-Layout App-Layout">
-            <div>
-                <Modal
-                    open={openDrawer}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    className="modal-container"
-                >
-                    <Box sx={fillScreen}>
-                        <div className="modal-body">
+        notLoggedBefore ?
+            <Tutorial user={user} openDrawer={notLoggedBefore} role="MERCHANT" />
+            :
+            <div className="Merchant-Layout App-Layout">
+                <div>
+                    <Modal
+                        open={openDrawer}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                        className="modal-container"
+                    >
+                        <Box sx={fillScreen}>
+                            <div className="modal-body">
+                                {list()}
+                            </div>
+                        </Box>
+                    </Modal>
+                </div>
+
+                <div>
+                    <Drawer
+                        className="drawer-container"
+                        variant="temporary"
+                        anchor="bottom"
+                        open={openDrawer}
+                    >
+                        <div className="drawer-body otp-drawer-body">
                             {list()}
                         </div>
-                    </Box>
-                </Modal>
-            </div>
-
-            <div>
-                <Drawer
-                    className="drawer-container"
-                    variant="temporary"
-                    anchor="bottom"
-                    open={openDrawer}
-                >
-                    <div className="drawer-body otp-drawer-body">
-                        {list()}
-                    </div>
-                </Drawer>
-            </div>
-
-            <Nav session={session} />
-            <div className="app-container">
-                <div className="app-menu-container">
-                    <Menu />
+                    </Drawer>
                 </div>
-                <div className="app-body-container">
-                    <div className="app-body">
-                        <Outlet />
+
+                <Nav session={session} />
+
+                <div className="app-container">
+                    <div className="app-menu-container">
+                        <Menu />
+                    </div>
+                    <div className="app-body-container">
+                        <div className="app-body">
+                            <Outlet />
+                        </div>
+                    </div>
+                    <div className="app-bottom-navigation">
+                        <AppNav />
                     </div>
                 </div>
-                <div className="app-bottom-navigation">
-                    <AppNav />
-                </div>
             </div>
-        </div>
     );
 }
 
