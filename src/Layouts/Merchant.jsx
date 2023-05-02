@@ -65,10 +65,13 @@ const MerchantLayout = ({ session }) => {
     };
 
     useEffect(() => {
-        if (!user?.profile?.user.isLogged) {
-            setNotLoggedBefore(false);
-        }else {
-            setNotLoggedBefore(true);
+        if (user.hasOwnProperty('profile')) {
+            const { isLoggedBefore } = user.profile.user;
+            if (isLoggedBefore) {
+                setNotLoggedBefore(false);
+            } else {
+                setNotLoggedBefore(true);
+            }
         }
     }, [user]);
 

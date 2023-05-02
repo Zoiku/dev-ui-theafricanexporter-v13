@@ -45,7 +45,7 @@ const Nav = ({ session }) => {
                 </div>
                 {
                     session.isLogged ?
-                        <Menu isOpen={openMenu} width={"100%"}>
+                        <Menu onOpen={toggleMenu(true)} onClose={toggleMenu(false)} isOpen={openMenu} width={"100%"}>
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/">
                                 <span>Home</span>
                             </NavLink>
@@ -63,7 +63,7 @@ const Nav = ({ session }) => {
                             </div>
                         </Menu>
                         :
-                        <Menu isOpen={openMenu} width={"100%"}>
+                        <Menu onOpen={toggleMenu(true)} onClose={toggleMenu(false)} isOpen={openMenu} width={"100%"}>
                             <NavLink onClick={toggleMenu(false)} className="hamburger-menu-links" style={defaultNavStyle} to="/">
                                 <span>Home</span>
                             </NavLink>

@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, EffectFade } from "swiper";
-import getStarted from "../Assets/The Little Things - UI Design.svg";
+import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import Tooltip from "@mui/material/Tooltip";
@@ -79,7 +79,7 @@ const Tutorial = ({ openDrawer, role, user }) => {
                                             <div className="tutorialContentBodyContainer">
                                                 <div className="tutorialContentBody">
                                                     <div className="hello-message">Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span>, welcome to TheAfricanExporter!</div>
-                                                    <div className="extra-message-to-hello">Swipe to follow a quick application walkthrough</div>
+                                                    <div className="extra-message-to-hello">Swipe for a quick app walkthough</div>
                                                 </div>
                                             </div>
                                         </div>

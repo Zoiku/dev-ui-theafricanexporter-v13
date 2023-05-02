@@ -51,6 +51,10 @@ html {
   color: var(--tae-orange) !important;
 }
 
+.css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
+  color: var(--tae-orange) !important;
+}
+
 .MuiTabs-indicator {
   background: var(--tae-orange) !important;
 }

@@ -430,7 +430,7 @@ const Orders = () => {
                         </div>
                     </section>
                     <section className="sales-and-purchase-agreement-container">
-                        <div>C. Sales and purchanse agreement</div>
+                        <div>C. Sales and purchase agreement</div>
                         <div>
                             <div style={navLinkStyle} onClick={toggleDrawerPromptConfirm(true)}>Click to open sales and purchase agreement</div>
                             <div>
