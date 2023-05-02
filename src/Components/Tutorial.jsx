@@ -12,13 +12,48 @@ import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
+import completedTutorialImage from "../Assets/Allura - Exploring on Laptop.svg"
+
+import merchantStep1 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 1.png";
+import merchantStep2 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 2.png";
+import merchantStep3 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 3.png";
+import merchantStep4 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 4.png";
+import merchantStep5 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 5.png";
+import merchantStep6 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 6.png";
+import merchantStep7 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 7.png";
+
+import buyerStep1 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 1.png";
+import buyerStep2 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 2.png";
+import buyerStep3 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 3.png";
+import buyerStep4 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 4.png";
+import buyerStep5 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 5.png";
+import buyerStep6 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 6.png";
+import buyerStep7 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 7.png";
+import buyerStep8 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 8.png";
+import buyerStep9 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 9.png";
+import buyerStep10 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 10.png";
+import buyerStep11 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 11.png";
+
 
 const Tutorial = ({ openDrawer, role, user }) => {
     const [loading, setLoading] = useState(false);
+    const [slideEnd, setSlideEnd] = useState(false);
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
+    const CompletedTutorial = () => {
+        return (
+            <div className="completedTutorialContainer">
+                <div className="completedTutorial">
+                    <img src={completedTutorialImage} alt="" />
+                    <div>All right! You're all set and ready to go</div>
+                </div>
+            </div>
+        )
+    }
+
     const tutorialType = {
-        MERCHANT: <iframe className="tutorialEmbededContainer" title="tutorial" src="https://pitch.com/embed/45f1c9b9-0b1d-4d10-a6b5-7c8162b868e8" allow="fullscreen" allowFullScreen={true} style={{ border: 0 }}></iframe>,
-        BUYER: <iframe className="tutorialEmbededContainer" title="tutorial" src="https://pitch.com/embed/6c2bdfaf-3e54-4d5a-a7a0-b16797f0a9c9" allow="fullscreen" allowFullScreen={true} style={{ border: 0 }}></iframe>
+        MERCHANT: [merchantStep1, merchantStep2, merchantStep3, merchantStep4, merchantStep5, merchantStep6, merchantStep7],
+        BUYER: [buyerStep1, buyerStep2, buyerStep3, buyerStep4, buyerStep5, buyerStep6, buyerStep7, buyerStep8, buyerStep9, buyerStep10, buyerStep11]
     }
 
     const handleClose = async () => {
@@ -50,7 +85,13 @@ const Tutorial = ({ openDrawer, role, user }) => {
                             {loading ?
                                 <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
                                 :
-                                <span className="skipTutorialContent">Skip Tutorial</span>
+                                <div className={slideEnd ? "skipTutorialContent enlarge" : "skipTutorialContent"}>
+                                    {
+                                        slideEnd ? "Finish Tutorial"
+                                            :
+                                            "Skip Tutorial"
+                                    }
+                                </div>
                             }
                         </div>
 
@@ -60,6 +101,7 @@ const Tutorial = ({ openDrawer, role, user }) => {
                             pagination={true}
                             modules={[Pagination, Navigation, EffectFade]}
                             className="mySwiper"
+                            onReachEnd={() => setSlideEnd(true)}
                         >
                             <SwiperSlide>
                                 <div className="tutorialSwipeContainer">
@@ -82,8 +124,16 @@ const Tutorial = ({ openDrawer, role, user }) => {
                                 </div>
                             </SwiperSlide>
 
+                            {
+                                tutorialType[`${role}`].map((src, index) =>
+                                    <SwiperSlide key={index}>
+                                        <img src={src} alt="tutorial" />
+                                    </SwiperSlide>
+                                )
+                            }
+
                             <SwiperSlide>
-                                {tutorialType[`${role}`]}
+                                <CompletedTutorial />
                             </SwiperSlide>
                         </Swiper>
                     </div>
