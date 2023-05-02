@@ -36,8 +36,8 @@
 .tutorialComponent .swiper-button-prev {
     width: 10px;
     height: 10px;
-    padding: 18px;
-    border-radius: 10px;
+    padding: 13px;
+    border-radius: 5px;
     transition: all 0.2s ease;
     background: #efefef;
     color: black !important;
@@ -48,8 +48,8 @@
 
 .tutorialComponent .swiper-button-next::after,
 .tutorialComponent .swiper-button-prev::after {
-    font-size: 15px;
-    font-weight: 800;
+    font-size: small;
+    font-weight: 600;
 }
 
 .tutorialComponent .colored {
@@ -112,35 +112,24 @@
     position: relative;
 }
 
-.close-button-container {
+.skipTutorialContainer {
     z-index: 100;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: -50px;
     cursor: pointer;
-    color: rgb(255, 43, 43);
-}
-
-.skipTutorialContainer {
+    color: #fff;
+    font-weight: 500;
     font-size: small;
-    padding: 5px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    animation: blinking 1.5s ease infinite;
 }
 
-@keyframes blinking {
-    0% {
-        background: #efefefb6;
-    }
+.skipTutorialContent {
+    transition: all .2s ease;
+}
 
-    50% {
-        background: #fff;
-    }
-
-    100% {
-        background: #efefefb6;
-    }
+.skipTutorialContent:hover {
+    color: #dadada;
 }
 
 @media screen and (max-width: 1000px) {
