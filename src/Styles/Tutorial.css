@@ -5,7 +5,7 @@
 .tutorialComponent {
     height: 100%;
     width: 100%;
-    height: 500px;
+    height: 400px;
 }
 
 .tutorialComponent .swiper {
@@ -60,7 +60,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
-    height: 290px;
+    height: 200px;
 }
 
 .get-started-img img {
@@ -119,6 +119,28 @@
     top: 10px;
     cursor: pointer;
     color: rgb(255, 43, 43);
+}
+
+.skipTutorialContainer {
+    font-size: small;
+    padding: 5px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    animation: blinking 1.5s ease infinite;
+}
+
+@keyframes blinking {
+    0% {
+        background: #efefefb6;
+    }
+
+    50% {
+        background: #fff;
+    }
+
+    100% {
+        background: #efefefb6;
+    }
 }
 
 @media screen and (max-width: 1000px) {

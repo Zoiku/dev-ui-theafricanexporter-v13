@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, EffectFade } from "swiper";
 import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
-import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -50,11 +49,12 @@ const Tutorial = ({ openDrawer, role, user }) => {
                     <div className="tutorialComponent">
                         <Tooltip title="Close Tutorial">
                             <div onClick={handleClose} className="close-button-container">
-
                                 {loading ?
                                     <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
                                     :
-                                    <DisabledByDefaultRoundedIcon />
+                                    <div className="skipTutorialContainer">
+                                        <span>Skip</span>
+                                    </div>
                                 }
                             </div>
                         </Tooltip>

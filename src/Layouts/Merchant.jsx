@@ -67,6 +67,7 @@ const MerchantLayout = ({ session }) => {
     useEffect(() => {
         if (user.hasOwnProperty('profile')) {
             const { isLoggedBefore } = user.profile.user;
+            console.log(user);
             if (isLoggedBefore) {
                 setNotLoggedBefore(false);
             } else {

@@ -12,7 +12,7 @@ export default class AuthService {
     const url = `/user/logged/${id}`;
 
     try {
-      await AxiosInstance().patch(url);
+      await AxiosInstance().post(url);
     } catch (error) {
       errors.push(error);
     }
