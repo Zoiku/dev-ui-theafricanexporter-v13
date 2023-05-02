@@ -12,7 +12,7 @@ const BuyerLayout = ({ session }) => {
 
     useEffect(() => {
         if (user.hasOwnProperty('profile')) {
-            const { isLoggedBefore } = user.profile.user;
+            const { isLoggedBefore } = user.profile;
             if (isLoggedBefore) {
                 setNotLoggedBefore(false);
             } else {
