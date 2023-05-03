@@ -3,11 +3,13 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { inWebTut } from "../Styles/Modal";
 import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
 import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, EffectFade } from "swiper";
+import { EffectFade, Navigation, Pagination } from "swiper";
+
 import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
 import { useState } from "react";
@@ -34,8 +36,11 @@ import buyerStep9 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 9.
 import buyerStep10 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 10.png";
 import buyerStep11 from "../Assets/Walkthrough Images/Walkthrough (Buyer)/Step 11.png";
 
+import { initUser } from "../Redux/Features/Session";
+import { useDispatch } from "react-redux";
 
 const Tutorial = ({ openDrawer, role, user }) => {
+    const rootDispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [slideEnd, setSlideEnd] = useState(false);
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
@@ -58,12 +63,17 @@ const Tutorial = ({ openDrawer, role, user }) => {
 
     const handleClose = async () => {
         setLoading(true);
-        const id = user?.profile?.id;
+        const id = role === "BUYER" ? user.profile.id : role === "MERCHANT" && user.profile.user.id;
         const authService = new AuthService();
         try {
             const { errors } = await authService.isLoggedBefore(id);
             if (errors.length === 0) {
-                window.location.reload();
+                setLoading(false);
+                if (role === "MERCHANT") {
+                    rootDispatch(initUser({ user: { ...user.profile.user, isLoggedBefore: true } }));
+                } else if (role === "BUYER") {
+                    rootDispatch(initUser({ isLoggedBefore: true }));
+                }
             } else {
                 setLoading(false);
             }
@@ -85,9 +95,9 @@ const Tutorial = ({ openDrawer, role, user }) => {
                             {loading ?
                                 <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
                                 :
-                                <div className={slideEnd ? "skipTutorialContent enlarge" : "skipTutorialContent"}>
+                                <div className={slideEnd ? "skipTutorialContent skipTutorialContentEnlarge" : "skipTutorialContent"}>
                                     {
-                                        slideEnd ? "Finish Tutorial"
+                                        slideEnd ? "Get Started"
                                             :
                                             "Skip Tutorial"
                                     }
@@ -97,10 +107,12 @@ const Tutorial = ({ openDrawer, role, user }) => {
 
                         <Swiper
                             effect={"fade"}
+                            pagination={{
+                                type: "bullets",
+                            }}
                             navigation={true}
-                            pagination={true}
-                            modules={[Pagination, Navigation, EffectFade]}
-                            className="mySwiper"
+                            modules={[EffectFade, Pagination, Navigation]}
+                            className="mySwiper tutorialSwiper"
                             onReachEnd={() => setSlideEnd(true)}
                         >
                             <SwiperSlide>
@@ -115,8 +127,8 @@ const Tutorial = ({ openDrawer, role, user }) => {
 
                                             <div className="tutorialContentBodyContainer">
                                                 <div className="tutorialContentBody">
-                                                    <div className="hello-message">Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span>, welcome to TheAfricanExporter!</div>
-                                                    <div className="extra-message-to-hello">Swipe for a quick app walkthough</div>
+                                                    <div className="hello-message">Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span>, Welcome to TheAfricanExporter.com!</div>
+                                                    <div className="extra-message-to-hello">Swipe for a quick walkthough</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +139,7 @@ const Tutorial = ({ openDrawer, role, user }) => {
                             {
                                 tutorialType[`${role}`].map((src, index) =>
                                     <SwiperSlide key={index}>
-                                        <img src={src} alt="tutorial" />
+                                        <img className="tutorialSwiperSlideImages" src={src} alt="tutorial" />
                                     </SwiperSlide>
                                 )
                             }
