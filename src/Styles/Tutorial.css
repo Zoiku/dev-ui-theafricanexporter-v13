@@ -43,7 +43,7 @@
     width: 20px;
     height: 20px;
     padding: 20px;
-    background: #efefef98;
+    background: #efefef;
     border-radius: 50%;
 }
 
@@ -209,7 +209,15 @@
     }
 
     .get-started-img-container {
-        height: 110px;
+        height: 130px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .get-started-img img {
+        object-fit: contain !important;
+        width: 100% !important;
     }
 
     .hello-message {
