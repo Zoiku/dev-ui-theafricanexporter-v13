@@ -135,17 +135,17 @@ html {
   z-index: 30;
 }
 
-.modal-title-container > div {
+.modal-title-container>div {
   display: grid;
   place-content: center;
 }
 
-.modal-title-container > div:nth-child(1) {
+.modal-title-container>div:nth-child(1) {
   font-weight: 600;
   width: 100%;
 }
 
-.modal-title-container > div:nth-child(2) {
+.modal-title-container>div:nth-child(2) {
   cursor: pointer;
 }
 
@@ -158,16 +158,16 @@ html {
   color: var(--tae-orange);
 }
 
-.registration-form-verification-code-container > div {
+.registration-form-verification-code-container>div {
   margin: 5px 0;
 }
 
-.registration-form-verification-code-container > div:nth-child(1) {
+.registration-form-verification-code-container>div:nth-child(1) {
   font-size: x-large;
   font-weight: 700;
 }
 
-.registration-form-verification-code-container > div:nth-child(2) {
+.registration-form-verification-code-container>div:nth-child(2) {
   font-size: 14px;
 }
 
@@ -175,11 +175,11 @@ html {
   margin: 30px 0 20px 0;
 }
 
-.form-controller-container > div {
+.form-controller-container>div {
   margin: 20px 0;
 }
 
-.form-controller-duo-input > div {
+.form-controller-duo-input>div {
   width: 49%;
 }
 
@@ -193,11 +193,11 @@ html {
   margin: 30px 0;
 }
 
-.requests-sections-container > section {
+.requests-sections-container>section {
   margin: 0 0 40px 0;
 }
 
-.requests-sections-container > section:nth-last-child(1) {
+.requests-sections-container>section:nth-last-child(1) {
   margin: 0;
 }
 
@@ -218,27 +218,27 @@ html {
   margin-right: 10px;
 }
 
-.request-section-body > div {
+.request-section-body>div {
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--tae-gray-faded);
 }
 
-.request-section-body-validity > div {
+.request-section-body-validity>div {
   border: none;
 }
 
-.request-section-body > div > span {
+.request-section-body>div>span {
   display: block;
   width: 50%;
 }
 
-.request-section-body > div > span:nth-child(1) {
+.request-section-body>div>span:nth-child(1) {
   color: gray;
 }
 
-.request-section-body > div > span:nth-child(2) {
+.request-section-body>div>span:nth-child(2) {
   font-weight: 600;
   text-align: left;
   text-transform: capitalize;
@@ -302,15 +302,19 @@ html {
   0% {
     transform: rotate(0deg);
   }
+
   80% {
     transform: rotate(0deg);
   }
+
   85% {
     transform: rotate(5deg);
   }
+
   95% {
     transform: rotate(-5deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
@@ -342,7 +346,7 @@ html {
     background: white;
   }
 
-  .drawer-title-container > div:nth-child(1) {
+  .drawer-title-container>div:nth-child(1) {
     font-size: large;
     font-weight: bold;
   }
@@ -355,5 +359,13 @@ html {
 
   .inAppDialog {
     left: 0% !important;
+  }
+
+  .css-16o16h3-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    color: var(--tae-orange) !important;
+  }
+
+  .css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
+    color: var(--tae-orange) !important;
   }
 }
