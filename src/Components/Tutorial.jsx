@@ -107,6 +107,7 @@ const Tutorial = ({ openDrawer, role, user }) => {
 
                         <Swiper
                             effect={"fade"}
+                            grabCursor={true}
                             pagination={{
                                 type: "bullets",
                             }}
@@ -127,7 +128,10 @@ const Tutorial = ({ openDrawer, role, user }) => {
 
                                             <div className="tutorialContentBodyContainer">
                                                 <div className="tutorialContentBody">
-                                                    <div className="hello-message">Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span>, Welcome to TheAfricanExporter.com!</div>
+                                                    <div className="hello-message">
+                                                        <div>Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span></div>
+                                                        <div>Welcome to TheAfricanExporter.com!</div>
+                                                    </div>
                                                     <div className="extra-message-to-hello">Swipe for a quick walkthough</div>
                                                 </div>
                                             </div>

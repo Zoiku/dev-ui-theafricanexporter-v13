@@ -43,7 +43,7 @@
     width: 20px;
     height: 20px;
     padding: 20px;
-    background: #efefef;
+    background: #efefef86;
     border-radius: 50%;
 }
 
@@ -112,13 +112,22 @@
 }
 
 .hello-message {
-    font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.hello-message>div:nth-child(1) {
+    font-size: large;
+    font-weight: 500;
+}
+
+.hello-message>div:nth-child(2) {
+    margin-top: 2px;
+    font-size: x-large;
     font-weight: 700;
 }
 
 .extra-message-to-hello {
-    font-size: small;
+    font-size: smaller;
 }
 
 .skipTutorialContainer {
@@ -201,7 +210,7 @@
     }
 
     .tutorialComponent {
-        height: 250px;
+        height: 300px;
     }
 
     .completedTutorial div {
@@ -220,15 +229,19 @@
         width: 100% !important;
     }
 
-    .hello-message {
-        font-size: 14px;
-    }
-
     .completedTutorial {
         width: 70%;
     }
 
     .tutorialSwiperSlideImages {
         object-fit: contain !important;
+    }
+
+    .hello-message>div:nth-child(1) {
+        font-size: medium;
+    }
+
+    .hello-message>div:nth-child(2) {
+        font-size: large;
     }
 }

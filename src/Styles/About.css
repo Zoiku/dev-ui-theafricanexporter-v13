@@ -42,11 +42,11 @@
   min-height: 350px;
 }
 
-.payment-section-container:nth-child(even) > .payment-option-title-container {
+.payment-section-container:nth-child(even)>.payment-option-title-container {
   right: 50px;
 }
 
-.payment-section-container:nth-child(odd) > .payment-option-title-container {
+.payment-section-container:nth-child(odd)>.payment-option-title-container {
   left: 50px;
 }
 
@@ -121,6 +121,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
   }
@@ -192,14 +193,12 @@
   transform: rotateY(-10deg);
   transition: all 0.5s ease;
   text-align: left;
-  background: linear-gradient(
-    45deg,
-    #ffba3a 0%,
-    #ffb429 50%,
-    #ffae18 51%,
-    rgb(255, 169, 10) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ee9b00', endColorstr='#ee9b00',GradientType=1 );
+  background: linear-gradient(45deg,
+      #ffba3a 0%,
+      #ffb429 50%,
+      #ffae18 51%,
+      rgb(255, 169, 10) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee9b00', endColorstr='#ee9b00', GradientType=1);
 }
 
 .benefits-card:hover {
@@ -296,7 +295,7 @@
 .hiw-container {
   display: flex;
   width: 100%;
-  margin: 100px 0 300px;
+  margin: 40px 0 200px;
   position: relative;
   align-items: center;
 }
@@ -311,8 +310,6 @@
 
 .hiw-numbering {
   font-size: 110px;
-  margin-bottom: 30px;
-  padding: 0 0 30px 0;
   font-weight: normal;
   font-weight: bolder;
 }
@@ -421,7 +418,7 @@
   .hiw-container {
     flex-direction: column;
     padding: 0;
-    margin: 50px 0;
+    margin: 0 0 50px 0;
   }
 
   .hiw-desc-container {
@@ -452,7 +449,7 @@
 
   .hiw-text {
     font-size: 20px;
-    margin: 20px 0;
+    margin: 0 0 10px 0;
   }
 
   .payment-section-container {
@@ -462,6 +459,7 @@
   .payment-option-text {
     margin-top: 190px;
     width: 100%;
+    text-align: center;
   }
 
   .payment-option-title-container {
@@ -469,12 +467,12 @@
     height: 180px;
   }
 
-  .payment-section-container:nth-child(even) > .payment-option-title-container {
+  .payment-section-container:nth-child(even)>.payment-option-title-container {
     left: 50%;
     transform: translate(-50%, -0%);
   }
 
-  .payment-section-container:nth-child(odd) > .payment-option-title-container {
+  .payment-section-container:nth-child(odd)>.payment-option-title-container {
     left: 50%;
     transform: translate(-50%, -0%);
   }
