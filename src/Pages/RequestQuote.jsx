@@ -429,6 +429,7 @@ const RequestQuote = ({ session }) => {
                                 pagination={true}
                                 modules={[Pagination, Navigation]}
                                 className="mySwiper"
+                                lazy={true}
                             >
                                 {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) =>
                                     <SwiperSlide key={index}>

@@ -129,6 +129,7 @@ const Home = ({ session }) => {
                                         pagination={true}
                                         modules={[Pagination, Navigation]}
                                         className="mySwiper"
+                                        lazy={true}
                                     >
                                         {
                                             IMAGES_TO_DISPLAY[product.name].map((src, index) =>

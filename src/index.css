@@ -55,6 +55,14 @@ html {
   color: var(--tae-orange) !important;
 }
 
+.css-wno0wh.Mui-selected {
+  color: var(--tae-orange) !important;
+}
+
+.css-sxw2zh.Mui-selected {
+  color: var(--tae-orange) !important;
+}
+
 .MuiTabs-indicator {
   background: var(--tae-orange) !important;
 }
@@ -359,13 +367,5 @@ html {
 
   .inAppDialog {
     left: 0% !important;
-  }
-
-  .css-16o16h3-MuiButtonBase-root-MuiTab-root.Mui-selected {
-    color: var(--tae-orange) !important;
-  }
-
-  .css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
-    color: var(--tae-orange) !important;
   }
 }

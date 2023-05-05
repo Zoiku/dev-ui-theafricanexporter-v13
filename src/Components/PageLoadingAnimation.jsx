@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const PageLoadingAnimation = () => {
     return (
         <div className="PageLoadingAnimation">
-            <div><CircularProgress sx={{ color: "var(--tae-orange)" }} /></div>
+            <div><CircularProgress size={25} sx={{ color: "var(--tae-orange)" }} /></div>
         </div>
     )
 };

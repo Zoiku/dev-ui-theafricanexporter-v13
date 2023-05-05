@@ -12,9 +12,11 @@ import { EffectFade, Navigation, Pagination } from "swiper";
 
 import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
-import completedTutorialImage from "../Assets/Allura - Exploring on Laptop.svg"
+import completedTutorialImage from "../Assets/Allura - Exploring on Laptop.svg";
+
+import ImageViewer from "react-simple-image-viewer";
 
 import merchantStep1 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 1.png";
 import merchantStep2 from "../Assets/Walkthrough Images/Walkthrough (Merchant)/Step 2.png";
@@ -40,10 +42,23 @@ import { initUser } from "../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 
 const Tutorial = ({ openDrawer, role, user }) => {
+    const [currentImage, setCurrentImage] = useState(0);
+    const [isViewerOpen, setIsViewerOpen] = useState(false);
+
     const rootDispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [slideEnd, setSlideEnd] = useState(false);
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
+    const openImageViewer = useCallback((index) => {
+        setCurrentImage(index);
+        setIsViewerOpen(true);
+    }, []);
+
+    const closeImageViewer = () => {
+        setCurrentImage(currentImage);
+        setIsViewerOpen(false);
+    };
 
     const CompletedTutorial = () => {
         return (
@@ -83,79 +98,91 @@ const Tutorial = ({ openDrawer, role, user }) => {
     }
 
     return (
-        <div className="tutorialComponentContainer">
-            <Modal
-                open={openDrawer}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box className="tutorialModal" sx={inWebTut}>
-                    <div className="tutorialComponent">
-                        <div onClick={handleClose} className="skipTutorialContainer">
-                            {loading ?
-                                <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
-                                :
-                                <div className={slideEnd ? "skipTutorialContent skipTutorialContentEnlarge" : "skipTutorialContent"}>
-                                    {
-                                        slideEnd ? "Get Started"
-                                            :
-                                            "Skip Tutorial"
-                                    }
-                                </div>
-                            }
-                        </div>
+        isViewerOpen ?
+            <ImageViewer
+                src={tutorialType[`${role}`]}
+                currentIndex={currentImage - 1}
+                onClose={closeImageViewer}
+                disableScroll={false}
+                backgroundStyle={{
+                    backgroundColor: "rgba(0,0,0,0.9)"
+                }}
+                closeOnClickOutside={true}
+            />
+            :
+            <div className="tutorialComponentContainer">
+                <Modal
+                    open={openDrawer}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box className="tutorialModal" sx={inWebTut}>
+                        <div className="tutorialComponent">
+                            <div onClick={handleClose} className="skipTutorialContainer">
+                                {loading ?
+                                    <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
+                                    :
+                                    <div className={slideEnd ? "skipTutorialContent skipTutorialContentEnlarge" : "skipTutorialContent"}>
+                                        {
+                                            slideEnd ? "Get Started"
+                                                :
+                                                "Skip Tutorial"
+                                        }
+                                    </div>
+                                }
+                            </div>
 
-                        <Swiper
-                            effect={"fade"}
-                            grabCursor={true}
-                            pagination={{
-                                type: "bullets",
-                            }}
-                            navigation={true}
-                            modules={[EffectFade, Pagination, Navigation]}
-                            className="mySwiper tutorialSwiper"
-                            onReachEnd={() => setSlideEnd(true)}
-                        >
-                            <SwiperSlide>
-                                <div className="tutorialSwipeContainer">
-                                    <div className="tutorialSwipe">
-                                        <div className="tutorialContent tutorial-page-01">
-                                            <div className="get-started-img-container">
-                                                <div className="get-started-img">
-                                                    <img src={getStarted} alt="" />
-                                                </div>
-                                            </div>
-
-                                            <div className="tutorialContentBodyContainer">
-                                                <div className="tutorialContentBody">
-                                                    <div className="hello-message">
-                                                        <div>Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span></div>
-                                                        <div>Welcome to TheAfricanExporter.com!</div>
+                            <Swiper
+                                effect={"fade"}
+                                pagination={{
+                                    type: "bullets",
+                                }}
+                                navigation={true}
+                                modules={[EffectFade, Pagination, Navigation]}
+                                className="mySwiper tutorialSwiper"
+                                onReachEnd={() => setSlideEnd(true)}
+                                initialSlide={currentImage}
+                            >
+                                <SwiperSlide>
+                                    <div className="tutorialSwipeContainer">
+                                        <div className="tutorialSwipe">
+                                            <div className="tutorialContent tutorial-page-01">
+                                                <div className="get-started-img-container">
+                                                    <div className="get-started-img">
+                                                        <img src={getStarted} alt="" />
                                                     </div>
-                                                    <div className="extra-message-to-hello">Swipe for a quick walkthough</div>
+                                                </div>
+
+                                                <div className="tutorialContentBodyContainer">
+                                                    <div className="tutorialContentBody">
+                                                        <div className="hello-message">
+                                                            <div>Hello <span className="colored">{capitalizeFirstLetter(String(role).toLowerCase())}</span></div>
+                                                            <div>Welcome to TheAfricanExporter.com!</div>
+                                                        </div>
+                                                        <div className="extra-message-to-hello">Swipe for a quick walkthough</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </SwiperSlide>
+                                </SwiperSlide>
 
-                            {
-                                tutorialType[`${role}`].map((src, index) =>
-                                    <SwiperSlide key={index}>
-                                        <img className="tutorialSwiperSlideImages" src={src} alt="tutorial" />
-                                    </SwiperSlide>
-                                )
-                            }
+                                {
+                                    tutorialType[`${role}`].map((src, index) =>
+                                        <SwiperSlide key={index}>
+                                            <img onClick={() => openImageViewer(index + 1)} className="tutorialSwiperSlideImages" src={src} alt="tutorial" />
+                                        </SwiperSlide>
+                                    )
+                                }
 
-                            <SwiperSlide>
-                                <CompletedTutorial />
-                            </SwiperSlide>
-                        </Swiper>
-                    </div>
-                </Box>
-            </Modal>
-        </div>
+                                <SwiperSlide>
+                                    <CompletedTutorial />
+                                </SwiperSlide>
+                            </Swiper>
+                        </div>
+                    </Box>
+                </Modal>
+            </div>
     );
 };
 
