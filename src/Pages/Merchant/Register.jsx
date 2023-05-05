@@ -32,6 +32,7 @@ import Modal from '@mui/material/Modal';
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from 'react-otp-input';
 import successImg from "../../Assets/Charco - Good Job.png";
+import Slide from 'react-reveal/Slide';
 
 const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -420,9 +421,7 @@ const Register = () => {
                             </FormControl>
                         </div>
 
-                        {
-                            state?.payload &&
-                            state?.payload?.category &&
+                        <Slide bottom when={Object.hasOwn(state.payload, 'category')}>
                             <div className="form-controller-input">
                                 <FormControl className="something-cool" required fullWidth>
                                     <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
@@ -450,7 +449,7 @@ const Register = () => {
                                     </FormHelperText>
                                 </FormControl>
                             </div>
-                        }
+                        </Slide>
 
                         <div>
                             <FormGroup>

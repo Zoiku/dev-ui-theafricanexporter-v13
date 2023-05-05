@@ -3,32 +3,29 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import log from "../Assets/log.jpg";
-
 import tr11 from "../Assets/Logs/t11.jpg";
-import tr12 from "../Assets/Logs/t12.jpg";
+// import tr12 from "../Assets/Logs/t12.jpg";
 import tr13 from "../Assets/Logs/t13.jpg";
-import tr14 from "../Assets/Logs/t14.jpg";
+// import tr14 from "../Assets/Logs/t14.jpg";
 import tr15 from "../Assets/Logs/t15.jpg";
-import tr16 from "../Assets/Logs/t16.jpg";
+// import tr16 from "../Assets/Logs/t16.jpg";
 import tr17 from "../Assets/Logs/t17.jpg";
-import tr18 from "../Assets/Logs/t18.jpg";
-import tr19 from "../Assets/Logs/t19.jpg";
-import tr20 from "../Assets/Logs/t20.jpg";
+// import tr18 from "../Assets/Logs/t18.jpg";
+// import tr19 from "../Assets/Logs/t19.jpg";
+// import tr20 from "../Assets/Logs/t20.jpg";
 import tre from "../Assets/Logs/te.jpg";
 import tre1 from "../Assets/Logs/te1.jpg";
 import tre2 from "../Assets/Logs/te2.jpg";
 import tre3 from "../Assets/Logs/te4.jpg";
-
-import ts1 from "../Assets/Logs/t1.jpg";
+// import ts1 from "../Assets/Logs/t1.jpg";
 import ts2 from "../Assets/Logs/t2.jpg";
-import ts3 from "../Assets/Logs/t3.jpg";
+// import ts3 from "../Assets/Logs/t3.jpg";
 import ts4 from "../Assets/Logs/t4.jpg";
 import ts5 from "../Assets/Logs/t5.jpg";
-import ts6 from "../Assets/Logs/t6.jpg";
+// import ts6 from "../Assets/Logs/t6.jpg";
 import ts7 from "../Assets/Logs/t7.jpg";
 import ts8 from "../Assets/Logs/t8.jpg";
-import ts9 from "../Assets/Logs/t9.jpg";
+// import ts9 from "../Assets/Logs/t9.jpg";
 import ts10 from "../Assets/Logs/t10.jpg";
 
 import comingsoon from "../Assets/log.jpg";
@@ -129,7 +126,6 @@ const Home = ({ session }) => {
                                         pagination={true}
                                         modules={[Pagination, Navigation]}
                                         className="mySwiper"
-                                        lazy={true}
                                     >
                                         {
                                             IMAGES_TO_DISPLAY[product.name].map((src, index) =>

@@ -263,7 +263,6 @@ const UsersMerchant = () => {
                         <div className="modal-body">
                             {list()}
                         </div>
-
                     </Box>
                 </Modal>
             </div>
