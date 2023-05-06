@@ -7,7 +7,7 @@ import howitworks2 from "../Assets/2.png";
 import howitworks3 from "../Assets/3.png";
 import howitworks4 from "../Assets/4.png";
 
-import globe from "../Assets/Hands - Earth.png";
+import globe from "../Assets/t1.webp";
 import travel from "../Assets/Charco - Travel International.png";
 import we from "../Assets/The Movement - Your World.png";
 import trees from "../Assets/Allura - Trees.png";

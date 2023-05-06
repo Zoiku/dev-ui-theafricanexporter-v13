@@ -421,35 +421,38 @@ const Register = () => {
                             </FormControl>
                         </div>
 
-                        <Slide bottom when={Object.hasOwn(state.payload, 'category')}>
-                            <div className="form-controller-input">
-                                <FormControl className="something-cool" required fullWidth>
-                                    <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
-                                    <Select
-                                        labelId="demo-multiple-chip-label"
-                                        id="demo-multiple-chip"
-                                        multiple
-                                        value={selectedSubscriptions}
-                                        onChange={handleMultipleSelectChange}
-                                        input={<OutlinedInput id="select-multiple-chip" label="Subscriptions" />}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {subscriptions.map((subscription) => (
-                                            <MenuItem
-                                                key={subscription}
-                                                value={subscription}
-                                                style={getStyles(subscription, subscriptions, theme)}
-                                            >
-                                                {subscription}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                    <FormHelperText sx={{ marginLeft: "20px" }}>
-                                        Select Subscriptions
-                                    </FormHelperText>
-                                </FormControl>
-                            </div>
-                        </Slide>
+                        {
+                            Object.hasOwn(state.payload, 'category') &&
+                            <Slide bottom when={Object.hasOwn(state.payload, 'category')}>
+                                <div className="form-controller-input">
+                                    <FormControl className="something-cool" required fullWidth>
+                                        <InputLabel id="demo-multiple-chip-label">Subscriptions</InputLabel>
+                                        <Select
+                                            labelId="demo-multiple-chip-label"
+                                            id="demo-multiple-chip"
+                                            multiple
+                                            value={selectedSubscriptions}
+                                            onChange={handleMultipleSelectChange}
+                                            input={<OutlinedInput id="select-multiple-chip" label="Subscriptions" />}
+                                            MenuProps={MenuProps}
+                                        >
+                                            {subscriptions.map((subscription) => (
+                                                <MenuItem
+                                                    key={subscription}
+                                                    value={subscription}
+                                                    style={getStyles(subscription, subscriptions, theme)}
+                                                >
+                                                    {subscription}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        <FormHelperText sx={{ marginLeft: "20px" }}>
+                                            Select Subscriptions
+                                        </FormHelperText>
+                                    </FormControl>
+                                </div>
+                            </Slide>
+                        }
 
                         <div>
                             <FormGroup>
