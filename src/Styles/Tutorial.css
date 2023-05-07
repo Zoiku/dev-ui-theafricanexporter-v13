@@ -1,252 +1,307 @@
-.tutorialComponentContainer {
-    height: 100vh;
-}
-
 .tutorialComponent {
-    height: 100%;
-    width: 100%;
-    height: 450px;
-    outline: 2px solid rgba(255, 255, 255, 0.664);
-    border-radius: 5px;
+  width: 100%;
+  border-radius: 5px;
+  overflow: clip;
 }
 
 .tutorialComponent .swiper {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
+  width: 100%;
+  height: 100%;
 }
 
 .tutorialComponent .swiper-slide {
-    height: 100%;
-    width: 100%;
-    background: white;
+  height: 100%;
+  width: 100%;
+  background: white;
 }
 
 .tutorialComponent .swiper-slide img {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .tutorialSwiperSlideImages {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .tutorialSwipeContainer {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    place-content: center;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-content: center;
 }
 
 .tutorialSwipe {
-    height: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .tutorialComponent .swiper-button-next,
 .tutorialComponent .swiper-button-prev {
-    color: black;
-    width: 20px;
-    height: 20px;
-    padding: 20px;
-    background: #efefef86;
-    border-radius: 50%;
+  color: black;
+  width: 20px;
+  height: 20px;
+  padding: 20px;
+  background: #efefef86;
+  border-radius: 50%;
 }
 
 .tutorialComponent .swiper-button-next::after,
 .tutorialComponent .swiper-button-prev::after {
-    font-size: large;
-    font-weight: 600;
+  font-size: large;
+  font-weight: 600;
 }
 
 .tutorialComponent .swiper-button-next {
-    right: -40px;
+  right: -40px;
 }
 
 .tutorialComponent .swiper-button-prev {
-    left: -40px;
+  left: -40px;
 }
 
 .tutorialComponent .swiper:hover .swiper-button-next {
-    animation: swiper-button-next .5s ease forwards;
+  animation: swiper-button-next 0.5s ease forwards;
 }
 
 .tutorialComponent .swiper:hover .swiper-button-prev {
-    animation: swiper-button-prev .5s ease forwards;
+  animation: swiper-button-prev 0.5s ease forwards;
 }
 
 @keyframes swiper-button-next {
-    to {
-        right: 15px;
-    }
+  to {
+    right: 15px;
+  }
 }
 
 @keyframes swiper-button-prev {
-    to {
-        left: 15px;
-    }
+  to {
+    left: 15px;
+  }
 }
 
 .tutorialComponent .colored {
-    color: var(--tae-orange);
+  color: var(--tae-orange);
 }
 
 .get-started-img-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-    height: 200px;
+  display: flex;
+  justify-content: center;
 }
 
 .get-started-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .tutorialContent {
-    height: 100%;
+  height: 100%;
 }
 
 .tutorialContentBodyContainer {
-    display: grid;
-    justify-content: center;
+  display: grid;
+  justify-content: center;
 }
 
 .tutorialContentBody {
-    text-align: center;
+  text-align: center;
 }
 
 .hello-message {
-    margin-bottom: 20px;
-}
-
-.hello-message>div:nth-child(1) {
-    font-size: large;
-    font-weight: 500;
-}
-
-.hello-message>div:nth-child(2) {
-    margin-top: 2px;
-    font-size: x-large;
-    font-weight: 700;
+  margin: 20px 0;
 }
 
 .extra-message-to-hello {
-    font-size: smaller;
+  font-size: smaller;
 }
 
 .skipTutorialContainer {
-    z-index: 100;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    bottom: -70px;
-    cursor: pointer;
-    color: #c5c5c5;
-    font-weight: 500;
+  z-index: 100;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: -70px;
+  cursor: pointer;
+  color: #c5c5c5;
 }
 
 .skipTutorialContent {
-    transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 
 .skipTutorialContent:hover {
-    color: #dadada;
+  color: #dadada;
 }
 
 .skipTutorialContentEnlarge {
-    color: white !important;
+  color: white !important;
 }
 
 .completedTutorialContainer {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    place-items: center;
-}
-
-.completedTutorial {
-    width: 500px;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .completedTutorial img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .completedTutorial div {
-    font-size: x-large;
-    font-weight: 600;
-    margin: 20px 0;
-    text-align: center;
-    animation: blinking 1s ease infinite;
+  text-align: center;
+  animation: blinking 2s ease infinite;
+  font-size: x-large;
+  font-weight: 600;
 }
 
 @keyframes blinking {
-    0% {
-        opacity: 100%;
-    }
+  0% {
+    opacity: 100%;
+  }
 
-    50% {
-        opacity: 10%;
-    }
+  50% {
+    opacity: 0%;
+  }
 
-    100% {
-        opacity: 100%;
-    }
+  100% {
+    opacity: 100%;
+  }
 }
 
-.tutorialSwiper .swiper-horizontal>.tutorialSwiper .swiper-pagination-bullets,
+.tutorialSwiper .swiper-horizontal > .tutorialSwiper .swiper-pagination-bullets,
 .tutorialSwiper .swiper-pagination-bullets.swiper-pagination-horizontal,
 .tutorialSwiper .swiper-pagination-custom,
 .tutorialSwiper .swiper-pagination-fraction {
-    position: fixed;
-    bottom: -30px;
+  position: fixed;
+  bottom: -35px;
 }
 
 .tutorialSwiper .swiper-pagination-bullet-active {
-    background-color: #fff !important;
+  background-color: #fff !important;
 }
 
-@media screen and (max-width: 1000px) {
-    .tutorialModal {
-        width: 95% !important;
-    }
+@media screen and (max-width: 920px) {
+  .tutorialModal {
+    width: 95% !important;
+  }
 
+  .hello-message > div:nth-child(1) {
+    font-size: 12px;
+  }
+
+  .hello-message > div:nth-child(2) {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .extra-message-to-hello {
+    font-size: 10px;
+  }
+
+  .completedTutorial div {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 200px) {
+  .tutorialComponent {
+    height: 200px;
+  }
+
+  .get-started-img-container {
+    height: 80px;
+  }
+
+  .completedTutorial {
+    height: 80px;
+  }
+
+  .skipTutorialContainer {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 300px) {
+  .tutorialComponent {
+    height: 300px;
+  }
+
+  .completedTutorial div {
+    font-size: large;
+  }
+
+  .get-started-img-container {
+    height: 100px;
+  }
+
+  .completedTutorial {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .tutorialComponent {
+    height: 300px;
+  }
+
+  .get-started-img-container {
+    height: 150px;
+  }
+
+  .completedTutorial {
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .tutorialComponent {
+    height: 500px;
+  }
+
+  .get-started-img-container {
+    height: 250px;
+  }
+
+  .completedTutorial {
+    height: 250px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .tutorialComponent {
+    height: 500px;
+  }
+
+  .get-started-img-container {
+    height: 250px;
+  }
+
+  .completedTutorial {
+    height: 250px;
+  }
+
+  .skipTutorialContainer {
+    font-size: medium;
+  }
+
+  .hello-message > div:nth-child(1) {
+    font-size: large;
+  }
+
+  .hello-message > div:nth-child(2) {
+    font-size: x-large;
+    font-weight: 600;
+  }
+
+  @media screen and (max-height: 600px) {
     .tutorialComponent {
-        height: 300px;
+      height: 400px;
     }
+  }
+}
 
-    .completedTutorial div {
-        font-size: 14px;
-    }
-
-    .get-started-img-container {
-        height: 100px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .get-started-img img {
-        object-fit: contain !important;
-        width: 100% !important;
-    }
-
-    .completedTutorial {
-        width: 280px;
-    }
-
-    .tutorialSwiperSlideImages {
-        object-fit: contain !important;
-    }
-
-    .hello-message>div:nth-child(1) {
-        font-size: small;
-    }
-
-    .hello-message>div:nth-child(2) {
-        font-size: medium;
-    }
+.styles-module_next__1uQwZ {
+  display: none;
 }
