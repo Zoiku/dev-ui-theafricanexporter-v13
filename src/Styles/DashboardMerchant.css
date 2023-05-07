@@ -97,7 +97,7 @@
 .dash-item-no-chart-data {
   text-align: center;
   color: gray;
-  font-size: small;
+  font-size: smaller;
 }
 
 .dash-item-no-chart-data img {

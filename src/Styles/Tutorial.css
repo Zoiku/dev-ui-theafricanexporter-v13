@@ -5,7 +5,9 @@
 .tutorialComponent {
     height: 100%;
     width: 100%;
-    height: 500px;
+    height: 450px;
+    outline: 2px solid rgba(255, 255, 255, 0.664);
+    border-radius: 5px;
 }
 
 .tutorialComponent .swiper {
@@ -16,14 +18,13 @@
 
 .tutorialComponent .swiper-slide {
     height: 100%;
-    background: #fff;
     width: 100%;
+    background: white;
 }
 
 .tutorialComponent .swiper-slide img {
     height: 100%;
     width: 100%;
-    object-fit: cover;
 }
 
 .tutorialSwiperSlideImages {
@@ -179,7 +180,7 @@
     font-weight: 600;
     margin: 20px 0;
     text-align: center;
-    animation: blinking 5s ease infinite;
+    animation: blinking 1s ease infinite;
 }
 
 @keyframes blinking {
@@ -214,7 +215,7 @@
     }
 
     .tutorialComponent {
-        height: 35vh;
+        height: 300px;
     }
 
     .completedTutorial div {
@@ -222,7 +223,7 @@
     }
 
     .get-started-img-container {
-        height: 130px;
+        height: 100px;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -234,7 +235,7 @@
     }
 
     .completedTutorial {
-        width: 70%;
+        width: 280px;
     }
 
     .tutorialSwiperSlideImages {
@@ -242,10 +243,10 @@
     }
 
     .hello-message>div:nth-child(1) {
-        font-size: medium;
+        font-size: small;
     }
 
     .hello-message>div:nth-child(2) {
-        font-size: large;
+        font-size: medium;
     }
 }

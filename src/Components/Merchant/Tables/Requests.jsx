@@ -380,7 +380,7 @@ const Requests = () => {
                     <section>
                         <div style={{ fontWeight: 700 }} className="requests-section-title">PLEASE PROVIDE YOUR QUOTE FOR THIS REQUEST</div>
                         <div style={{ border: 0, margin: "20px 0" }}>
-                            <TextField fullWidth size="small" onChange={(e) => handleChange(e)} helperText={<strong>Kindly indicate the quantity you can supply for this request</strong>} InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 } }} label="Quantity" name="quantity" type="number" variant="outlined" placeholder={`Allowed maximum: ${selectedRequest?.quantity}`} required />
+                            <TextField fullWidth size="small" onChange={(e) => handleChange(e)} helperText={<strong>Kindly indicate the quantity you can supply for this request</strong>} InputProps={{ inputProps: { max: selectedRequest?.quantity, min: 1 } }} label="Quantity" name="quantity" type="number" variant="filled" placeholder={`Allowed maximum: ${selectedRequest?.quantity}`} required />
                         </div>
                         <div>
                             <div className="incoterm-settings-table-container">
