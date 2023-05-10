@@ -40,28 +40,28 @@ const About = () => {
                         <section id="company">
                             <div className="about-section-primary-title">Democratising <span className="special-text-style">access to global supply chain</span> systems</div>
                             <div className="section-content">
-                                <div className="company-tiles-container">
+                                <div data-aos-duration="1000" data-aos="fade-up" className="company-tiles-container">
                                     <div className="tiles-icon">
                                         <img src={globe} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">TheAfricanExporter.com</span> is a B2B marketplace connecting Global buyers directly to wholesale exporters of Agro – based products in Africa.</div>
                                 </div>
 
-                                <div className="company-tiles-container">
+                                <div data-aos-duration="1000" data-aos="fade-up" className="company-tiles-container">
                                     <div className="tiles-icon">
                                         <img src={travel} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Our raison d’etre</span> is to champion and facilitate the diversification of Africa’s exports through a fanatical focus on Agro – based products.</div>
                                 </div>
 
-                                <div className="company-tiles-container">
+                                <div data-aos-duration="1000" data-aos="fade-up" className="company-tiles-container">
                                     <div className="tiles-icon">
                                         <img src={trees} alt="" />
                                     </div>
                                     <div className="tiles-text"><span className="first-words">Africa</span>with its enormous natural resources and a population of 1.2 people contributes a paltry 3% to global trade. Intra – continental trade is only 17%, compared with 59% for Asia and 68% for Europe.</div>
                                 </div>
 
-                                <div className="company-tiles-container">
+                                <div data-aos-duration="1000" data-aos="fade-up" className="company-tiles-container">
                                     <div className="tiles-icon">
                                         <img src={we} alt="" />
                                     </div>
@@ -76,7 +76,7 @@ const About = () => {
                         <section id="how-it-works">
                             <div className="about-section-primary-title">Gain access to <span className="special-text-style">unlimited Supply</span> in 4 simple steps</div>
                             <div className="section-content">
-                                <div className="hiw-container">
+                                <div data-aos-duration="500" data-aos="fade-right" className="hiw-container">
                                     <div className="hiw-desc-container">
                                         <div className="hiw-numbering">01</div>
                                         <div className="hiw-text">Place a Request for Quotations from Merchants.</div>
@@ -86,7 +86,7 @@ const About = () => {
                                     </div>
                                 </div>
 
-                                <div className="hiw-container">
+                                <div data-aos-duration="1000" data-aos="fade-right" className="hiw-container">
                                     <div className="hiw-desc-container">
                                         <div className="hiw-numbering">02</div>
                                         <div className="hiw-text">Choose preferred offer from quotations provided by Merchants.</div>
@@ -96,7 +96,7 @@ const About = () => {
                                     </div>
                                 </div>
 
-                                <div className="hiw-container">
+                                <div data-aos-duration="1500" data-aos="fade-right" className="hiw-container">
                                     <div className="hiw-desc-container">
                                         <div className="hiw-numbering">03</div>
                                         <div className="hiw-text">Confirm your Order by providing Proof of Payment.</div>
@@ -106,7 +106,7 @@ const About = () => {
                                     </div>
                                 </div>
 
-                                <div className="hiw-container">
+                                <div data-aos-duration="2000" data-aos="fade-right" className="hiw-container">
                                     <div className="hiw-desc-container">
                                         <div className="hiw-numbering">04</div>
                                         <div className="hiw-text">Your Order is processed and delivered to Destination Port.</div>
@@ -128,7 +128,7 @@ const About = () => {
                             <section id="payment-options">
                                 <div className="about-section-primary-title">Any of the following <span className="special-text-style">Payment Options</span> are accepted</div>
                                 <div className="section-content">
-                                    <div id="payment-options-cash-against-document" className="payment-section-container non-alternate">
+                                    <div data-aos-duration="500" data-aos="fade-right" id="payment-options-cash-against-document" className="payment-section-container non-alternate">
                                         <div className="payment-option-title-container">Documentary Collections
                                             <div style={{ fontSize: "small", color: "#efefef" }}>( Cash against Document )</div>
                                             <br />
@@ -144,7 +144,7 @@ const About = () => {
                                         </div>
                                     </div>
 
-                                    <div id="payment-options-cash-bank-transfer" className="payment-section-container alternate">
+                                    <div data-aos-duration="1000" data-aos="fade-left" id="payment-options-cash-bank-transfer" className="payment-section-container alternate">
                                         <div className="payment-option-title-container">Bank Transfer
                                             <br />
                                             <br />
@@ -160,7 +160,7 @@ const About = () => {
                                         </div>
                                     </div>
 
-                                    <div id="payment-options-letter-of-credit" className="payment-section-container non-alternate">
+                                    <div data-aos-duration="1500" data-aos="fade-right" id="payment-options-letter-of-credit" className="payment-section-container non-alternate">
                                         <div className="payment-option-title-container">Letters of Credit
                                             <br />
                                             <br />
@@ -176,7 +176,7 @@ const About = () => {
                                         </div>
                                     </div>
 
-                                    <div className="payment-section-container alternate">
+                                    <div data-aos-duration="2000" data-aos="fade-left" className="payment-section-container alternate">
                                         <div className="payment-option-title-container">Bank Details
                                             <br />
                                             <br />
