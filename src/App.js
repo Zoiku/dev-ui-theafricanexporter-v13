@@ -41,6 +41,9 @@ import {
   REQUEST_SUCCESSFUL,
   SEND_REQUEST
 } from "./Reducers/Actions";
+import AOS from 'aos';
+
+AOS.init();
 
 const App = () => {
   // eslint-disable-next-line

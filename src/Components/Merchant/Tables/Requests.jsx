@@ -27,7 +27,6 @@ import { Transition } from "../../../Material/Dialog";
 import { GenericSecondary, GenericPrimaryButton } from "../../../Material/Button";
 import { inAppDialog } from "../../../Styles/Dialog";
 import NoRowsOverlay from "../../../Material/Overlay";
-import Flash from 'react-reveal/Flash';
 
 const PRODUCTS = {
     TEAK_SQUARE_LOGS: "Teak Square Logs",
@@ -403,7 +402,6 @@ const Requests = () => {
                                     <tbody>
                                         {
                                             Array.from(Array(incotermRows)).map((_row, index) =>
-                                                <Flash key={index + 1}>
                                                     <tr>
                                                         <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="number" value={index + 1} disabled /></td>
                                                         {selectedRequest.product === PRODUCTS.TEAK_ROUND_LOGS && <td><input placeholder="eg 40-50" required type="text" onChange={(e) => handleChange(e, index)} name="diameter" /></td>}
@@ -417,7 +415,6 @@ const Requests = () => {
                                                         {(selectedRequest.terms !== "FOB") && <td><input placeholder="0" required type="number" disabled value={incotermSettings[index]?.freight ? incotermSettings[index]?.freight : 0} onChange={(e) => handleChange(e, index)} name="freight" /></td>}
                                                         <td><input required type="number" disabled value={incotermSettings[index]?.totalAmount ? incotermSettings[index]?.totalAmount : 0} /></td>
                                                     </tr>
-                                                </Flash>
                                             )
                                         }
                                     </tbody>
