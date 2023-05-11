@@ -6,7 +6,6 @@ import { StyledBadge } from "../../Material/Avatar";
 import { SettingsPageUpdateButton, SettingsPageCancelButton, SettingsPageUpdateButtonSecondary } from "../../Material/Button";
 import { useEffect, useState, useReducer } from "react";
 import { useDispatch } from "react-redux";
-import AuthService from "../../Services/Auth";
 import { initUser } from "../../Redux/Features/Session";
 import InputLabel from '@mui/material/InputLabel';
 import Select from "@mui/material/Select";
@@ -33,10 +32,6 @@ const Settings = ({ profile }) => {
     const [updateProfileButton, setUpdateProfileButton] = useState(false);
     const toggleUpdate = (open) => (_event) => {
         setUpdateProfileButton(open);
-    };
-
-    const updateSuccess = (_profile) => {
-        rootDispatch(initUser(_profile));
     };
 
     useEffect(() => {
@@ -95,25 +90,33 @@ const Settings = ({ profile }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch({ type: SEND_REQUEST });
-        const merchantService = new MerchantService();
-        const authService = new AuthService();
 
+        const merchantService = new MerchantService();
         state.payload.subscription = products.filter(product => selectedSubscriptions.includes(product.product));
+        const sessionProfile = {
+            company: {
+                introduction: state.payload.companyIntroduction,
+                noOfEmployees: state.payload.companyNoEmployees,
+                supplyAbility: state.payload.supplyAbility,
+                year: state.payload.year
+            },
+            address: state.payload.companyAddress,
+            subscription: state.payload.subscription,
+            type: {
+                label: state.payload.businessType
+            }
+        }
 
         try {
             const { errors } = await merchantService.update(state.payload);
             if (errors.length === 0) {
+                setUpdateProfileButton(false);
                 dispatch({ type: REQUEST_SUCCESSFUL });
-                handleSuccessfullRequest("Successfully updated your profile", 3000);
-                const { errors, data } = await authService.getUserProfile();
-                if (errors.length === 0) {
-                    const updatedProfile = data.data.data[0];
-                    updateSuccess(updatedProfile);
-                    setUpdateProfileButton(false);
-                } else { }
+                rootDispatch(initUser(sessionProfile));
+                handleSuccessfullRequest("Profile updated successfully", 3000);
             } else {
                 dispatch({ type: REQUEST_FAILED });
-                handleFailedRequest("Could not process your request", 5000);
+                handleFailedRequest("Could not update your profile", 5000);
             }
         } catch (error) { }
     }

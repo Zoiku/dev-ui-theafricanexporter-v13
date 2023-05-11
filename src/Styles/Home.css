@@ -121,23 +121,46 @@
 
 .Home .swiper-button-next,
 .Home .swiper-button-prev {
-  width: 10px;
-  height: 10px;
-  background-color: white;
-  background-color: rgba(255, 255, 255, 0.8);
-  right: 10px;
-  padding: 20px;
-  border-radius: 5px;
-  color: #000 !important;
-  fill: black !important;
-  stroke: black !important;
-  transition: all 0.2s ease;
+    color: black;
+    width: 20px;
+    height: 20px;
+    padding: 20px;
+    background: #efefef;
+    border-radius: 50%;
 }
 
 .Home .swiper-button-next::after,
 .Home .swiper-button-prev::after {
-  font-size: 15px;
-  font-weight: bolder;
+    font-size: large;
+    font-weight: 600;
+}
+
+.Home .swiper-button-next {
+    right: -40px;
+}
+
+.Home .swiper-button-prev {
+    left: -40px;
+}
+
+.Home .swiper:hover .swiper-button-next {
+    animation: swiper-button-next .5s ease forwards;
+}
+
+.Home .swiper:hover .swiper-button-prev {
+    animation: swiper-button-prev .5s ease forwards;
+}
+
+@keyframes swiper-button-next {
+    to {
+        right: 15px;
+    }
+}
+
+@keyframes swiper-button-prev {
+    to {
+        left: 15px;
+    }
 }
 
 .Home .swiper-pagination-bullet-active {
