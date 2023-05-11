@@ -39,8 +39,12 @@ import { formReducer, INITIAL_STATE } from "./Reducers/FormReducer";
 import {
   REQUEST_FAILED,
   REQUEST_SUCCESSFUL,
-  SEND_REQUEST
+  SEND_REQUEST,
 } from "./Reducers/Actions";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
 
 const App = () => {
   // eslint-disable-next-line
@@ -93,7 +97,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) { }
+      } catch (error) {}
     };
 
     session.isLogged && fetchData();
