@@ -1,12 +1,11 @@
 import axios from "axios";
 
 const axiosInstance = () => {
-  // const url = "https://dev-msafricanexporter-com.onrender.com/ms/api/v1/";
-  const url = "https://theafricanexporter.com/ms/api/v1";
+  const url = process.env.baseURLProduction;
 
   let headers = {
     "Content-Type": "application/json",
-    Accept: "application/json"
+    Accept: "application/json",
   };
 
   const getToken = () => {
@@ -30,7 +29,7 @@ const axiosInstance = () => {
 
   const axiosInstance = axios.create({
     baseURL: url,
-    headers
+    headers,
   });
 
   return axiosInstance;
