@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = () => {
-  //TODO: this is not ideal but this is done as a temporary fix while getting value from .env is being worked on.
-  const url = "https://theafricanexporter.com/ms/ms/api/v1";
-
-  console.log("base url from .env file : "+ url);
+  const url = process.env.REACT_APP_BASE_URL_PRODUCTION;
 
   let headers = {
     "Content-Type": "application/json",
