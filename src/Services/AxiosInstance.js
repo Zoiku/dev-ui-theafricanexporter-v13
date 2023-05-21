@@ -1,10 +1,12 @@
 import axios from "axios";
 
+require('dotenv').config();
+
 const axiosInstance = () => {
   const url = process.env.baseURLProduction;
 
   console.log("base url from .env file : "+ url);
-  
+
   let headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
