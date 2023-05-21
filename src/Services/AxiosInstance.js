@@ -1,7 +1,5 @@
 import axios from "axios";
 
-require('dotenv').config();
-
 const axiosInstance = () => {
   const url = process.env.BASE_URL_PRODUCTION;
 
