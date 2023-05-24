@@ -12,7 +12,7 @@ import { EffectFade, Navigation, Pagination } from "swiper";
 
 import getStarted from "../Assets/Allura - Feedback Session.svg";
 import AuthService from "../Services/Auth";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import completedTutorialImage from "../Assets/Allura - Exploring on Laptop.svg";
 
@@ -60,10 +60,6 @@ const Tutorial = ({ openDrawer, role, user }) => {
     setCurrentImage(currentImage);
     setIsViewerOpen(false);
   };
-
-  useEffect(() => {
-    console.log(`Current image: ${currentImage}`);
-  }, [currentImage]);
 
   const CompletedTutorial = () => {
     return (

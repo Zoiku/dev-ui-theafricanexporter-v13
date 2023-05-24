@@ -54,6 +54,7 @@ import tre from "../Assets/Logs Min/te.jpg";
 import tre1 from "../Assets/Logs Min/te1.jpg";
 import tre2 from "../Assets/Logs Min/te2.jpg";
 import tre3 from "../Assets/Logs Min/te4.jpg";
+import tre5 from "../Assets/Logs Min/te3.jpg";
 import ts1 from "../Assets/Logs Min/t1.jpg";
 import ts2 from "../Assets/Logs Min/t2.jpg";
 import ts3 from "../Assets/Logs Min/t3.jpg";
@@ -124,6 +125,7 @@ const IMAGES_TO_DISPLAY = {
     tre,
     tre1,
     tre2,
+    tre5,
     tre3,
     tr12,
     tr14,

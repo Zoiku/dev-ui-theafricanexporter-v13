@@ -7,41 +7,43 @@ import { useState, useEffect } from "react";
 import Tutorial from "../Components/Tutorial";
 
 const BuyerLayout = ({ session }) => {
-    const { user } = session;
-    const [notLoggedBefore, setNotLoggedBefore] = useState(false);
+  const { user } = session;
+  const [notLoggedBefore, setNotLoggedBefore] = useState(false);
 
-    useEffect(() => {
-        if (user.hasOwnProperty('profile')) {
-            const { isLoggedBefore } = user.profile;
-            if (isLoggedBefore) {
-                setNotLoggedBefore(false);
-            } else {
-                setNotLoggedBefore(true);
-            }
+  useEffect(() => {
+    if (user.hasOwnProperty("profile")) {
+      const { isLoggedBefore } = user.profile;
+
+      if (isLoggedBefore !== undefined) {
+        if (isLoggedBefore) {
+          setNotLoggedBefore(false);
+        } else {
+          setNotLoggedBefore(true);
         }
-    }, [user]);
+      }
+    }
+  }, [user]);
 
-    return (
-        notLoggedBefore ?
-            <Tutorial user={user} openDrawer={notLoggedBefore} role="BUYER" />
-            :
-            <div className="Buyer-Layout App-Layout">
-                <Nav session={session} />
-                <div className="app-container">
-                    <div className="app-menu-container">
-                        <Menu />
-                    </div>
-                    <div className="app-body-container">
-                        <div className="app-body">
-                            <Outlet />
-                        </div>
-                    </div>
-                    <div className="app-bottom-navigation">
-                        <AppNav />
-                    </div>
-                </div>
-            </div>
-    );
-}
+  return notLoggedBefore ? (
+    <Tutorial user={user} openDrawer={notLoggedBefore} role="BUYER" />
+  ) : (
+    <div className="Buyer-Layout App-Layout">
+      <Nav session={session} />
+      <div className="app-container">
+        <div className="app-menu-container">
+          <Menu />
+        </div>
+        <div className="app-body-container">
+          <div className="app-body">
+            <Outlet />
+          </div>
+        </div>
+        <div className="app-bottom-navigation">
+          <AppNav />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default BuyerLayout;

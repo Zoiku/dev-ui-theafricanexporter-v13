@@ -43,9 +43,10 @@ const capitalizeFirstLetter = (string) =>
 
 const Register = () => {
   const navLinkStyle = {
-    color: "var(--tae-orange)",
-    fontSize: "small",
-    fontWeight: 700,
+    color: "inherit",
+    fontSize: "inherit",
+    fontWeight: "inherit",
+    textDecoration: "inherit",
   };
   const theme = useTheme();
   const resendCodeTimerInterval = useRef(null);

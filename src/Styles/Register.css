@@ -27,7 +27,7 @@
 
 .register-form-container > div:nth-child(2) {
   width: 50%;
-  padding: 10px 20px;
+  padding: 20px;
 }
 
 .register-form-desc {
@@ -84,7 +84,15 @@
 }
 
 .quick-links-container > div {
-  padding: 0 8px;
+  margin: 0 10px;
+  font-size: small;
+  text-decoration: none;
+  color: var(--tae-orange);
+  font-weight: 600;
+}
+
+.quick-links-container > div:hover {
+  text-decoration: underline;
 }
 
 .otp-controller-container {
