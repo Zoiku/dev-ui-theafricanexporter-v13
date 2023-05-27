@@ -32,7 +32,11 @@ const FAQ = () => {
           <div className="FAQSection">
             <div className="FAQSectionLeftContainer">
               <div className="backgroundArtSvgContainer">
-                <img src={backgroundSvgArt} className="backgroundArtSvg" alt="" />
+                <img
+                  src={backgroundSvgArt}
+                  className="backgroundArtSvg"
+                  alt=""
+                />
               </div>
               <div className="FAQSectionLeft">
                 <div className="titleFAQLeftContainer">
@@ -41,8 +45,9 @@ const FAQ = () => {
                   </div>
                   <div className="titleFAQLeft">FAQs</div>
                   <div className="titleFAQExtra">
-                    Everything you need to know about the product and billing.
-                    Can't find what you are looking for? Please send an email to{" "}
+                    Everything you need to know about our products, billing, and
+                    more. Can't find what you are looking for? Please send an
+                    email to{" "}
                     <span className="handleClickButton" onClick={handleMail}>
                       hello@theafricanexporter.com
                     </span>

@@ -58,17 +58,16 @@
   color: #888;
 }
 
-.FAQSectionContainer {
-  padding: 100px 0;
-}
-
 .FAQSection {
+  height: 80vh;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .FAQSection > div {
   width: 50%;
+  height: 100%;
   display: flex;
   align-items: center;
 }
@@ -85,10 +84,12 @@
   left: 0;
   right: 0;
   height: 100%;
+  width: 100%;
 }
 
 .backgroundArtSvg {
   height: 100%;
+  width: 100%;
   z-index: 0;
   opacity: 0.5;
 }
