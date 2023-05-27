@@ -1,0 +1,145 @@
+.pageInformationContentContainer {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  background-image: url("../Assets/background-2.png");
+  background-attachment: fixed;
+}
+
+.pageInformationContentContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.FAQ .handleClickButton {
+  cursor: pointer;
+  font-weight: 600;
+  color: black;
+  text-decoration: underline;
+}
+
+.pageInformationContent {
+  color: white;
+  z-index: 10;
+}
+
+.FAQ .titleContainer {
+  margin: 0 0 0 100px;
+}
+
+.FAQ .titleHelper {
+  font-weight: 600;
+  color: var(--tae-orange);
+}
+
+.FAQ .title {
+  font-size: 50px;
+  margin: 5px 0;
+  font-weight: 600;
+}
+
+.FAQ .titleFAQLeft {
+  font-size: 25px;
+  margin: 5px 0;
+  font-weight: 600;
+}
+
+.FAQ .titleExtra {
+  color: #efefef;
+}
+
+.FAQ .titleFAQExtra {
+  color: #888;
+}
+
+.FAQSectionContainer {
+  padding: 100px 0;
+}
+
+.FAQSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FAQSection > div {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.FAQSectionLeftContainer {
+  justify-content: center;
+  position: relative;
+}
+
+.backgroundArtSvgContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+.backgroundArtSvg {
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.FAQSectionRightContainer {
+  justify-content: flex-start;
+}
+
+.FAQSectionLeft {
+  margin: 0 0 0 50px;
+  width: 400px;
+  z-index: 1;
+}
+
+.FAQSectionRight {
+  width: 80%;
+}
+
+@media screen and (max-width: 1024px) {
+  .pageInformationContentContainer {
+    background-attachment: scroll;
+  }
+
+  .FAQ .titleContainer {
+    margin: 0 0 0 0px;
+    padding: 0 10px;
+  }
+
+  .FAQ .title {
+    font-size: xx-large;
+  }
+
+  .FAQSectionContainer {
+    padding: 50px 10px;
+  }
+
+  .FAQSection {
+    flex-direction: column;
+  }
+
+  .FAQSection > div {
+    width: 100%;
+  }
+
+  .FAQSectionLeft {
+    margin: 0 0 0 0;
+    width: 100%;
+  }
+
+  .FAQSectionRight {
+    width: 100%;
+    margin: 50px 0 0 0;
+  }
+}

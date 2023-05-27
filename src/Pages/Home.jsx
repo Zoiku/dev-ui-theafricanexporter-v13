@@ -2,7 +2,6 @@ import "../Styles/Home.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import tr11 from "../Assets/Logs Min/t11.jpg";
 import tr12 from "../Assets/Logs Min/t12.jpg";
 import tr13 from "../Assets/Logs Min/t13.jpg";
@@ -28,7 +27,6 @@ import ts7 from "../Assets/Logs Min/t7.jpg";
 import ts8 from "../Assets/Logs Min/t8.jpg";
 import ts9 from "../Assets/Logs Min/t9.jpg";
 import ts10 from "../Assets/Logs Min/t10.jpg";
-
 import comingsoon from "../Assets/log.jpg";
 import { PrimaryButton } from "../Material/Button";
 import { Swiper, SwiperSlide } from "swiper/react";

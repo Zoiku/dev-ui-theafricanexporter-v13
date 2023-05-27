@@ -1,0 +1,30 @@
+.AccordionRow {
+  margin: 0 0 5px 0;
+}
+
+.searchContainer {
+  margin: 0 0 20px 0;
+}
+
+.resultsAccordion {
+  margin: 0 0 20px 0;
+  color: gray;
+  font-size: small;
+}
+
+.searchedTerm {
+  font-weight: 600;
+  color: black;
+}
+
+.emailTo {
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cantFindQuestion {
+  font-size: small;
+  color: gray;
+}

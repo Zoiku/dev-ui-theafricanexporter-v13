@@ -43,6 +43,7 @@ import {
 } from "./Reducers/Actions";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import FAQ from "./Pages/FAQ";
 
 AOS.init();
 
@@ -143,6 +144,7 @@ const App = () => {
           />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/legal" element={<LegalPage />} />
+          <Route exact path="/faq" element={<FAQ />} />
         </Route>
 
         <Route element={<ProtectedAdminRoutes session={session} />}>

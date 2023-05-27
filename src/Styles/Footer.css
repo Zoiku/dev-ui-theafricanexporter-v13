@@ -16,8 +16,9 @@ footer > div {
 }
 
 footer > div > div:nth-child(1) {
-  font-size: x-large;
-  margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 footer ul {

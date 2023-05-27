@@ -30,6 +30,7 @@ const Footer = () => {
                     <li><NavLink style={navStyle} to="/about#payment-options">Payment Options</NavLink></li>
                     <li><NavLink style={navStyle} to="/about#buyers">Buyers</NavLink></li>
                     <li><NavLink style={navStyle} to="/about#merchants">Merchants</NavLink></li>
+                    <li><NavLink style={navStyle} to="/faq">FAQs</NavLink></li>
                 </ul>
             </div>
 
