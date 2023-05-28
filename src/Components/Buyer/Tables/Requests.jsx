@@ -251,6 +251,7 @@ const Requests = () => {
       renderCell: ({ row }) => (
         <div>
           <IconButton
+            disabled={row.quantity === 0}
             onClick={() => handleSelectRequestOffers(row.offers, row.quantity)}
             aria-label="cart"
           >
@@ -488,7 +489,7 @@ const Requests = () => {
           <div className="offers-data-grid-container">
             {selectedOffers && selectedOffers.length > 0 && (
               <div className="selected-quantities-offers">
-                <div>{"(*)"} Select offers to match requested quantity</div>
+                <div>{"(*)"} Select offers to satisfy your requested quantity</div>
                 <div
                   className={selectedQuantityStatus(
                     totalSelected,
@@ -515,16 +516,18 @@ const Requests = () => {
             />
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <SmallSecondary
-              disabled={!canPlaceOrder}
-              loading={state.requestState.loading}
-              onClick={handleOrderSubmit}
-              variant="contained"
-            >
-              Place Order
-            </SmallSecondary>
-          </div>
+          {selectedOffers && selectedOffers.length > 0 && (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <SmallSecondary
+                disabled={!canPlaceOrder}
+                loading={state.requestState.loading}
+                onClick={handleOrderSubmit}
+                variant="contained"
+              >
+                Place Order
+              </SmallSecondary>
+            </div>
+          )}
         </div>
       </Box>
     );

@@ -1,28 +1,33 @@
-export const searchObjects = (searchTerm, arrayOfObjects) => {
-  // Create an empty array to store the matched objects
-  let matchedObjects = [];
+export const searchObjects = (sentence, array) => {
+  const results = [];
+  const searchTerms = sentence.toLowerCase().split(" ");
 
-  // Loop through each object in the array
-  for (let i = 0; i < arrayOfObjects.length; i++) {
-    // Get the current object
-    let obj = arrayOfObjects[i];
+  for (const obj of array) {
+    let isMatch = false;
 
-    // Loop through each property of the object
-    for (let key in obj) {
-      // Check if the property value contains the search term
+    for (const value of Object.values(obj)) {
       if (
-        obj.hasOwnProperty(key) &&
-        typeof obj[key] === "string" &&
-        obj[key].toLowerCase().includes(searchTerm.toLowerCase())
+        typeof value === "string" &&
+        containsAllTerms(value.toLowerCase(), searchTerms)
       ) {
-        // Add the matched object to the array
-        matchedObjects.push(obj);
-        // Break the loop to avoid adding the same object multiple times
+        isMatch = true;
         break;
       }
     }
+
+    if (isMatch) {
+      results.push(obj);
+    }
   }
 
-  // Return the array of matched objects
-  return matchedObjects;
+  return results;
 };
+
+function containsAllTerms(text, searchTerms) {
+  for (const term of searchTerms) {
+    if (!text.includes(term)) {
+      return false;
+    }
+  }
+  return true;
+}

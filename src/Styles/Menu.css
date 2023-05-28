@@ -1,10 +1,10 @@
 .Menu {
-  padding: 30px 20px;
+  padding: 10px;
   height: 100%;
+  position: relative;
 }
 
 .menu-links-container {
-  position: relative;
   position: sticky;
   top: 130px;
 }
@@ -18,20 +18,11 @@
   display: flex;
   align-items: center;
   font-weight: 500;
+  position: relative;
 }
 
 .menu-links-container .active {
   background: var(--tae-orange);
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   color: white;
-}
-
-.menu-links-container .active::before {
-  content: "";
-  /* border-left: 5px solid white; */
-  height: 15px;
-  position: absolute;
-  left: -2px;
-  border-radius: 5px;
-  margin-top: 3px;
 }

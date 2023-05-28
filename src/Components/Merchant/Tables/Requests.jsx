@@ -563,7 +563,7 @@ const Requests = () => {
                     </thead>
                     <tbody>
                       {Array.from(Array(incotermRows)).map((_row, index) => (
-                        <tr>
+                        <tr key={index}>
                           <td>
                             <input
                               placeholder="eg 40-50"

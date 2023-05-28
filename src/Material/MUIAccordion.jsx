@@ -85,14 +85,20 @@ const MUIAccordion = () => {
   const [faqs, setFaqs] = useState(initialState);
   const [searchedTerm, setSearchTerm] = useState(null);
   const oninput = (e) => {
-    let searchKeyword = e.target.value;
-    setSearchTerm(searchKeyword);
-    let matchedObjects = searchObjects(searchKeyword, initialState);
-    setFaqs(matchedObjects);
+    setTimeout(() => {
+      let searchKeyword = e.target.value;
+      setSearchTerm(searchKeyword);
+      let matchedObjects = searchObjects(searchKeyword, initialState);
+      setFaqs(matchedObjects);
+    }, 1000);
   };
 
   const handleMail = () => {
     window.open("mailto:hello@theafricanexporter.com");
+  };
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -106,6 +112,7 @@ const MUIAccordion = () => {
               display: "flex",
               alignItems: "center",
             }}
+            onSubmit={handleSumbit}
           >
             <InputBase
               onChange={oninput}

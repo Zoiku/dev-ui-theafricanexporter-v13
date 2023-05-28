@@ -12,7 +12,57 @@ import travel from "../Assets/Charco - Travel International.png";
 import we from "../Assets/The Movement - Your World.png";
 import trees from "../Assets/Allura - Trees.png";
 
+import unlimitedDemand from "../Assets/About/Finance-amico.svg";
+import guaranteedPayment from "../Assets/About/Cash Payment-bro.svg";
+import nonColatirizedLoan from "../Assets/About/Plain credit card-cuate.svg";
+
+import unlimitedSupply from "../Assets/About/Growth curve-pana.svg";
+import verifiedMerchants from "../Assets/About/International trade-bro.svg";
+import buyerProtection from "../Assets/About/Refund-bro.svg";
+import seamlessProcurement from "../Assets/About/Container ship-pana.svg";
+
 const About = () => {
+  const merchantBenefits = [
+    {
+      background: unlimitedDemand,
+      title: "Unlimited Demand",
+      body: "Gain access to continuous streams of Business Leads from across the world, leading to more clients and increased revenue",
+    },
+    {
+      background: guaranteedPayment,
+      title: "Guaranteed Payment",
+      body: "Instant and upfront payment once goods are delivered to the Departure Port. No more payment worries",
+    },
+    {
+      background: nonColatirizedLoan,
+      title: "Non – collaterized Loans",
+      body: "Get working capital loans sans collateral at competitive rates",
+    },
+  ];
+
+  const buyerBenefits = [
+    {
+      background: unlimitedSupply,
+      title: "Unlimited Supply",
+      body: "Gain access to continuous streams of Quotations and subsequent Supply from Merchants across Africa",
+    },
+    {
+      background: verifiedMerchants,
+      title: "Verified & Vetted Merchants",
+      body: "Source directly and at wholesale prices from credible and reliable Merchants",
+    },
+    {
+      background: buyerProtection,
+      title: "Buyer Protection",
+      body: "All exports are insured under a Product Liability / Guarantee policy. Buyers are assured of 100% returns of their funds in case products do not meet the agreed terms / standards",
+    },
+    {
+      background: seamlessProcurement,
+      title: "Seamless Procurement",
+      body: "A One – stop marketplace to aggregate and coordinate procurement of Agro – based products in unlimited quantities from Merchants across Africa",
+    },
+  ];
+
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
 
@@ -391,58 +441,31 @@ const About = () => {
                 Benefits for <span className="special-text-style">Buyers</span>
               </div>
               <div className="section-content">
-                <div className="benefits-cards-container">
-                  <div className="benefits-card">
-                    <div className="card-title">Unlimited Supply</div>
-                    <div className="card-content">
-                      Gain access to continuous streams of Quotations and
-                      subsequent Supply from Merchants across Africa
+                <div className="newBenefitsSectionContainer">
+                  {buyerBenefits.map((benefit, index) => (
+                    <div
+                      data-aos-duration="1000"
+                      data-aos="fade-left"
+                      key={index}
+                      className="newBenefitsSection"
+                    >
+                      <div className="backgroundImageContainer">
+                        <img
+                          src={benefit.background}
+                          alt=""
+                          className="backgroundImage"
+                        />
+                      </div>
+                      <div className="benefitsTextContentContainer">
+                        <div className="benefitsTextContent">
+                          <div className="benefitsTitle">{benefit.title}</div>
+                          <div className="benefitsBodyContainer">
+                            {benefit.body}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">flight</span>
-                    </div>
-                  </div>
-                  <div className="benefits-card">
-                    <div className="card-title">
-                      Verified & Vetted Merchants
-                    </div>
-                    <div className="card-content">
-                      Source directly and at wholesale prices from credible and
-                      reliable Merchants
-                    </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        support_agent
-                      </span>
-                    </div>
-                  </div>
-                  <div className="benefits-card">
-                    <div className="card-title">Buyer Protection</div>
-                    <div className="card-content">
-                      All exports are insured under a Product Liability /
-                      Guarantee policy. Buyers are assured of 100% returns of
-                      their funds in case products do not meet the agreed terms
-                      / standards
-                    </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        admin_panel_settings
-                      </span>
-                    </div>
-                  </div>
-                  <div className="benefits-card">
-                    <div className="card-title">Seamless Procurement</div>
-                    <div className="card-content">
-                      A One – stop marketplace to aggregate and coordinate
-                      procurement of Agro – based products in unlimited
-                      quantities from Merchants across Africa
-                    </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        local_shipping
-                      </span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </section>
@@ -455,44 +478,31 @@ const About = () => {
                 <span className="special-text-style">Merchants</span>
               </div>
               <div className="section-content">
-                <div className="benefits-cards-container">
-                  <div className="benefits-card">
-                    <div className="card-title">Unlimited Demand</div>
-                    <div className="card-content">
-                      Gain access to continuous streams of Business Leads from
-                      across the world, leading to more clients and increased
-                      revenue
+                <div className="newBenefitsSectionContainer">
+                  {merchantBenefits.map((benefit, index) => (
+                    <div
+                      data-aos-duration="1000"
+                      data-aos="fade-left"
+                      key={index}
+                      className="newBenefitsSection"
+                    >
+                      <div className="backgroundImageContainer">
+                        <img
+                          src={benefit.background}
+                          alt=""
+                          className="backgroundImage"
+                        />
+                      </div>
+                      <div className="benefitsTextContentContainer">
+                        <div className="benefitsTextContent">
+                          <div className="benefitsTitle">{benefit.title}</div>
+                          <div className="benefitsBodyContainer">
+                            {benefit.body}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        monitoring
-                      </span>
-                    </div>
-                  </div>
-                  <div className="benefits-card">
-                    <div className="card-title">Guaranteed Payment</div>
-                    <div className="card-content">
-                      Instant and upfront payment once goods are delivered to
-                      the Departure Port. No more payment worries
-                    </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        monetization_on
-                      </span>
-                    </div>
-                  </div>
-                  <div className="benefits-card">
-                    <div className="card-title">Non – collaterized Loans</div>
-                    <div className="card-content">
-                      Get working capital loans sans collateral at competitive
-                      rates
-                    </div>
-                    <div className="background-icon">
-                      <span className="material-symbols-rounded">
-                        credit_score
-                      </span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </section>
