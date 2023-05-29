@@ -1,14 +1,18 @@
+.newGoBackContainer {
+  margin: 0 0 20px 0;
+}
+
 .RequestQuote-Page {
   min-height: calc(100vh - 100px);
   display: flex;
   place-content: center;
 }
 
-.request-summary-container>div {
+.request-summary-container > div {
   margin-bottom: 20px;
 }
 
-.request-summary-container>div>div:nth-child(1) {
+.request-summary-container > div > div:nth-child(1) {
   font-weight: 600;
   margin-bottom: 5px;
   position: relative;
@@ -16,7 +20,7 @@
   align-items: center;
 }
 
-.request-summary-container>div>div:nth-child(1)::before {
+.request-summary-container > div > div:nth-child(1)::before {
   content: "";
   height: 13px;
   position: relative;
@@ -25,41 +29,41 @@
   border: 2px solid var(--tae-orange);
 }
 
-.request-summary-container>div>div>div:nth-child(1) {
+.request-summary-container > div > div > div:nth-child(1) {
   padding: 5px 0;
   border-bottom: 1px solid #efefef;
   display: flex;
   justify-content: space-between;
 }
 
-.request-summary-container>div>div>div:nth-child(1)>span {
+.request-summary-container > div > div > div:nth-child(1) > span {
   width: 50%;
 }
 
-.request-summary-container>div>div>div:nth-child(1)>span:nth-child(1) {
+.request-summary-container > div > div > div:nth-child(1) > span:nth-child(1) {
   color: gray;
 }
 
-.request-summary-container>div>div>div:nth-child(1)>span:nth-child(2) {
+.request-summary-container > div > div > div:nth-child(1) > span:nth-child(2) {
   font-weight: 500;
   text-align: left;
 }
 
-.request-summary-container>div:nth-last-child(1) {
+.request-summary-container > div:nth-last-child(1) {
   margin: 0;
 }
 
-.request-quote-page-header>div:nth-child(1) {
+.request-quote-page-header > div:nth-child(1) {
   font-size: xx-large;
   font-weight: 700;
 }
 
-.RequestQuote-Page>div:nth-child(3) {
+.RequestQuote-Page > div:nth-child(3) {
   width: 900px;
   padding: 30px 0;
 }
 
-.request-quote-page-form>section {
+.request-quote-page-form > section {
   border: 1px solid #c5c5c5;
   border-radius: 5px;
   padding: 20px;
@@ -79,7 +83,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.profile-information-body>div:nth-child(even) {
+.profile-information-body > div:nth-child(even) {
   text-align: right;
 }
 
@@ -88,31 +92,31 @@
   justify-content: space-between;
 }
 
-.select-input-form-with-units>div:nth-child(1) {
+.select-input-form-with-units > div:nth-child(1) {
   width: 100%;
 }
 
-.select-input-form-with-units>div:nth-child(2) {
+.select-input-form-with-units > div:nth-child(2) {
   width: 30%;
   margin-left: 10px;
 }
 
-.select-input-form>div {
+.select-input-form > div {
   margin: 20px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.select-input-form>div:nth-last-child(1) {
+.select-input-form > div:nth-last-child(1) {
   margin: 0;
 }
 
-.select-input-form>div>div:nth-child(1) {
+.select-input-form > div > div:nth-child(1) {
   width: 30%;
 }
 
-.select-input-form>div>div:nth-child(2) {
+.select-input-form > div > div:nth-child(2) {
   width: 70%;
 }
 
@@ -125,7 +129,7 @@
   background: var(--tae-orange-faded);
 }
 
-.request-quote-specification-note-container>div>div:nth-child(1) {
+.request-quote-specification-note-container > div > div:nth-child(1) {
   font-size: medium;
   font-weight: 600;
 }
@@ -199,11 +203,11 @@
 }
 
 .RequestQuote-Page .swiper:hover .swiper-button-next {
-  animation: swiper-button-next .5s ease forwards;
+  animation: swiper-button-next 0.5s ease forwards;
 }
 
 .RequestQuote-Page .swiper:hover .swiper-button-prev {
-  animation: swiper-button-prev .5s ease forwards;
+  animation: swiper-button-prev 0.5s ease forwards;
 }
 
 @keyframes swiper-button-next {
@@ -237,17 +241,17 @@
     grid-template-columns: repeat(1, 1fr);
   }
 
-  .profile-information-body>div:nth-child(even) {
+  .profile-information-body > div:nth-child(even) {
     text-align: left;
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .RequestQuote-Page>div:nth-child(3) {
+  .RequestQuote-Page > div:nth-child(3) {
     width: 94%;
   }
 
-  .select-input-form-with-units>div:nth-child(2) {
+  .select-input-form-with-units > div:nth-child(2) {
     width: 80%;
   }
 
