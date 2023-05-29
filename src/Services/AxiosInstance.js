@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = () => {
-  const url = process.env.REACT_APP_BASE_URL_PRODUCTION;
+  const url = process.env.REACT_APP_BASE_URL_BASE_URL_DEVELOPMENT;
 
   let headers = {
     "Content-Type": "application/json",
