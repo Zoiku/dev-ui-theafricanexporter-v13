@@ -541,7 +541,7 @@ const RequestQuote = ({ session }) => {
             variant="text"
             startIcon={<KeyboardBackspaceRounded />}
           >
-            Go back Home
+            Go back
           </EmptyButton>
         </div>
 
