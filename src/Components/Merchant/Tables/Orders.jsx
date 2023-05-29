@@ -220,7 +220,7 @@ const Orders = () => {
         { field: "product", headerName: "Product", width: 150 },
         { field: "terms", headerName: "Terms", width: 100 },
         { field: "quantity", headerName: "Quantity", width: 100 },
-        { field: "timeLeft", headerName: "TimeLeft", width: 100, renderCell: ({ row }) => <div> <Countdown endDate={row.expiryDate} /> </div> },
+        { field: "timeLeft", headerName: "Time Left", width: 100, renderCell: ({ row }) => <div> <Countdown endDate={row.expiryDate} /> </div> },
         { field: "status", headerName: "Status", width: 100 },
         { field: "action", headerName: "", width: 30, renderCell: ({ row }) => <div className="simple-center-div"><More id={row.id} /></div> },
     ];

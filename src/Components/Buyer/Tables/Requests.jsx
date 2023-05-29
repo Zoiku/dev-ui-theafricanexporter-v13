@@ -235,7 +235,7 @@ const Requests = () => {
     { field: "quantity", headerName: "Quantity", width: 100 },
     {
       field: "timeLeft",
-      headerName: "TimeLeft",
+      headerName: "Time Left",
       width: 100,
       renderCell: ({ row }) => (
         <div>

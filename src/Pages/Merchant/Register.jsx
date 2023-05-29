@@ -323,7 +323,7 @@ const Register = () => {
 
         <div className="resend-otp-container">
           <div>
-            Didn't recieve OTP,{" "}
+            Didn't receive OTP?{" "}
             <span
               className={
                 resendCodeTimerInterval.current

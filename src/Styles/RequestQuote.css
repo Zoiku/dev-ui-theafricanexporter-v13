@@ -1,5 +1,5 @@
 .newGoBackContainer {
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
 .RequestQuote-Page {
@@ -140,20 +140,13 @@
 
 .RequestQuote-Page .swiper-container {
   width: 100%;
-  height: 500px;
+  height: 450px;
   margin-top: 20px;
 }
 
 .RequestQuote-Page .swiper {
   width: 100%;
   height: 100%;
-}
-
-.RequestQuote-Page .swiper-slide {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .RequestQuote-Page .swiper-slide img {
