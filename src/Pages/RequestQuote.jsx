@@ -443,7 +443,7 @@ const RequestQuote = ({ session }) => {
               loading={state.requestState.loading}
               variant="contained"
             >
-              Confirm Quote
+              Confirm Request
             </SmallSecondary>
           </div>
         </div>
