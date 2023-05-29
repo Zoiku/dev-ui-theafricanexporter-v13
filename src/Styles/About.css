@@ -375,7 +375,8 @@
 }
 
 .newBenefitsSection .backgroundImageContainer {
-  height: 400px;
+  height: 350px;
+  overflow: clip;
 }
 
 .newBenefitsSection .benefitsBodyContainer {

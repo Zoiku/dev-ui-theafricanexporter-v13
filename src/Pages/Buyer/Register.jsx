@@ -208,18 +208,17 @@ const Register = () => {
     const abortController = new AbortController();
     const fetchData = async () => {
       try {
-        // const { data } = await axios.get("https://restcountries.com/v2/all", {
-        //   signal: abortController.signal,
-        // });
-        // setCountries(data);
-
-        const { data } = await axios.get(
-          "http://api.countrylayer.com/v2/all?access_key=d79d5a8b3f403a4e817997dce219ae3f",
-          {
-            signal: abortController.signal,
-          }
-        );
+        const { data } = await axios.get("https://restcountries.com/v2/all", {
+          signal: abortController.signal,
+        });
         setCountries(data);
+        // const { data } = await axios.get(
+        //   "http://api.countrylayer.com/v2/all?access_key=d79d5a8b3f403a4e817997dce219ae3f",
+        //   {
+        //     signal: abortController.signal,
+        //   }
+        // );
+        // setCountries(data);
       } catch (error) {}
     };
     fetchData();
@@ -444,12 +443,12 @@ const Register = () => {
                     countries.map((country) => (
                       <MenuItem key={country.name} value={country.name}>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          {/* <img
+                          <img
                             style={{ marginRight: 10 }}
                             alt={country.name}
                             width={30}
                             src={country.flags.svg}
-                          />{" "} */}
+                          />{" "}
                           {country.name}
                         </div>
                       </MenuItem>
