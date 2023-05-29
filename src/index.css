@@ -137,8 +137,7 @@ html {
 }
 
 .offers-data-grid-container {
-  height: 290px;
-  /* height: auto; */
+  height: auto;
 }
 
 .drawer-container {

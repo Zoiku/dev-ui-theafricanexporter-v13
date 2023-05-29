@@ -251,7 +251,7 @@ const Requests = () => {
       renderCell: ({ row }) => (
         <div>
           <IconButton
-            disabled={row.quantity === 0}
+            disabled={row.offers.length === 0}
             onClick={() => handleSelectRequestOffers(row.offers, row.quantity)}
             aria-label="cart"
           >
