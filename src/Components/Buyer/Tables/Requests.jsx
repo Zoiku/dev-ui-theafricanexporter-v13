@@ -51,7 +51,7 @@ const selectedQuantityStatus = (total, requested) => {
   if (total === requested) {
     return "good-selected";
   } else if (total > requested) {
-    return "bad-selected";
+    return "default-selected";
   } else {
     return "default-selected";
   }
