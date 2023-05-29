@@ -489,7 +489,9 @@ const Requests = () => {
           <div className="offers-data-grid-container">
             {selectedOffers && selectedOffers.length > 0 && (
               <div className="selected-quantities-offers">
-                <div>{"(*)"} Select offers to satisfy your requested quantity</div>
+                <div>
+                  {"(*)"} Select offers to satisfy your requested quantity
+                </div>
                 <div
                   className={selectedQuantityStatus(
                     totalSelected,
@@ -517,7 +519,12 @@ const Requests = () => {
           </div>
 
           {selectedOffers && selectedOffers.length > 0 && (
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <SmallSecondary
                 disabled={!canPlaceOrder}
                 loading={state.requestState.loading}

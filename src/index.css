@@ -137,7 +137,8 @@ html {
 }
 
 .offers-data-grid-container {
-  height: 250px !important;
+  height: 290px;
+  /* height: auto; */
 }
 
 .drawer-container {
@@ -305,6 +306,10 @@ html {
   color: black;
 }
 
+.bad-selected {
+  color: rgba(185, 0, 0, 0.767);
+}
+
 .default-selected {
   color: #88888888;
 }
@@ -342,6 +347,18 @@ html {
 }
 
 @media screen and (max-width: 1000px) {
+  .offers-data-grid-container {
+    height: auto;
+  }
+
+  .selected-quantities-offers {
+    flex-direction: column;
+  }
+
+  .selected-quantities-offers > div:nth-child(2) {
+    margin: 2px 0 0 0;
+  }
+
   .nav-hello {
     display: none;
   }
