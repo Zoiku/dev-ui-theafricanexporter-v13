@@ -140,15 +140,20 @@
 
 .RequestQuote-Page .swiper-container {
   width: 100%;
-  height: 400px;
-  margin-top: 30px;
+  height: 500px;
+  margin-top: 20px;
 }
 
 .RequestQuote-Page .swiper {
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  background: var(--tae-black);
+}
+
+.RequestQuote-Page .swiper-slide {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .RequestQuote-Page .swiper-slide img {
@@ -156,26 +161,49 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.9;
-  cursor: grab;
 }
 
-.RequestQuote-Page .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: rgba(255, 255, 255, 0);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+.RequestQuote-Page .mySwiper2 {
+  width: 100%;
+}
+
+.teakRoundSwipeImagesTop {
+  height: 85% !important;
+}
+.teakRoundSwipeImagesBottom {
+  height: 15% !important;
+}
+
+.teakSquareSwipeImagesTop {
+  height: 80% !important;
+}
+.teakSquareSwipeImagesBottom {
+  height: 20% !important;
+}
+
+.RequestQuote-Page .mySwiper {
+  box-sizing: border-box;
+  padding: 5px 0 0 0;
+}
+
+.RequestQuote-Page .mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  position: relative;
+}
+
+.RequestQuote-Page .mySwiper .swiper-slide::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.RequestQuote-Page .mySwiper .swiper-slide-thumb-active::after {
+  background: rgba(0, 0, 0, 0);
 }
 
 .RequestQuote-Page .swiper-button-next,

@@ -313,9 +313,10 @@ export const TextButton = styled(LoadingButton)({
 export const EmptyButton = styled(LoadingButton)({
   boxShadow: "none",
   textTransform: "none",
-  color: "#000",
+  color: "black",
   transition: "all 0.2s ease",
   lineHeight: 1.5,
+  borderColor: "black",
   fontWeight: 600,
   fontFamily: [
     "-apple-system",
@@ -331,10 +332,13 @@ export const EmptyButton = styled(LoadingButton)({
   ].join(","),
   "&:hover": {
     boxShadow: "none",
-    color: "#000",
+    color: "black",
+    borderColor: "black",
   },
   "&:active": {
     boxShadow: "none",
+    color: "black",
+    borderColor: "black",
   },
   "&:focus": {}
 });

@@ -16,7 +16,7 @@ import unlimitedDemand from "../Assets/About/Finance-amico.svg";
 import guaranteedPayment from "../Assets/About/Cash Payment-bro.svg";
 import nonColatirizedLoan from "../Assets/About/Plain credit card-cuate.svg";
 
-import unlimitedSupply from "../Assets/About/Growth curve-pana.svg";
+import unlimitedSupply from "../Assets/About/Growth curve-bro.svg";
 import verifiedMerchants from "../Assets/About/International trade-bro.svg";
 import buyerProtection from "../Assets/About/Refund-bro.svg";
 import seamlessProcurement from "../Assets/About/Container ship-pana.svg";

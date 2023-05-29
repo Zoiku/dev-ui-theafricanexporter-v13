@@ -30,11 +30,15 @@ import axios from "axios";
 import BuyerService from "../Services/Buyer";
 import { setAlert } from "../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import "swiper/css/free-mode";
+
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
+import { Navigation, Thumbs, FreeMode } from "swiper";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
 import ProgressiveImage from "react-progressive-graceful-image";
 import Modal from "@mui/material/Modal";
@@ -141,6 +145,8 @@ const IMAGES_TO_DISPLAY = {
 };
 
 const RequestQuote = ({ session }) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
   const navigate = useNavigate();
   const handleRedirect = (redirect) => () => {
     navigate(redirect, { replace: true });
@@ -552,26 +558,67 @@ const RequestQuote = ({ session }) => {
 
         <div className="swiper-container">
           {parsedProduct.name ? (
-            <Swiper
-              navigation={true}
-              pagination={true}
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) => (
-                <SwiperSlide key={index}>
-                  <ProgressiveImage src={src}>
-                    {(src, loading) => (
-                      <img
-                        className={`image${loading ? " loading" : " loaded"}`}
-                        src={src}
-                        alt=""
-                      />
-                    )}
-                  </ProgressiveImage>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <>
+              <Swiper
+                spaceBetween={5}
+                navigation={true}
+                thumbs={{ swiper: thumbsSwiper }}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className={
+                  parsedProduct.name === "Teak Round Logs"
+                    ? "mySwiper2 teakRoundSwipeImagesTop"
+                    : parsedProduct.name === "Teak Square Logs" &&
+                      "mySwiper2 teakSquareSwipeImagesTop"
+                }
+              >
+                {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) => (
+                  <SwiperSlide key={index}>
+                    <ProgressiveImage src={src}>
+                      {(src, loading) => (
+                        <img
+                          className={`image${loading ? " loading" : " loaded"}`}
+                          src={src}
+                          alt=""
+                        />
+                      )}
+                    </ProgressiveImage>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <Swiper
+                spaceBetween={5}
+                onSwiper={setThumbsSwiper}
+                slidesPerView={
+                  parsedProduct.name === "Teak Round Logs"
+                    ? 15
+                    : parsedProduct.name === "Teak Square Logs" && 10
+                }
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className={
+                  parsedProduct.name === "Teak Round Logs"
+                    ? "mySwiper teakRoundSwipeImagesBottom"
+                    : parsedProduct.name === "Teak Square Logs" &&
+                      "mySwiper teakSquareSwipeImagesBottom"
+                }
+              >
+                {IMAGES_TO_DISPLAY[parsedProduct.name].map((src, index) => (
+                  <SwiperSlide key={index}>
+                    <ProgressiveImage src={src}>
+                      {(src, loading) => (
+                        <img
+                          className={`image${loading ? " loading" : " loaded"}`}
+                          src={src}
+                          alt=""
+                        />
+                      )}
+                    </ProgressiveImage>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </>
           ) : (
             <PageLoadingAnimation />
           )}

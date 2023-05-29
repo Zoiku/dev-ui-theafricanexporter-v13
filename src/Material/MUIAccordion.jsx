@@ -14,8 +14,11 @@ import { searchObjects } from "../Components/Misc";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
-))(() => ({
-  "&:not(:last-child)": {},
+))(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    // borderBottom: 0,
+  },
   "&:before": {
     display: "none",
   },
@@ -27,16 +30,12 @@ const AccordionSummary = styled((props) => (
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
+  backgroundColor: theme.palette.mode === "dark" ? "white" : "white",
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
     transform: "rotate(90deg)",
   },
   "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
+    // marginLeft: theme.spacing(1),
   },
 }));
 
