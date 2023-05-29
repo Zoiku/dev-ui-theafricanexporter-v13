@@ -2,14 +2,17 @@ import "../Styles/RequestQuote.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import ProductService from "../Services/Product";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import {
+  Stack,
+  TextField,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  Box,
+} from "@mui/material/";
+import {
+  EmptyButton,
   GenericPrimaryButton,
   GenericSecondary,
   SmallSecondary,
@@ -39,7 +42,6 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { standard } from "../Styles/Modal";
 import { Puller } from "../Material/Drawer";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-
 import tr11 from "../Assets/Logs Min/t11.jpg";
 import tr12 from "../Assets/Logs Min/t12.jpg";
 import tr13 from "../Assets/Logs Min/t13.jpg";
@@ -65,6 +67,7 @@ import ts7 from "../Assets/Logs Min/t7.jpg";
 import ts8 from "../Assets/Logs Min/t8.jpg";
 import ts9 from "../Assets/Logs Min/t9.jpg";
 import ts10 from "../Assets/Logs Min/t10.jpg";
+import { KeyboardBackspaceRounded } from "@mui/icons-material/";
 
 const SPECIFICATION_DETAILS = {
   "Teak Round Logs": [
@@ -138,11 +141,14 @@ const IMAGES_TO_DISPLAY = {
 };
 
 const RequestQuote = ({ session }) => {
+  const navigate = useNavigate();
+  const handleRedirect = (redirect) => () => {
+    navigate(redirect, { replace: true });
+  };
   const { isLogged } = session;
   const rootDispatch = useDispatch();
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
   const [countries, setCountries] = useState(null);
-  const navigate = useNavigate();
   const { search } = useLocation();
   const { pid } = useMemo(
     () => Object.fromEntries([...new URLSearchParams(search)]),
@@ -529,6 +535,16 @@ const RequestQuote = ({ session }) => {
       </div>
 
       <div>
+        <div className="newGoBackContainer">
+          <EmptyButton
+            onClick={handleRedirect("/")}
+            variant="text"
+            startIcon={<KeyboardBackspaceRounded />}
+          >
+            Go back Home
+          </EmptyButton>
+        </div>
+
         <div className="request-quote-page-header">
           <div>{parsedProduct.name}</div>
           <div>{parsedProduct.description}</div>
