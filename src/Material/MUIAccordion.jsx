@@ -8,17 +8,12 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { searchObjects } from "../Components/Misc";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    // borderBottom: 0,
-  },
+))(() => ({
   "&:before": {
     display: "none",
   },
@@ -102,9 +97,10 @@ const MUIAccordion = () => {
 
   return (
     <div className="MUIAccordion">
-      <div className="searchContainer">
-        <div className="search">
+      <div className="searchContentContainer">
+        <div className="searchContent">
           <Paper
+            className="searchBoxMaterial"
             component="form"
             sx={{
               p: "2px 4px",
@@ -113,16 +109,23 @@ const MUIAccordion = () => {
             }}
             onSubmit={handleSumbit}
           >
+            <div
+              style={{
+                padding: "10px",
+                display: "grid",
+                placeContent: "center",
+              }}
+            >
+              <SearchIcon />
+            </div>
+
             <InputBase
               onChange={oninput}
               name="question"
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Search for keywords eg. Payment Method"
+              placeholder="Search"
               inputProps={{ "aria-label": "search frequently asked questions" }}
             />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
           </Paper>
         </div>
       </div>

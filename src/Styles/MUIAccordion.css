@@ -1,15 +1,21 @@
-.AccordionRow {
-  /* margin: 0 0 5px 0; */
+.searchContentContainer {
+  margin: 40px 0;
 }
 
-.searchContainer {
-  margin: 0 0 20px 0;
+.searchContent {
+  display: flex;
+  justify-content: center;
+}
+
+.searchBoxMaterial {
+  width: 350px;
 }
 
 .resultsAccordion {
   margin: 0 0 20px 0;
   color: gray;
   font-size: small;
+  text-align: center;
 }
 
 .searchedTerm {
@@ -27,4 +33,29 @@
 .cantFindQuestion {
   font-size: small;
   color: gray;
+  text-align: center;
+}
+
+.AccordionRow {
+  border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+@media screen and (max-width: 1000px) {
+  .searchContent {
+    padding: 10px;
+  }
+
+  .cantFindQuestion {
+    text-align: left;
+    padding: 0 20px;
+  }
+
+  .resultsAccordion {
+    padding: 0 20px;
+    text-align: left;
+  }
+
+  .searchBoxMaterial {
+    width: 100%;
+  }
 }
