@@ -1,6 +1,6 @@
 import MUIAccordion from "../Material/MUIAccordion";
 import "../Styles/FAQ.css";
-import backgroundSvgArt from "../Assets/FAQs-pana.svg";
+import backgroundSvgArt from "../Assets/FAQs-cuate.svg";
 
 const FAQ = () => {
   const handleMail = () => {

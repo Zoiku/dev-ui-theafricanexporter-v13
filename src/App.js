@@ -43,7 +43,8 @@ import {
 } from "./Reducers/Actions";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import FAQ from "./Pages/FAQ";
+// import FAQ from "./Pages/FAQ";
+import FAQ2 from "./Pages/FAQ2";
 
 AOS.init();
 
@@ -98,7 +99,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     session.isLogged && fetchData();
@@ -144,7 +145,8 @@ const App = () => {
           />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/legal" element={<LegalPage />} />
-          <Route exact path="/faq" element={<FAQ />} />
+          <Route exact path="/faq" element={<FAQ2 />} />
+          {/* <Route exact path="/faq2" element={<FAQ2 />} /> */}
         </Route>
 
         <Route element={<ProtectedAdminRoutes session={session} />}>
