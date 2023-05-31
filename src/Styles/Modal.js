@@ -19,7 +19,6 @@ export const inWebTut = {
   width: 900,
   borderRadius: "5px",
   outline: 0,
-  background: "white"
 };
 
 export const fillScreen = {

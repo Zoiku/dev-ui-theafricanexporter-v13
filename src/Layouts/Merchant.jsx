@@ -196,7 +196,7 @@ const MerchantLayout = ({ session }) => {
   );
 
   return notLoggedBefore ? (
-    <Tutorial user={user} openDrawer={notLoggedBefore} role="MERCHANT" />
+    <Tutorial user={user} openDrawer={notLoggedBefore} />
   ) : (
     <div className="Merchant-Layout App-Layout">
       <div>

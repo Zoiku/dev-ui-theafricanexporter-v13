@@ -31,3 +31,7 @@ function containsAllTerms(text, searchTerms) {
   }
   return true;
 }
+
+export const capitalizeFirstLetter = (string) => {
+  return string.toLowerCase();
+};

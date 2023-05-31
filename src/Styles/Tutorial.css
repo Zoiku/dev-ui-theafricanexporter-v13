@@ -1,307 +1,197 @@
-.tutorialComponent {
-  width: 100%;
-  border-radius: 5px;
+.TutorialPageContainer {
+  height: 100vh;
+}
+
+.TutorialComponentContainer {
   overflow: clip;
+  background: #00000000;
 }
 
-.tutorialComponent .swiper {
+.TutorialComponentContainer .swiper {
+  height: 500px;
   width: 100%;
-  height: 100%;
 }
 
-.tutorialComponent .swiper-slide {
-  height: 100%;
+.TutorialSwiperSlideContainer {
   width: 100%;
+  height: 100%;
   background: white;
 }
 
-.tutorialComponent .swiper-slide img {
-  height: 100%;
+.TutorialSwiperSlideImage {
   width: 100%;
+  height: 100%;
 }
 
-.tutorialSwiperSlideImages {
-  cursor: pointer;
-}
-
-.tutorialSwipeContainer {
+.TutorialContentContainer {
   height: 100%;
   width: 100%;
   display: grid;
   place-content: center;
 }
 
-.tutorialSwipe {
-  height: 100%;
-  width: 100%;
-}
-
-.tutorialComponent .swiper-button-next,
-.tutorialComponent .swiper-button-prev {
-  color: black;
-  width: 20px;
-  height: 20px;
-  padding: 20px;
-  background: #efefef86;
-  border-radius: 50%;
-}
-
-.tutorialComponent .swiper-button-next::after,
-.tutorialComponent .swiper-button-prev::after {
-  font-size: large;
-  font-weight: 600;
-}
-
-.tutorialComponent .swiper-button-next {
-  right: -40px;
-}
-
-.tutorialComponent .swiper-button-prev {
-  left: -40px;
-}
-
-.tutorialComponent .swiper:hover .swiper-button-next {
-  animation: swiper-button-next 0.5s ease forwards;
-}
-
-.tutorialComponent .swiper:hover .swiper-button-prev {
-  animation: swiper-button-prev 0.5s ease forwards;
-}
-
-@keyframes swiper-button-next {
-  to {
-    right: 15px;
-  }
-}
-
-@keyframes swiper-button-prev {
-  to {
-    left: 15px;
-  }
-}
-
-.tutorialComponent .colored {
-  color: var(--tae-orange);
-}
-
-.get-started-img-container {
-  display: flex;
-  justify-content: center;
-}
-
-.get-started-img img {
-  width: 100%;
-  height: 100%;
-}
-
-.tutorialContent {
-  height: 100%;
-}
-
-.tutorialContentBodyContainer {
-  display: grid;
-  justify-content: center;
-}
-
-.tutorialContentBody {
+.TutorialContent > div {
+  margin: 5px 0;
   text-align: center;
 }
 
-.hello-message {
-  margin: 20px 0;
+.tutorialTitle4 {
+  font-size: small;
+  color: gray;
 }
 
-.extra-message-to-hello {
-  font-size: smaller;
+.tutorialTitleSpan {
+  text-transform: capitalize;
 }
 
-.skipTutorialContainer {
-  z-index: 100;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  bottom: -70px;
-  cursor: pointer;
-  color: #c5c5c5;
+.tutorialTitle3 {
+  margin: 30px 0 0 0 !important;
+  font-size: large;
+  font-weight: 700;
 }
 
-.skipTutorialContent {
+.tutorialTitle1 {
+  font-weight: 700;
+}
+
+.tutorialTitle1 span {
+  text-transform: capitalize;
+  color: var(--tae-orange);
+  font-weight: 800;
+}
+
+.tutorialTitle3 span {
+  color: var(--tae-orange);
+  font-weight: 800;
+}
+
+.tutorialArtImageContainer {
+  height: 300px;
+}
+
+.tutorialArtImageContainer2 {
+  height: 350px;
+}
+
+.tutorialArtImage {
+  width: 100%;
+  height: 100%;
+}
+
+.TutorialComponentContainer .swiper-button-next,
+.TutorialComponentContainer .swiper-button-prev {
+  color: black;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #efefef;
+}
+
+.TutorialComponentContainer .swiper-button-next::after,
+.TutorialComponentContainer .swiper-button-prev::after {
+  font-size: medium;
+  font-weight: 800;
+}
+
+.TutorialComponentContainer .swiper-button-next {
+  right: -50px;
   transition: all 0.5s ease;
 }
 
-.skipTutorialContent:hover {
-  color: #dadada;
+.TutorialComponentContainer .swiper-button-prev {
+  left: -50px;
+  transition: all 0.5s ease;
 }
 
-.skipTutorialContentEnlarge {
-  color: white !important;
+.TutorialComponentContainer .swiper:hover .swiper-button-next {
+  right: 15px;
 }
 
-.completedTutorialContainer {
-  height: 100%;
-  width: 100%;
-  display: grid;
-  place-items: center;
+.TutorialComponentContainer .swiper:hover .swiper-button-prev {
+  left: 15px;
 }
 
-.completedTutorial img {
-  height: 100%;
-  width: 100%;
-}
-
-.completedTutorial div {
+.tutorialSkipContainer {
+  margin: 40px 0 0 0;
   text-align: center;
-  animation: blinking 2s ease infinite;
-  font-size: x-large;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tutorialSkipContainer > div {
+  transition: all 0.2s ease;
+}
+
+.tutorialProgressIncomplete {
+  color: rgb(186, 186, 186);
+}
+
+.tutorialProgressComplete {
+  color: white;
+}
+
+.tutorialSkipContainer > div:hover {
+  color: white;
+}
+
+.tutorialCircularLoadingProgress {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 0 0;
+}
+
+.tutorialCompleteHelper {
+  font-weight: 600;
+  font-size: large;
+}
+
+.TutorialComponentContainer
+  .swiper-horizontal
+  > .TutorialComponentContainer
+  .swiper-pagination-bullets,
+.TutorialComponentContainer
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+.TutorialTutorialComponentContainerComponent .swiper-pagination-custom,
+.TutorialComponentContainer .swiper-pagination-fraction {
+  position: fixed;
+  bottom: 30px;
+}
+
+.tutorialCompleted {
   font-weight: 600;
 }
 
-@keyframes blinking {
-  0% {
-    opacity: 100%;
-  }
-
-  50% {
-    opacity: 0%;
-  }
-
-  100% {
-    opacity: 100%;
-  }
+.tutorialCompleted span {
+  font-weight: 700;
+  color: var(--tae-orange);
 }
 
-.tutorialSwiper .swiper-horizontal > .tutorialSwiper .swiper-pagination-bullets,
-.tutorialSwiper .swiper-pagination-bullets.swiper-pagination-horizontal,
-.tutorialSwiper .swiper-pagination-custom,
-.tutorialSwiper .swiper-pagination-fraction {
-  position: fixed;
-  bottom: -35px;
+.tutorialCompleted div {
+  font-size: small;
 }
 
-.tutorialSwiper .swiper-pagination-bullet-active {
-  background-color: #fff !important;
-}
-
-@media screen and (max-width: 920px) {
-  .tutorialModal {
+@media screen and (max-width: 1024px) {
+  .TutorialComponentContainer {
     width: 95% !important;
   }
 
-  .hello-message > div:nth-child(1) {
-    font-size: 12px;
-  }
-
-  .hello-message > div:nth-child(2) {
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .extra-message-to-hello {
-    font-size: 10px;
-  }
-
-  .completedTutorial div {
-    font-size: 13px;
-  }
-}
-
-@media screen and (min-width: 200px) {
-  .tutorialComponent {
-    height: 200px;
-  }
-
-  .get-started-img-container {
-    height: 80px;
-  }
-
-  .completedTutorial {
-    height: 80px;
-  }
-
-  .skipTutorialContainer {
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-width: 300px) {
-  .tutorialComponent {
+  .TutorialComponentContainer .swiper {
     height: 300px;
   }
 
-  .completedTutorial div {
-    font-size: large;
+  .tutorialArtImageContainer {
+    height: 130px;
   }
 
-  .get-started-img-container {
-    height: 100px;
-  }
-
-  .completedTutorial {
-    height: 100px;
-  }
-}
-
-@media screen and (min-width: 500px) {
-  .tutorialComponent {
-    height: 300px;
-  }
-
-  .get-started-img-container {
+  .tutorialArtImageContainer2 {
     height: 150px;
   }
 
-  .completedTutorial {
-    height: 150px;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .tutorialComponent {
-    height: 500px;
-  }
-
-  .get-started-img-container {
-    height: 250px;
-  }
-
-  .completedTutorial {
-    height: 250px;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .tutorialComponent {
-    height: 500px;
-  }
-
-  .get-started-img-container {
-    height: 250px;
-  }
-
-  .completedTutorial {
-    height: 250px;
-  }
-
-  .skipTutorialContainer {
+  .tutorialTitle3 {
     font-size: medium;
   }
 
-  .hello-message > div:nth-child(1) {
-    font-size: large;
+  .tutorialCompleted {
+    font-size: 15px;
   }
-
-  .hello-message > div:nth-child(2) {
-    font-size: x-large;
-    font-weight: 600;
-  }
-
-  @media screen and (max-height: 600px) {
-    .tutorialComponent {
-      height: 400px;
-    }
-  }
-}
-
-.styles-module_next__1uQwZ {
-  display: none;
 }
