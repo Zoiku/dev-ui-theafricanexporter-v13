@@ -25,7 +25,7 @@ const BuyerLayout = ({ session }) => {
   }, [user]);
 
   return notLoggedBefore ? (
-    <Tutorial user={user} openDrawer={notLoggedBefore} role="BUYER" />
+    <Tutorial user={user} openDrawer={notLoggedBefore} />
   ) : (
     <div className="Buyer-Layout App-Layout">
       <Nav session={session} />

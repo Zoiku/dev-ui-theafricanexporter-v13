@@ -1,5 +1,15 @@
+.MUIAccordionContentContainer {
+  margin: 40px 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.MUIAccordionContent {
+  width: 85%;
+}
+
 .searchContentContainer {
-  margin: 40px 0;
+  margin: 0 0 50px 0;
 }
 
 .searchContent {
@@ -8,7 +18,7 @@
 }
 
 .searchBoxMaterial {
-  width: 350px;
+  width: 300px;
 }
 
 .resultsAccordion {
@@ -37,25 +47,24 @@
 }
 
 .AccordionRow {
-  border-bottom: 1px solid rgb(226, 226, 226);
+  border-bottom: 1px solid rgb(220, 220, 220);
 }
 
 @media screen and (max-width: 1000px) {
-  .searchContent {
-    padding: 10px;
+  .MUIAccordionContentContainer {
+    padding: 0 10px;
+    margin: 0px 0 0 0;
+  }
+
+  .searchBoxMaterial {
+    width: 100%;
   }
 
   .cantFindQuestion {
     text-align: left;
-    padding: 0 20px;
   }
 
-  .resultsAccordion {
-    padding: 0 20px;
-    text-align: left;
-  }
-
-  .searchBoxMaterial {
+  .MUIAccordionContent {
     width: 100%;
   }
 }

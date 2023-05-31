@@ -96,76 +96,84 @@ const MUIAccordion = () => {
   };
 
   return (
-    <div className="MUIAccordion">
-      <div className="searchContentContainer">
-        <div className="searchContent">
-          <Paper
-            className="searchBoxMaterial"
-            component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-            }}
-            onSubmit={handleSumbit}
-          >
-            <div
-              style={{
-                padding: "10px",
-                display: "grid",
-                placeContent: "center",
+    <div className="MUIAccordionContentContainer">
+      <div className="MUIAccordionContent">
+        <div className="searchContentContainer">
+          <div className="searchContent">
+            <Paper
+              className="searchBoxMaterial"
+              component="form"
+              sx={{
+                boxShadow: "none",
+                border: "1px solid rgb(220, 220, 220)",
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
               }}
+              onSubmit={handleSumbit}
             >
-              <SearchIcon />
-            </div>
+              <div
+                style={{
+                  padding: "5px",
+                  display: "grid",
+                  placeContent: "center",
+                }}
+              >
+                <SearchIcon />
+              </div>
 
-            <InputBase
-              onChange={oninput}
-              name="question"
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search"
-              inputProps={{ "aria-label": "search frequently asked questions" }}
-            />
-          </Paper>
+              <InputBase
+                onChange={oninput}
+                name="question"
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search"
+                inputProps={{
+                  "aria-label": "search frequently asked questions",
+                }}
+              />
+            </Paper>
+          </div>
         </div>
+
+        {faqs.length > 0 ? (
+          <div>
+            {searchedTerm && (
+              <div className="resultsAccordion">
+                Results for: "
+                <span className="searchedTerm">{searchedTerm}</span>"{" "}
+              </div>
+            )}
+            {faqs.map((faq, index) => (
+              <Accordion
+                key={index}
+                expanded={expanded === mergeStringPanel(index)}
+                onChange={handleChange(mergeStringPanel(index))}
+                className={
+                  expanded === mergeStringPanel(index)
+                    ? "AccordionRow ActiveAccordionRow"
+                    : "AccordionRow"
+                }
+              >
+                <AccordionSummary>
+                  <Typography sx={{ fontWeight: 600 }}>
+                    {faq.summary}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{faq.details}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </div>
+        ) : (
+          <div className="cantFindQuestion">
+            Uh oh, no results. Please send your question to{" "}
+            <span onClick={handleMail} className="emailTo">
+              hello@theafricanexporter.com
+            </span>{" "}
+          </div>
+        )}
       </div>
-
-      {faqs.length > 0 ? (
-        <div>
-          {searchedTerm && (
-            <div className="resultsAccordion">
-              Results for: "<span className="searchedTerm">{searchedTerm}</span>
-              "{" "}
-            </div>
-          )}
-          {faqs.map((faq, index) => (
-            <Accordion
-              key={index}
-              expanded={expanded === mergeStringPanel(index)}
-              onChange={handleChange(mergeStringPanel(index))}
-              className={
-                expanded === mergeStringPanel(index)
-                  ? "AccordionRow ActiveAccordionRow"
-                  : "AccordionRow"
-              }
-            >
-              <AccordionSummary>
-                <Typography sx={{ fontWeight: 600 }}>{faq.summary}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.details}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </div>
-      ) : (
-        <div className="cantFindQuestion">
-          Uh oh, no results. Please send your question to{" "}
-          <span onClick={handleMail} className="emailTo">
-            hello@theafricanexporter.com
-          </span>{" "}
-        </div>
-      )}
     </div>
   );
 };

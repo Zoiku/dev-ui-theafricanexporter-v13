@@ -111,17 +111,23 @@
   .merchantCardsContainer {
     grid-template-columns: repeat(1, 1fr);
     height: auto;
+    width: 100%;
   }
 
   .merchantCards {
     height: 100px;
   }
 
+  .merchantDashboardGrid {
+    width: 100%;
+  }
+
   .merchantDashboardGridContainer {
+    width: 100%;
     grid-template-areas:
       "item1"
       "item3"
       "item2";
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
 }
