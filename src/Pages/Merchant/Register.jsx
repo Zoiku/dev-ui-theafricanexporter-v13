@@ -215,7 +215,7 @@ const Register = () => {
       if (errors.length === 0) {
         setOpenDrawer(false);
         handleVerificationSuccessfull(
-          "Account created successfully, please wait while you account is being activated",
+          "Email address verified, your account is pending approval.",
           3000
         );
         dispatch({ type: REQUEST_SUCCESSFUL });

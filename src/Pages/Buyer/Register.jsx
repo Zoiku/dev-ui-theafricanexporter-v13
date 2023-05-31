@@ -161,7 +161,7 @@ const Register = () => {
       if (errors.length === 0) {
         setOpenDrawer(false);
         handleVerificationSuccessfull(
-          "Account created and activated successfully",
+          "Email address verified, please login",
           3000
         );
         dispatch({ type: REQUEST_SUCCESSFUL });

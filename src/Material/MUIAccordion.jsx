@@ -103,6 +103,8 @@ const MUIAccordion = () => {
             className="searchBoxMaterial"
             component="form"
             sx={{
+              boxShadow: "none",
+              border: "1px solid rgb(226, 226, 226)",
               p: "2px 4px",
               display: "flex",
               alignItems: "center",

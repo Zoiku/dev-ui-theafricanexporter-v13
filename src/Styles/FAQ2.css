@@ -13,7 +13,7 @@
 }
 
 .faqHeaderTitleHelper {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--tae-orange);
 }
 
@@ -55,6 +55,6 @@
 
   .faqHeaderTitle {
     font-size: x-large;
-    font-weight: 600;
+    font-weight: 700;
   }
 }
