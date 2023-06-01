@@ -104,7 +104,7 @@ const Register = () => {
           type: REQUEST_FAILED,
           error: errors[0].response.data.message,
         });
-        handleFailedRequest(errors[0].response.data.message, 5000);
+        handleFailedRequest(errors[0].response.data.message, 8000);
       }
     } catch (error) {}
   };
@@ -162,12 +162,12 @@ const Register = () => {
         setOpenDrawer(false);
         handleVerificationSuccessfull(
           "Email address verified, please login",
-          3000
+          8000
         );
         dispatch({ type: REQUEST_SUCCESSFUL });
         navigate("/login");
       } else {
-        handleVerificationFailed("Could not verify code", 5000);
+        handleVerificationFailed("Could not verify code", 8000);
         dispatch({ type: REQUEST_FAILED, error: "Could not verify code" });
       }
     } catch (error) {}

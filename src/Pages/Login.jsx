@@ -56,11 +56,11 @@ const Login = () => {
                 rootDispatch(clearAlerts());
             } else {
                 dispatch({ type: REQUEST_FAILED, error: errors });
-                handleFailedRequest(errors[0], 5000);
+                handleFailedRequest(errors[0], 8000);
             }
         } catch (error) {
             dispatch({ type: REQUEST_FAILED, error: error });
-            handleFailedRequest(error, 5000);
+            handleFailedRequest(error, 8000);
         }
     }
 

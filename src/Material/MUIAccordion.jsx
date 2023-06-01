@@ -51,10 +51,10 @@ const MUIAccordion = () => {
   const mergeStringPanel = (index) => `panel${index}`;
   const initialState = [
     {
-      summary: "What is TheAfricanExporter.com",
+      summary: "What is TheAfricanExporter.com?",
       details: (
         <div>
-          It's a B2B marketplace connecting Global buyers directly to wholesale
+          It is a B2B marketplace connecting Global buyers directly to wholesale
           exporters of Agro-based products in Africa
         </div>
       ),
@@ -84,7 +84,7 @@ const MUIAccordion = () => {
       ),
     },
     {
-      summary: "How much is our commision",
+      summary: "How much is our commision?",
       details: (
         <>
           <div>
