@@ -54,7 +54,7 @@ const MUIAccordion = () => {
       summary: "What is TheAfricanExporter.com",
       details: (
         <div>
-          It's a B2B marketplace connecting GLobal buyers directly to wholesale
+          It's a B2B marketplace connecting Global buyers directly to wholesale
           exporters of Agro-based products in Africa
         </div>
       ),
@@ -88,7 +88,7 @@ const MUIAccordion = () => {
       details: (
         <>
           <div>
-            Our commision is 4-6% of the of the cost of (FOB) of the goods.
+            Our commision is 4-6% of the of the cost (FOB) of the goods.
           </div>
           <ol type="a">
             <li>4% for transactions above $20,000</li>
