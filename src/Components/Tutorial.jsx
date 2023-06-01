@@ -170,6 +170,9 @@ const Tutorial = ({ user }) => {
             <SwiperSlide className="TutorialSwiperSlideContainer">
               <div className="TutorialContentContainer">
                 <div className="TutorialContent">
+                  <div className="tutorialCompleted">
+                    <span>Congratulations!</span>
+                  </div>
                   <div className="tutorialArtImageContainer2">
                     <img
                       src={completedTutorial}
@@ -177,12 +180,9 @@ const Tutorial = ({ user }) => {
                       className="tutorialArtImage"
                     />
                   </div>
-                  <div className="tutorialCompleted">
-                    <span>Congratulations!</span>
-                    <div>
-                      Get started by clicking the "<strong>Get Started</strong>"
-                      below
-                    </div>
+                  <div>
+                    Get started by clicking the "<strong>Get Started</strong>"
+                    below
                   </div>
                 </div>
               </div>

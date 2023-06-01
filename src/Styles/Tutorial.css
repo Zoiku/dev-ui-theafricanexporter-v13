@@ -118,6 +118,17 @@
   cursor: pointer;
 }
 
+.tutorialCircularLoadingProgress {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 0 0;
+}
+
+.tutorialCompleteHelper {
+  font-weight: 600;
+  font-size: large;
+}
+
 .tutorialSkipContainer > div {
   transition: all 0.2s ease;
 }
@@ -132,17 +143,6 @@
 
 .tutorialSkipContainer > div:hover {
   color: white;
-}
-
-.tutorialCircularLoadingProgress {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0 0 0;
-}
-
-.tutorialCompleteHelper {
-  font-weight: 600;
-  font-size: large;
 }
 
 .TutorialComponentContainer
