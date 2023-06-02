@@ -80,7 +80,7 @@ const steps = [
     description: "Thank you for placing your order",
   },
   {
-    label: "Confirm Order",
+    label: "Order Confirmed",
     description: "Confirm your order to alert Merchant",
   },
   {

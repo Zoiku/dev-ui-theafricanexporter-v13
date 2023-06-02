@@ -63,7 +63,7 @@ const steps = [
     description: "Order placed by buyer",
   },
   {
-    label: "Confirm Order",
+    label: "Order Confirmed",
     description: "Order to be confirmed by merchant",
   },
   {
