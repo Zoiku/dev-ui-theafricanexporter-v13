@@ -24,8 +24,6 @@ import Modal from "@mui/material/Modal";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Transition } from "../../../Material/Dialog";
 import {
@@ -833,19 +831,14 @@ const Requests = () => {
           sx={inAppDialog}
           className="inAppDialog"
         >
-          <DialogTitle>{"Agree to post the offer?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Do you post this offer to the buyer?
-            </DialogContentText>
-          </DialogContent>
+          <DialogTitle>{"Post this offer to the Buyer?"}</DialogTitle>
           <DialogActions>
             <GenericSecondary
               size="small"
               variant="text"
               onClick={handleCloseDialogConfirm}
             >
-              Disagree
+              No
             </GenericSecondary>
             <GenericPrimaryButton
               size="small"
@@ -853,7 +846,7 @@ const Requests = () => {
               loading={state.requestState.loading}
               onClick={handleSubmit}
             >
-              Agree
+              Yes
             </GenericPrimaryButton>
           </DialogActions>
         </Dialog>

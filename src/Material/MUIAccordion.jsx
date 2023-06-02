@@ -228,19 +228,24 @@ const MUIAccordion = () => {
                 }
               >
                 <AccordionSummary>
-                  <Typography sx={{ fontWeight: 600 }}>
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      width: "95%",
+                    }}
+                  >
                     {faq.summary}
-                  </Typography>
+                  </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>{faq.details}</Typography>
+                  <div>{faq.details}</div>
                 </AccordionDetails>
               </Accordion>
             ))}
           </div>
         ) : (
           <div className="cantFindQuestion">
-            Uh oh, no results. Please send your question to{" "}
+            Uh oh, no results? Please send your question to{" "}
             <span onClick={handleMail} className="emailTo">
               hello@theafricanexporter.com
             </span>{" "}
