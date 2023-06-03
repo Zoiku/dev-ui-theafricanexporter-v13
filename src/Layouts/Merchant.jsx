@@ -107,9 +107,9 @@ const MerchantLayout = ({ session }) => {
     >
       <div className="otp-content-container">
         <div>
-          <div className="clip-art-image-container">
+          {/* <div className="clip-art-image-container">
             <img src={successImg} alt="" />
-          </div>
+          </div> */}
 
           <div className="registration-form-verification-code-container">
             <div>Almost Done!</div>
@@ -149,13 +149,13 @@ const MerchantLayout = ({ session }) => {
                   endAdornment: (
                     <div
                       style={{
-                        width: "130px",
+                        width: "280px",
                         textAlign: "right",
                         fontSize: "12px",
                         color: "gray",
                       }}
                     >
-                      20ft per month
+                      20ft container per month
                     </div>
                   ),
                 }}
@@ -174,6 +174,7 @@ const MerchantLayout = ({ session }) => {
                 multiline
                 fullWidth
                 label="Company History"
+                placeholder="Write something about your company, its founders, mission, vision, achievements, etc"
                 name="introduction"
                 variant="outlined"
               />
@@ -196,7 +197,7 @@ const MerchantLayout = ({ session }) => {
   );
 
   return notLoggedBefore ? (
-    <Tutorial user={user} openDrawer={notLoggedBefore} role="MERCHANT" />
+    <Tutorial user={user} openDrawer={notLoggedBefore} />
   ) : (
     <div className="Merchant-Layout App-Layout">
       <div>

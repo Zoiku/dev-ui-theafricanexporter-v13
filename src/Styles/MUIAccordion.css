@@ -1,15 +1,31 @@
-.AccordionRow {
-  /* margin: 0 0 5px 0; */
+.MUIAccordionContentContainer {
+  margin: 40px 0 0 0;
+  display: flex;
+  justify-content: center;
 }
 
-.searchContainer {
-  margin: 0 0 20px 0;
+.MUIAccordionContent {
+  width: 85%;
+}
+
+.searchContentContainer {
+  margin: 0 0 50px 0;
+}
+
+.searchContent {
+  display: flex;
+  justify-content: center;
+}
+
+.searchBoxMaterial {
+  width: 300px;
 }
 
 .resultsAccordion {
   margin: 0 0 20px 0;
   color: gray;
   font-size: small;
+  text-align: center;
 }
 
 .searchedTerm {
@@ -27,4 +43,28 @@
 .cantFindQuestion {
   font-size: small;
   color: gray;
+  text-align: center;
+}
+
+.AccordionRow {
+  border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+@media screen and (max-width: 1000px) {
+  .MUIAccordionContentContainer {
+    padding: 0 10px;
+    margin: 0px 0 0 0;
+  }
+
+  .searchBoxMaterial {
+    width: 100%;
+  }
+
+  .cantFindQuestion {
+    text-align: left;
+  }
+
+  .MUIAccordionContent {
+    width: 100%;
+  }
 }

@@ -122,33 +122,34 @@
 .Home .swiper-button-next,
 .Home .swiper-button-prev {
   color: black;
-  width: 20px;
-  height: 20px;
-  padding: 20px;
+  width: 40px;
+  height: 40px;
   background: #efefef;
-  border-radius: 50%;
+  border-radius: 20px;
 }
 
 .Home .swiper-button-next::after,
 .Home .swiper-button-prev::after {
-  font-size: large;
-  font-weight: 600;
+  font-size: medium;
+  font-weight: 700;
 }
 
 .Home .swiper-button-next {
-  right: -40px;
+  right: -50px;
+  transition: all 0.5s ease;
 }
 
 .Home .swiper-button-prev {
-  left: -40px;
+  left: -50px;
+  transition: all 0.5s ease;
 }
 
 .Home .swiper:hover .swiper-button-next {
-  animation: swiper-button-next 0.5s ease forwards;
+  right: 15px;
 }
 
 .Home .swiper:hover .swiper-button-prev {
-  animation: swiper-button-prev 0.5s ease forwards;
+  left: 15px;
 }
 
 @keyframes swiper-button-next {

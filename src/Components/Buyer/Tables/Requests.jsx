@@ -32,8 +32,6 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Overlay from "../../../Material/Overlay";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Transition } from "../../../Material/Dialog";
 import {
@@ -862,22 +860,17 @@ const Requests = () => {
           sx={inAppDialog}
           className="inAppDialog"
         >
-          <DialogTitle>{"Repost request?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Do you agree to repost this request?
-            </DialogContentText>
-          </DialogContent>
+          <DialogTitle>{"Repost this request?"}</DialogTitle>
           <DialogActions>
             <GenericSecondary variant="text" onClick={handleCloseDialogConfirm}>
-              Disagree
+              No
             </GenericSecondary>
             <GenericPrimaryButton
               variant="contained"
               loading={state.requestState.loading}
               onClick={handleRepost}
             >
-              Agree
+              Yes
             </GenericPrimaryButton>
           </DialogActions>
         </Dialog>

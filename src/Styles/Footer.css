@@ -71,12 +71,13 @@ footer > div:nth-last-child(1) {
 
 @media screen and (max-width: 1000px) {
   footer {
-    padding: 40px 30px;
+    padding: 40px 20px;
     flex-direction: column;
   }
 
   footer > div {
     margin-bottom: 30px;
+    width: 100%;
   }
 
   footer > div:nth-last-child(2) {
