@@ -174,7 +174,7 @@ const MerchantLayout = ({ session }) => {
                 multiline
                 fullWidth
                 label="Company History"
-                placeholder="Write something about your company, its founders, mission, vission, achievements, etc"
+                placeholder="Write something about your company, its founders, mission, vision, achievements, etc"
                 name="introduction"
                 variant="outlined"
               />
