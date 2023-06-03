@@ -21,7 +21,6 @@ import { setAlert } from "../Redux/Features/Alert.js";
 import MerchantService from "../Services/Merchant";
 import { fillScreen } from "../Styles/Modal";
 import Modal from "@mui/material/Modal";
-import successImg from "../Assets/Charco - Good Job.png";
 import Tutorial from "../Components/Tutorial";
 
 const MerchantLayout = ({ session }) => {
