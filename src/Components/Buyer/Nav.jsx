@@ -25,6 +25,7 @@ const BuyerNav = ({ session }) => {
         setAnchorEl(null);
     };
     const handleLogout = () => {
+        sessionStorage.removeItem("token");
         rootDispatch(endSession());
     }
     const handleRedirect = () => {

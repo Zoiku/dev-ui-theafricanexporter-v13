@@ -104,16 +104,17 @@ const SPECIFICATION_DETAILS = {
       label: "Thickness",
       units: [{ name: "thicknessUnit", values: ["mm", "cm"] }],
     },
+
+    {
+      name: "width",
+      label: "Width",
+      units: [{ name: "widthUnit", values: ["mm", "cm"] }],
+    },
     {
       name: "quantity",
       label: "Quantity",
       defaultUnit: "20ft Container",
       units: [{ name: "quantityUnit", values: ["20ft Container"] }],
-    },
-    {
-      name: "width",
-      label: "Width",
-      units: [{ name: "widthUnit", values: ["mm", "cm"] }],
     },
     {
       name: "dryingLabel",
@@ -144,9 +145,45 @@ const IMAGES_TO_DISPLAY = {
   "Teak Square Logs": [ts2, ts4, ts5, ts7, ts8, ts10, ts1, ts3, ts6, ts9],
 };
 
-const RequestQuote = ({ session }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+const initPendingQuoteSession = (productId, pendingQuoteId) => {
+  const session = {
+    isExists: true,
+    productId,
+    pendingQuoteId,
+  };
 
+  sessionStorage.setItem("pq_id", JSON.stringify(session));
+};
+
+const endPendingQuoteSession = async () => {
+  const pq_session = sessionStorage.getItem("pq_id");
+  if (pq_session) {
+    const pendingQuoteSession = JSON.parse(pq_session);
+    const buyerService = new BuyerService();
+    try {
+      const { errors } = await buyerService.deleteQuote(
+        pendingQuoteSession.pendingQuoteId
+      );
+      if (errors.length === 0) {
+        sessionStorage.removeItem("pq_id");
+        document.location.reload();
+      }
+    } catch (error) {}
+  }
+};
+
+const strictMatch = (array, key) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === key) {
+      return array[i];
+    }
+  }
+  return null;
+};
+
+const RequestQuote = ({ session }) => {
+  const [errorBoxes, setErrorBoxes] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const navigate = useNavigate();
   const handleRedirect = (redirect) => () => {
     navigate(redirect, { replace: true });
@@ -200,32 +237,31 @@ const RequestQuote = ({ session }) => {
     dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
   };
 
-  const removePendingQuote = async () => {
-    const id = sessionStorage.getItem(`${parsedProduct.name}_pqid`);
-    if (id) {
-      const buyerService = new BuyerService();
-      try {
-        const { errors } = await buyerService.deleteQuote(id);
-        if (errors.length === 0) {
-          sessionStorage.removeItem(`${parsedProduct.name}_pqid`);
-          document.location.reload();
-        }
-      } catch (error) {}
-    } else {
-      document.location.reload();
-    }
+  const onInvalidFunction = (e) => {
+    setErrorBoxes([...errorBoxes, e.target.name]);
+  };
+
+  const onValidFunction = (e) => {
+    setErrorBoxes((prevErrors) => {
+      const index = prevErrors.indexOf(e.target.name);
+      if (index > -1) {
+        const updatedErrors = [...prevErrors];
+        updatedErrors.splice(index, 1);
+        return updatedErrors;
+      }
+      return prevErrors;
+    });
   };
 
   const preSubmission = (e) => {
     e.preventDefault();
-
+    setErrorBoxes([]);
     if (parsedProduct.name === "Teak Round Logs") {
       state.payload = {
         ...state.payload,
         diameterUnit: "cm",
       };
     }
-
     setOpenDrawer(true);
   };
 
@@ -239,7 +275,7 @@ const RequestQuote = ({ session }) => {
       if (isLogged) {
         const { errors } = await buyerService.postQuote(state.payload);
         if (errors.length === 0) {
-          removePendingQuote();
+          endPendingQuoteSession();
           dispatch({ type: REQUEST_SUCCESSFUL });
           setOpenDrawer(false);
           handleSuccessfullRequest(
@@ -256,7 +292,7 @@ const RequestQuote = ({ session }) => {
         );
         if (errors.length === 0) {
           const { _id } = data.data.data[0];
-          sessionStorage.setItem(`${parsedProduct.name}_pqid`, _id);
+          initPendingQuoteSession(pid, _id);
           dispatch({ type: REQUEST_SUCCESSFUL });
           setOpenDrawer(false);
           handleSuccessfullRequest(
@@ -452,31 +488,33 @@ const RequestQuote = ({ session }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const pendingQuoteId = sessionStorage.getItem(`${parsedProduct.name}_pqid`);
-
-    if (pendingQuoteId) {
-      const fetchData = async () => {
-        const buyerService = new BuyerService();
-        try {
-          const { errors, data } = await buyerService.getQuote(
-            pendingQuoteId,
-            abortController.signal
-          );
-          if (errors.length === 0) {
-            const _pendingQuote = {
-              ...data.data.data[0],
-              ...data.data.data[0].specification,
-              dryingLabel: data.data.data[0].specification?.drying?.label,
-            };
-
-            dispatch({ type: PUSH_FORM_DATA, payload: _pendingQuote });
-          }
-        } catch (error) {}
-      };
-      fetchData();
+    const pq_session = sessionStorage.getItem("pq_id");
+    if (pq_session) {
+      const sessionObject = JSON.parse(pq_session);
+      const { pendingQuoteId, productId } = sessionObject;
+      if (productId === pid) {
+        const fetchData = async () => {
+          const buyerService = new BuyerService();
+          try {
+            const { errors, data } = await buyerService.getQuote(
+              pendingQuoteId,
+              abortController.signal
+            );
+            if (errors.length === 0) {
+              const pendingQuote = {
+                ...data.data.data[0],
+                ...data.data.data[0].specification,
+                dryingLabel: data.data.data[0].specification?.drying?.label,
+              };
+              dispatch({ type: PUSH_FORM_DATA, payload: pendingQuote });
+            }
+          } catch (error) {}
+        };
+        fetchData();
+      }
     }
     return () => abortController.abort();
-  }, [parsedProduct.name]);
+  }, [pid]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -486,13 +524,6 @@ const RequestQuote = ({ session }) => {
           signal: abortController.signal,
         });
         setCountries(data);
-        // const { data } = await axios.get(
-        //   "http://api.countrylayer.com/v2/all?access_key=d79d5a8b3f403a4e817997dce219ae3f",
-        //   {
-        //     signal: abortController.signal,
-        //   }
-        // );
-        // setCountries(data);
       } catch (error) {}
     };
     fetchData();
@@ -683,6 +714,12 @@ const RequestQuote = ({ session }) => {
                                   ? state.payload[specification.name]
                                   : ""
                               }
+                              onBlur={onValidFunction}
+                              error={strictMatch(
+                                errorBoxes,
+                                specification.name
+                              )}
+                              onInvalid={onInvalidFunction}
                               onChange={handleChange}
                               name={specification.name}
                               label={specification.label}
@@ -712,6 +749,9 @@ const RequestQuote = ({ session }) => {
                                 : {}
                             }
                             required
+                            onBlur={onValidFunction}
+                            error={strictMatch(errorBoxes, specification.name)}
+                            onInvalid={onInvalidFunction}
                             onChange={handleChange}
                             size="small"
                             fullWidth
@@ -729,10 +769,10 @@ const RequestQuote = ({ session }) => {
                             specification.units.map(
                               (specificationUnits, index) => (
                                 <FormControl
-                                  required
                                   key={index}
                                   size="small"
                                   fullWidth
+                                  required
                                 >
                                   <InputLabel>Units</InputLabel>
                                   <Select
@@ -745,6 +785,12 @@ const RequestQuote = ({ session }) => {
                                     }
                                     key={specificationUnits.name}
                                     size="small"
+                                    error={strictMatch(
+                                      errorBoxes,
+                                      specificationUnits.name
+                                    )}
+                                    onBlur={onValidFunction}
+                                    onInvalid={onInvalidFunction}
                                     onChange={handleChange}
                                     name={specificationUnits.name}
                                     label="Units"
@@ -771,6 +817,9 @@ const RequestQuote = ({ session }) => {
                     value={
                       state.payload.information ? state.payload.information : ""
                     }
+                    error={strictMatch(errorBoxes, "information")}
+                    onBlur={onValidFunction}
+                    onInvalid={onInvalidFunction}
                     onChange={handleChange}
                     multiline
                     rows={1}
@@ -802,6 +851,9 @@ const RequestQuote = ({ session }) => {
                       value={
                         state.payload.incoterm ? state.payload.incoterm : ""
                       }
+                      error={strictMatch(errorBoxes, "incoterm")}
+                      onBlur={onValidFunction}
+                      onInvalid={onInvalidFunction}
                       onChange={handleChange}
                       name="incoterm"
                       label="Country"
@@ -827,6 +879,9 @@ const RequestQuote = ({ session }) => {
                           ? state.payload.destination
                           : ""
                       }
+                      error={strictMatch(errorBoxes, "destination")}
+                      onBlur={onValidFunction}
+                      onInvalid={onInvalidFunction}
                       onChange={handleChange}
                       required
                       name="destination"
@@ -859,6 +914,9 @@ const RequestQuote = ({ session }) => {
                   <TextField
                     value={state.payload.port ? state.payload.port : ""}
                     required
+                    error={strictMatch(errorBoxes, "port")}
+                    onBlur={onValidFunction}
+                    onInvalid={onInvalidFunction}
                     onChange={handleChange}
                     size="small"
                     fullWidth
@@ -888,6 +946,9 @@ const RequestQuote = ({ session }) => {
                       value={
                         state.payload.validity ? state.payload.validity : ""
                       }
+                      error={strictMatch(errorBoxes, "validity")}
+                      onBlur={onValidFunction}
+                      onInvalid={onInvalidFunction}
                       onChange={handleChange}
                       required
                       name="validity"

@@ -34,6 +34,7 @@ const Nav = ({ session }) => {
     };
     const handleLogout = (open) => () => {
         setOpenMenu(open);
+        sessionStorage.removeItem("token");
         rootDispatch(endSession());
     };
 

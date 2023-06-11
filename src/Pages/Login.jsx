@@ -79,7 +79,13 @@ const Login = () => {
         rootDispatch(clearPath());
         navigate(to);
       } else {
-        navigate(ROLES[role]);
+        const pd_id = sessionStorage.getItem("pq_id");
+        if (role === "BUYER" && pd_id) {
+          const pendingQuoteStorage = JSON.parse(pd_id);
+          navigate(`/requestquote?pid=${pendingQuoteStorage.productId}`);
+        } else {
+          navigate(ROLES[role]);
+        }
       }
     }
     // eslint-disable-next-line
