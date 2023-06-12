@@ -375,6 +375,10 @@ const Orders = () => {
               .slice(0, 25);
             return 1;
           });
+
+          filteredData.sort(
+            (a, b) => new Date(b.expiryDate) - new Date(a.expiryDate)
+          );
           setRows(filteredData);
         }
       } catch (error) {}

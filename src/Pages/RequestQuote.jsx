@@ -76,7 +76,7 @@ const endPendingQuoteSession = async () => {
   window.scrollTo(0, 0);
 };
 
-const strictMatch = (array, key) => {
+export const strictMatch = (array, key) => {
   for (let i = 0; i < array.length; i++) {
     if (array[i] === key) {
       return array[i];
@@ -170,7 +170,7 @@ const RequestQuote = ({ session }) => {
   };
 
   const onInvalidForm = () => {
-    handleFailedRequest("Please fill all fields correctly", 9000);
+    handleFailedRequest("Please fill all required fields correctly", 9000);
   };
 
   const handleSubmit = async (e) => {

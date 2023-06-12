@@ -838,6 +838,9 @@ const Requests = () => {
             })
           );
 
+          filteredData.sort(
+            (a, b) => new Date(b.expiryDate) - new Date(a.expiryDate)
+          );
           setRows(filteredData);
         }
       } catch (error) {}

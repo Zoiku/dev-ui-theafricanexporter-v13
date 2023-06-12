@@ -1,4 +1,5 @@
 import "../../Styles/Register.css";
+import { strictMatch } from "../RequestQuote";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { PrimaryButton } from "../../Material/Button";
@@ -42,6 +43,7 @@ const capitalizeFirstLetter = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
 const Register = () => {
+  const [errorBoxes, setErrorBoxes] = useState([]);
   const navLinkStyle = {
     color: "inherit",
     fontSize: "inherit",
@@ -266,18 +268,28 @@ const Register = () => {
           signal: abortController.signal,
         });
         setCountries(data);
-        // const { data } = await axios.get(
-        //   "http://api.countrylayer.com/v2/all?access_key=d79d5a8b3f403a4e817997dce219ae3f",
-        //   {
-        //     signal: abortController.signal,
-        //   }
-        // );
-        // setCountries(data);
       } catch (error) {}
     };
     fetchData();
     return () => abortController.abort();
   }, []);
+
+  const onFormInvalid = (e) => {
+    setErrorBoxes([...errorBoxes, e.target.name]);
+    handleFailedRequest("Please fill all required fields", 8000);
+  };
+
+  const onFormValid = (e) => {
+    setErrorBoxes((prevErrors) => {
+      const index = prevErrors.indexOf(e.target.name);
+      if (index > -1) {
+        const updatedErrors = [...prevErrors];
+        updatedErrors.splice(index, 1);
+        return updatedErrors;
+      }
+      return prevErrors;
+    });
+  };
 
   const list = () => (
     <Box
@@ -404,6 +416,7 @@ const Register = () => {
             }}
             autoComplete="off"
             onSubmit={handleSubmit}
+            onInvalid={onFormInvalid}
           >
             <div className="form-controller-duo-input">
               <TextField
@@ -415,6 +428,8 @@ const Register = () => {
                 name="firstName"
                 label="First Name"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "firstName")}
+                onBlur={onFormValid}
               />
               <TextField
                 required
@@ -425,6 +440,8 @@ const Register = () => {
                 name="lastName"
                 label="Last Name"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "lastName")}
+                onBlur={onFormValid}
               />
             </div>
             <div className="form-controller-input">
@@ -437,6 +454,8 @@ const Register = () => {
                 name="email"
                 label="Email"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "email")}
+                onBlur={onFormValid}
               />
             </div>
             <div className="form-controller-input">
@@ -464,6 +483,8 @@ const Register = () => {
                 name="password"
                 label="Password"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "password")}
+                onBlur={onFormValid}
               />
             </div>
             <div className="form-controller-input">
@@ -476,6 +497,8 @@ const Register = () => {
                 name="companyName"
                 label="Company Name"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "companyName")}
+                onBlur={onFormValid}
               />
             </div>
 
@@ -523,6 +546,8 @@ const Register = () => {
                 name="address"
                 label="Address"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "address")}
+                onBlur={onFormValid}
               />
               <TextField
                 required
@@ -533,6 +558,8 @@ const Register = () => {
                 name="city"
                 label="City/Town"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "city")}
+                onBlur={onFormValid}
               />
             </div>
 
@@ -556,6 +583,8 @@ const Register = () => {
                 name="telephone"
                 label="Phone Number"
                 variant="outlined"
+                error={strictMatch(errorBoxes, "telephone")}
+                onBlur={onFormValid}
               />
             </div>
 
@@ -567,6 +596,7 @@ const Register = () => {
                   name="typeLabel"
                   label="Business Type"
                   onChange={handleChange}
+                  error={strictMatch(errorBoxes, "typeLabel")}
                 >
                   <MenuItem value="Manufacturer/Producer">
                     Manufacturer/Producer
@@ -584,6 +614,8 @@ const Register = () => {
                   name="category"
                   label="Category"
                   onChange={handleChange}
+                  error={strictMatch(errorBoxes, "category")}
+                  onBlur={onFormValid}
                 >
                   {products &&
                     products.length > 0 &&
@@ -614,6 +646,7 @@ const Register = () => {
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
+                    name="subscription"
                     value={selectedSubscriptions}
                     onChange={handleMultipleSelectChange}
                     input={
@@ -623,6 +656,8 @@ const Register = () => {
                       />
                     }
                     MenuProps={MenuProps}
+                    error={strictMatch(errorBoxes, "subscription")}
+                    onBlur={onFormValid}
                   >
                     {subscriptions.map((subscription) => (
                       <MenuItem
