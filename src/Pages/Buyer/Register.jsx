@@ -221,7 +221,7 @@ const Register = () => {
 
   const onFormInvalid = (e) => {
     setErrorBoxes([...errorBoxes, e.target.name]);
-    handleFailedRequest("Please fill all required fields", 8000);
+    handleFailedRequest("Please fill all required fields correctly", 8000);
   };
 
   const onFormValid = (e) => {
