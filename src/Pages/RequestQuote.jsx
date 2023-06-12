@@ -25,18 +25,17 @@ import {
   REQUEST_SUCCESSFUL,
   SEND_REQUEST,
   PUSH_FORM_DATA,
+  CLEAR_FORM,
 } from "../Reducers/Actions";
 import axios from "axios";
 import BuyerService from "../Services/Buyer";
 import { setAlert } from "../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
-
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, FreeMode } from "swiper";
 import PageLoadingAnimation from "../Components/PageLoadingAnimation";
@@ -46,104 +45,9 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { standard } from "../Styles/Modal";
 import { Puller } from "../Material/Drawer";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import tr11 from "../Assets/Logs Min/t11.jpg";
-import tr12 from "../Assets/Logs Min/t12.jpg";
-import tr13 from "../Assets/Logs Min/t13.jpg";
-import tr14 from "../Assets/Logs Min/t14.jpg";
-import tr15 from "../Assets/Logs Min/t15.jpg";
-import tr16 from "../Assets/Logs Min/t16.jpg";
-import tr17 from "../Assets/Logs Min/t17.jpg";
-import tr18 from "../Assets/Logs Min/t18.jpg";
-import tr19 from "../Assets/Logs Min/t19.jpg";
-import tr20 from "../Assets/Logs Min/t20.jpg";
-import tre from "../Assets/Logs Min/te.jpg";
-import tre1 from "../Assets/Logs Min/te1.jpg";
-import tre2 from "../Assets/Logs Min/te2.jpg";
-import tre3 from "../Assets/Logs Min/te4.jpg";
-import tre5 from "../Assets/Logs Min/te3.jpg";
-import ts1 from "../Assets/Logs Min/t1.jpg";
-import ts2 from "../Assets/Logs Min/t2.jpg";
-import ts3 from "../Assets/Logs Min/t3.jpg";
-import ts4 from "../Assets/Logs Min/t4.jpg";
-import ts5 from "../Assets/Logs Min/t5.jpg";
-import ts6 from "../Assets/Logs Min/t6.jpg";
-import ts7 from "../Assets/Logs Min/t7.jpg";
-import ts8 from "../Assets/Logs Min/t8.jpg";
-import ts9 from "../Assets/Logs Min/t9.jpg";
-import ts10 from "../Assets/Logs Min/t10.jpg";
 import { KeyboardBackspaceRounded } from "@mui/icons-material/";
-
-const SPECIFICATION_DETAILS = {
-  "Teak Round Logs": [
-    {
-      name: "length",
-      label: "Length",
-      units: [{ name: "lengthUnit", values: ["cm", "m"] }],
-    },
-    {
-      name: "diameter",
-      label: "Diameter",
-      defaultUnit: "cm",
-      units: [{ name: "diameterUnit", values: ["cm"] }],
-    },
-    {
-      name: "quantity",
-      label: "Quantity",
-      defaultUnit: "20ft Container",
-      units: [{ name: "quantityUnit", values: ["20ft Container"] }],
-    },
-  ],
-  "Teak Square Logs": [
-    {
-      name: "length",
-      label: "Length",
-      units: [{ name: "lengthUnit", values: ["cm", "m"] }],
-    },
-    {
-      name: "thickness",
-      label: "Thickness",
-      units: [{ name: "thicknessUnit", values: ["mm", "cm"] }],
-    },
-
-    {
-      name: "width",
-      label: "Width",
-      units: [{ name: "widthUnit", values: ["mm", "cm"] }],
-    },
-    {
-      name: "quantity",
-      label: "Quantity",
-      defaultUnit: "20ft Container",
-      units: [{ name: "quantityUnit", values: ["20ft Container"] }],
-    },
-    {
-      name: "dryingLabel",
-      label: "Drying",
-      menu: ["Air Drying", "Kiln Drying", "Fresh Sawn"],
-    },
-  ],
-};
-
-const IMAGES_TO_DISPLAY = {
-  "Teak Round Logs": [
-    tr11,
-    tr13,
-    tr15,
-    tr17,
-    tre,
-    tre1,
-    tre2,
-    tre5,
-    tre3,
-    tr12,
-    tr14,
-    tr16,
-    tr18,
-    tr19,
-    tr20,
-  ],
-  "Teak Square Logs": [ts2, ts4, ts5, ts7, ts8, ts10, ts1, ts3, ts6, ts9],
-};
+import { productSpecifications } from "../Components/RequestQuoteSpecs";
+import { IMAGES_TO_DISPLAY } from "../Components/ProductImages";
 
 const initPendingQuoteSession = (productId, pendingQuoteId) => {
   const session = {
@@ -166,10 +70,10 @@ const endPendingQuoteSession = async () => {
       );
       if (errors.length === 0) {
         sessionStorage.removeItem("pq_id");
-        document.location.reload();
       }
     } catch (error) {}
   }
+  window.scrollTo(0, 0);
 };
 
 const strictMatch = (array, key) => {
@@ -265,6 +169,10 @@ const RequestQuote = ({ session }) => {
     setOpenDrawer(true);
   };
 
+  const onInvalidForm = () => {
+    handleFailedRequest("Please fill all fields correctly", 9000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: SEND_REQUEST });
@@ -275,13 +183,14 @@ const RequestQuote = ({ session }) => {
       if (isLogged) {
         const { errors } = await buyerService.postQuote(state.payload);
         if (errors.length === 0) {
-          endPendingQuoteSession();
           dispatch({ type: REQUEST_SUCCESSFUL });
           setOpenDrawer(false);
           handleSuccessfullRequest(
             "Request successful, merchants will respond shortly",
             6000
           );
+          endPendingQuoteSession();
+          dispatch({ type: CLEAR_FORM });
         } else {
           dispatch({ type: REQUEST_FAILED });
           handleFailedRequest("Could not process request", 5000);
@@ -476,7 +385,7 @@ const RequestQuote = ({ session }) => {
           <div>
             <SmallSecondary
               type="submit"
-              loading={state.requestState.loading}
+              loading={state?.requestState?.loading}
               variant="contained"
             >
               Confirm Request
@@ -663,6 +572,7 @@ const RequestQuote = ({ session }) => {
           autoComplete="off"
           className="request-quote-page-form"
           onSubmit={preSubmission}
+          onInvalid={onInvalidForm}
         >
           <section>
             <div className="request-quote-section-title">
@@ -698,140 +608,113 @@ const RequestQuote = ({ session }) => {
             </div>
             <div className="request-quote-section-body select-input-form">
               {parsedProduct &&
-                SPECIFICATION_DETAILS[parsedProduct.name]?.map(
+                productSpecifications[parsedProduct.name]?.map(
                   (specification, index) =>
-                    specification.name === "dryingLabel" ? (
-                      <div key={index}>
-                        <div>Drying</div>
-                        <div>
-                          <FormControl required size="small" fullWidth>
-                            <InputLabel id="demo-multiple-chip-label">
-                              Drying
-                            </InputLabel>
-                            <Select
-                              value={
-                                state.payload[specification.name]
-                                  ? state.payload[specification.name]
-                                  : ""
-                              }
-                              onBlur={onValidFunction}
-                              error={strictMatch(
-                                errorBoxes,
-                                specification.name
-                              )}
-                              onInvalid={onInvalidFunction}
-                              onChange={handleChange}
-                              name={specification.name}
-                              label={specification.label}
-                            >
-                              {specification.menu.map((menuItem, index) => (
-                                <MenuItem key={index} value={menuItem}>
-                                  {menuItem}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        </div>
-                      </div>
-                    ) : (
+                    (specification.type === "text") |
+                    (specification.type === "number") ? (
                       <div key={index}>
                         <div>{specification.label}</div>
                         <div className="select-input-form-with-units">
                           <TextField
+                            type={specification.type}
                             value={
-                              state.payload[specification.name]
+                              state.payload
                                 ? state.payload[specification.name]
+                                  ? state.payload[specification.name]
+                                  : ""
                                 : ""
                             }
-                            inputProps={
-                              specification.name === "quantity"
-                                ? { min: 1, pattern: "[0-9+.-]{1,}" }
-                                : {}
-                            }
-                            required
+                            required={specification.required}
+                            inputProps={specification.inputProps ?? {}}
                             onBlur={onValidFunction}
                             error={strictMatch(errorBoxes, specification.name)}
                             onInvalid={onInvalidFunction}
                             onChange={handleChange}
                             size="small"
-                            fullWidth
                             name={specification.name}
-                            type={
-                              specification.name === "quantity"
-                                ? "number"
-                                : "text"
-                            }
                             label={specification.label}
-                            variant="outlined"
+                            fullWidth
                           />
-                          {specification.units &&
-                            specification.units.length > 0 &&
-                            specification.units.map(
-                              (specificationUnits, index) => (
-                                <FormControl
-                                  key={index}
-                                  size="small"
-                                  fullWidth
-                                  required
-                                >
-                                  <InputLabel>Units</InputLabel>
-                                  <Select
-                                    value={
-                                      state.payload[specificationUnits.name]
-                                        ? state.payload[specificationUnits.name]
-                                        : specification.defaultUnit
-                                        ? specification.defaultUnit
-                                        : ""
-                                    }
-                                    key={specificationUnits.name}
-                                    size="small"
-                                    error={strictMatch(
-                                      errorBoxes,
-                                      specificationUnits.name
-                                    )}
-                                    onBlur={onValidFunction}
-                                    onInvalid={onInvalidFunction}
-                                    onChange={handleChange}
-                                    name={specificationUnits.name}
-                                    label="Units"
-                                  >
-                                    {specificationUnits.values &&
-                                      specificationUnits.values.length > 0 &&
-                                      specificationUnits.values.map((value) => (
-                                        <MenuItem key={value} value={value}>
-                                          {value}
-                                        </MenuItem>
-                                      ))}
-                                  </Select>
-                                </FormControl>
-                              )
-                            )}
+                          {specification.units && (
+                            <FormControl required size="small">
+                              <InputLabel>Units</InputLabel>
+                              <Select
+                                required
+                                onBlur={onValidFunction}
+                                error={strictMatch(
+                                  errorBoxes,
+                                  specification.units.name
+                                )}
+                                onInvalid={onInvalidFunction}
+                                onChange={handleChange}
+                                name={specification.units.name}
+                                label="Units"
+                                value={
+                                  state.payload
+                                    ? state.payload[specification.units.name]
+                                      ? state.payload[specification.units.name]
+                                      : specification.defaultUnit
+                                      ? specification.defaultUnit.value
+                                      : ""
+                                    : ""
+                                }
+                              >
+                                {specification.units &&
+                                  specification.units.values.length > 0 &&
+                                  specification.units.values.map(
+                                    (unit, index) => (
+                                      <MenuItem key={index} value={unit}>
+                                        {unit}
+                                      </MenuItem>
+                                    )
+                                  )}
+                              </Select>
+                            </FormControl>
+                          )}
                         </div>
                       </div>
+                    ) : (
+                      specification.type === "select" && (
+                        <div key={index}>
+                          <div>{specification.label}</div>
+                          <div>
+                            <FormControl
+                              required={specification.required}
+                              size="small"
+                              fullWidth
+                            >
+                              <InputLabel>{specification.label}</InputLabel>
+                              <Select
+                                value={
+                                  state.payload
+                                    ? state.payload[specification.name]
+                                      ? state.payload[specification.name]
+                                      : ""
+                                    : ""
+                                }
+                                size="small"
+                                onBlur={onValidFunction}
+                                error={strictMatch(
+                                  errorBoxes,
+                                  specification.name
+                                )}
+                                onInvalid={onInvalidFunction}
+                                onChange={handleChange}
+                                name={specification.name}
+                                label={specification.label}
+                              >
+                                {specification.menu.map((menuItem, index) => (
+                                  <MenuItem key={index} value={menuItem}>
+                                    {menuItem}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                      )
                     )
                 )}
-              <div>
-                <div>Additional Information</div>
-                <div>
-                  <TextField
-                    value={
-                      state.payload.information ? state.payload.information : ""
-                    }
-                    error={strictMatch(errorBoxes, "information")}
-                    onBlur={onValidFunction}
-                    onInvalid={onInvalidFunction}
-                    onChange={handleChange}
-                    multiline
-                    rows={1}
-                    size="small"
-                    fullWidth
-                    type="text"
-                    name="information"
-                    label="Additional Information"
-                    variant="outlined"
-                  />
-                </div>
-              </div>
             </div>
           </section>
 
@@ -849,7 +732,11 @@ const RequestQuote = ({ session }) => {
                     </InputLabel>
                     <Select
                       value={
-                        state.payload.incoterm ? state.payload.incoterm : ""
+                        state.payload
+                          ? state.payload.incoterm
+                            ? state.payload.incoterm
+                            : ""
+                          : ""
                       }
                       error={strictMatch(errorBoxes, "incoterm")}
                       onBlur={onValidFunction}
@@ -875,8 +762,10 @@ const RequestQuote = ({ session }) => {
                     </InputLabel>
                     <Select
                       value={
-                        state.payload.destination
+                        state.payload
                           ? state.payload.destination
+                            ? state.payload.destination
+                            : ""
                           : ""
                       }
                       error={strictMatch(errorBoxes, "destination")}
@@ -912,7 +801,13 @@ const RequestQuote = ({ session }) => {
                 <div>Destination Port</div>
                 <div>
                   <TextField
-                    value={state.payload.port ? state.payload.port : ""}
+                    value={
+                      state.payload
+                        ? state.payload.port
+                          ? state.payload.port
+                          : ""
+                        : ""
+                    }
                     required
                     error={strictMatch(errorBoxes, "port")}
                     onBlur={onValidFunction}
@@ -944,7 +839,11 @@ const RequestQuote = ({ session }) => {
                     </InputLabel>
                     <Select
                       value={
-                        state.payload.validity ? state.payload.validity : ""
+                        state.payload
+                          ? state.payload.validity
+                            ? state.payload.validity
+                            : ""
+                          : ""
                       }
                       error={strictMatch(errorBoxes, "validity")}
                       onBlur={onValidFunction}

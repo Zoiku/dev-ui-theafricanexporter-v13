@@ -392,8 +392,8 @@ html {
   }
 
   .drawer-title-container > div:nth-child(1) {
-    font-size: large;
-    font-weight: bold;
+    padding: 5px 0 0 0;
+    font-weight: 800;
   }
 
   .drawer-body {

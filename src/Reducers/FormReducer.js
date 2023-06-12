@@ -4,16 +4,16 @@ import {
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED,
   CLEAR_FORM,
-  PUSH_FORM_DATA
+  PUSH_FORM_DATA,
 } from "./Actions";
 
 export const INITIAL_STATE = {
   requestState: {
     data: {},
     error: null,
-    loading: false
+    loading: false,
   },
-  payload: {}
+  payload: {},
 };
 
 export const formReducer = (state = INITIAL_STATE, action) => {
@@ -23,8 +23,8 @@ export const formReducer = (state = INITIAL_STATE, action) => {
         ...state,
         payload: {
           ...state.payload,
-          [action.prop]: action.value
-        }
+          [action.prop]: action.value,
+        },
       };
 
     case SEND_REQUEST:
@@ -32,8 +32,8 @@ export const formReducer = (state = INITIAL_STATE, action) => {
         ...state,
         requestState: {
           ...state.requestState,
-          loading: true
-        }
+          loading: true,
+        },
       };
 
     case REQUEST_SUCCESSFUL:
@@ -43,8 +43,8 @@ export const formReducer = (state = INITIAL_STATE, action) => {
           ...state.requestState,
           data: action.payload,
           error: null,
-          loading: false
-        }
+          loading: false,
+        },
       };
 
     case REQUEST_FAILED:
@@ -53,23 +53,29 @@ export const formReducer = (state = INITIAL_STATE, action) => {
         requestState: {
           ...state.requestState,
           error: action.error,
-          loading: false
-        }
+          loading: false,
+        },
       };
 
-      case PUSH_FORM_DATA: {
-        return {
-          ...state,
-          payload: action.payload
-        }
-      }
+    case PUSH_FORM_DATA: {
+      return {
+        ...state,
+        payload: action.payload,
+      };
+    }
 
-      case CLEAR_FORM: {
-        return {
-          ...state,
-          payload: null
-        }
-      }
+    case CLEAR_FORM: {
+      return {
+        state: {
+          requestState: {
+            data: {},
+            error: null,
+            loading: false,
+          },
+          payload: {},
+        },
+      };
+    }
 
     default:
       return state;
