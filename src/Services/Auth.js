@@ -63,7 +63,7 @@ export default class AuthService {
 
   async verifyCode(otp, email, role) {
     let errors = [];
-    const url = `/opt/verify/${otp}?email=${email}&role=${role}`;
+    const url = `/opt/verify/${otp.toUpperCase()}?email=${email}&role=${role}`;
 
     try {
       await AxiosInstance().patch(url);
