@@ -297,6 +297,23 @@ const Orders = () => {
           </div>
           <div className="requests-sections-container">
             <section>
+              <div className="requests-section-title">Buyer Details</div>
+              <div className="request-section-body">
+                <div>
+                  Buyer: <span>{JSON.stringify(selectedOrder.user)}</span>
+                </div>
+                <div>
+                  Merchant:{" "}
+                  <span>{JSON.stringify(selectedOrder.merchant)}</span>
+                </div>
+                {/* <div>
+                  <span>Shipping Address:</span>
+                  <span>{selectedOrder.shippingAddress}</span>
+                </div> */}
+              </div>
+            </section>
+
+            <section>
               <div className="requests-section-title">Order Summary</div>
               <div className="request-section-body">
                 <div>
