@@ -322,30 +322,33 @@ const Orders = () => {
               </div>
             </section>
 
-            <section>
-              <div className="requests-section-title">Merchant Details</div>
-              <div className="request-section-body">
-                <div>
-                  <span>Name:</span>
-                  <span>
-                    {selectedOrder?.merchant?.firstName}{" "}
-                    {selectedOrder?.merchant?.lastName}
-                  </span>
+            {selectedOrder?.merchant.map((userMerchant, index) => (
+              <section key={index}>
+                <div className="requests-section-title">
+                  [ {index + 1} ] Merchant Details
                 </div>
-                <div>
-                  <span>Email:</span>
-                  <span>{selectedOrder?.merchant?.email}</span>
+                <div className="request-section-body">
+                  <div>
+                    <span>Name:</span>
+                    <span>
+                      {userMerchant?.firstName} {userMerchant?.lastName}
+                    </span>
+                  </div>
+                  <div>
+                    <span>Email:</span>
+                    <span>{userMerchant?.email}</span>
+                  </div>
+                  <div>
+                    <span>Company:</span>
+                    <span>{userMerchant?.companyName}</span>
+                  </div>
+                  <div>
+                    <span>Country:</span>
+                    <span>{userMerchant?.country}</span>
+                  </div>
                 </div>
-                <div>
-                  <span>Company:</span>
-                  <span>{selectedOrder?.merchant?.companyName}</span>
-                </div>
-                <div>
-                  <span>Country:</span>
-                  <span>{selectedOrder?.merchant?.country}</span>
-                </div>
-              </div>
-            </section>
+              </section>
+            ))}
 
             <section>
               <div className="requests-section-title">Order Summary</div>
@@ -476,6 +479,7 @@ const Orders = () => {
         if (errors.length === 0) {
           setPaging({ ...paging, totalCount: data.data.totalCount });
           const filteredData = data.data.data;
+
           const newFilteredData = await Promise.all(
             filteredData.map(async (order, index) => {
               order.users = await (
@@ -496,8 +500,11 @@ const Orders = () => {
                   firstName: userGroup.user.firstName,
                   lastName: userGroup.user.lastName,
                 };
+
                 return userGroup;
               });
+
+              console.log(order.users);
 
               return {
                 index: paging.size * paging.page - (paging.size - index) + 1,
@@ -538,7 +545,7 @@ const Orders = () => {
                 orderNo: order?.doc[0]?.orderNo,
                 status: order?.doc[0]?.status,
                 buyer: order?.users[0]?.buyer,
-                merchant: order?.users[0]?.merchant,
+                merchant: order?.users.map((user) => user.merchant),
               };
             })
           );
