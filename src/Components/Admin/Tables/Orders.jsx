@@ -309,7 +309,9 @@ const Orders = () => {
                 </div>
                 <div>
                   <span>Email:</span>
-                  <span>{selectedOrder?.buyer?.email}</span>
+                  <span style={{ textTransform: "lowercase" }}>
+                    {selectedOrder?.buyer?.email}
+                  </span>
                 </div>
                 <div>
                   <span>Company:</span>
@@ -336,7 +338,9 @@ const Orders = () => {
                   </div>
                   <div>
                     <span>Email:</span>
-                    <span>{userMerchant?.email}</span>
+                    <span style={{ textTransform: "lowercase" }}>
+                      {userMerchant?.email}
+                    </span>
                   </div>
                   <div>
                     <span>Company:</span>

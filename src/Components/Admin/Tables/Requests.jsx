@@ -110,10 +110,15 @@ const Requests = () => {
                   <span>{selectedRequest.buyer?.country}</span>
                 </div>
                 <div>
+                  <span>Email:</span>
+                  <span style={{ textTransform: "lowercase" }}>
+                    {selectedRequest.buyer?.email}
+                  </span>
+                </div>
+                <div>
                   <span>Mobile:</span>
                   <span>+{selectedRequest.buyer?.mobileNo}</span>
                 </div>
-
                 <div>
                   <span>Enabled Status:</span>
                   <span>
@@ -130,7 +135,7 @@ const Requests = () => {
                 </div>
                 <div>
                   <span>Customer Since:</span>
-                  <span>{selectedRequest.buyer?.createdOn}</span>
+                  <span>{new Date(selectedRequest.buyer?.createdOn).toDateString()}</span>
                 </div>
               </div>
             </section>
