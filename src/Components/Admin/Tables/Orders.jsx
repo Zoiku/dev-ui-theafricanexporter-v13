@@ -36,6 +36,7 @@ import {
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED,
 } from "../../../Reducers/Actions";
+import BuyerService from "../../../Services/Buyer";
 
 const ORDER_STATUS_LEVELS = {
   RECEIVED: 10,
@@ -293,23 +294,56 @@ const Orders = () => {
       <Box role="presentation">
         <div className="requests-sections-body">
           <div className="requests-title-container">
-            <div>Order {selectedOrder.orderNo}</div>
+            <div>Order {selectedOrder?.orderNo}</div>
           </div>
           <div className="requests-sections-container">
             <section>
               <div className="requests-section-title">Buyer Details</div>
               <div className="request-section-body">
                 <div>
-                  Buyer: <span>{JSON.stringify(selectedOrder.user)}</span>
+                  <span>Name:</span>
+                  <span>
+                    {selectedOrder?.buyer?.firstName}{" "}
+                    {selectedOrder?.buyer?.lastName}
+                  </span>
                 </div>
                 <div>
-                  Merchant:{" "}
-                  <span>{JSON.stringify(selectedOrder.merchant)}</span>
+                  <span>Email:</span>
+                  <span>{selectedOrder?.buyer?.email}</span>
                 </div>
-                {/* <div>
-                  <span>Shipping Address:</span>
-                  <span>{selectedOrder.shippingAddress}</span>
-                </div> */}
+                <div>
+                  <span>Company:</span>
+                  <span>{selectedOrder?.buyer?.companyName}</span>
+                </div>
+                <div>
+                  <span>Country:</span>
+                  <span>{selectedOrder?.buyer?.country}</span>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <div className="requests-section-title">Merchant Details</div>
+              <div className="request-section-body">
+                <div>
+                  <span>Name:</span>
+                  <span>
+                    {selectedOrder?.merchant?.firstName}{" "}
+                    {selectedOrder?.merchant?.lastName}
+                  </span>
+                </div>
+                <div>
+                  <span>Email:</span>
+                  <span>{selectedOrder?.merchant?.email}</span>
+                </div>
+                <div>
+                  <span>Company:</span>
+                  <span>{selectedOrder?.merchant?.companyName}</span>
+                </div>
+                <div>
+                  <span>Country:</span>
+                  <span>{selectedOrder?.merchant?.country}</span>
+                </div>
               </div>
             </section>
 
@@ -432,6 +466,7 @@ const Orders = () => {
     const fetchData = async () => {
       setRowsLoading(true);
       const adminService = new AdminService();
+      const buyerService = new BuyerService();
       try {
         const { page, size } = paging;
         const { data, errors } = await adminService.getOrders(
@@ -441,38 +476,74 @@ const Orders = () => {
         if (errors.length === 0) {
           setPaging({ ...paging, totalCount: data.data.totalCount });
           const filteredData = data.data.data;
-          filteredData.map((order, index) => {
-            order.index = paging.size * paging.page - (paging.size - index) + 1;
-            order.id = order?._id;
-            order.destination = order?.request?.destination;
-            order.product = order?.request?.quotationProducts[0]?.product.name;
-            order.species =
-              order?.request?.quotationProducts[0]?.product?.species?.label;
-            order.speciesType =
-              order?.request?.quotationProducts[0]?.product?.species?.type?.label;
-            order.origin =
-              order?.request?.quotationProducts[0]?.product?.origin?.country;
-            order.containerSize =
-              order?.request?.quotationProducts[0]?.product?.supportedShippingContainers[0].label;
-            order.volume =
-              order?.request?.quotationProducts[0]?.product?.volume?.value;
-            order.volumeUnit =
-              order?.request?.quotationProducts[0]?.product?.volume?.unit;
-            order.terms = order?.request?.buyerQuotationIncoterm?.label;
-            order.quantity = order?.orderQuantity;
-            order.createdOn = new Date(order.createdOn)
-              .toUTCString()
-              .slice(0, 16);
-            order.expiryDate = new Date(order?.request?.expiryDate)
-              .toUTCString()
-              .slice(0, 25);
-            order.shippingAddress = order?.orderPaymentDetails?.shippingAddress;
-            order.port = order?.request?.port;
-            order.paymentMode = order?.orderPaymentDetails?.orderPayment;
-            return 1;
-          });
+          const newFilteredData = await Promise.all(
+            filteredData.map(async (order, index) => {
+              order.users = await (
+                await buyerService.getOrderList(order?._id)
+              ).data.data.data.map((userGroup) => {
+                userGroup.merchant = {
+                  companyName: userGroup.merchant.companyName,
+                  country: userGroup.merchant.country,
+                  email: userGroup.merchant.email,
+                  firstName: userGroup.merchant.firstName,
+                  lastName: userGroup.merchant.lastName,
+                };
 
-          setRows(filteredData);
+                userGroup.buyer = {
+                  companyName: userGroup.user.companyName,
+                  country: userGroup.user.country,
+                  email: userGroup.user.email,
+                  firstName: userGroup.user.firstName,
+                  lastName: userGroup.user.lastName,
+                };
+                return userGroup;
+              });
+
+              return {
+                index: paging.size * paging.page - (paging.size - index) + 1,
+                id: order?.doc[0]?._id,
+                destination: order?.doc[0]?.request?.destination,
+                product:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product.name,
+                species:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product?.species
+                    ?.label,
+                speciesType:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product?.species
+                    ?.type?.label,
+                origin:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product?.origin
+                    ?.country,
+                containerSize:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product
+                    ?.supportedShippingContainers[0].label,
+                volume:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product?.volume
+                    ?.value,
+                volumeUnit:
+                  order?.doc[0]?.request?.quotationProducts[0]?.product?.volume
+                    ?.unit,
+                terms: order?.doc[0]?.request?.buyerQuotationIncoterm?.label,
+                quantity: order?.doc[0]?.orderQuantity,
+                createdOn: new Date(order?.doc[0]?.createdOn)
+                  .toUTCString()
+                  .slice(0, 16),
+                expiryDate: new Date(order?.doc[0]?.request?.expiryDate)
+                  .toUTCString()
+                  .slice(0, 25),
+                shippingAddress:
+                  order?.doc[0]?.orderPaymentDetails?.shippingAddress,
+                port: order?.doc[0]?.request?.port,
+                paymentMode: order?.doc[0]?.orderPaymentDetails?.orderPayment,
+                orderNo: order?.doc[0]?.orderNo,
+                status: order?.doc[0]?.status,
+                buyer: order?.users[0]?.buyer,
+                merchant: order?.users[0]?.merchant,
+              };
+            })
+          );
+
+          setRows(newFilteredData);
         }
       } catch (error) {}
       setRowsLoading(false);

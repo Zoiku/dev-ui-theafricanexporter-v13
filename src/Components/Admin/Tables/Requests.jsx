@@ -102,6 +102,10 @@ const Requests = () => {
                   </span>
                 </div>
                 <div>
+                  <span>Comany Name:</span>
+                  <span>{selectedRequest.buyer?.companyName}</span>
+                </div>
+                <div>
                   <span>Country:</span>
                   <span>{selectedRequest.buyer?.country}</span>
                 </div>
@@ -109,10 +113,7 @@ const Requests = () => {
                   <span>Mobile:</span>
                   <span>+{selectedRequest.buyer?.mobileNo}</span>
                 </div>
-                <div>
-                  <span>Comany Name:</span>
-                  <span>{selectedRequest.buyer?.companyName}</span>
-                </div>
+
                 <div>
                   <span>Enabled Status:</span>
                   <span>
@@ -246,7 +247,7 @@ const Requests = () => {
                   <div key={index} className="incoterm-table-offers-admin">
                     <section>
                       <div className="requests-section-title">
-                        [{index + 1}] Merchant Details
+                        [ {index + 1} ] Merchant Details
                       </div>
                       <div className="request-section-body">
                         <div>
@@ -257,12 +258,12 @@ const Requests = () => {
                           </span>
                         </div>
                         <div>
-                          <span>Mobile:</span>
-                          <span>+{offer?.merchant?.mobileNo}</span>
-                        </div>
-                        <div>
                           <span>Comany Name:</span>
                           <span>{offer?.merchant?.companyName}</span>
+                        </div>
+                        <div>
+                          <span>Mobile:</span>
+                          <span>+{offer?.merchant?.mobileNo}</span>
                         </div>
                       </div>
                     </section>
