@@ -1,52 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-
-const sumArray = (arr) => {
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (typeof arr[i] === "number") {
-      sum += arr[i];
-    }
-  }
-  return sum;
-};
-
-const reduce = (array) => {
-  const count = {};
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-  return count;
-};
-
-const monthReduce = (array) => {
-  const count = {
-    January: 0,
-    February: 0,
-    March: 0,
-    April: 0,
-    May: 0,
-    June: 0,
-    July: 0,
-    August: 0,
-    September: 0,
-    October: 0,
-    November: 0,
-    December: 0
-  };
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-
-  return count;
-};
+import { monthReduce, sumArray, reduce } from "../Components/Functions"
 
 export default class MerchantService {
   async getRequests(signal) {
@@ -55,7 +8,7 @@ export default class MerchantService {
     const url = `/buyer/quotation/merchants/requests/true`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -72,7 +25,7 @@ export default class MerchantService {
     const url = "/orders/merchant/nonpaged";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -89,7 +42,7 @@ export default class MerchantService {
     const url = "/merchant/quotations";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -105,7 +58,7 @@ export default class MerchantService {
     const url = "/merchant/quotation/offer";
 
     try {
-      await AxiosInstance().post(url, payload);
+      await AxiosInstance.post(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -120,7 +73,7 @@ export default class MerchantService {
     const url = `/order/${id}/status/confirm`;
 
     try {
-      await AxiosInstance().put(url);
+      await AxiosInstance.put(url);
     } catch (error) {
       errors.push(error);
     }
@@ -135,7 +88,7 @@ export default class MerchantService {
     const url = `/orders/${id}`;
 
     try {
-      await AxiosInstance().delete(url);
+      await AxiosInstance.delete(url);
     } catch (error) {
       errors.push(error);
     }
@@ -151,7 +104,7 @@ export default class MerchantService {
     const url = "/user/company";
 
     try {
-      data = await AxiosInstance().post(url, payload);
+      data = await AxiosInstance.post(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -168,7 +121,7 @@ export default class MerchantService {
     const url = `/user/${payload.id}`;
 
     try {
-      data = await AxiosInstance().put(url, payload);
+      data = await AxiosInstance.put(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -185,7 +138,7 @@ export default class MerchantService {
     const url = `/all/customers`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -202,7 +155,7 @@ export default class MerchantService {
     const url = `/all/orders`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -219,7 +172,7 @@ export default class MerchantService {
     const url = `/all/orders`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
       const allCategories = data.data.data.map(
         (order) => order.request.quotationProducts[0].product.name
       );
@@ -240,7 +193,7 @@ export default class MerchantService {
     let data = {};
     const url = `/all/sales`;
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
 
       const allMonths = data.data.data.map((order) => {
         const months = [];
@@ -272,7 +225,7 @@ export default class MerchantService {
     let data = {};
     const url = `/all/sales`;
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
       const allIncoterms = data.data.data.map(
         (orderArray) => orderArray.incoterm
       );

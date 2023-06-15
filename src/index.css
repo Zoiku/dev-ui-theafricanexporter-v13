@@ -370,15 +370,15 @@ html {
     display: none;
   }
 
-  .modal-container {
+  /* .modal-container {
     display: none;
-  }
+  } */
 
-  .drawer-container {
+  /* .drawer-container {
     position: relative;
     display: block;
-  }
-
+  } */
+/* 
   .drawer-title-container {
     padding: 15px;
     border-bottom: 1px solid #efefef;
@@ -389,18 +389,18 @@ html {
     position: sticky;
     top: 0;
     background: white;
-  }
+  } */
 
-  .drawer-title-container > div:nth-child(1) {
+  /* .drawer-title-container > div:nth-child(1) {
     padding: 5px 0 0 0;
     font-weight: 700;
-  }
+  } */
 
-  .drawer-body {
+  /* .drawer-body {
     max-height: 90vh;
     overflow-y: scroll;
     padding: 15px;
-  }
+  } */
 
   .inAppDialog {
     left: 0% !important;

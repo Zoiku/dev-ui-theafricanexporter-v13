@@ -7,7 +7,7 @@ export default class ProductService {
     const url = "/products/enabled/true";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -24,7 +24,7 @@ export default class ProductService {
     const url = `/product/${id}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
