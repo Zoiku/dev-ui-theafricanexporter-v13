@@ -7,7 +7,7 @@ export default class BuyerService {
     const url = "/buyer/requests/quotation";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -24,7 +24,7 @@ export default class BuyerService {
     const url = "/orders/user/nonpaged";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -40,7 +40,7 @@ export default class BuyerService {
     const url = `/orders/reference/${referenceCode}`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -57,7 +57,7 @@ export default class BuyerService {
     const url = `/order/${id}`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -74,7 +74,7 @@ export default class BuyerService {
     const url = `/buyer/quotation/requests/pending/${id}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -91,7 +91,7 @@ export default class BuyerService {
     const url = "/buyer/quotation/requests/pending/";
 
     try {
-      data = await AxiosInstance().post(url, payload);
+      data = await AxiosInstance.post(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -108,7 +108,7 @@ export default class BuyerService {
     const url = "/buyer/quotation/request/";
 
     try {
-      data = await AxiosInstance().post(url, payload);
+      data = await AxiosInstance.post(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -125,7 +125,7 @@ export default class BuyerService {
     const url = `/buyer/quotation/offers/request/${id}`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -141,7 +141,7 @@ export default class BuyerService {
     const url = "/order";
 
     try {
-      await AxiosInstance().post(url, payload);
+      await AxiosInstance.post(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -156,7 +156,7 @@ export default class BuyerService {
     const url = `/buyer/quotation/requests/pending/${id}`;
 
     try {
-      await AxiosInstance().delete(url);
+      await AxiosInstance.delete(url);
     } catch (error) {
       errors.push(error);
     }
@@ -172,7 +172,7 @@ export default class BuyerService {
     const url = `/user/company/${id}`;
 
     try {
-      data = await AxiosInstance().get(url);
+      data = await AxiosInstance.get(url);
     } catch (error) {
       errors.push(error);
     }
@@ -188,7 +188,7 @@ export default class BuyerService {
     const url = `/order/${referenceCode}/payment/details`;
 
     try {
-      await AxiosInstance().put(url, payload);
+      await AxiosInstance.put(url, payload);
     } catch (error) {
       errors.push(error);
     }
@@ -203,7 +203,7 @@ export default class BuyerService {
     const url = `/buyer/requests/repost/${id}`;
 
     try {
-      await AxiosInstance().put(url);
+      await AxiosInstance.put(url);
     } catch (error) {
       errors.push(error);
     }

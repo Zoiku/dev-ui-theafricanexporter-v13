@@ -1,0 +1,36 @@
+.DrawerComponent {
+  display: none;
+}
+
+.ModalComponent {
+  display: block;
+}
+
+.modal_title_container {
+  padding: 5px 10px;
+}
+
+.drawer-title-container {
+  padding: 10px;
+}
+
+.modal_title_container,
+.drawer-title-container {
+  border-bottom: 1px solid #c5c5c5;
+  font-weight: 600;
+}
+
+.modal_body_container,
+.drawer-body-container {
+  padding: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+  .DrawerComponent {
+    display: block;
+  }
+
+  .ModalComponent {
+    display: none;
+  }
+}

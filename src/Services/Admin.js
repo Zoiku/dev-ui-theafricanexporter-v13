@@ -1,60 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-
-const calculateRatio = (a, b) => {
-  if (b !== 0) {
-    const gcd = calculateGCD(a, b);
-    const ratio = `${a / gcd}:${b / gcd}`;
-    return ratio;
-  } else {
-    throw new Error("Cannot divide by zero.");
-  }
-};
-
-const calculateGCD = (a, b) => {
-  if (b === 0) {
-    return a;
-  } else {
-    return calculateGCD(b, a % b);
-  }
-};
-
-const reduce = (array) => {
-  const count = {};
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-  return count;
-};
-
-const monthReduce = (array) => {
-  const count = {
-    January: 0,
-    February: 0,
-    March: 0,
-    April: 0,
-    May: 0,
-    June: 0,
-    July: 0,
-    August: 0,
-    September: 0,
-    October: 0,
-    November: 0,
-    December: 0
-  };
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-
-  return count;
-};
+import { calculateRatio, monthReduce, reduce } from "../Components/Functions/"
 
 export default class AdminService {
   async getRequests(signal, paging) {
@@ -64,7 +9,7 @@ export default class AdminService {
     const url = `/buyer/quotation/requests?page=${page}&size=${size}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -81,7 +26,7 @@ export default class AdminService {
     const url = "/admin/buyer/quotation/requests";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
       const allMonths = data.data.data.map((request) => {
         const currentYear = new Date().getFullYear();
         const requestYear = new Date(request.createdOn).getFullYear();
@@ -117,7 +62,7 @@ export default class AdminService {
     const url = "/admin/buyer/quotation/requests";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
       const allCategories = data.data.data.map(
         (request) => request.quotationProducts[0].product.name
       );
@@ -138,7 +83,7 @@ export default class AdminService {
     const url = "/orders/AWAITING";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -155,7 +100,7 @@ export default class AdminService {
     const url = "/orders/DELIVERED";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -172,7 +117,7 @@ export default class AdminService {
     const url = "/users/false";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -189,7 +134,7 @@ export default class AdminService {
     const url = "/merchants/unactivated/only";
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -207,7 +152,7 @@ export default class AdminService {
     const url = `/orders?page=${page}&size=${size}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -225,7 +170,7 @@ export default class AdminService {
     const url = `/buyers?page=${page}&size=${size}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -243,7 +188,7 @@ export default class AdminService {
     const url = `/merchants?page=${page}&size=${size}`;
 
     try {
-      data = await AxiosInstance().get(url, { signal });
+      data = await AxiosInstance.get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
@@ -260,10 +205,10 @@ export default class AdminService {
     const merchantsUrl = "/merchants";
     const buyersUrl = "/buyers";
     try {
-      const merchants = await AxiosInstance().get(merchantsUrl, {
+      const merchants = await AxiosInstance.get(merchantsUrl, {
         signal
       });
-      const buyers = await AxiosInstance().get(buyersUrl, {
+      const buyers = await AxiosInstance.get(buyersUrl, {
         signal
       });
 
@@ -285,7 +230,7 @@ export default class AdminService {
     const url = `/user/account/${!status}/${id}`;
 
     try {
-      await AxiosInstance().patch(url);
+      await AxiosInstance.patch(url);
     } catch (error) {
       errors.push(error);
     }
@@ -300,7 +245,7 @@ export default class AdminService {
     const url = `/merchant/enable/true/${id}`;
 
     try {
-      await AxiosInstance().patch(url);
+      await AxiosInstance.patch(url);
     } catch (error) {
       errors.push(error);
     }
@@ -315,7 +260,7 @@ export default class AdminService {
     const url = `/order/confirm/${referenceCode}`;
 
     try {
-      await AxiosInstance().patch(url);
+      await AxiosInstance.patch(url);
     } catch (error) {
       errors.push(error);
     }
@@ -330,7 +275,7 @@ export default class AdminService {
     const url = `/order/${id}/${status}`;
 
     try {
-      await AxiosInstance().patch(url);
+      await AxiosInstance.patch(url);
     } catch (error) {
       errors.push(error);
     }
