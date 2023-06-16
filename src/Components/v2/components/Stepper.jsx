@@ -3,7 +3,7 @@ import { steps, ORDER_STATUS_STEPS } from "./OrderStatus";
 
 const MuiStepper = ({ activeStep }) => {
   return (
-    <Stepper activeStep={ORDER_STATUS_STEPS[activeStep]} >
+    <Stepper activeStep={ORDER_STATUS_STEPS[activeStep]} alternativeLabel>
       {steps.map((step) => (
         <Step key={step.label}>
           <StepLabel>{step.label}</StepLabel>

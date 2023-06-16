@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import Toolbar from "../../../Material/Toolbar";
 import Overlay from "../../../Material/Overlay";
+import "../../../Styles/v2/Table.css";
 
 const MuiTable = ({
   rows,
@@ -20,7 +21,7 @@ const MuiTable = ({
         LoadingOverlay: LinearProgress,
         NoRowsOverlay: () => <Overlay label={label} />,
       }}
-      className="standard-table"
+      className="main_table_box_standard main_table_all"
       checkboxSelection
       disableSelectionOnClick
       pageSize={paging.size}
@@ -38,12 +39,7 @@ const MuiTable = ({
   );
 };
 
-export const MuiTableV1 = ({
-  rows,
-  rowsLoading,
-  columns,
-  label,
-}) => {
+export const MuiTableV1 = ({ rows, rowsLoading, columns, label }) => {
   return (
     <DataGrid
       components={{
@@ -51,7 +47,26 @@ export const MuiTableV1 = ({
         LoadingOverlay: LinearProgress,
         NoRowsOverlay: () => <Overlay label={label} />,
       }}
-      className="standard-table"
+      className="main_table_box_standard main_table_all"
+      checkboxSelection
+      disableSelectionOnClick
+      rows={rows}
+      columns={columns}
+      pagination
+      density="compact"
+      rowsPerPageOptions={[10, 20, 30, 40, 50]}
+      loading={rowsLoading}
+    />
+  );
+};
+
+export const MuiTableV2 = ({ rows, rowsLoading, columns }) => {
+  return (
+    <DataGrid
+      components={{
+        LoadingOverlay: LinearProgress,
+      }}
+      className="main_table_box_offerings_table main_table_all"
       checkboxSelection
       disableSelectionOnClick
       rows={rows}

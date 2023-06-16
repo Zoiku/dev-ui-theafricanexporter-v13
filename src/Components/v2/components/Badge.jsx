@@ -2,10 +2,15 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import { StyledBadge } from "../../../Material/Badge";
 import IconButton from "@mui/material/IconButton";
 
-const MuiBadge = ({ offers }) => {
+const MuiBadge = ({ offersTotalCount, onClick }) => {
   return (
-    <IconButton disabled={offers.length === 0} size="small" aria-label="cart">
-      <StyledBadge badgeContent={offers.length} color="primary">
+    <IconButton
+      disabled={offersTotalCount === 0}
+      size="small"
+      aria-label="cart"
+      onClick={onClick}
+    >
+      <StyledBadge badgeContent={offersTotalCount} color="primary">
         <RequestQuoteIcon />
       </StyledBadge>
     </IconButton>

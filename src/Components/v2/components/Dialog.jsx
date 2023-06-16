@@ -1,19 +1,14 @@
 import Dialog from "@mui/material/Dialog";
 import { Transition } from "./Transition";
-import { Button1 } from "./Buttons";
 import {
   DialogContent,
   DialogContentText,
   DialogActions,
 } from "@mui/material/";
-import { dialogStyle } from "../styles/dialog";
+import { dialogStyle } from "../../../Styles/v2/dialog";
+import "../../../Styles/v2/Dialog.css";
 
-const MuiDialog = ({
-  dialogTitle,
-  openDialog,
-  toggleOpenDialog,
-  handleDialogActions,
-}) => {
+const MuiDialog = ({ dialogTitle, openDialog, toggleOpenDialog, children }) => {
   return (
     <Dialog
       open={openDialog}
@@ -28,22 +23,7 @@ const MuiDialog = ({
           {dialogTitle}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button1
-          onClick={handleDialogActions(false)}
-          variant="text"
-          color="inherit"
-        >
-          No
-        </Button1>
-        <Button1
-          onClick={handleDialogActions(true)}
-          variant="text"
-          color="inherit"
-        >
-          Yes
-        </Button1>
-      </DialogActions>
+      <DialogActions>{children}</DialogActions>
     </Dialog>
   );
 };

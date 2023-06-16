@@ -144,7 +144,7 @@ const UsersMerchant = () => {
             alignItems="center"
           >
             <AvatarProfile fullName={selectedUser?.name} />
-            <strong style={{ fontSize: 30 }}>{selectedUser?.name}</strong>
+            <strong style={{ fontSize: 25 }}>{selectedUser?.name}</strong>
           </Stack>
 
           <div>

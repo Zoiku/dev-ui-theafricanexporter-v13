@@ -3,12 +3,16 @@ import MuiTable from "../../v2/components/Table";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import AdminService from "../../../Services/Admin";
 import BuyerService from "../../../Services/Buyer";
-import MuiMore from "../../More";
+import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { widerBox } from "../../../Styles/v2/box";
 import { Box, Stack } from "@mui/material";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import MuiStepper from "../../v2/components/Stepper";
+import { ORDER_STATUS } from "../../v2/components/OrderStatus";
+import MuiDialog from "../../v2/components/Dialog";
+import { Button1 } from "../../v2/components/Buttons";
+import { MenuItem } from "@mui/material";
 
 const Orders = () => {
   const [paging, setPaging] = useState({
@@ -31,6 +35,11 @@ const Orders = () => {
     setOpenOrderView(open);
   };
 
+  const [openApproveDialog, setOpenApproveDialog] = useState(false);
+  const toggleOpenApproveDialog = (open) => () => {
+    setOpenApproveDialog(open);
+  };
+
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "orderNo", headerName: "Order #", width: 100 },
@@ -38,14 +47,21 @@ const Orders = () => {
     { field: "terms", headerName: "Terms", width: 100 },
     { field: "destination", headerName: "Destination", width: 100 },
     { field: "quantity", headerName: "Quantity", width: 100 },
-    { field: "status", headerName: "Status", width: 100 },
+    { field: "status", headerName: "Status", width: 150 },
     {
       field: "actions",
       headerName: "",
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMore handleOpenView={handleOpenOrder(row.id)} />
+          <MuiMoreV1>
+            <MenuItem onClick={handleOpenOrder(row.id)}>View</MenuItem>
+            {row.status === ORDER_STATUS["AWAITING PROOF OF PAYMENT"] && (
+              <MenuItem onClick={toggleOpenApproveDialog(true)}>
+                Approve
+              </MenuItem>
+            )}
+          </MuiMoreV1>
         </Stack>
       ),
     },
@@ -210,12 +226,7 @@ const Orders = () => {
               ))}
 
             <SectionItem sectionTitle="Track Order">
-              <Stack
-                sx={{ margin: "20px 0 0 0" }}
-                direction="column"
-                width="100%"
-                spacing={2}
-              >
+              <Stack direction="column" width="100%" spacing={2}>
                 <ProgressBar status={selectedOrder?.status} />
                 <MuiStepper activeStep={selectedOrder?.status} />
               </Stack>
@@ -228,6 +239,23 @@ const Orders = () => {
 
   return (
     <main>
+      <MuiDialog
+        openDialog={openApproveDialog}
+        toggleOpenDialog={toggleOpenApproveDialog}
+        dialogTitle="Do you want to approve the order?"
+      >
+        <Button1
+          onClick={toggleOpenApproveDialog(false)}
+          variant="text"
+          color="inherit"
+        >
+          No
+        </Button1>
+        <Button1 variant="text" color="inherit">
+          Yes
+        </Button1>
+      </MuiDialog>
+
       <DrawerModal
         boxStyle={widerBox}
         openState={openOrderView}

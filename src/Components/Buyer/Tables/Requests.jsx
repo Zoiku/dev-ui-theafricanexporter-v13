@@ -7,6 +7,7 @@ import { Box, Stack } from "@mui/material";
 import { wideBox } from "../../../Styles/v2/box";
 import { MuiTableV1 } from "../../v2/components/Table";
 import MuiBadge from "../../v2/components/Badge";
+import { SectionItem, StackItem } from "../../v2/components/Lists";
 
 const Requests = () => {
   const [rows, setRows] = useState([]);
@@ -23,12 +24,32 @@ const Requests = () => {
     setOpenRequestView(true);
   };
 
-  // const [openOffersView, setOpenOffersView] = useState(false);
-  // const toggleOpenOffersView = (open) => () => {
-  //   setOpenOffersView(open);
-  // };
-  // const [selectedOffers, setSelectedOffers] = useState(null);
-  // const handleOpenOffersView = (id) => () => {};
+  const [openOffersView, setOpenOffersView] = useState(false);
+  const toggleOpenOffersView = (open) => () => {
+    setOpenOffersView(open);
+  };
+  const [selectedOffers, setSelectedOffers] = useState(null);
+  const handleOpenOffersView = (id) => () => {
+    const fetchData = async () => {
+      const buyerService = new BuyerService();
+      try {
+        const { data, errors } = await buyerService.getOffers(id);
+        if (errors.length === 0) {
+          const filteredData = data.data.data.map((offers) => {
+            return {
+              offers: offers.buyerQuotationRequestIncoterm,
+            };
+          });
+          setSelectedOffers(filteredData);
+          setOpenOffersView(true);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+
+    fetchData();
+  };
 
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
@@ -48,12 +69,15 @@ const Requests = () => {
       ),
     },
     {
-      field: "offers",
+      field: "offersTotalCount",
       headerName: "",
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiBadge offers={row.offers} />
+          <MuiBadge
+            onClick={handleOpenOffersView(row.id)}
+            offersTotalCount={row.offersTotalCount}
+          />
         </Stack>
       ),
     },
@@ -79,22 +103,33 @@ const Requests = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          console.log(data.data.data);
-          const filteredData = data.data.data.map((request, index) => {
-            const quotationProduct = request?.quotationProducts?.at(0);
-
-            return {
-              index: index + 1,
-              id: request?._id,
-              requestNo: request?.requestNo,
-              expiryDate: request?.expiryDate,
-              destination: request?.destination,
-              productName: quotationProduct?.product?.name,
-              origin: quotationProduct?.product?.origin?.country,
-              quantity: quotationProduct?.specification?.quantity,
-              offers: [],
-            };
-          });
+          const unfilteredData = data.data.data;
+          const filteredData = await Promise.all(
+            unfilteredData.map(async (request, index) => {
+              const getOffersTotalCount = async () => {
+                let offersTotalCount = 0;
+                const { data, errors } = await buyerService.getOffersTotalCount(
+                  request?._id
+                );
+                if (errors.length === 0) {
+                  offersTotalCount = data.data.totalCount;
+                }
+                return offersTotalCount;
+              };
+              const quotationProduct = request?.quotationProducts?.at(0);
+              return {
+                index: index + 1,
+                id: request?._id,
+                requestNo: request?.requestNo,
+                expiryDate: request?.expiryDate,
+                destination: request?.destination,
+                offersTotalCount: await getOffersTotalCount(),
+                productName: quotationProduct?.product?.name,
+                origin: quotationProduct?.product?.origin?.country,
+                quantity: quotationProduct?.specification?.quantity,
+              };
+            })
+          );
           setRows(filteredData);
         }
       } catch (error) {
@@ -106,7 +141,65 @@ const Requests = () => {
   }, []);
 
   const RequestView = () => {
-    return selectedRequest && <Box></Box>;
+    return (
+      selectedRequest && (
+        <Box>
+          <div>
+            <SectionItem sectionTitle="Product Information">
+              <StackItem title="Product" value={selectedRequest?.productName} />
+              <StackItem title="Species" value={selectedRequest?.species} />
+              <StackItem
+                title="Type Of Species"
+                value={selectedRequest?.speciesType}
+              />
+              <StackItem title="Origin" value={selectedRequest?.origin} />
+              <StackItem
+                title="Container Size"
+                value={selectedRequest?.containerSize}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Specifications">
+              <StackItem title="Length" value={selectedRequest?.productName} />
+              <StackItem
+                title="Diameter"
+                value={`${selectedRequest?.diameter} ${selectedRequest?.diameterUnit}`}
+              />
+              <StackItem
+                title="Quantity"
+                value={`${selectedRequest?.quantity} 20ft Container`}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Pricing and Delivery Information">
+              <StackItem title="Incoterm" value={selectedRequest?.incoterm} />
+              <StackItem
+                title="Destination"
+                value={selectedRequest?.destination}
+              />
+              <StackItem
+                title="Destination Port"
+                value={selectedRequest?.port}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Request Settings">
+              <StackItem title="Validaity" value={selectedRequest?.validity} />
+            </SectionItem>
+          </div>
+        </Box>
+      )
+    );
+  };
+
+  const OffersView = () => {
+    return (
+      selectedOffers && (
+        <Box>
+          <div></div>
+        </Box>
+      )
+    );
   };
 
   return (
@@ -118,6 +211,15 @@ const Requests = () => {
         title="Request Details"
       >
         <RequestView />
+      </DrawerModal>
+
+      <DrawerModal
+        boxStyle={wideBox}
+        openState={openOffersView}
+        toggleOpenState={toggleOpenOffersView}
+        title="Offers Details"
+      >
+        <OffersView />
       </DrawerModal>
 
       <MuiTableV1

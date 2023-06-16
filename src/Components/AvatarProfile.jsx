@@ -6,12 +6,13 @@ const AvatarProfile = ({ fullName }) => {
   return (
     <div>
       <StyledBadge
-        overlap="circular"
+        overlap="rectangular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >
         <Avatar
-          sx={{ width: 150, height: 150, fontSize: 50 }}
+          variant="rounded"
+          sx={{ width: 100, height: 100, fontSize: 50 }}
           alt={fullName}
           src="/"
         />

@@ -136,6 +136,23 @@ export default class BuyerService {
     };
   }
 
+  async getOffersTotalCount(id) {
+    let errors = [];
+    let data = null;
+    const url = `/buyer/quotation/offers/request/totalCount/${id}`;
+
+    try {
+      data = await AxiosInstance.get(url);
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors,
+      data
+    };
+  }
+
   async acceptOffer(payload) {
     let errors = [];
     const url = "/order";
