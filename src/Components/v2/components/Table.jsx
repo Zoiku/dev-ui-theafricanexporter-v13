@@ -38,4 +38,30 @@ const MuiTable = ({
   );
 };
 
+export const MuiTableV1 = ({
+  rows,
+  rowsLoading,
+  columns,
+  label,
+}) => {
+  return (
+    <DataGrid
+      components={{
+        Toolbar: Toolbar,
+        LoadingOverlay: LinearProgress,
+        NoRowsOverlay: () => <Overlay label={label} />,
+      }}
+      className="standard-table"
+      checkboxSelection
+      disableSelectionOnClick
+      rows={rows}
+      columns={columns}
+      pagination
+      density="compact"
+      rowsPerPageOptions={[10, 20, 30, 40, 50]}
+      loading={rowsLoading}
+    />
+  );
+};
+
 export default MuiTable;

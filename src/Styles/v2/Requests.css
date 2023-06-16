@@ -8,7 +8,7 @@
 
 .section_content_title {
   margin: 0 0 5px 0;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .section_content_row_container {
@@ -25,5 +25,5 @@
 }
 
 .section_content_row_container > div:nth-child(2) {
-  font-weight: 400;
+  font-weight: 500;
 }

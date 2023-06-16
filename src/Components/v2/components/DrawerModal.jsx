@@ -41,7 +41,7 @@ const DrawerModal = ({
         onClose={toggleOpenState(false)}
         keepMounted
       >
-        <Box sx={boxStyle}>
+        <Box className="modal_container" sx={boxStyle}>
           <Stack
             direction="row"
             alignItems="center"
@@ -49,7 +49,7 @@ const DrawerModal = ({
             className="modal_title_container"
           >
             <div>{title}</div>
-            <IconButton onClick={toggleOpenState(false)} sx={{ padding: 0.2 }}>
+            <IconButton onClick={toggleOpenState(false)} sx={{ padding: 0.1 }}>
               <Close />
             </IconButton>
           </Stack>

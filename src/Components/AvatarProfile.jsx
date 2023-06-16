@@ -10,7 +10,11 @@ const AvatarProfile = ({ fullName }) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >
-        <Avatar sx={{ width: 100, height: 100 }} alt={fullName} src="/" />
+        <Avatar
+          sx={{ width: 150, height: 150, fontSize: 50 }}
+          alt={fullName}
+          src="/"
+        />
       </StyledBadge>
     </div>
   );

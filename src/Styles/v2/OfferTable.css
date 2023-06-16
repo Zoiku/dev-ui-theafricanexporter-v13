@@ -1,0 +1,45 @@
+.OfferTableComponent {
+  width: 100%;
+}
+
+.offer_table_container {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #c5c5c5;
+  border-radius: 5px;
+}
+
+.offer_table,
+.offer_table th,
+.offer_table td {
+  border-collapse: collapse;
+}
+
+.offer_table {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.offer_table thead > tr > th {
+  font-weight: 500 !important;
+}
+
+.offer_table thead > tr > th:not(:last-child)::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  color: #c5c5c5;
+}
+
+.offer_table th,
+.offer_table td {
+  text-align: center;
+  font-size: small;
+  padding: 5px;
+  position: relative;
+}
+
+.offer_table tbody > tr:nth-child(odd) {
+  background: #efefef !important;
+}

@@ -1,3 +1,220 @@
+import { useEffect, useState } from "react";
+import AdminService from "../../../Services/Admin";
+import DrawerModal from "../../v2/components/DrawerModal";
+import MuiTable from "../../v2/components/Table";
+import { Box, Stack } from "@mui/material";
+import MuiMore from "../../More";
+import { normalBox } from "../../../Styles/v2/box";
+import { SectionItem, StackItem } from "../../v2/components/Lists";
+import AvatarProfile from "../../AvatarProfile";
+import MuiSwitch from "../../v2/components/Switch";
+
+const UsersMerchant = () => {
+  const [paging, setPaging] = useState({
+    page: 1,
+    size: 10,
+    totalCount: 0,
+  });
+  const handlePageChange = (page) => {
+    setPaging({ ...paging, page: page + 1 });
+  };
+  const handlePageSizeChange = (size) => {
+    setPaging({ ...paging, size: size });
+  };
+
+  const [rows, setRows] = useState([]);
+  const [rowsLoading, setRowsLoading] = useState(false);
+
+  const [openUserView, setOpenUserView] = useState(false);
+  const toggleOpenUserView = (open) => () => {
+    setOpenUserView(open);
+  };
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleOpenUserView = (id) => () => {
+    const user = rows.find((row) => row.id === id);
+    setSelectedUser(user);
+    setOpenUserView(true);
+  };
+
+  const columns = [
+    { field: "index", headerName: "Number", width: 80 },
+    { field: "name", headerName: "Full Name", width: 200 },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "businessType", headerName: "Business Type", width: 150 },
+    {
+      field: "verified",
+      headerName: "Status",
+      width: 100,
+      renderCell: ({ row }) => (
+        <Stack direction="row" width={"100%"}>
+          <MuiSwitch checked={row?.verified} />
+        </Stack>
+      ),
+    },
+    {
+      field: "validated",
+      headerName: "Validated",
+      width: 100,
+      renderCell: ({ row }) => (
+        <Stack direction="row" width={"100%"}>
+          <MuiSwitch checked={row?.validated} />
+        </Stack>
+      ),
+    },
+    {
+      field: "activated",
+      headerName: "Activated",
+      width: 100,
+      renderCell: ({ row }) => (
+        <Stack direction="row" width={"100%"}>
+          <MuiSwitch checked={row?.activated} />
+        </Stack>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "",
+      width: 50,
+      renderCell: ({ row }) => (
+        <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
+          <MuiMore handleOpenView={handleOpenUserView(row.id)} />
+        </Stack>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      setRowsLoading(true);
+      const adminService = new AdminService();
+      try {
+        const { data, errors } = await adminService.getMerchants(
+          abortController.signal,
+          paging
+        );
+        if (errors.length === 0) {
+          const filteredData = data.data.data.map((user, index) => {
+            return {
+              index: index + 1,
+              id: user?.id,
+              name: user?.user?.firstName + " " + user?.user?.lastName,
+              email: user?.user?.email,
+              verified: user?.user?.isVerified,
+              validated: user?.isValidated,
+              activated: user?.user?.enabled,
+              mobile: user?.user?.mobileNo,
+              businessType: user?.type?.label,
+              company: {
+                name: user?.user?.companyName,
+                address: user?.address,
+                city: user?.city,
+                more: user.company
+                  ? {
+                      introduction: user.company?.introduction,
+                      employeeNum: user.company?.noOfEmployees,
+                      supplyAbility: user.company?.supplyAbility,
+                      joinedSince: user?.company?.year,
+                    }
+                  : null,
+              },
+            };
+          });
+          setRows(filteredData);
+        }
+      } catch (error) {
+        throw error;
+      }
+      setRowsLoading(false);
+    };
+
+    fetchData();
+  }, [paging]);
+
+  const UserView = () => {
+    return (
+      selectedUser && (
+        <Box>
+          <Stack
+            sx={{ margin: "0 0 40px 0" }}
+            direction="row"
+            spacing={2}
+            alignItems="center"
+          >
+            <AvatarProfile fullName={selectedUser?.name} />
+            <strong style={{ fontSize: 30 }}>{selectedUser?.name}</strong>
+          </Stack>
+
+          <div>
+            <SectionItem sectionTitle="Personal Details">
+              <StackItem title="Full Name" value={selectedUser?.name} />
+              <StackItem title="Email" value={selectedUser?.email} />
+              <StackItem title="Mobile" value={"+" + selectedUser?.mobile} />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Company Details">
+              <StackItem title="Name" value={selectedUser?.company?.name} />
+              <StackItem
+                title="Address"
+                value={selectedUser?.company?.address}
+              />
+              <StackItem title="City" value={selectedUser?.company?.city} />
+
+              {selectedUser?.company.more && (
+                <>
+                  <StackItem
+                    title="Introduction"
+                    value={selectedUser?.company?.more?.introduction}
+                  />
+                  <StackItem
+                    title="Established Since"
+                    value={selectedUser?.company?.more?.joinedSince}
+                  />
+                  <StackItem
+                    title="Number of Employee"
+                    value={selectedUser?.company?.more?.employeeNum}
+                  />
+                  <StackItem
+                    title="Supply Ability"
+                    value={selectedUser?.company?.more?.supplyAbility}
+                  />
+                </>
+              )}
+            </SectionItem>
+          </div>
+        </Box>
+      )
+    );
+  };
+
+  return (
+    <main>
+      <DrawerModal
+        boxStyle={normalBox}
+        openState={openUserView}
+        toggleOpenState={toggleOpenUserView}
+        title="User Information"
+      >
+        <UserView />
+      </DrawerModal>
+
+      <MuiTable
+        rows={rows}
+        rowsLoading={rowsLoading}
+        columns={columns}
+        label=""
+        paging={paging}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
+      />
+    </main>
+  );
+};
+
+export default UsersMerchant;
+
 // import { DataGrid } from "@mui/x-data-grid";
 // import LinearProgress from "@mui/material/LinearProgress";
 // import { CustomToolBar1 } from "../../../Material/Toolbar";
@@ -185,7 +402,7 @@
 //       headerName: "Activated",
 //       width: 100,
 //       renderCell: ({ row }) => (
-//         <IOSSwitch
+// <IOSSwitch
 //           disabled={state.requestState.loading ? true : false}
 //           onChange={() => handleToggleActivate(row.id, row.activated)}
 //           checked={row.activated}
@@ -479,192 +696,3 @@
 //   );
 // };
 // export default UsersMerchant;
-
-import { useEffect, useState } from "react";
-import AdminService from "../../../Services/Admin";
-import DrawerModal from "../../v2/components/DrawerModal";
-import MuiTable from "../../v2/components/Table";
-import { Box, Stack } from "@mui/material";
-import MuiMore from "../../More";
-import { wideBox } from "../../../Styles/v2/box";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
-import AvatarProfile from "../../AvatarProfile";
-
-const UsersMerchant = () => {
-  const [paging, setPaging] = useState({
-    page: 1,
-    size: 10,
-    totalCount: 0,
-  });
-  const handlePageChange = (page) => {
-    setPaging({ ...paging, page: page + 1 });
-  };
-  const handlePageSizeChange = (size) => {
-    setPaging({ ...paging, size: size });
-  };
-
-  const [rows, setRows] = useState([]);
-  const [rowsLoading, setRowsLoading] = useState(false);
-
-  const [openUserView, setOpenUserView] = useState(false);
-  const toggleOpenUserView = (open) => () => {
-    setOpenUserView(open);
-  };
-
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  const handleOpenUserView = (id) => () => {
-    const user = rows.find((row) => row.id === id);
-    setSelectedUser(user);
-    setOpenUserView(true);
-  };
-
-  const columns = [
-    { field: "index", headerName: "Number", width: 80 },
-    { field: "name", headerName: "Full Name", width: 200 },
-    { field: "email", headerName: "Email", width: 200 },
-    { field: "businessType", headerName: "Business Type", width: 150 },
-    { field: "verified", headerName: "Status", width: 100 },
-    { field: "validated", headerName: "Validated", width: 100 },
-    { field: "activated", headerName: "Activated", width: 100 },
-    {
-      field: "actions",
-      headerName: "",
-      width: 50,
-      renderCell: ({ row }) => (
-        <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMore handleOpenView={handleOpenUserView(row.id)} />
-        </Stack>
-      ),
-    },
-  ];
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    const fetchData = async () => {
-      setRowsLoading(true);
-      const adminService = new AdminService();
-      try {
-        const { data, errors } = await adminService.getMerchants(
-          abortController.signal,
-          paging
-        );
-        if (errors.length === 0) {
-          const filteredData = data.data.data.map((user, index) => {
-            return {
-              index: index + 1,
-              id: user?.id,
-              name: user?.user?.firstName + " " + user?.user?.lastName,
-              email: user?.user?.email,
-              verified: user?.user?.isVerified,
-              validated: user?.isValidated,
-              activated: user?.user?.enabled,
-              mobile: user?.user?.mobileNo,
-              businessType: user?.type?.label,
-              company: {
-                name: user?.user?.companyName,
-                address: user?.address,
-                city: user?.city,
-                more: user.company
-                  ? {
-                      introduction: user.company?.introduction,
-                      employeeNum: user.company?.noOfEmployees,
-                      supplyAbility: user.company?.supplyAbility,
-                      joinedSince: user?.company?.year,
-                    }
-                  : null,
-              },
-            };
-          });
-          setRows(filteredData);
-        }
-      } catch (error) {
-        throw error;
-      }
-      setRowsLoading(false);
-    };
-
-    fetchData();
-  }, [paging]);
-
-  const UserView = () => {
-    return (
-      selectedUser && (
-        <Box>
-          <Stack
-            sx={{ margin: "0 0 40px 0" }}
-            direction="row"
-            spacing={2}
-            alignItems="center"
-          >
-            <AvatarProfile fullName={selectedUser?.name} />
-            <div>{selectedUser?.name}</div>
-          </Stack>
-
-          <div>
-            <SectionItem sectionTitle="Personal Details">
-              <StackItem title="Full Name" value={selectedUser?.name} />
-              <StackItem title="Email" value={selectedUser?.email} />
-              <StackItem title="Mobile" value={"+" + selectedUser?.mobile} />
-            </SectionItem>
-
-            <SectionItem sectionTitle="Company Details">
-              <StackItem title="Name" value={selectedUser?.company?.name} />
-              <StackItem
-                title="Address"
-                value={selectedUser?.company?.address}
-              />
-              <StackItem title="City" value={selectedUser?.company?.city} />
-
-              {selectedUser?.company.more && (
-                <>
-                  <StackItem
-                    title="Introduction"
-                    value={selectedUser?.company?.more?.introduction}
-                  />
-                  <StackItem
-                    title="Established Since"
-                    value={selectedUser?.company?.more?.joinedSince}
-                  />
-                  <StackItem
-                    title="Number of Employee"
-                    value={selectedUser?.company?.more?.employeeNum}
-                  />
-                  <StackItem
-                    title="Supply Ability"
-                    value={selectedUser?.company?.more?.supplyAbility}
-                  />
-                </>
-              )}
-            </SectionItem>
-          </div>
-        </Box>
-      )
-    );
-  };
-
-  return (
-    <main>
-      <DrawerModal
-        boxStyle={wideBox}
-        openState={openUserView}
-        toggleOpenState={toggleOpenUserView}
-        title="User Information"
-      >
-        <UserView />
-      </DrawerModal>
-
-      <MuiTable
-        rows={rows}
-        rowsLoading={rowsLoading}
-        columns={columns}
-        label=""
-        paging={paging}
-        handlePageChange={handlePageChange}
-        handlePageSizeChange={handlePageSizeChange}
-      />
-    </main>
-  );
-};
-
-export default UsersMerchant;
