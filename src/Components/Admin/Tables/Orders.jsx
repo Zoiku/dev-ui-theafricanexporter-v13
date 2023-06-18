@@ -30,9 +30,38 @@ const Orders = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOffers, setSelectedOffers] = useState(null);
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
     setOpenOrderView(open);
+  };
+  const handleOpenOrder = (id) => () => {
+    const order = rows.find((row) => row.id === id);
+    setSelectedOrder(order);
+    const fetchData = async () => {
+      const buyerService = new BuyerService();
+      try {
+        const { data, errors } = await buyerService.getOrderList(order.ref);
+        if (errors.length === 0) {
+          setOpenOrderView(true);
+          const filteredData = data.data.data.map((offer) => {
+            return {
+              merchant: {
+                name:
+                  offer?.merchant?.firstName + " " + offer?.merchant?.lastName,
+                email: offer?.merchant?.email,
+                mobile: offer?.merchant?.mobileNo,
+              },
+            };
+          });
+          setSelectedOffers(filteredData);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchData();
   };
 
   const [openApproveDialog, setOpenApproveDialog] = useState(false);
@@ -66,38 +95,6 @@ const Orders = () => {
       ),
     },
   ];
-
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [selectedOffers, setSelectedOffers] = useState(null);
-
-  const handleOpenOrder = (id) => () => {
-    const order = rows.find((row) => row.id === id);
-    setSelectedOrder(order);
-    const fetchData = async () => {
-      const buyerService = new BuyerService();
-      try {
-        const { data, errors } = await buyerService.getOrderList(order.ref);
-        if (errors.length === 0) {
-          setOpenOrderView(true);
-          const filteredData = data.data.data.map((offer) => {
-            return {
-              merchant: {
-                name:
-                  offer?.merchant?.firstName + " " + offer?.merchant?.lastName,
-                email: offer?.merchant?.email,
-                mobile: offer?.merchant?.mobileNo,
-              },
-            };
-          });
-          setSelectedOffers(filteredData);
-        }
-      } catch (error) {
-        throw error;
-      }
-    };
-
-    fetchData();
-  };
 
   useEffect(() => {
     const abortController = new AbortController();

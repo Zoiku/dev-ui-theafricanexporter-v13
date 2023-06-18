@@ -13,9 +13,15 @@ const Quotations = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [selectedQuote, setSelectedQuote] = useState(null);
   const [openQuoteView, setOpenQuoteView] = useState(false);
   const toggleOpenQuoteView = (open) => () => {
     setOpenQuoteView(open);
+  };
+  const handleOpenQuote = (id) => () => {
+    const quote = rows.find((row) => row.id === id);
+    setSelectedQuote(quote);
+    setOpenQuoteView(true);
   };
 
   const columns = [
@@ -47,14 +53,6 @@ const Quotations = () => {
     },
   ];
 
-  const [selectedQuote, setSelectedQuote] = useState(null);
-
-  const handleOpenQuote = (id) => () => {
-    const quote = rows.find((row) => row.id === id);
-    setSelectedQuote(quote);
-    setOpenQuoteView(true);
-  };
-
   useEffect(() => {
     const abortController = new AbortController();
     const fetchData = async () => {
@@ -65,12 +63,10 @@ const Quotations = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          console.log(data.data.data);
           const filteredData = data.data.data.map((quote, index) => {
             const quotationRequest = quote?.request;
             const quotationProduct = quotationRequest?.quotationProducts.at(0);
             const quotationOfferRows = quote?.buyerQuotationRequestIncoterm;
-
             return {
               index: index + 1,
               id: quote?._id,
@@ -156,9 +152,9 @@ const Quotations = () => {
               />
             </SectionItem>
 
-            <SectionItem sectionTitle="Quotated Offer">
+            <SectionItem sectionTitle="Offer Table">
               <Stack>
-                <OfferTable offerRows={selectedQuote?.offerRows} />
+                <OfferTable offerRows={selectedQuote?.offerRows} product={selectedQuote?.productName} incoterm={selectedQuote?.terms}  />
               </Stack>
             </SectionItem>
           </div>

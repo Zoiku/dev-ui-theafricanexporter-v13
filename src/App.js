@@ -43,8 +43,8 @@ import {
 } from "./Reducers/Actions";
 import AOS from "aos";
 import "aos/dist/aos.css";
-// import FAQ from "./Pages/FAQ";
 import FAQ2 from "./Pages/FAQ2";
+import "./Styles/v2/SectionContent.css";
 
 AOS.init();
 
@@ -99,7 +99,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) { }
+      } catch (error) {}
     };
 
     session.isLogged && fetchData();

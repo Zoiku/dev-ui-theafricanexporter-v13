@@ -1,0 +1,29 @@
+.section_content {
+  margin: 0 0 20px 0;
+}
+
+.section_content:last-child {
+  margin-bottom: 0;
+}
+
+.section_content_title {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+}
+
+.section_content_row_container {
+  border-bottom: 1px solid #efefef;
+  padding: 5px 0;
+}
+
+.section_content_row_container > div {
+  width: 50%;
+}
+
+.section_content_row_container > div:nth-child(1) {
+  color: gray;
+}
+
+.section_content_row_container > div:nth-child(2) {
+  font-weight: 500;
+}

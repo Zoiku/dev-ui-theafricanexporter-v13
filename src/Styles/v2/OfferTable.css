@@ -40,6 +40,15 @@
   position: relative;
 }
 
-.offer_table tbody > tr:nth-child(odd) {
-  background: #efefef !important;
+.offer_table tbody tr {
+  border-top: 1px solid #c5c5c5;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.offer_table td > div {
+  width: 150px;
+}
+
+.offer_table input {
+  text-align: center;
 }

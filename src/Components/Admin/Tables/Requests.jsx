@@ -9,6 +9,7 @@ import DrawerModal from "../../v2/components/DrawerModal";
 import { wideBox } from "../../../Styles/v2/box";
 import { Box } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
+import OfferTable from "../../v2/components/OfferTable";
 
 const Requests = () => {
   const [paging, setPaging] = useState({
@@ -26,9 +27,45 @@ const Requests = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [rowButtonState, setRowButtonState] = useState({
+    id: null,
+    loading: null,
+  });
+
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedRequestOffers, setSelectedRequestOffers] = useState(null);
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
     setOpenRequestView(open);
+  };
+  const handleOpenRequest = (id) => () => {
+    const request = rows.find((row) => row.id === id);
+    setSelectedRequest(request);
+    const fecthData = async () => {
+      setRowButtonState({ ...rowButtonState, id: id, loading: true });
+      const buyerService = new BuyerService();
+      try {
+        const { errors, data } = await buyerService.getOffers(id);
+        if (errors.length === 0) {
+          setOpenRequestView(true);
+          const filteredData = data.data.data.map((offer) => {
+            return {
+              merchant: {
+                name: `${offer?.merchant?.firstName} ${offer?.merchant?.lastName}`,
+                company: offer?.merchant?.companyName,
+                telephone: offer?.merchant?.mobileNo,
+              },
+              offer: offer?.buyerQuotationRequestIncoterm,
+            };
+          });
+          setSelectedRequestOffers(filteredData);
+        }
+      } catch (error) {
+        throw error;
+      }
+      setRowButtonState({ ...rowButtonState, id: null, loading: false });
+    };
+    fecthData();
   };
 
   const columns = [
@@ -66,45 +103,6 @@ const Requests = () => {
     },
   ];
 
-  const [rowButtonState, setRowButtonState] = useState({
-    id: null,
-    loading: null,
-  });
-
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [selectedRequestOffers, setSelectedRequestOffers] = useState(null);
-
-  const handleOpenRequest = (id) => () => {
-    const request = rows.find((row) => row.id === id);
-    setSelectedRequest(request);
-    const fecthData = async () => {
-      setRowButtonState({ ...rowButtonState, id: id, loading: true });
-      const buyerService = new BuyerService();
-      try {
-        const { errors, data } = await buyerService.getOffers(id);
-        if (errors.length === 0) {
-          setOpenRequestView(true);
-          const filteredData = data.data.data.map((offer) => {
-            return {
-              merchant: {
-                name: offer?.merchant?.firstName + offer?.merchant?.lastName,
-                company: offer?.merchant?.companyName,
-                telephone: offer?.merchant?.mobileNo,
-              },
-              offers: offer?.buyerQuotationRequestIncoterm,
-            };
-          });
-          setSelectedRequestOffers(filteredData);
-        }
-      } catch (error) {
-        throw error;
-      }
-      setRowButtonState({ ...rowButtonState, id: null, loading: false });
-    };
-
-    fecthData();
-  };
-
   useEffect(() => {
     const abortController = new AbortController();
     const fetchData = async () => {
@@ -119,9 +117,9 @@ const Requests = () => {
           const filteredData = data.data.data.map((request, index) => {
             return {
               index: index + 1,
-              id: request.id,
-              requestNo: request.requestNo,
-              expiryDate: request.expiryDate,
+              id: request?.id,
+              requestNo: request?.requestNo,
+              expiryDate: request?.expiryDate,
               product: request?.quotationProducts[0]?.product?.name,
               terms: request?.buyerQuotationIncoterm?.label,
               origin: request?.quotationProducts[0]?.product?.origin?.country,
@@ -213,7 +211,7 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Pricing and Delivery Information">
-              <StackItem title="Incoterm" value={selectedRequest.incoterm} />
+              <StackItem title="Incoterm" value={selectedRequest.terms} />
               <StackItem
                 title="Destination"
                 value={selectedRequest.destination}
@@ -230,10 +228,29 @@ const Requests = () => {
 
             {selectedRequestOffers &&
               selectedRequestOffers.length > 0 &&
-              selectedRequestOffers.map((_selectedRequestOffer, index) => (
-                <SectionItem key={index} sectionTitle="Merchant Details">
-                  <StackItem title="" value="" />
-                </SectionItem>
+              selectedRequestOffers.map((selectedRequestOffer, index) => (
+                <div key={index}>
+                  <SectionItem
+                    sectionTitle={`Merchant Details [${index + 1}] `}
+                  >
+                    <StackItem
+                      title="Name"
+                      value={selectedRequestOffer?.merchant?.name}
+                    />
+                    <StackItem
+                      title="Company Name"
+                      value={selectedRequestOffer?.merchant?.company}
+                    />
+                    <StackItem
+                      title="Telephone"
+                      value={`+${selectedRequestOffer?.merchant?.telephone}`}
+                    />
+                  </SectionItem>
+
+                  <SectionItem sectionTitle={`Merchant  Offer [${index + 1}] `}>
+                    <OfferTable offerRows={selectedRequestOffer?.offer} product={selectedRequest?.product} incoterm={selectedRequest?.terms} />
+                  </SectionItem>
+                </div>
               ))}
           </div>
         </Box>

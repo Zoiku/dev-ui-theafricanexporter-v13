@@ -1,25 +1,43 @@
 import { useEffect, useState } from "react";
 import Countdown from "../../Countdown";
-import MuiMore from "../../More";
-import { MuiTableV1 } from "../../v2/components/Table";
+import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import { MenuItem } from "@mui/material";
+import { MuiMoreV1 } from "../../More";
+import { SectionItem, StackItem } from "../../v2/components/Lists";
+import { widerBox, xMediumBox } from "../../../Styles/v2/box";
+import DrawerModal from "../../v2/components/DrawerModal";
+import { SmallPrimary } from "../../../Material/Button";
+import MuiStepper from "../../v2/components/Stepper";
+import { ProgressBar } from "../../v2/components/ProgressBar";
 
 const Orders = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [openOrdersView, setOpenOrdersView] = useState(false);
+  const toggleOpenOrdersView = (open) => () => {
+    setOpenOrdersView(open);
+  };
+  const [selectedOrders, setSelectedOrders] = useState(null);
   const handleOpenOrdersView = (id) => () => {
     const fetchData = async () => {
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getOrder(id);
         if (errors.length === 0) {
-          console.log(data.data.data);
-          const filteredData = data.data.data.map((orders) => {
+          const filteredData = data.data.data.map((orders, index) => {
             const quotationProduct = orders?.request?.quotationProducts?.at(0);
             return {
-              quantity: quotationProduct?.specification?.quantity,
+              id: orders?.id,
+              index: index + 1,
+              productName: quotationProduct?.product?.name,
+              companyName: orders?.merchant?.companyName,
+              status: orders?.status,
+              quantity: orders?.orderQuantity,
+              destination: orders?.request?.destination,
+              terms: orders?.request?.buyerQuotationIncoterm?.label,
               merchant: {
                 name: `${orders?.merchant?.firstName} ${orders?.merchant?.lastName} `,
                 email: orders?.merchant?.email,
@@ -27,14 +45,25 @@ const Orders = () => {
               },
             };
           });
-          console.log(filteredData);
+          setSelectedOrders(filteredData);
+          setOpenOrdersView(true);
         }
       } catch (error) {
         throw error;
       }
     };
-
     fetchData();
+  };
+
+  const [openOrderView, setOpenOrderView] = useState(false);
+  const toggleOpenOrderView = (open) => () => {
+    setOpenOrderView(open);
+  };
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const handleOpenOrderView = (id) => () => {
+    const order = selectedOrders.find((orders) => orders.id === id);
+    setSelectedOrder(order);
+    setOpenOrderView(true);
   };
 
   const columns = [
@@ -60,9 +89,34 @@ const Orders = () => {
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMore handleOpenView={handleOpenOrdersView(row.id)} />
+          <MuiMoreV1>
+            <MenuItem onClick={handleOpenOrdersView(row.id)}>View</MenuItem>
+          </MuiMoreV1>
         </Stack>
       ),
+    },
+  ];
+
+  const columnsOrders = [
+    { field: "index", headerName: "Number", width: 80 },
+    // { field: "productName", headerName: "Product", width: 150 },
+    { field: "companyName", headerName: "Company", width: 100 },
+    // { field: "quantity", headerName: "Quantity", width: 100 },
+    { field: "status", headerName: "Status", width: 100 },
+    {
+      field: "action",
+      headerName: "",
+      width: 90,
+      renderCell: ({ row }) => {
+        return (
+          <SmallPrimary
+            onClick={handleOpenOrderView(row.id)}
+            variant="contained"
+          >
+            View
+          </SmallPrimary>
+        );
+      },
     },
   ];
 
@@ -96,12 +150,74 @@ const Orders = () => {
       }
       setRowsLoading(false);
     };
-
     fetchData();
   }, []);
 
+  const OrdersView = () => {
+    return (
+      selectedOrders && (
+        <Box>
+          <MuiTableV2 checkboxSelection={false} rows={selectedOrders} columns={columnsOrders} />
+        </Box>
+      )
+    );
+  };
+
+  const OrderView = () => {
+    return (
+      selectedOrder && (
+        <Box>
+          <div>
+            <SectionItem sectionTitle="Merchant Information">
+              <StackItem title="Name" value={selectedOrder?.merchant?.name} />
+              <StackItem title="Email" value={selectedOrder?.merchant?.email} />
+              <StackItem
+                title="Telephone"
+                value={`+${selectedOrder?.merchant?.mobile}`}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Product Information">
+              <StackItem title="Product" value={selectedOrder?.productName} />
+              <StackItem title="Terms" value={selectedOrder?.terms} />
+              <StackItem
+                title="Quantity"
+                value={`${selectedOrder?.quantity} 20ft Container`}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Track Order">
+              <Stack direction="column" width="100%" spacing={2}>
+                <ProgressBar status={selectedOrder?.status} />
+                <MuiStepper activeStep={selectedOrder?.status} />
+              </Stack>
+            </SectionItem>
+          </div>
+        </Box>
+      )
+    );
+  };
+
   return (
     <main>
+      <DrawerModal
+        boxStyle={xMediumBox}
+        openState={openOrdersView}
+        toggleOpenState={toggleOpenOrdersView}
+        title="Orders Details"
+      >
+        <OrdersView />
+      </DrawerModal>
+
+      <DrawerModal
+        boxStyle={widerBox}
+        openState={openOrderView}
+        toggleOpenState={toggleOpenOrderView}
+        title="Order Details"
+      >
+        <OrderView />
+      </DrawerModal>
+
       <MuiTableV1
         label=""
         rows={rows}
@@ -345,14 +461,14 @@ export default Orders;
 //     }
 //   };
 
-//   const handleSuccessfullRequest = (message, timeOut) => {
-//     const payload = {
-//       severity: "success",
-//       message,
-//       timeOut,
-//     };
-//     rootDispatch(setAlert(payload));
-//   };
+  // const handleSuccessfullRequest = (message, timeOut) => {
+  //   const payload = {
+  //     severity: "success",
+  //     message,
+  //     timeOut,
+  //   };
+  //   rootDispatch(setAlert(payload));
+  // };
 
 //   const handleFailedRequest = (message, timeOut) => {
 //     const payload = {

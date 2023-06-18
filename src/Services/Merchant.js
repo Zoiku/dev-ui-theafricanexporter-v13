@@ -1,5 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-import { monthReduce, sumArray, reduce } from "../Components/Functions"
+import { monthReduce, sumArray, reduce } from "../Components/Functions";
 
 export default class MerchantService {
   async getRequests(signal) {
@@ -8,14 +8,14 @@ export default class MerchantService {
     const url = `/buyer/quotation/merchants/requests/true`;
 
     try {
-      data = await AxiosInstance.get(url, { signal });
+      data = await AxiosInstance().get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -25,14 +25,14 @@ export default class MerchantService {
     const url = "/orders/merchant/nonpaged";
 
     try {
-      data = await AxiosInstance.get(url, { signal });
+      data = await AxiosInstance().get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -42,14 +42,14 @@ export default class MerchantService {
     const url = "/merchant/quotations";
 
     try {
-      data = await AxiosInstance.get(url, { signal });
+      data = await AxiosInstance().get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -58,13 +58,13 @@ export default class MerchantService {
     const url = "/merchant/quotation/offer";
 
     try {
-      await AxiosInstance.post(url, payload);
+      await AxiosInstance().post(url, payload);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -73,13 +73,13 @@ export default class MerchantService {
     const url = `/order/${id}/status/confirm`;
 
     try {
-      await AxiosInstance.put(url);
+      await AxiosInstance().put(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -88,13 +88,13 @@ export default class MerchantService {
     const url = `/orders/${id}`;
 
     try {
-      await AxiosInstance.delete(url);
+      await AxiosInstance().delete(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -104,14 +104,14 @@ export default class MerchantService {
     const url = "/user/company";
 
     try {
-      data = await AxiosInstance.post(url, payload);
+      data = await AxiosInstance().post(url, payload);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -121,14 +121,14 @@ export default class MerchantService {
     const url = `/user/${payload.id}`;
 
     try {
-      data = await AxiosInstance.put(url, payload);
+      data = await AxiosInstance().put(url, payload);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -138,14 +138,14 @@ export default class MerchantService {
     const url = `/all/customers`;
 
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -155,14 +155,14 @@ export default class MerchantService {
     const url = `/all/orders`;
 
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -172,7 +172,7 @@ export default class MerchantService {
     const url = `/all/orders`;
 
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
       const allCategories = data.data.data.map(
         (order) => order.request.quotationProducts[0].product.name
       );
@@ -184,7 +184,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -193,13 +193,13 @@ export default class MerchantService {
     let data = {};
     const url = `/all/sales`;
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
 
       const allMonths = data.data.data.map((order) => {
         const months = [];
         months.push(
           new Date(order.date).toLocaleDateString("default", {
-            month: "long"
+            month: "long",
           })
         );
 
@@ -216,7 +216,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -225,23 +225,24 @@ export default class MerchantService {
     let data = {};
     const url = `/all/sales`;
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
       const allIncoterms = data.data.data.map(
         (orderArray) => orderArray.incoterm
       );
       const allIncotermTotalAmounts = allIncoterms.map((incotermArray) =>
         incotermArray.map((incoterm) => incoterm.totalAmount)
       );
-      const incotermTotal = allIncotermTotalAmounts.map((incotermArray) => sumArray(incotermArray))
-      data = sumArray(incotermTotal)
-
+      const incotermTotal = allIncotermTotalAmounts.map((incotermArray) =>
+        sumArray(incotermArray)
+      );
+      data = sumArray(incotermTotal);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 }

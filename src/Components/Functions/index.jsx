@@ -11,6 +11,9 @@ export const getToken = () => {
   }
 };
 
+export const capitalizeFirstLetter = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
+
 export const setSessionToken = (token) => {
   sessionStorage.setItem("token", token);
 };
@@ -67,7 +70,6 @@ export const monthReduce = (array) => {
       count[element] = 1;
     }
   }
-
   return count;
 };
 
@@ -81,40 +83,30 @@ export const sumArray = (arr) => {
   return sum;
 };
 
-// export const reduce = (array) => {
-//   const count = {};
-//   for (const element of array) {
-//     if (count[element]) {
-//       count[element] += 1;
-//     } else {
-//       count[element] = 1;
-//     }
-//   }
-//   return count;
-// };
+export const isMadeUpOfOnly = (array, key) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] !== key) {
+      return false;
+    }
+  }
+  return true;
+};
 
-// export const monthReduce = (array) => {
-//   const count = {
-//     January: 0,
-//     February: 0,
-//     March: 0,
-//     April: 0,
-//     May: 0,
-//     June: 0,
-//     July: 0,
-//     August: 0,
-//     September: 0,
-//     October: 0,
-//     November: 0,
-//     December: 0
-//   };
-//   for (const element of array) {
-//     if (count[element]) {
-//       count[element] += 1;
-//     } else {
-//       count[element] = 1;
-//     }
-//   }
+export const strictMatch = (array, key) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === key) {
+      return array[i];
+    }
+  }
+  return null;
+};
 
-//   return count;
-// };
+export const initPendingQuoteSession = (productId, pendingQuoteId) => {
+  const session = {
+    isExists: true,
+    productId,
+    pendingQuoteId,
+  };
+
+  sessionStorage.setItem("pq_id", JSON.stringify(session));
+};

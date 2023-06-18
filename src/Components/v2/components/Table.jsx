@@ -50,6 +50,7 @@ export const MuiTableV1 = ({ rows, rowsLoading, columns, label }) => {
       className="main_table_box_standard main_table_all"
       checkboxSelection
       disableSelectionOnClick
+      pageSize={10}
       rows={rows}
       columns={columns}
       pagination
@@ -60,14 +61,19 @@ export const MuiTableV1 = ({ rows, rowsLoading, columns, label }) => {
   );
 };
 
-export const MuiTableV2 = ({ rows, rowsLoading, columns }) => {
+export const MuiTableV2 = ({
+  rows,
+  rowsLoading,
+  columns,
+  checkboxSelection = true,
+}) => {
   return (
     <DataGrid
       components={{
         LoadingOverlay: LinearProgress,
       }}
       className="main_table_box_offerings_table main_table_all"
-      checkboxSelection
+      checkboxSelection={checkboxSelection}
       disableSelectionOnClick
       rows={rows}
       columns={columns}

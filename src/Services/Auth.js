@@ -1,7 +1,7 @@
 import AxiosInstance from "./AxiosInstance";
 import { JSEncrypt } from "jsencrypt";
 import decode from "jwt-decode";
-import { setSessionToken } from "../Components/Functions"
+import { setSessionToken } from "../Components/Functions";
 
 export default class AuthService {
   async isLoggedBefore(id) {
@@ -9,13 +9,13 @@ export default class AuthService {
     const url = `/user/logged/${id}`;
 
     try {
-      await AxiosInstance.post(url);
+      await AxiosInstance().post(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -24,13 +24,13 @@ export default class AuthService {
     const url = "/users";
 
     try {
-      await AxiosInstance.post(url, JSON.stringify(payload));
+      await AxiosInstance().post(url, JSON.stringify(payload));
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -46,7 +46,7 @@ export default class AuthService {
     const url = "/user/token";
 
     try {
-      data = await AxiosInstance.post(url, { data: encrypted });
+      data = await AxiosInstance().post(url, { data: encrypted });
       setSessionToken(data.data.token);
     } catch (error) {
       errors.push(error?.response?.data?.message);
@@ -54,7 +54,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -63,13 +63,13 @@ export default class AuthService {
     const url = `/opt/verify/${otp.toUpperCase()}?email=${email}&role=${role}`;
 
     try {
-      await AxiosInstance.patch(url);
+      await AxiosInstance().patch(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -78,13 +78,13 @@ export default class AuthService {
     const url = `/opt/resend/${email}`;
 
     try {
-      await AxiosInstance.post(url);
+      await AxiosInstance().post(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -94,14 +94,14 @@ export default class AuthService {
     const url = "/user";
 
     try {
-      data = await AxiosInstance.get(url, { signal });
+      data = await AxiosInstance().get(url, { signal });
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -111,14 +111,14 @@ export default class AuthService {
     const url = `/user/password/${email}`;
 
     try {
-      data = await AxiosInstance.get(url);
+      data = await AxiosInstance().get(url);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -132,8 +132,8 @@ export default class AuthService {
     const url = `/user/password/new/${email}`;
 
     try {
-      data = await AxiosInstance.post(url, {
-        password: password
+      data = await AxiosInstance().post(url, {
+        password: password,
       });
     } catch (error) {
       errors.push(error);
@@ -141,7 +141,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 }

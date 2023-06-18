@@ -26,10 +26,10 @@ const DrawerModal = ({
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
       >
-        <Box>
+        <Box className="drawer_container">
           <div className="drawer-title-container">
             <Puller />
-            <div>{title}</div>
+            <div className="drawer-title-text">{title}</div>
           </div>
           <div className="drawer-body-container">{children}</div>
         </Box>

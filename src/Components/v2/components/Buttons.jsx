@@ -1,6 +1,7 @@
-import { Button, styled } from "@mui/material";
+import { styled } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
-export const Button1 = styled(Button)({
+export const Button1 = styled(LoadingButton)({
   boxShadow: "none",
   textTransform: "none",
   transition: "all 0.2s ease",
@@ -25,7 +26,7 @@ export const Button1 = styled(Button)({
   "&:focus": {},
 });
 
-export const Button2 = styled(Button)({
+export const Button2 = styled(LoadingButton)({
   boxShadow: "none",
   textTransform: "none",
   transition: "all 0.2s ease",

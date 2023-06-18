@@ -18,25 +18,73 @@ const Orders = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
-  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const toggleOpenConfirmDialog = (open) => () => {
-    setOpenConfirmDialog(open);
-  };
-  const [openRejectDialog, setOpenRejectDialog] = useState(false);
-  const toggleOpenRejectDialog = (open) => () => {
-    setOpenRejectDialog(open);
-  };
+  const [selectedOrderId, setSelectedSelectedOrderId] = useState(null);
 
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
     setOpenOrderView(open);
   };
-  const [selectedOrder, setSelectedOrder] = useState(null);
   const handleOpenOrderView = (id) => () => {
     const order = rows.find((row) => row.id === id);
-    console.log(order);
     setSelectedOrder(order);
     setOpenOrderView(true);
+  };
+
+  const [dialogButtonLoading, setDialogButtonLoading] = useState(false);
+  
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleOpenConfirmDialog = (open) => () => {
+    setOpenConfirmDialog(open);
+  };
+  const handleOpenConfirmDialog = (id) => () => {
+    setSelectedSelectedOrderId(id);
+    setOpenConfirmDialog(true);
+  };
+  const dialogActionConfirm_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonLoading(true);
+      try {
+        const merchantService = new MerchantService();
+        const { errors } = await merchantService.orderConfirmation(
+          selectedOrderId
+        );
+        if (errors.length === 0) {
+          setOpenConfirmDialog(false);
+        }
+      } catch (error) {
+        throw error;
+      }
+      setDialogButtonLoading(false);
+    };
+    doAction();
+  };
+
+  const [openRejectDialog, setOpenRejectDialog] = useState(false);
+  const toggleOpenRejectDialog = (open) => () => {
+    setOpenRejectDialog(open);
+  };
+  const handleOpenRejectDialog = (id) => () => {
+    setSelectedSelectedOrderId(id);
+    setOpenRejectDialog(true);
+  };
+  const dialogActionReject_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonLoading(true);
+      try {
+        const merchantService = new MerchantService();
+        const { errors } = await merchantService.orderRejection(
+          selectedOrderId
+        );
+        if (errors.length === 0) {
+          setOpenConfirmDialog(false);
+        }
+      } catch (error) {
+        throw error;
+      }
+      setDialogButtonLoading(false);
+    };
+    doAction();
   };
 
   const columns = [
@@ -66,10 +114,10 @@ const Orders = () => {
             <MenuItem onClick={handleOpenOrderView(row.id)}>View</MenuItem>
             {row.status === ORDER_STATUS.RECEIVED && (
               <>
-                <MenuItem onClick={toggleOpenConfirmDialog(true)}>
+                <MenuItem onClick={handleOpenConfirmDialog(row.id)}>
                   Confirm
                 </MenuItem>
-                <MenuItem onClick={toggleOpenRejectDialog(true)}>
+                <MenuItem onClick={handleOpenRejectDialog(row.id)}>
                   Reject
                 </MenuItem>
               </>
@@ -90,7 +138,6 @@ const Orders = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          console.log(data.data.data[0]);
           const filteredData = data.data.data.map((order, index) => {
             const quotationProduct = order?.request?.quotationProducts.at(0);
             return {
@@ -147,7 +194,7 @@ const Orders = () => {
       <MuiDialog
         openDialog={openConfirmDialog}
         toggleOpenDialog={toggleOpenConfirmDialog}
-        dialogTitle="Do you want to confirm the order?"
+        dialogTitle="Do you want to confirm this order?"
       >
         <Button1
           onClick={toggleOpenConfirmDialog(false)}
@@ -156,7 +203,12 @@ const Orders = () => {
         >
           No
         </Button1>
-        <Button1 variant="text" color="inherit">
+        <Button1
+          onClick={dialogActionConfirm_Yes}
+          loading={dialogButtonLoading}
+          variant="text"
+          color="inherit"
+        >
           Yes
         </Button1>
       </MuiDialog>
@@ -164,7 +216,7 @@ const Orders = () => {
       <MuiDialog
         openDialog={openRejectDialog}
         toggleOpenDialog={toggleOpenRejectDialog}
-        dialogTitle="Do you want to reject the order?"
+        dialogTitle="Do you want to reject this order?"
       >
         <Button1
           onClick={toggleOpenRejectDialog(false)}
@@ -173,7 +225,12 @@ const Orders = () => {
         >
           No
         </Button1>
-        <Button1 variant="text" color="inherit">
+        <Button1
+          onClick={dialogActionReject_Yes}
+          loading={dialogButtonLoading}
+          variant="text"
+          color="inherit"
+        >
           Yes
         </Button1>
       </MuiDialog>

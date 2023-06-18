@@ -1,5 +1,5 @@
 import "../../Styles/Register.css";
-import { strictMatch } from "../RequestQuote";
+import { strictMatch } from "../../Components/Functions/";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { PrimaryButton } from "../../Material/Button";

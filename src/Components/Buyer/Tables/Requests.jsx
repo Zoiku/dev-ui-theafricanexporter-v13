@@ -1,43 +1,59 @@
 import { useEffect, useState } from "react";
 import BuyerService from "../../../Services/Buyer";
 import Countdown from "../../Countdown";
-import MuiMore from "../../More";
+import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { Box, Stack } from "@mui/material";
-import { wideBox } from "../../../Styles/v2/box";
-import { MuiTableV1 } from "../../v2/components/Table";
+import { wideBox, xSmallBox } from "../../../Styles/v2/box";
+import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import MuiBadge from "../../v2/components/Badge";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
+import { SmallPrimary, SmallSecondary } from "../../../Material/Button";
+import OfferTable from "../../v2/components/OfferTable";
+import { MenuItem } from "@mui/material";
 
 const Requests = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
     setOpenRequestView(open);
   };
-  const [selectedRequest, setSelectedRequest] = useState(null);
   const handleOpenRequestView = (id) => () => {
     const request = rows.find((row) => row.id === id);
     setSelectedRequest(request);
     setOpenRequestView(true);
   };
 
+  const [selectedOffers, setSelectedOffers] = useState(null);
   const [openOffersView, setOpenOffersView] = useState(false);
   const toggleOpenOffersView = (open) => () => {
     setOpenOffersView(open);
   };
-  const [selectedOffers, setSelectedOffers] = useState(null);
   const handleOpenOffersView = (id) => () => {
     const fetchData = async () => {
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getOffers(id);
         if (errors.length === 0) {
-          const filteredData = data.data.data.map((offers) => {
+          const filteredData = data.data.data.map((offers, index) => {
+            const quotationProduct = offers?.request?.quotationProducts?.at(0);
             return {
-              offers: offers.buyerQuotationRequestIncoterm,
+              id: offers?.id,
+              index: index + 1,
+              companyName: offers?.merchant?.companyName,
+              productName: quotationProduct?.product?.name,
+              offers: offers?.buyerQuotationRequestIncoterm,
+              quantity: offers?.offerQuantity,
+              terms: offers?.request?.buyerQuotationIncoterm?.label,
+              destination: offers?.request?.destination,
+              date: new Date(offers?.createdOn).toDateString(),
+              merchant: {
+                id: offers?.merchant?.id,
+                name: `${offers?.merchant?.firstName} ${offers?.merchant?.lastName}`,
+              },
             };
           });
           setSelectedOffers(filteredData);
@@ -47,7 +63,41 @@ const Requests = () => {
         throw error;
       }
     };
+    fetchData();
+  };
 
+  const [selectedOffer, setSelectedOffer] = useState(null);
+  const [openOfferView, setOpenOfferView] = useState(false);
+  const toggleOpenOfferView = (open) => () => {
+    setOpenOfferView(open);
+  };
+  const handleOpenOfferView = (id, offerRows, requestSummary) => () => {
+    const fetchData = async () => {
+      const buyerService = new BuyerService();
+      try {
+        const { data, errors } = await buyerService.getCompany(id);
+        if (errors.length === 0) {
+          const filteredData = data.data.data.map((company) => {
+            return {
+              companyName: company?.user?.companyName,
+              businessType: company?.type?.label,
+              memberSince: company?.user?.createdOn,
+              establishedYear: company?.company?.year,
+              numEmployees: company?.company?.noOfEmployees,
+              supplyAbility: company?.company?.supplyAbility,
+              address: company?.address,
+              city: company?.city,
+              offerRows,
+              requestSummary,
+            };
+          });
+          setSelectedOffer(filteredData.at(0));
+          setOpenOfferView(true);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
     fetchData();
   };
 
@@ -87,9 +137,44 @@ const Requests = () => {
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMore handleOpenView={handleOpenRequestView(row.id)} />
+          <MuiMoreV1>
+            <MenuItem onClick={handleOpenRequestView(row.id)}>View</MenuItem>
+          </MuiMoreV1>
         </Stack>
       ),
+    },
+  ];
+
+  const columnsOffers = [
+    { field: "index", headerName: "Number", width: 80 },
+    // { field: "productName", headerName: "Product", width: 150 },
+    { field: "companyName", headerName: "Company", width: 110 },
+    // { field: "date", headerName: "Date", width: 100 },
+    // { field: "quantity", headerName: "Quantity", width: 100 },
+    {
+      field: "action",
+      headerName: "",
+      width: 90,
+      renderCell: ({ row }) => {
+        const requestSummary = {
+          productName: row?.productName,
+          merchantName: row?.merchant?.name,
+          terms: row?.terms,
+          destination: row?.destination,
+        };
+        return (
+          <SmallPrimary
+            onClick={handleOpenOfferView(
+              row?.merchant?.id,
+              row?.offers,
+              requestSummary
+            )}
+            variant="contained"
+          >
+            View
+          </SmallPrimary>
+        );
+      },
     },
   ];
 
@@ -127,6 +212,20 @@ const Requests = () => {
                 productName: quotationProduct?.product?.name,
                 origin: quotationProduct?.product?.origin?.country,
                 quantity: quotationProduct?.specification?.quantity,
+                validity: request?.validity,
+                port: request?.port,
+                incoterm: request?.buyerQuotationIncoterm?.label,
+                species: quotationProduct?.product?.species?.label,
+                speciesType: quotationProduct?.product?.species?.type?.label,
+                containerSize:
+                  quotationProduct?.product?.supportedShippingContainers[0]
+                    ?.label,
+                specification: {
+                  length: quotationProduct?.specification?.length,
+                  lengthUnit: quotationProduct?.specification?.lengthUnit,
+                  diameter: quotationProduct?.specification?.diameter,
+                  diameterUnit: quotationProduct?.specification?.diameterUnit,
+                },
               };
             })
           );
@@ -163,7 +262,7 @@ const Requests = () => {
               <StackItem title="Length" value={selectedRequest?.productName} />
               <StackItem
                 title="Diameter"
-                value={`${selectedRequest?.diameter} ${selectedRequest?.diameterUnit}`}
+                value={`${selectedRequest?.specification?.diameter} ${selectedRequest?.specification?.diameterUnit}`}
               />
               <StackItem
                 title="Quantity"
@@ -184,7 +283,10 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Request Settings">
-              <StackItem title="Validaity" value={selectedRequest?.validity} />
+              <StackItem
+                title="Validaity"
+                value={`${selectedRequest?.validity} Days`}
+              />
             </SectionItem>
           </div>
         </Box>
@@ -196,7 +298,65 @@ const Requests = () => {
     return (
       selectedOffers && (
         <Box>
-          <div></div>
+          <MuiTableV2 rows={selectedOffers} columns={columnsOffers} />
+          <Stack>
+            <SmallSecondary variant="contained">Place Order</SmallSecondary>
+          </Stack>
+        </Box>
+      )
+    );
+  };
+
+  const OfferView = () => {
+    return (
+      selectedOffer && (
+        <Box>
+          <div>
+            <SectionItem sectionTitle="Request Summary">
+              <StackItem
+                title="Product Name"
+                value={selectedOffer?.requestSummary?.productName}
+              />
+              <StackItem
+                title="Terms"
+                value={selectedOffer?.requestSummary?.terms}
+              />
+              <StackItem
+                title="Destination"
+                value={selectedOffer?.requestSummary?.destination}
+              />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Offer Table">
+              <OfferTable offerRows={selectedOffer?.offerRows} product={selectedOffer?.requestSummary?.productName} incoterm={selectedOffer?.requestSummary?.terms} />
+            </SectionItem>
+
+            <SectionItem sectionTitle="Company Profile">
+              <StackItem
+                title="Merchant Name"
+                value={selectedOffer?.requestSummary?.merchantName}
+              />
+              <StackItem title="Company" value={selectedOffer?.companyName} />
+              <StackItem title="Address" value={selectedOffer?.address} />
+              <StackItem title="City" value={selectedOffer?.city} />
+              <StackItem
+                title="Member Since"
+                value={selectedOffer?.memberSince}
+              />
+              <StackItem
+                title="Business Type"
+                value={selectedOffer?.businessType}
+              />
+              <StackItem
+                title="Number of Employees"
+                value={selectedOffer?.numEmployees}
+              />
+              <StackItem
+                title="Supply Ability"
+                value={selectedOffer?.supplyAbility}
+              />
+            </SectionItem>
+          </div>
         </Box>
       )
     );
@@ -214,12 +374,21 @@ const Requests = () => {
       </DrawerModal>
 
       <DrawerModal
-        boxStyle={wideBox}
+        boxStyle={xSmallBox}
         openState={openOffersView}
         toggleOpenState={toggleOpenOffersView}
         title="Offers Details"
       >
         <OffersView />
+      </DrawerModal>
+
+      <DrawerModal
+        boxStyle={wideBox}
+        openState={openOfferView}
+        toggleOpenState={toggleOpenOfferView}
+        title="Offer Details"
+      >
+        <OfferView />
       </DrawerModal>
 
       <MuiTableV1

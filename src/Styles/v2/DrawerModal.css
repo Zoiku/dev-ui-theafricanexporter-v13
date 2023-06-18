@@ -11,6 +11,11 @@
   overflow-y: auto !important;
 }
 
+.drawer_container {
+  max-height: 90%;
+  overflow-y: auto !important;
+}
+
 .modal_title_container {
   z-index: 100;
   background: white;
@@ -20,7 +25,12 @@
 }
 
 .drawer-title-container {
-  padding: 10px;
+  padding: 25px 0 15px 0;
+}
+
+.drawer-title-text {
+  text-align: center;
+  width: 100%;
 }
 
 .modal_title_container,

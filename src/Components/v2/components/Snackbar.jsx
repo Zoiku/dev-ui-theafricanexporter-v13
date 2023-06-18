@@ -6,10 +6,7 @@ import { Transition } from "./Transition";
 
 const MuiSnackbar = () => {
   const [open, setOpen] = useState(false);
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }

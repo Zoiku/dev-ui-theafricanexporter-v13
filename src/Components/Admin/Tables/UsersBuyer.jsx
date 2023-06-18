@@ -1,12 +1,15 @@
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import DrawerModal from "../../v2/components/DrawerModal";
 import MuiTable from "../../v2/components/Table";
-import { Box, Stack } from "@mui/material";
-import MuiMore from "../../More";
+import { Box, Stack, MenuItem } from "@mui/material";
+import { MuiMoreV1 } from "../../More";
 import { normalBox } from "../../../Styles/v2/box";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import AvatarProfile from "../../AvatarProfile";
+import MuiSwitch from "../../v2/components/Switch";
+import { setAlert } from "../../../Redux/Features/Alert.js";
 
 const UsersBuyer = () => {
   const [paging, setPaging] = useState({
@@ -21,20 +24,64 @@ const UsersBuyer = () => {
     setPaging({ ...paging, size: size });
   };
 
+  const [reloadTable, setReloadTable] = useState(false);
+  
+  const rootDispatch = useDispatch();
+
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [selectedUser, setSelectedUser] = useState(null);
   const [openUserView, setOpenUserView] = useState(false);
   const toggleOpenUserView = (open) => () => {
     setOpenUserView(open);
   };
-
-  const [selectedUser, setSelectedUser] = useState(null);
-
   const handleOpenUserView = (id) => () => {
     const user = rows.find((row) => row.id === id);
     setSelectedUser(user);
     setOpenUserView(true);
+  };
+
+  const triggerSnackBarAlert = (message, timeOut, severity) => {
+    const payload = {
+      severity,
+      message,
+      timeOut,
+    };
+    rootDispatch(setAlert(payload));
+  };
+
+  const toggleActivate = async (status, id) => {
+    const adminService = new AdminService();
+    try {
+      const { errors } = await adminService.toggleActivate(status, id);
+      if (errors.length === 0) {
+        setReloadTable((prev) => !prev);
+        triggerSnackBarAlert(
+          `Status of buyer with ID: ${id} updated`,
+          5000,
+          "success"
+        );
+      } else {
+        triggerSnackBarAlert(
+          `Status of buyer with ID: ${id} could not be updated`,
+          5000,
+          "error"
+        );
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  const handleToggleButtonsActions = (actionType, id, status) => () => {
+    switch (actionType) {
+      case "ACTIVATE":
+        toggleActivate(status, id);
+        break;
+      default:
+        break;
+    }
   };
 
   const columns = [
@@ -42,15 +89,42 @@ const UsersBuyer = () => {
     { field: "name", headerName: "Full Name", width: 200 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "joinedSince", headerName: "Joined Since", width: 150 },
-    { field: "verified", headerName: "Status", width: 100 },
-    { field: "validated", headerName: "Validated", width: 100 },
+    {
+      field: "verified",
+      headerName: "Status",
+      width: 100,
+      renderCell: ({ row }) => (
+        <Stack direction="row" width={"100%"}>
+          <MuiSwitch checked={row?.verified} disabled />
+        </Stack>
+      ),
+    },
+    {
+      field: "activated",
+      headerName: "Activated",
+      width: 100,
+      renderCell: ({ row }) => (
+        <Stack direction="row" width={"100%"}>
+          <MuiSwitch
+            checked={row?.activated}
+            onChange={handleToggleButtonsActions(
+              "ACTIVATE",
+              row.id,
+              row?.activated
+            )}
+          />
+        </Stack>
+      ),
+    },
     {
       field: "actions",
       headerName: "",
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMore handleOpenView={handleOpenUserView(row.id)} />
+          <MuiMoreV1>
+            <MenuItem onClick={handleOpenUserView(row.id)}>View</MenuItem>
+          </MuiMoreV1>
         </Stack>
       ),
     },
@@ -62,7 +136,7 @@ const UsersBuyer = () => {
       setRowsLoading(true);
       const adminService = new AdminService();
       try {
-        const { data, errors } = await adminService.getMerchants(
+        const { data, errors } = await adminService.getBuyers(
           abortController.signal,
           paging
         );
@@ -71,28 +145,18 @@ const UsersBuyer = () => {
             return {
               index: index + 1,
               id: user?.id,
-              name: user?.user?.firstName + " " + user?.user?.lastName,
-              email: user?.user?.email,
-              verified: user?.user?.isVerified,
-              validated: user?.isValidated,
-              activated: user?.user?.enabled,
-              mobile: user?.user?.mobileNo,
-              joinedSince: new Date(user?.user?.createdOn).toLocaleDateString(),
+              name: `${user?.firstName} ${user?.lastName}`,
+              email: user?.email,
+              verified: user?.isVerified,
+              activated: user?.enabled,
+              mobile: user?.mobileNo,
+              joinedSince: new Date(user?.createdOn).toLocaleDateString(),
               company: {
-                name: user?.user?.companyName,
-                address: user?.address,
-                city: user?.city,
-                country: user?.user?.country,
-                subscriptions: user?.subscription?.map((sub) => {
-                  return {
-                    category: sub.category,
-                    name: sub.product,
-                  };
-                }),
+                name: user?.companyName,
+                country: user?.country,
               },
             };
           });
-
           setRows(filteredData);
         }
       } catch (error) {
@@ -100,9 +164,8 @@ const UsersBuyer = () => {
       }
       setRowsLoading(false);
     };
-
     fetchData();
-  }, [paging]);
+  }, [paging, reloadTable]);
 
   const UserView = () => {
     return (
@@ -128,14 +191,9 @@ const UsersBuyer = () => {
             <SectionItem sectionTitle="Company Details">
               <StackItem title="Name" value={selectedUser?.company?.name} />
               <StackItem
-                title="Origin"
+                title="Country"
                 value={selectedUser?.company?.country}
               />
-              <StackItem
-                title="Address"
-                value={selectedUser?.company?.address}
-              />
-              <StackItem title="City" value={selectedUser?.company?.city} />
             </SectionItem>
           </div>
         </Box>

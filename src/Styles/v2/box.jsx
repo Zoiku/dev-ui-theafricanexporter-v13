@@ -1,3 +1,39 @@
+export const smallBox = {
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  borderRadius: "5px",
+  outline: "none",
+  background: "white",
+  overflow: "clip",
+  fontSize: "15px",
+};
+export const xSmallBox = {
+  position: "relative",
+  top: "50%",
+  left: "58.3%",
+  transform: "translate(-50%, -50%)",
+  width: 350,
+  borderRadius: "5px",
+  outline: "none",
+  background: "white",
+  overflow: "clip",
+  fontSize: "15px",
+};
+export const xMediumBox = {
+  position: "relative",
+  top: "50%",
+  left: "58.3%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  borderRadius: "5px",
+  outline: "none",
+  background: "white",
+  overflow: "clip",
+  fontSize: "15px",
+};
 export const normalBox = {
   position: "relative",
   top: "50%",
@@ -10,7 +46,6 @@ export const normalBox = {
   overflow: "clip",
   fontSize: "15px",
 };
-
 export const wideBox = {
   position: "relative",
   top: "50%",
@@ -23,7 +58,6 @@ export const wideBox = {
   overflow: "clip",
   fontSize: "15px",
 };
-
 export const widerBox = {
   position: "relative",
   top: "50%",

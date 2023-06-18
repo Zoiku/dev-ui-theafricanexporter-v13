@@ -1,0 +1,17 @@
+.incoterm_note_container {
+  padding: 10px;
+  font-size: small;
+  background: var(--tae-orange-faded);
+}
+
+.incoterm_note {
+  font-weight: 500;
+}
+
+.incoterm_note > div:not(:last-child) {
+  margin: 0 0 5px 0;
+}
+
+.incoterm_note_title {
+  font-weight: bold;
+}
