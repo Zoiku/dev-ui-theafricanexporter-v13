@@ -13,6 +13,8 @@ import { ORDER_STATUS } from "../../v2/components/OrderStatus";
 import MuiDialog from "../../v2/components/Dialog";
 import { Button1 } from "../../v2/components/Buttons";
 import { MenuItem } from "@mui/material";
+import { setAlert } from "../../../Redux/Features/Alert.js";
+import { useDispatch } from "react-redux";
 
 const Orders = () => {
   const [paging, setPaging] = useState({
@@ -27,14 +29,26 @@ const Orders = () => {
     setPaging({ ...paging, size: size });
   };
 
+  const rootDispatch = useDispatch();
+
+  const [reloadTable, setReloadTable] = useState(false);
+
+  const [selectedOrderReference, setSelectedOrderReference] = useState(null);
+
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
+
+  const [dialogButtonState, setDialogButtonState] = useState(false);
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedOffers, setSelectedOffers] = useState(null);
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
     setOpenOrderView(open);
+    if (!open) {
+      setSelectedOrder(null);
+      setSelectedOffers(null);
+    }
   };
   const handleOpenOrder = (id) => () => {
     const order = rows.find((row) => row.id === id);
@@ -65,8 +79,43 @@ const Orders = () => {
   };
 
   const [openApproveDialog, setOpenApproveDialog] = useState(false);
-  const toggleOpenApproveDialog = (open) => () => {
+  const toggleOpenApproveDialog = (open, ref) => () => {
     setOpenApproveDialog(open);
+    setSelectedOrderReference(ref);
+  };
+  const dialogActionApprove_Yes = (ref) => () => {
+    const doAction = async () => {
+      setDialogButtonState(true);
+      const adminService = new AdminService();
+      try {
+        const { errors } = await adminService.approveOrder(ref);
+        if (errors.length === 0) {
+          setOpenApproveDialog(false);
+          setReloadTable(true);
+          triggerSnackBarAlert("Order approved successfully", 5000, "success");
+        } else {
+          triggerSnackBarAlert(
+            "Could not approve order, please try again",
+            5000,
+            "error"
+          );
+        }
+      } catch (error) {
+        throw error;
+      }
+      setDialogButtonState(false);
+      setSelectedOrderReference(null);
+    };
+    doAction();
+  };
+
+  const triggerSnackBarAlert = (message, timeOut, severity) => {
+    const payload = {
+      severity,
+      message,
+      timeOut,
+    };
+    rootDispatch(setAlert(payload));
   };
 
   const columns = [
@@ -86,7 +135,7 @@ const Orders = () => {
           <MuiMoreV1>
             <MenuItem onClick={handleOpenOrder(row.id)}>View</MenuItem>
             {row.status === ORDER_STATUS["AWAITING PROOF OF PAYMENT"] && (
-              <MenuItem onClick={toggleOpenApproveDialog(true)}>
+              <MenuItem onClick={toggleOpenApproveDialog(true, row.ref)}>
                 Approve
               </MenuItem>
             )}
@@ -150,7 +199,7 @@ const Orders = () => {
     };
 
     fetchData();
-  }, [paging]);
+  }, [paging, reloadTable]);
 
   const OrderView = () => {
     return (
@@ -248,7 +297,12 @@ const Orders = () => {
         >
           No
         </Button1>
-        <Button1 variant="text" color="inherit">
+        <Button1
+          variant="text"
+          color="inherit"
+          onClick={dialogActionApprove_Yes(selectedOrderReference)}
+          loading={dialogButtonState}
+        >
           Yes
         </Button1>
       </MuiDialog>

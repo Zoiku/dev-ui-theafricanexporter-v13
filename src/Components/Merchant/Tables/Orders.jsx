@@ -24,6 +24,10 @@ const Orders = () => {
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
     setOpenOrderView(open);
+    if (!open) {
+      setSelectedOrder(null);
+      setSelectedSelectedOrderId(null);
+    }
   };
   const handleOpenOrderView = (id) => () => {
     const order = rows.find((row) => row.id === id);
@@ -32,7 +36,7 @@ const Orders = () => {
   };
 
   const [dialogButtonLoading, setDialogButtonLoading] = useState(false);
-  
+
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = (open) => () => {
     setOpenConfirmDialog(open);

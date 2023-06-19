@@ -1,18 +1,10 @@
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
 import { Transition } from "./Transition";
+import { MaterialAlert } from "../../../Material/Alert";
 
-const MuiSnackbar = () => {
-  const [open, setOpen] = useState(false);
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
+const MuiSnackbar = ({ open, handleClose, message, severity }) => {
   const action = (
     <div>
       <IconButton
@@ -28,14 +20,20 @@ const MuiSnackbar = () => {
 
   return (
     <Snackbar
-      className="snack_bar_container"
       open={open}
       onClose={handleClose}
-      autoHideDuration={10000}
-      message="Note Archived"
+      autoHideDuration={5000}
       action={action}
       TransitionComponent={Transition}
-    />
+    >
+      <MaterialAlert
+        onClose={handleClose}
+        severity={severity}
+        sx={{ width: "100%" }}
+      >
+        {message}
+      </MaterialAlert>
+    </Snackbar>
   );
 };
 

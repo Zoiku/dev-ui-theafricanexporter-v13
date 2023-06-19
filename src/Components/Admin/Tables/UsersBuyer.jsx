@@ -25,7 +25,7 @@ const UsersBuyer = () => {
   };
 
   const [reloadTable, setReloadTable] = useState(false);
-  
+
   const rootDispatch = useDispatch();
 
   const [rows, setRows] = useState([]);
@@ -35,6 +35,7 @@ const UsersBuyer = () => {
   const [openUserView, setOpenUserView] = useState(false);
   const toggleOpenUserView = (open) => () => {
     setOpenUserView(open);
+    !open && setSelectedUser(null);
   };
   const handleOpenUserView = (id) => () => {
     const user = rows.find((row) => row.id === id);
@@ -73,7 +74,7 @@ const UsersBuyer = () => {
       throw error;
     }
   };
-  
+
   const handleToggleButtonsActions = (actionType, id, status) => () => {
     switch (actionType) {
       case "ACTIVATE":

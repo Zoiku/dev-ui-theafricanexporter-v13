@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Countdown from "../../Countdown";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
-import { Box, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
@@ -16,13 +16,23 @@ const Orders = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [rowsButtonState, setRowsButton] = useState({
+    id: null,
+    loading: false,
+  });
+
+  const [selectedOrders, setSelectedOrders] = useState(null);
   const [openOrdersView, setOpenOrdersView] = useState(false);
   const toggleOpenOrdersView = (open) => () => {
     setOpenOrdersView(open);
+    !open && setSelectedOrders(null);
   };
-  const [selectedOrders, setSelectedOrders] = useState(null);
   const handleOpenOrdersView = (id) => () => {
     const fetchData = async () => {
+      setRowsButton({
+        id: id,
+        loading: true,
+      });
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getOrder(id);
@@ -51,15 +61,20 @@ const Orders = () => {
       } catch (error) {
         throw error;
       }
+      setRowsButton({
+        id: null,
+        loading: false,
+      });
     };
     fetchData();
   };
 
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
     setOpenOrderView(open);
+    !open && setSelectedOrder(null);
   };
-  const [selectedOrder, setSelectedOrder] = useState(null);
   const handleOpenOrderView = (id) => () => {
     const order = selectedOrders.find((orders) => orders.id === id);
     setSelectedOrder(order);
@@ -89,9 +104,17 @@ const Orders = () => {
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMoreV1>
-            <MenuItem onClick={handleOpenOrdersView(row.id)}>View</MenuItem>
-          </MuiMoreV1>
+          {rowsButtonState.id === row.id ? (
+            rowsButtonState.loading && (
+              <div className="simple-center-div primary-tae-color">
+                <CircularProgress color="inherit" size={20} />
+              </div>
+            )
+          ) : (
+            <MuiMoreV1>
+              <MenuItem onClick={handleOpenOrdersView(row.id)}>View</MenuItem>
+            </MuiMoreV1>
+          )}
         </Stack>
       ),
     },
@@ -102,7 +125,7 @@ const Orders = () => {
     // { field: "productName", headerName: "Product", width: 150 },
     { field: "companyName", headerName: "Company", width: 100 },
     // { field: "quantity", headerName: "Quantity", width: 100 },
-    { field: "status", headerName: "Status", width: 100 },
+    { field: "status", headerName: "Status", width: 150 },
     {
       field: "action",
       headerName: "",
@@ -157,7 +180,11 @@ const Orders = () => {
     return (
       selectedOrders && (
         <Box>
-          <MuiTableV2 checkboxSelection={false} rows={selectedOrders} columns={columnsOrders} />
+          <MuiTableV2
+            checkboxSelection={false}
+            rows={selectedOrders}
+            columns={columnsOrders}
+          />
         </Box>
       )
     );
@@ -461,14 +488,14 @@ export default Orders;
 //     }
 //   };
 
-  // const handleSuccessfullRequest = (message, timeOut) => {
-  //   const payload = {
-  //     severity: "success",
-  //     message,
-  //     timeOut,
-  //   };
-  //   rootDispatch(setAlert(payload));
-  // };
+// const handleSuccessfullRequest = (message, timeOut) => {
+//   const payload = {
+//     severity: "success",
+//     message,
+//     timeOut,
+//   };
+//   rootDispatch(setAlert(payload));
+// };
 
 //   const handleFailedRequest = (message, timeOut) => {
 //     const payload = {

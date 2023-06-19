@@ -1,7 +1,6 @@
 import "../Styles/RequestQuote.css";
 import axios from "axios";
 import BuyerService from "../Services/Buyer";
-import { setAlert } from "../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -47,6 +46,7 @@ import {
   PUSH_FORM_DATA,
   CLEAR_FORM,
 } from "../Reducers/Actions";
+import { setAlert } from "../Redux/Features/Alert.js";
 
 const endPendingQuoteSession = async () => {
   const pq_session = sessionStorage.getItem("pq_id");
@@ -76,22 +76,21 @@ const RequestQuote = ({ session }) => {
     [search]
   );
 
-  const [parsedProduct, setParsedProduct] = useState({});
   const [countries, setCountries] = useState(null);
   const [errorBoxes, setErrorBoxes] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
+  const [parsedProduct, setParsedProduct] = useState({});
   const [openRequestQuoteSummaryView, setOpenRequestQuoteSummaryView] =
     useState(false);
   const toggleOpenRequestQuoteSummaryView = (open) => () => {
     setOpenRequestQuoteSummaryView(open);
   };
 
-  const triggerSnackBarAlert = (message, timeOut, severity) => {
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
-      severity,
       message,
-      timeOut,
+      severity,
     };
     rootDispatch(setAlert(payload));
   };
@@ -102,6 +101,10 @@ const RequestQuote = ({ session }) => {
 
   const handleChange = (e) => {
     dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
+  };
+
+  const onInvalidForm = () => {
+    triggerSnackBarAlert("Please fill all required fields correctly", "error");
   };
 
   const onInvalidFunction = (e) => {
@@ -118,14 +121,6 @@ const RequestQuote = ({ session }) => {
       }
       return prevErrors;
     });
-  };
-
-  const onInvalidForm = () => {
-    triggerSnackBarAlert(
-      "Please fill all required fields correctly",
-      9000,
-      "error"
-    );
   };
 
   const preSubmission = (e) => {
@@ -153,14 +148,13 @@ const RequestQuote = ({ session }) => {
           setOpenRequestQuoteSummaryView(false);
           triggerSnackBarAlert(
             "Request successful, merchants will respond shortly",
-            5000,
             "success"
           );
           endPendingQuoteSession();
           dispatch({ type: CLEAR_FORM });
         } else {
           dispatch({ type: REQUEST_FAILED });
-          triggerSnackBarAlert("Could not process request", 5000, "error");
+          triggerSnackBarAlert("Could not process request", "error");
         }
       } else {
         const { data, errors } = await buyerService.postPendingQuote(
@@ -173,16 +167,17 @@ const RequestQuote = ({ session }) => {
           setOpenRequestQuoteSummaryView(false);
           triggerSnackBarAlert(
             "Your request is pending, please log in to complete request",
-            5000,
             "success"
           );
           navigate("/login");
         } else {
           dispatch({ type: REQUEST_FAILED });
-          triggerSnackBarAlert("Could not process request", 5000, "error");
+          triggerSnackBarAlert("Could not process request", "error");
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -223,11 +218,11 @@ const RequestQuote = ({ session }) => {
           };
           setParsedProduct(filteredData);
         }
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     };
-
     fetchData();
-
     return () => abortController.abort();
   }, [pid]);
 
@@ -253,7 +248,9 @@ const RequestQuote = ({ session }) => {
               };
               dispatch({ type: PUSH_FORM_DATA, payload: pendingQuote });
             }
-          } catch (error) {}
+          } catch (error) {
+            throw error;
+          }
         };
         fetchData();
       }
@@ -282,7 +279,6 @@ const RequestQuote = ({ session }) => {
                 title="Length"
                 value={`${state.payload.length} ${state.payload.lengthUnit}`}
               />
-
               {state.payload?.diameter && (
                 <StackItem
                   title="Diameter"
@@ -309,7 +305,6 @@ const RequestQuote = ({ session }) => {
               {state.payload?.dryingLabel && (
                 <StackItem title="Drying" value={state.payload?.dryingLabel} />
               )}
-
               <StackItem
                 title="Additional Information"
                 value={
@@ -319,7 +314,6 @@ const RequestQuote = ({ session }) => {
                 }
               />
             </SectionItem>
-
             <SectionItem sectionTitle="3. Pricing and Delivery Information">
               <StackItem title="Incoterm" value={state.payload.incoterm} />
               <StackItem
@@ -328,14 +322,12 @@ const RequestQuote = ({ session }) => {
               />
               <StackItem title="Destination Port" value={state.payload.port} />
             </SectionItem>
-
             <SectionItem sectionTitle="4. Request Settings">
               <StackItem
                 title="Validity"
                 value={`${state.payload.validity} Days`}
               />
             </SectionItem>
-
             <Stack>
               <SmallSecondary
                 type="submit"

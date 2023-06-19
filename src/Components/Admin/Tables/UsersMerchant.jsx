@@ -25,9 +25,9 @@ const UsersMerchant = () => {
   };
 
   const [reloadTable, setReloadTable] = useState(false);
-  
+
   const rootDispatch = useDispatch();
-  
+
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
@@ -35,6 +35,7 @@ const UsersMerchant = () => {
   const [openUserView, setOpenUserView] = useState(false);
   const toggleOpenUserView = (open) => () => {
     setOpenUserView(open);
+    !open && setSelectedUser(null);
   };
   const handleOpenUserView = (id) => () => {
     const user = rows.find((row) => row.id === id);

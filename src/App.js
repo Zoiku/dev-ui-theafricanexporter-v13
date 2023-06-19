@@ -33,8 +33,6 @@ import ProtectedMerchantRoutes from "./Protected/MerchantRoutes";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAlerts } from "./Redux/Features/Alert";
 import { initPath, initUser } from "./Redux/Features/Session";
-import { MaterialAlert } from "./Material/Alert";
-import Snackbar from "@mui/material/Snackbar";
 import { formReducer, INITIAL_STATE } from "./Reducers/FormReducer";
 import {
   REQUEST_FAILED,
@@ -45,6 +43,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import FAQ2 from "./Pages/FAQ2";
 import "./Styles/v2/SectionContent.css";
+import MuiSnackbar from "./Components/v2/components/Snackbar";
 
 AOS.init();
 
@@ -60,6 +59,7 @@ const App = () => {
   );
   const { profile } = useSelector((state) => state.session.user);
   const { session } = useSelector((state) => state);
+
   const { alert } = useSelector((state) => state);
   const [openSnackBar, setOpenSnackBar] = useState(alert.active);
   const handleOpenSnackBar = () => setOpenSnackBar(true);
@@ -99,7 +99,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     session.isLogged && fetchData();
@@ -116,21 +116,10 @@ const App = () => {
     <div>
       <SessionTimeout session={session} />
 
-      {alert.active && (
-        <Snackbar
-          open={openSnackBar}
-          autoHideDuration={alert.timeOut}
-          onClose={handleCloseSnackBar}
-        >
-          <MaterialAlert
-            onClose={handleCloseSnackBar}
-            severity={alert.severity}
-            sx={{ width: "100%" }}
-          >
-            {alert.message}
-          </MaterialAlert>
-        </Snackbar>
-      )}
+      {
+        alert.active &&
+        <MuiSnackbar open={openSnackBar} handleClose={handleCloseSnackBar} message={alert?.message} severity={alert?.severity} />
+      }
 
       <Routes>
         <Route element={<DefaultLayout session={session} />}>

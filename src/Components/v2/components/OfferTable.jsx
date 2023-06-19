@@ -22,6 +22,7 @@ export const OfferTableV1 = ({
       },
     };
     handleQuotationChange(true)(event);
+    // eslint-disable-next-line
   }, [quantity]);
 
   const handleQuotationChange = (complex_type, index) => (e) => {
@@ -318,7 +319,6 @@ const OfferTable = ({ offerRows, product, incoterm }) => {
               <th>Price/container</th>
               <th>Total price</th>
               {incoterm === INCOTERMS.CIF && <th>Insurance</th>}
-              {incoterm !== INCOTERMS.FOB && <th>Freight Rate</th>}
               {incoterm !== INCOTERMS.FOB && <th>Total Freight</th>}
               <th>Total amount</th>
             </tr>
@@ -335,37 +335,32 @@ const OfferTable = ({ offerRows, product, incoterm }) => {
                   </td>
                 )}
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.noOfPieces}</div>
                 </td>
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.cbm}</div>
                 </td>
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.cbmprice}</div>
                 </td>
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.price}</div>
                 </td>
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.totalPrice}</div>
                 </td>
                 {incoterm === INCOTERMS.CIF && (
                   <td>
-                    <div>{row?.diameter}</div>
+                    <div>{row?.insurace}</div>
                   </td>
                 )}
                 {incoterm !== INCOTERMS.FOB && (
                   <td>
-                    <div>{row?.diameter}</div>
-                  </td>
-                )}
-                {incoterm !== INCOTERMS.FOB && (
-                  <td>
-                    <div>{row?.diameter}</div>
+                    <div>{row?.costOfFreight}</div>
                   </td>
                 )}
                 <td>
-                  <div>{row?.diameter}</div>
+                  <div>{row?.totalAmount}</div>
                 </td>
               </tr>
             ))}

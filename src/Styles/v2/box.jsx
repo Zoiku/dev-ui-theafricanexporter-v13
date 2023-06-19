@@ -27,7 +27,7 @@ export const xMediumBox = {
   top: "50%",
   left: "58.3%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 450,
   borderRadius: "5px",
   outline: "none",
   background: "white",

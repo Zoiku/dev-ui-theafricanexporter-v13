@@ -16,10 +16,16 @@ const Requests = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [rowButtonState, setRowButtonState] = useState({
+    id: null,
+    loading: false,
+  });
+
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
     setOpenRequestView(open);
+    !open && setSelectedRequest(null);
   };
   const handleOpenRequestView = (id) => () => {
     const request = rows.find((row) => row.id === id);
@@ -31,9 +37,14 @@ const Requests = () => {
   const [openOffersView, setOpenOffersView] = useState(false);
   const toggleOpenOffersView = (open) => () => {
     setOpenOffersView(open);
+    !open && setSelectedOffers(null);
   };
   const handleOpenOffersView = (id) => () => {
     const fetchData = async () => {
+      setRowButtonState({
+        id: id,
+        loading: true,
+      });
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getOffers(id);
@@ -62,6 +73,10 @@ const Requests = () => {
       } catch (error) {
         throw error;
       }
+      setRowButtonState({
+        id: null,
+        loading: false,
+      });
     };
     fetchData();
   };
@@ -70,9 +85,14 @@ const Requests = () => {
   const [openOfferView, setOpenOfferView] = useState(false);
   const toggleOpenOfferView = (open) => () => {
     setOpenOfferView(open);
+    !open && setSelectedOffer(null);
   };
   const handleOpenOfferView = (id, offerRows, requestSummary) => () => {
     const fetchData = async () => {
+      setRowButtonState({
+        id,
+        loading: true,
+      });
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getCompany(id);
@@ -97,6 +117,10 @@ const Requests = () => {
       } catch (error) {
         throw error;
       }
+      setRowButtonState({
+        id: null,
+        loading: false,
+      });
     };
     fetchData();
   };
@@ -125,6 +149,7 @@ const Requests = () => {
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
           <MuiBadge
+            loading={rowButtonState?.id === row.id && rowButtonState?.loading}
             onClick={handleOpenOffersView(row.id)}
             offersTotalCount={row.offersTotalCount}
           />
@@ -164,12 +189,15 @@ const Requests = () => {
         };
         return (
           <SmallPrimary
+            variant="contained"
+            loading={
+              row?.merchant?.id === rowButtonState.id && rowButtonState.loading
+            }
             onClick={handleOpenOfferView(
               row?.merchant?.id,
               row?.offers,
               requestSummary
             )}
-            variant="contained"
           >
             View
           </SmallPrimary>
@@ -328,7 +356,11 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Offer Table">
-              <OfferTable offerRows={selectedOffer?.offerRows} product={selectedOffer?.requestSummary?.productName} incoterm={selectedOffer?.requestSummary?.terms} />
+              <OfferTable
+                offerRows={selectedOffer?.offerRows}
+                product={selectedOffer?.requestSummary?.productName}
+                incoterm={selectedOffer?.requestSummary?.terms}
+              />
             </SectionItem>
 
             <SectionItem sectionTitle="Company Profile">

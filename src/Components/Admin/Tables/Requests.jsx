@@ -37,6 +37,10 @@ const Requests = () => {
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
     setOpenRequestView(open);
+    if (!open) {
+      setSelectedRequest(null);
+      setSelectedRequestOffers(null);
+    }
   };
   const handleOpenRequest = (id) => () => {
     const request = rows.find((row) => row.id === id);
@@ -248,7 +252,11 @@ const Requests = () => {
                   </SectionItem>
 
                   <SectionItem sectionTitle={`Merchant  Offer [${index + 1}] `}>
-                    <OfferTable offerRows={selectedRequestOffer?.offer} product={selectedRequest?.product} incoterm={selectedRequest?.terms} />
+                    <OfferTable
+                      offerRows={selectedRequestOffer?.offer}
+                      product={selectedRequest?.product}
+                      incoterm={selectedRequest?.terms}
+                    />
                   </SectionItem>
                 </div>
               ))}

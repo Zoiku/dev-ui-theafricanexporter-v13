@@ -10,10 +10,8 @@ import { SectionItem, StackItem } from "../../v2/components/Lists";
 import { incotermNote } from "../../v2/components/IncotermNotes";
 import { SmallSecondary } from "../../../Material/Button";
 import { OfferTableV1 } from "../../v2/components/OfferTable";
-import {
-  AddCircleOutlineRounded,
-  RemoveCircleOutline,
-} from "@mui/icons-material/";
+import { AddRounded, RemoveRounded } from "@mui/icons-material/";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Requests = () => {
   const [page, setPage] = useState(1);
@@ -30,6 +28,7 @@ const Requests = () => {
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
     setOpenRequestView(open);
+    !open && setSelectedRequest(null);
   };
   const handleOpenRequestView = (id) => () => {
     const request = rows.find((row) => row.id === id);
@@ -98,7 +97,18 @@ const Requests = () => {
   const RequestsView = () => {
     return (
       <Box className="request_rows_container">
-        {rows && rows.length > 0 ? (
+        {rowsLoading ? (
+          <Box>
+            <LinearProgress />
+            <Stack marginTop={1} direction="column" spacing={1}>
+              {Array.from(Array(4)).map(() => {
+                return (
+                  <Stack className="request_row_container_loading"></Stack>
+                );
+              })}
+            </Stack>
+          </Box>
+        ) : rows && rows.length > 0 ? (
           rows.slice(5 * page - 5, page * 5 - 1).map((request, index) => (
             <Stack
               onClick={handleOpenRequestView(request?.id)}
@@ -158,11 +168,6 @@ const Requests = () => {
       setQuotation({ ...quotation, [e.target.name]: e.target.value });
     };
 
-    const handleQuotationSubmit = (e) => {
-      e.preventDefault();
-      console.log(quotation);
-    };
-
     return (
       selectedRequest && (
         <Box>
@@ -185,10 +190,35 @@ const Requests = () => {
                 title="Length"
                 value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`}
               />
-              <StackItem
-                title="Diameter"
-                value={`${selectedRequest?.specification?.diameter} ${selectedRequest?.specification?.diameterUnit}`}
-              />
+
+              {selectedRequest?.specification?.diameter && (
+                <StackItem
+                  title="Diameter"
+                  value={`${selectedRequest?.specification?.diameter} ${selectedRequest?.specification?.diameterUnit}`}
+                />
+              )}
+
+              {selectedRequest?.specification?.thickness && (
+                <StackItem
+                  title="Diameter"
+                  value={`${selectedRequest?.specification?.thickness} ${selectedRequest?.specification?.thicknessUnit}`}
+                />
+              )}
+
+              {selectedRequest?.specification?.width && (
+                <StackItem
+                  title="Diameter"
+                  value={`${selectedRequest?.specification?.width} ${selectedRequest?.specification?.widthUnit}`}
+                />
+              )}
+
+              {selectedRequest?.specification?.drying && (
+                <StackItem
+                  title="Diameter"
+                  value={selectedRequest?.specification?.drying}
+                />
+              )}
+
               <StackItem
                 title="Quantity"
                 value={`${selectedRequest?.quantity} ${selectedRequest?.containerSize}`}
@@ -212,11 +242,7 @@ const Requests = () => {
               />
             </SectionItem>
 
-            <Box
-              onSubmit={handleQuotationSubmit}
-              component="form"
-              className="request_quotation_box_container"
-            >
+            <Box component="form" className="request_quotation_box_container">
               <div className="request_quotation_box">
                 <div className="request_quotation_box_title_container">
                   <div className="request_quotation_box_title">
@@ -236,6 +262,7 @@ const Requests = () => {
                     InputProps={{
                       inputProps: {
                         min: 0,
+                        max: selectedRequest?.quantity,
                       },
                     }}
                     onChange={handleChange}
@@ -249,7 +276,7 @@ const Requests = () => {
                     setQuotation={setQuotation}
                     quotation={quotation}
                   />
-                  <Stack direction="column" spacing={0.5}>
+                  <Stack direction="row" spacing={1}>
                     <Stack
                       onClick={handleChangeOfferRows("MORE")}
                       spacing={1}
@@ -257,7 +284,7 @@ const Requests = () => {
                       direction="row"
                       alignContent="center"
                     >
-                      <AddCircleOutlineRounded fontSize="small" />
+                      <AddRounded fontSize="small" />
                       <Box>Add new row</Box>
                     </Stack>
                     {offerRows > 1 && (
@@ -268,7 +295,7 @@ const Requests = () => {
                         direction="row"
                         alignContent="center"
                       >
-                        <RemoveCircleOutline fontSize="small" />
+                        <RemoveRounded fontSize="small" />
                         <Box>Remove last row</Box>
                       </Stack>
                     )}

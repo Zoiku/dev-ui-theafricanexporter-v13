@@ -17,6 +17,7 @@ const Quotations = () => {
   const [openQuoteView, setOpenQuoteView] = useState(false);
   const toggleOpenQuoteView = (open) => () => {
     setOpenQuoteView(open);
+    !open && setSelectedQuote(null);
   };
   const handleOpenQuote = (id) => () => {
     const quote = rows.find((row) => row.id === id);
@@ -88,6 +89,11 @@ const Quotations = () => {
                 lengthUnit: quotationProduct?.specification?.lengthUnit,
                 diameter: quotationProduct?.specification?.diameter,
                 diameterUnit: quotationProduct?.specification?.diameterUnit,
+                thickness: quotationProduct?.specification?.thickness,
+                thicknessUnit: quotationProduct?.specification?.thicknessUnit,
+                width: quotationProduct?.specification?.width,
+                widthUnit: quotationProduct?.specification?.widthUnit,
+                drying: quotationProduct?.specification?.drying?.label,
               },
             };
           });
@@ -126,16 +132,40 @@ const Quotations = () => {
                 title="Length"
                 value={`${selectedQuote?.specifications?.length} ${selectedQuote?.specifications?.lengthUnit}`}
               />
-              <StackItem
-                title="Diameter"
-                value={`${selectedQuote?.specifications?.diameter} ${selectedQuote?.specifications?.diameterUnit}`}
-              />
+
+              {selectedQuote?.specifications?.diameter && (
+                <StackItem
+                  title="Diameter"
+                  value={`${selectedQuote?.specifications?.diameter} ${selectedQuote?.specifications?.diameterUnit}`}
+                />
+              )}
+
+              {selectedQuote?.specifications?.thickness && (
+                <StackItem
+                  title="Thickness"
+                  value={`${selectedQuote?.specifications?.thickness} ${selectedQuote?.specifications?.thicknessUnit}`}
+                />
+              )}
+
+              {selectedQuote?.specifications?.width && (
+                <StackItem
+                  title="Width"
+                  value={`${selectedQuote?.specifications?.width} ${selectedQuote?.specifications?.widthUnit}`}
+                />
+              )}
+
+              {selectedQuote?.specifications?.drying && (
+                <StackItem
+                  title="Drying"
+                  value={selectedQuote?.specifications?.drying}
+                />
+              )}
+
               <StackItem
                 title="Quantity"
                 value={`${selectedQuote?.quantity} 20ft Container`}
               />
             </SectionItem>
-
             <SectionItem sectionTitle="Pricing and Delivery Information">
               <StackItem title="Incoterm" value={selectedQuote?.terms} />
               <StackItem
@@ -154,7 +184,11 @@ const Quotations = () => {
 
             <SectionItem sectionTitle="Offer Table">
               <Stack>
-                <OfferTable offerRows={selectedQuote?.offerRows} product={selectedQuote?.productName} incoterm={selectedQuote?.terms}  />
+                <OfferTable
+                  offerRows={selectedQuote?.offerRows}
+                  product={selectedQuote?.productName}
+                  incoterm={selectedQuote?.terms}
+                />
               </Stack>
             </SectionItem>
           </div>

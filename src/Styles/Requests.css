@@ -1,5 +1,5 @@
 .Requests-Page-Merchant .tables-container {
-  height: 750px;
+  height: 650px;
 }
 
 .requests-section-container {
@@ -271,6 +271,26 @@
   padding: 10px;
   display: flex;
   align-content: center;
+}
+
+.request_row_container_loading {
+  height: 80px;
+  background: #efefef;
+  animation: flashing 0.8s ease infinite;
+}
+
+@keyframes flashing {
+  0% {
+    background: #efefef;
+  }
+
+  50% {
+    background: #efefef68;
+  }
+
+  100% {
+    background: #efefef;
+  }
 }
 
 @media screen and (max-width: 1000px) {
