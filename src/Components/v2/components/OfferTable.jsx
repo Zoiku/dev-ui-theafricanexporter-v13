@@ -351,7 +351,7 @@ const OfferTable = ({ offerRows, product, incoterm }) => {
                 </td>
                 {incoterm === INCOTERMS.CIF && (
                   <td>
-                    <div>{row?.insurace}</div>
+                    <div>{row?.insurance}</div>
                   </td>
                 )}
                 {incoterm !== INCOTERMS.FOB && (

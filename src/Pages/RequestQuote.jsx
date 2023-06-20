@@ -44,6 +44,7 @@ import {
   REQUEST_SUCCESSFUL,
   SEND_REQUEST,
   PUSH_FORM_DATA,
+  CLEAR_FORM,
 } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js";
 
@@ -145,12 +146,12 @@ const RequestQuote = ({ session }) => {
         if (errors.length === 0) {
           dispatch({ type: REQUEST_SUCCESSFUL });
           setOpenRequestQuoteSummaryView(false);
+          dispatch({ type: CLEAR_FORM });
           triggerSnackBarAlert(
             "Request successful, merchants will respond shortly",
             "success"
           );
           endPendingQuoteSession();
-          
         } else {
           dispatch({ type: REQUEST_FAILED });
           triggerSnackBarAlert("Could not process request", "error");
@@ -194,7 +195,6 @@ const RequestQuote = ({ session }) => {
   }, []);
 
   useEffect(() => {
-    console.log("running");
     const abortController = new AbortController();
     const fetchData = async () => {
       const productService = new ProductService();

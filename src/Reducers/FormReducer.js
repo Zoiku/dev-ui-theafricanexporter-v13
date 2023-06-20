@@ -65,16 +65,7 @@ export const formReducer = (state = INITIAL_STATE, action) => {
     }
 
     case CLEAR_FORM: {
-      return {
-        state: {
-          requestState: {
-            data: {},
-            error: null,
-            loading: false,
-          },
-          payload: {},
-        },
-      };
+      return INITIAL_STATE;
     }
 
     default:

@@ -1,10 +1,21 @@
 import "../../../Styles/v2/IncotermNotes.css";
 import { Stack } from "@mui/material";
+import { ErrorOutline } from "@mui/icons-material/";
 
 const CIF = () => {
   return (
     <Stack direction="column" spacing={1} className="incoterm_note_container">
-      <div className="incoterm_note_title">Additional Notes for CIF</div>
+      <Stack
+        direction="row"
+        alignContent="center"
+        className="incoterm_note_title"
+        spacing={1}
+      >
+        <div>
+          <ErrorOutline fontSize="small" />
+        </div>
+        <div>Additional Notes for CIF</div>
+      </Stack>
       <div className="incoterm_note">
         <div>Price per Container: CBM x Price per CBM</div>
         <div>Total Price: Price per Container x Quantity</div>
@@ -19,7 +30,17 @@ const CIF = () => {
 const FOB = () => {
   return (
     <Stack direction="column" spacing={1} className="incoterm_note_container">
-      <div className="incoterm_note_title">Additional Notes for FOB</div>
+      <Stack
+        direction="row"
+        alignContent="center"
+        className="incoterm_note_title"
+        spacing={1}
+      >
+        <div>
+          <ErrorOutline fontSize="small" />
+        </div>
+        <div>Additional Notes for FOB</div>
+      </Stack>
       <div className="incoterm_note">
         <div>Price per Container: CBM x Price per CBM</div>
         <div>Total Price: Price per Container x Quantity</div>
@@ -32,7 +53,17 @@ const FOB = () => {
 const CFR = () => {
   return (
     <Stack direction="column" spacing={1} className="incoterm_note_container">
-      <div className="incoterm_note_title">Additional Notes for CFR</div>
+      <Stack
+        direction="row"
+        alignContent="center"
+        className="incoterm_note_title"
+        spacing={1}
+      >
+        <div>
+          <ErrorOutline fontSize="small" />
+        </div>
+        <div>Additional Notes for CFR</div>
+      </Stack>
       <div className="incoterm_note">
         <div>Price per Container: CBM x Price per CBM</div>
         <div>Total Price: Price per Container x Quantity</div>

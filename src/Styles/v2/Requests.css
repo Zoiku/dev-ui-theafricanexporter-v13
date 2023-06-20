@@ -77,8 +77,14 @@
 
 .request_placing_order_note {
   padding: 10px;
-  background: #efefefb6;
+  background: #efefef;
   border-radius: 3px;
+}
+
+.request_no_request_rows_container {
+  height: 400px;
+  display: grid;
+  place-content: center;
 }
 
 @keyframes flashing {

@@ -34,6 +34,11 @@ const Orders = () => {
   const [reloadTable, setReloadTable] = useState(false);
 
   const [selectedOrderReference, setSelectedOrderReference] = useState(null);
+  const [selectedUpdatedOrderPayload, setSelectedUpdatedOrderPayload] =
+    useState({
+      ref: null,
+      status: null,
+    });
 
   const [rowsButtonState, setRowsButtonState] = useState({
     id: null,
@@ -96,37 +101,66 @@ const Orders = () => {
     setOpenApproveDialog(open);
     setSelectedOrderReference(ref);
   };
-  const dialogActionApprove_Yes = (ref) => () => {
+  const dialogActionApprove_Yes = () => {
     const doAction = async () => {
       setDialogButtonState(true);
       const adminService = new AdminService();
       try {
-        const { errors } = await adminService.approveOrder(ref);
+        const { errors } = await adminService.approveOrder(
+          selectedOrderReference
+        );
         if (errors.length === 0) {
           setOpenApproveDialog(false);
           setReloadTable(true);
-          triggerSnackBarAlert("Order approved successfully", 5000, "success");
-        } else {
-          triggerSnackBarAlert(
-            "Could not approve order, please try again",
-            5000,
-            "error"
-          );
+          setSelectedOrderReference(null);
+          triggerSnackBarAlert("Order approved successfully", "success");
         }
       } catch (error) {
         throw error;
       }
       setDialogButtonState(false);
-      setSelectedOrderReference(null);
     };
     doAction();
   };
 
-  const triggerSnackBarAlert = (message, timeOut, severity) => {
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const toggleOpenUpdateDialog =
+    (open, ref = null, status = null) =>
+    () => {
+      setOpenUpdateDialog(open);
+      setSelectedUpdatedOrderPayload({
+        ref,
+        status,
+      });
+    };
+  const dialogActionUpdate_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonState(true);
+      const adminService = new AdminService();
+      const { ref, status } = selectedUpdatedOrderPayload;
+      try {
+        const { errors } = await adminService.updateOrder(ref, status);
+        if (errors.length === 0) {
+          setOpenUpdateDialog(false);
+          setReloadTable((prev) => !prev);
+          setSelectedUpdatedOrderPayload({
+            ref: null,
+            status: null,
+          });
+          triggerSnackBarAlert("Order status updated successfully", "success");
+        }
+      } catch (error) {
+        throw error;
+      }
+      setDialogButtonState(false);
+    };
+    doAction();
+  };
+
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
       severity,
       message,
-      timeOut,
     };
     rootDispatch(setAlert(payload));
   };
@@ -155,6 +189,22 @@ const Orders = () => {
               {row.status === ORDER_STATUS["AWAITING PROOF OF PAYMENT"] && (
                 <MenuItem onClick={toggleOpenApproveDialog(true, row.ref)}>
                   Approve
+                </MenuItem>
+              )}
+
+              {row.status === ORDER_STATUS["PROOF OF PAYMENT APPROVED"] && (
+                <MenuItem
+                  onClick={toggleOpenUpdateDialog(true, row.ref, row.status)}
+                >
+                  Shipped
+                </MenuItem>
+              )}
+
+              {row.status === ORDER_STATUS["SHIPPED"] && (
+                <MenuItem
+                  onClick={toggleOpenUpdateDialog(true, row.ref, row.status)}
+                >
+                  Delivered
                 </MenuItem>
               )}
             </MuiMoreV1>
@@ -310,17 +360,39 @@ const Orders = () => {
         dialogTitle="Do you want to approve the order?"
       >
         <Button1
-          onClick={toggleOpenApproveDialog(false)}
           variant="text"
           color="inherit"
+          onClick={toggleOpenApproveDialog(false)}
         >
           No
         </Button1>
         <Button1
           variant="text"
           color="inherit"
-          onClick={dialogActionApprove_Yes(selectedOrderReference)}
           loading={dialogButtonState}
+          onClick={dialogActionApprove_Yes}
+        >
+          Yes
+        </Button1>
+      </MuiDialog>
+
+      <MuiDialog
+        openDialog={openUpdateDialog}
+        toggleOpenDialog={toggleOpenUpdateDialog}
+        dialogTitle="Do you want to update the status of this order?"
+      >
+        <Button1
+          variant="text"
+          color="inherit"
+          onClick={toggleOpenUpdateDialog(false)}
+        >
+          No
+        </Button1>
+        <Button1
+          variant="text"
+          color="inherit"
+          loading={dialogButtonState}
+          onClick={dialogActionUpdate_Yes}
         >
           Yes
         </Button1>
@@ -859,8 +931,6 @@ export default Orders;
 
 //                 return userGroup;
 //               });
-
-//               console.log(order.users);
 
 //               return {
 //                 index: paging.size * paging.page - (paging.size - index) + 1,

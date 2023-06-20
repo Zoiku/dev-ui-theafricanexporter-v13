@@ -209,7 +209,7 @@ const Quotations = () => {
       </DrawerModal>
 
       <MuiTableV1
-        label=""
+        label="Quotations"
         rows={rows}
         columns={columns}
         rowsLoading={rowsLoading}

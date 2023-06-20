@@ -27,7 +27,7 @@ const Orders = () => {
     setOpenOrdersView(open);
     !open && setSelectedOrders(null);
   };
-  const handleOpenOrdersView = (id) => () => {
+  const handleOpenOrdersView = (id, ref) => () => {
     const fetchData = async () => {
       setRowsButton({
         id: id,
@@ -35,12 +35,13 @@ const Orders = () => {
       });
       const buyerService = new BuyerService();
       try {
-        const { data, errors } = await buyerService.getOrder(id);
+        const { data, errors } = await buyerService.getOrderList(ref);
         if (errors.length === 0) {
+          console.log(data.data.data);
           const filteredData = data.data.data.map((orders, index) => {
             const quotationProduct = orders?.request?.quotationProducts?.at(0);
             return {
-              id: orders?.id,
+              id: orders?._id,
               index: index + 1,
               productName: quotationProduct?.product?.name,
               companyName: orders?.merchant?.companyName,
@@ -86,8 +87,8 @@ const Orders = () => {
     { field: "orderNo", headerName: "Order #", width: 100 },
     { field: "productName", headerName: "Product", width: 150 },
     { field: "incoterm", headerName: "Terms", width: 100 },
-    { field: "destination", headerName: "Destination", width: 150 },
     { field: "quantity", headerName: "Quantity", width: 100 },
+    { field: "destination", headerName: "Destination", width: 150 },
     {
       field: "timeLeft",
       headerName: "Time Left",
@@ -112,7 +113,9 @@ const Orders = () => {
             )
           ) : (
             <MuiMoreV1>
-              <MenuItem onClick={handleOpenOrdersView(row.id)}>View</MenuItem>
+              <MenuItem onClick={handleOpenOrdersView(row.id, row.ref)}>
+                View
+              </MenuItem>
             </MuiMoreV1>
           )}
         </Stack>
@@ -158,6 +161,7 @@ const Orders = () => {
             return {
               index: index + 1,
               id: order?._id,
+              ref: order?.referenceCode,
               orderNo: order?.orderNo,
               productName: quotationProduct?.product?.name,
               destination: order?.request?.destination,
@@ -246,7 +250,7 @@ const Orders = () => {
       </DrawerModal>
 
       <MuiTableV1
-        label=""
+        label="Orders"
         rows={rows}
         columns={columns}
         rowsLoading={rowsLoading}

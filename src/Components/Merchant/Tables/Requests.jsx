@@ -17,6 +17,7 @@ import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 import MuiDialog from "../../v2/components/Dialog";
 import { Button1 } from "../../v2/components/Buttons";
+import NoRowsOverlay from "../../../Material/Overlay";
 
 const Requests = () => {
   const [page, setPage] = useState(1);
@@ -146,11 +147,13 @@ const Requests = () => {
                   className="request_row_inner_container"
                   direction="row"
                   justifyContent="space-between"
+                  spacing={1}
                 >
                   <div>Request Number {request?.requestNo}</div>
                   <div>{request?.destination}</div>
                 </Stack>
                 <Stack
+                  spacing={1}
                   className="request_row_inner_container"
                   direction="row"
                   justifyContent="space-between"
@@ -162,7 +165,9 @@ const Requests = () => {
             ))}
           </div>
         ) : (
-          <div></div>
+          <div className="request_no_request_rows_container">
+            <NoRowsOverlay label="Requests" />
+          </div>
         )}
       </Box>
     );
@@ -315,7 +320,6 @@ const Requests = () => {
                 value={`${selectedRequest?.validity} Days`}
               />
             </SectionItem>
-
             <Box
               onSubmit={toggleOpenPostOfferDialog(true)}
               component="form"
@@ -327,7 +331,6 @@ const Requests = () => {
                     Please Provide Your Quote For This Request
                   </div>
                 </div>
-
                 <Stack direction="column" marginTop={2} spacing={2}>
                   <TextField
                     name="quantity"
@@ -346,7 +349,6 @@ const Requests = () => {
                     onChange={handleChange}
                     required
                   />
-
                   <OfferTableV1
                     product={selectedRequest?.productName}
                     incoterm={selectedRequest?.terms}

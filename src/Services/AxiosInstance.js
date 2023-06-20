@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getToken } from "../Components/Functions";
 
 const axiosInstance = () => {
   const url = process.env.REACT_APP_BASE_URL_BASE_URL_DEVELOPMENT;
@@ -7,10 +6,26 @@ const axiosInstance = () => {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
+
+  const getToken = () => {
+    const token =
+      sessionStorage.getItem("token") !== null
+        ? sessionStorage.getItem("token")
+        : null;
+
+    if (token) {
+      return token;
+    } else {
+      return null;
+    }
+  };
+
   const token = getToken();
+
   if (token) {
     headers.authorization = `Bearer ${token}`;
   }
+
   const axiosInstance = axios.create({
     baseURL: url,
     headers,

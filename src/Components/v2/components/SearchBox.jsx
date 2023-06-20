@@ -17,7 +17,7 @@ export const SearchBox = () => {
     >
       <div
         style={{
-          padding: "5px",
+          padding: "2px",
           display: "grid",
           placeContent: "center",
         }}

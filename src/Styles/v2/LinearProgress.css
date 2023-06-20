@@ -1,0 +1,7 @@
+.linear_progress {
+  color: #777;
+}
+
+.linear_progress_bad {
+  color: rgb(226, 0, 0);
+}
