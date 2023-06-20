@@ -39,7 +39,13 @@ const MuiTable = ({
   );
 };
 
-export const MuiTableV1 = ({ rows, rowsLoading, columns, label }) => {
+export const MuiTableV1 = ({
+  rows,
+  rowsLoading,
+  columns,
+  label,
+  checkboxSelection = true,
+}) => {
   return (
     <DataGrid
       components={{
@@ -48,7 +54,7 @@ export const MuiTableV1 = ({ rows, rowsLoading, columns, label }) => {
         NoRowsOverlay: () => <Overlay label={label} />,
       }}
       className="main_table_box_standard main_table_all"
-      checkboxSelection
+      checkboxSelection={checkboxSelection}
       disableSelectionOnClick
       pageSize={10}
       rows={rows}
@@ -66,6 +72,7 @@ export const MuiTableV2 = ({
   rowsLoading,
   columns,
   checkboxSelection = true,
+  handleSelectionModel = null,
 }) => {
   return (
     <DataGrid
@@ -81,6 +88,7 @@ export const MuiTableV2 = ({
       density="compact"
       rowsPerPageOptions={[10, 20, 30, 40, 50]}
       loading={rowsLoading}
+      onSelectionModelChange={handleSelectionModel}
     />
   );
 };

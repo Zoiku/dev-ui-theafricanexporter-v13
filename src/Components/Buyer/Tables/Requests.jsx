@@ -3,18 +3,28 @@ import BuyerService from "../../../Services/Buyer";
 import Countdown from "../../Countdown";
 import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
-import { Box, Stack } from "@mui/material";
-import { wideBox, xSmallBox } from "../../../Styles/v2/box";
+import { Box, Stack, MenuItem } from "@mui/material";
+import { wideBox, xMediumBox } from "../../../Styles/v2/box";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import MuiBadge from "../../v2/components/Badge";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
-import { SmallPrimary, SmallSecondary } from "../../../Material/Button";
+import {
+  SmallPrimary,
+  SmallSecondaryV2,
+} from "../../../Material/Button";
 import OfferTable from "../../v2/components/OfferTable";
-import { MenuItem } from "@mui/material";
+import { setAlert } from "../../../Redux/Features/Alert";
+import { useDispatch } from "react-redux";
+import { ErrorOutline } from "@mui/icons-material/";
+import { MuiLinearProgress } from "../../v2/components/LinearProgress";
 
 const Requests = () => {
+  const rootDispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
+  const [reloadTable, setReloadTable] = useState(false);
+
+  const [buyerRequestedQuantity, setBuyerRequestedQuantity] = useState(null);
 
   const [rowButtonState, setRowButtonState] = useState({
     id: null,
@@ -37,9 +47,13 @@ const Requests = () => {
   const [openOffersView, setOpenOffersView] = useState(false);
   const toggleOpenOffersView = (open) => () => {
     setOpenOffersView(open);
-    !open && setSelectedOffers(null);
+    if (!open) {
+      setSelectedOffers(null);
+      setBuyerRequestedQuantity(null);
+    }
   };
-  const handleOpenOffersView = (id) => () => {
+  const handleOpenOffersView = (id, quantity) => () => {
+    setBuyerRequestedQuantity(quantity);
     const fetchData = async () => {
       setRowButtonState({
         id: id,
@@ -125,6 +139,14 @@ const Requests = () => {
     fetchData();
   };
 
+  const triggerSnackBarAlert = (message, severity) => {
+    const payload = {
+      severity,
+      message,
+    };
+    rootDispatch(setAlert(payload));
+  };
+
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "requestNo", headerName: "Request #", width: 100 },
@@ -150,7 +172,7 @@ const Requests = () => {
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
           <MuiBadge
             loading={rowButtonState?.id === row.id && rowButtonState?.loading}
-            onClick={handleOpenOffersView(row.id)}
+            onClick={handleOpenOffersView(row.id, row.quantity)}
             offersTotalCount={row.offersTotalCount}
           />
         </Stack>
@@ -175,7 +197,7 @@ const Requests = () => {
     // { field: "productName", headerName: "Product", width: 150 },
     { field: "companyName", headerName: "Company", width: 110 },
     // { field: "date", headerName: "Date", width: 100 },
-    // { field: "quantity", headerName: "Quantity", width: 100 },
+    { field: "quantity", headerName: "Quantity", width: 100 },
     {
       field: "action",
       headerName: "",
@@ -265,7 +287,7 @@ const Requests = () => {
       setRowsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [reloadTable]);
 
   const RequestView = () => {
     return (
@@ -323,12 +345,79 @@ const Requests = () => {
   };
 
   const OffersView = () => {
+    const [loading, setLoading] = useState(false);
+    const [selectedModelQuantity, setSelectedModelQuantity] = useState(0);
+    const handleSelectionModel = (model) => {
+      const totalCount =
+        selectedOffers &&
+        selectedOffers
+          .filter((offer) => model.find((id) => id === offer.id))
+          .map((filterdOffer) => filterdOffer.quantity)
+          .reduce((a, b) => a + b, 0);
+      setSelectedModelQuantity(totalCount);
+    };
+
+    const handleAcceptOrder = () => {
+      const doAction = async () => {
+        setLoading(true);
+        const buyerService = new BuyerService();
+        try {
+          const { errors } = await buyerService.acceptOffer();
+          if (errors.length === 0) {
+            setOpenOffersView(false);
+            setSelectedOffers(null);
+            setReloadTable((prev) => !prev);
+            triggerSnackBarAlert(
+              "Your order was successfully placed",
+              "success"
+            );
+          }
+        } catch (error) {
+          throw error;
+        }
+        setLoading(false);
+      };
+      doAction();
+    };
+
     return (
       selectedOffers && (
         <Box>
-          <MuiTableV2 rows={selectedOffers} columns={columnsOffers} />
+          <Stack
+            direction="row"
+            alignItems="flex-start"
+            className="request_placing_order_note"
+            spacing={2}
+            marginBottom={1}
+          >
+            <ErrorOutline fontSize="small" color="inherit" />
+            <small>
+              The total quantity of the offers you select must be equal to your
+              requested quantity
+            </small>
+          </Stack>
+
+          <Stack width={"100%"} spacing={1} marginBottom={2}>
+            <MuiLinearProgress
+              value={selectedModelQuantity}
+              completedValue={buyerRequestedQuantity}
+            />
+          </Stack>
+
+          <MuiTableV2
+            rows={selectedOffers}
+            columns={columnsOffers}
+            handleSelectionModel={handleSelectionModel}
+          />
           <Stack>
-            <SmallSecondary variant="contained">Place Order</SmallSecondary>
+            <SmallSecondaryV2
+              variant="contained"
+              onClick={handleAcceptOrder}
+              loading={loading}
+              disabled={selectedModelQuantity !== buyerRequestedQuantity}
+            >
+              Place Order
+            </SmallSecondaryV2>
           </Stack>
         </Box>
       )
@@ -406,7 +495,7 @@ const Requests = () => {
       </DrawerModal>
 
       <DrawerModal
-        boxStyle={xSmallBox}
+        boxStyle={xMediumBox}
         openState={openOffersView}
         toggleOpenState={toggleOpenOffersView}
         title="Offers Details"

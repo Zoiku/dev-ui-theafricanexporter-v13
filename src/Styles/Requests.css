@@ -1,5 +1,6 @@
 .Requests-Page-Merchant .tables-container {
-  height: 650px;
+  padding-bottom: 100px;
+  min-height: 600px;
 }
 
 .requests-section-container {
@@ -273,33 +274,9 @@
   align-content: center;
 }
 
-.request_row_container_loading {
-  height: 80px;
-  background: #efefef;
-  animation: flashing 0.8s ease infinite;
-}
-
-@keyframes flashing {
-  0% {
-    background: #efefef;
-  }
-
-  50% {
-    background: #efefef68;
-  }
-
-  100% {
-    background: #efefef;
-  }
-}
-
 @media screen and (max-width: 1000px) {
   .request-offer-body-container > div:nth-child(1) > div {
     border-bottom: 1px solid #efefef;
-  }
-
-  .Requests-Page-Merchant .tables-container {
-    height: 900px;
   }
 
   .request-offer-company-profile-section

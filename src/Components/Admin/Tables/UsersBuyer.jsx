@@ -31,6 +31,13 @@ const UsersBuyer = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [rowsButtonState, setRowsButtonState] = useState({
+    activated: {
+      id: null,
+      loading: false,
+    },
+  });
+
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserView, setOpenUserView] = useState(false);
   const toggleOpenUserView = (open) => () => {
@@ -43,16 +50,22 @@ const UsersBuyer = () => {
     setOpenUserView(true);
   };
 
-  const triggerSnackBarAlert = (message, timeOut, severity) => {
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
       severity,
       message,
-      timeOut,
     };
     rootDispatch(setAlert(payload));
   };
 
   const toggleActivate = async (status, id) => {
+    setRowsButtonState({
+      ...rowsButtonState,
+      activated: {
+        id: id,
+        loading: true,
+      },
+    });
     const adminService = new AdminService();
     try {
       const { errors } = await adminService.toggleActivate(status, id);
@@ -60,19 +73,24 @@ const UsersBuyer = () => {
         setReloadTable((prev) => !prev);
         triggerSnackBarAlert(
           `Status of buyer with ID: ${id} updated`,
-          5000,
           "success"
         );
       } else {
         triggerSnackBarAlert(
           `Status of buyer with ID: ${id} could not be updated`,
-          5000,
           "error"
         );
       }
     } catch (error) {
       throw error;
     }
+    setRowsButtonState({
+      ...rowsButtonState,
+      activated: {
+        id: null,
+        loading: false,
+      },
+    });
   };
 
   const handleToggleButtonsActions = (actionType, id, status) => () => {
@@ -113,6 +131,10 @@ const UsersBuyer = () => {
               row.id,
               row?.activated
             )}
+            disabled={
+              rowsButtonState.activated.id === row.id &&
+              rowsButtonState.activated.loading
+            }
           />
         </Stack>
       ),

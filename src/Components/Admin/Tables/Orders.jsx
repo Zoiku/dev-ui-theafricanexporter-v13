@@ -6,7 +6,7 @@ import BuyerService from "../../../Services/Buyer";
 import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { widerBox } from "../../../Styles/v2/box";
-import { Box, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import MuiStepper from "../../v2/components/Stepper";
 import { ORDER_STATUS } from "../../v2/components/OrderStatus";
@@ -35,6 +35,11 @@ const Orders = () => {
 
   const [selectedOrderReference, setSelectedOrderReference] = useState(null);
 
+  const [rowsButtonState, setRowsButtonState] = useState({
+    id: null,
+    loading: false,
+  });
+
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
@@ -54,6 +59,10 @@ const Orders = () => {
     const order = rows.find((row) => row.id === id);
     setSelectedOrder(order);
     const fetchData = async () => {
+      setRowsButtonState({
+        id: id,
+        loading: true,
+      });
       const buyerService = new BuyerService();
       try {
         const { data, errors } = await buyerService.getOrderList(order.ref);
@@ -74,6 +83,10 @@ const Orders = () => {
       } catch (error) {
         throw error;
       }
+      setRowsButtonState({
+        id: null,
+        loading: false,
+      });
     };
     fetchData();
   };
@@ -132,14 +145,20 @@ const Orders = () => {
       width: 50,
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
-          <MuiMoreV1>
-            <MenuItem onClick={handleOpenOrder(row.id)}>View</MenuItem>
-            {row.status === ORDER_STATUS["AWAITING PROOF OF PAYMENT"] && (
-              <MenuItem onClick={toggleOpenApproveDialog(true, row.ref)}>
-                Approve
-              </MenuItem>
-            )}
-          </MuiMoreV1>
+          {rowsButtonState.id === row.id && rowsButtonState.loading ? (
+            <div className="simple-center-div primary-tae-color">
+              <CircularProgress color="inherit" size={20} />
+            </div>
+          ) : (
+            <MuiMoreV1>
+              <MenuItem onClick={handleOpenOrder(row.id)}>View</MenuItem>
+              {row.status === ORDER_STATUS["AWAITING PROOF OF PAYMENT"] && (
+                <MenuItem onClick={toggleOpenApproveDialog(true, row.ref)}>
+                  Approve
+                </MenuItem>
+              )}
+            </MuiMoreV1>
+          )}
         </Stack>
       ),
     },

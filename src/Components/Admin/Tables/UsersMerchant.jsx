@@ -31,6 +31,17 @@ const UsersMerchant = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
 
+  const [rowsButtonState, setRowsButtonState] = useState({
+    validated: {
+      id: null,
+      loading: false,
+    },
+    activated: {
+      id: null,
+      loading: false,
+    },
+  });
+
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserView, setOpenUserView] = useState(false);
   const toggleOpenUserView = (open) => () => {
@@ -53,6 +64,13 @@ const UsersMerchant = () => {
   };
 
   const toggleActivate = async (status, id) => {
+    setRowsButtonState({
+      ...rowsButtonState,
+      activated: {
+        id: id,
+        loading: true,
+      },
+    });
     const adminService = new AdminService();
     try {
       const { errors } = await adminService.toggleActivate(status, id);
@@ -73,9 +91,23 @@ const UsersMerchant = () => {
     } catch (error) {
       throw error;
     }
+    setRowsButtonState({
+      ...rowsButtonState,
+      activated: {
+        id: null,
+        loading: false,
+      },
+    });
   };
 
   const togglValidate = async (id) => {
+    setRowsButtonState({
+      ...rowsButtonState,
+      validated: {
+        id: id,
+        loading: true,
+      },
+    });
     const adminService = new AdminService();
     try {
       const { errors } = await adminService.approveMerchant(id);
@@ -96,6 +128,13 @@ const UsersMerchant = () => {
     } catch (error) {
       throw error;
     }
+    setRowsButtonState({
+      ...rowsButtonState,
+      validated: {
+        id: null,
+        loading: false,
+      },
+    });
   };
 
   const handleToggleButtonsActions = (actionType, id, status) => () => {
@@ -134,7 +173,11 @@ const UsersMerchant = () => {
         <Stack direction="row" width={"100%"}>
           <MuiSwitch
             checked={row?.validated}
-            disabled={row?.validated}
+            disabled={
+              row?.validated |
+              (rowsButtonState.validated.id === row.id &&
+                rowsButtonState.validated.loading)
+            }
             onChange={handleToggleButtonsActions("VALIDATE", row.id, null)}
           />
         </Stack>
@@ -153,6 +196,10 @@ const UsersMerchant = () => {
               row.id,
               row?.activated
             )}
+            disabled={
+              rowsButtonState.activated.id === row.id &&
+              rowsButtonState.activated.loading
+            }
           />
         </Stack>
       ),
