@@ -12,6 +12,17 @@ import OfferTable from "../../v2/components/OfferTable";
 const Quotations = () => {
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
+  const [paging, setPaging] = useState({
+    page: 1,
+    size: 10,
+    totalCount: 0,
+  });
+  const handlePageChange = (page) => {
+    setPaging({ ...paging, page: page + 1 });
+  };
+  const handlePageSizeChange = (size) => {
+    setPaging({ ...paging, size: size });
+  };
 
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [openQuoteView, setOpenQuoteView] = useState(false);
@@ -212,7 +223,10 @@ const Quotations = () => {
         label="Quotations"
         rows={rows}
         columns={columns}
+        paging={paging}
         rowsLoading={rowsLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
       />
     </main>
   );

@@ -20,11 +20,20 @@ const Orders = () => {
   const rootDispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
+  const [tableReload, setTableReload] = useState(false);
+  const [paging, setPaging] = useState({
+    page: 1,
+    size: 10,
+    totalCount: 0,
+  });
+  const handlePageChange = (page) => {
+    setPaging({ ...paging, page: page + 1 });
+  };
+  const handlePageSizeChange = (size) => {
+    setPaging({ ...paging, size: size });
+  };
 
   const [selectedOrderId, setSelectedSelectedOrderId] = useState(null);
-
-  const [tableReload, setTableReload] = useState(false);
-
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [openOrderView, setOpenOrderView] = useState(false);
   const toggleOpenOrderView = (open) => () => {
@@ -205,7 +214,7 @@ const Orders = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Track Order">
-              <Stack direction="column" width="100%" spacing={2}>
+              <Stack paddingY={1} direction="column" width="100%" spacing={2}>
                 <ProgressBar status={selectedOrder?.status} />
                 <MuiStepper activeStep={selectedOrder?.status} />
               </Stack>
@@ -224,17 +233,18 @@ const Orders = () => {
         dialogTitle="Do you want to confirm this order?"
       >
         <Button1
-          onClick={toggleOpenConfirmDialog(false)}
-          variant="text"
           color="inherit"
+          variant="text"
+          onClick={toggleOpenConfirmDialog(false)}
+          disabled={dialogButtonLoading}
         >
           No
         </Button1>
         <Button1
-          onClick={dialogActionConfirm_Yes}
-          loading={dialogButtonLoading}
           variant="text"
           color="inherit"
+          onClick={dialogActionConfirm_Yes}
+          loading={dialogButtonLoading}
         >
           Yes
         </Button1>
@@ -275,7 +285,10 @@ const Orders = () => {
         label="Orders"
         rows={rows}
         columns={columns}
+        paging={paging}
         rowsLoading={rowsLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
       />
     </main>
   );

@@ -107,10 +107,6 @@ const MerchantLayout = ({ session }) => {
     >
       <div className="otp-content-container">
         <div>
-          {/* <div className="clip-art-image-container">
-            <img src={successImg} alt="" />
-          </div> */}
-
           <div className="registration-form-verification-code-container">
             <div>Almost Done!</div>
             <div>Kindly fill in the following company details.</div>

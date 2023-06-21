@@ -1,37 +1,44 @@
-.request_rows_container {
+.requests_view_container {
   margin: 20px 0 0 0;
+  height: 338px;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  overflow: auto;
+  padding: 0 5px 0px 0;
 }
 
-.request_row_container {
-  border-radius: 5px;
-  border: 1px solid #c5c5c5;
+.requests_view_inner {
+  height: 100%;
+}
+
+.request_items_container {
+  padding-bottom: 5px;
+}
+
+.requests_view_container:hover .request_item:not(:hover) {
+  opacity: 0.5;
+}
+
+.request_item {
+  border: 2px solid #c5c5c55f;
   padding: 10px;
-  margin: 0 0 10px 0;
-  cursor: pointer;
-}
-
-.request_row_container_loading {
-  border-radius: 5px;
-  height: 80px;
-  background: #efefef;
-  animation: flashing 0.8s ease infinite;
-}
-
-.request_row_container_loading_search {
-  border-radius: 5px;
-  height: 40px;
-  background: #efefef;
-  animation: flashing 0.8s ease infinite;
-}
-
-.request_row_inner_container > div {
-  width: 50%;
-  text-transform: capitalize;
   font-weight: 500;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 0 0 10px 0;
+  transition: all 0.1s ease;
+  text-transform: capitalize;
+}
+
+.request_item:hover {
+  border-color: #000;
+}
+
+.request_item_row > div {
+  width: 50%;
 }
 
 .request_quotation_box_container {
-  margin: 50px 0 0 0;
+  margin: 100px 0 0 0;
 }
 
 .request_quotation_box_title_container {
@@ -40,20 +47,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: underline;
 }
 
 .request_quotation_box_title {
   background: white;
   z-index: 2;
   padding: 0 20px;
-  font-size: small;
   font-weight: bold;
 }
 
 .request_quotation_box_title_container::after {
   content: "";
   width: 100%;
-  border: 1px dashed #c5c5c5;
   position: absolute;
   top: 50%;
   z-index: 1;
@@ -79,12 +85,6 @@
   padding: 10px;
   background: #efefef;
   border-radius: 3px;
-}
-
-.request_no_request_rows_container {
-  height: 400px;
-  display: grid;
-  place-content: center;
 }
 
 @keyframes flashing {

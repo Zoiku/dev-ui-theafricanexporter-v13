@@ -21,6 +21,18 @@ const Requests = () => {
   const [rowsLoading, setRowsLoading] = useState(false);
   const [reloadTable, setReloadTable] = useState(false);
 
+  const [paging, setPaging] = useState({
+    page: 1,
+    size: 10,
+    totalCount: 0,
+  });
+  const handlePageChange = (page) => {
+    setPaging({ ...paging, page: page + 1 });
+  };
+  const handlePageSizeChange = (size) => {
+    setPaging({ ...paging, size: size });
+  };
+
   const [buyerRequestedQuantity, setBuyerRequestedQuantity] = useState(null);
 
   const [rowButtonState, setRowButtonState] = useState({
@@ -155,7 +167,7 @@ const Requests = () => {
             return {
               companyName: company?.user?.companyName,
               businessType: company?.type?.label,
-              memberSince: company?.user?.createdOn,
+              memberSince: new Date(company?.user?.createdOn).toDateString(),
               establishedYear: company?.company?.year,
               numEmployees: company?.company?.noOfEmployees,
               supplyAbility: company?.company?.supplyAbility,
@@ -348,7 +360,7 @@ const Requests = () => {
               />
               <StackItem title="Origin" value={selectedRequest?.origin} />
               <StackItem
-                title="Container Size"
+                title="Container size"
                 value={selectedRequest?.containerSize}
               />
             </SectionItem>
@@ -379,6 +391,10 @@ const Requests = () => {
                   value={selectedRequest?.specification?.drying}
                 />
               )}
+              <StackItem
+                title="Quantity"
+                value={`${selectedRequest?.quantity} ${selectedRequest?.containerSize}`}
+              />
             </SectionItem>
 
             <SectionItem sectionTitle="Pricing and Delivery Information">
@@ -530,7 +546,10 @@ const Requests = () => {
         label="Requests"
         rows={rows}
         columns={columns}
+        paging={paging}
         rowsLoading={rowsLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
       />
     </main>
   );

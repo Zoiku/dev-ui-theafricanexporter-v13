@@ -1,8 +1,3 @@
-.Requests-Page-Merchant .tables-container {
-  padding-bottom: 100px;
-  min-height: 600px;
-}
-
 .requests-section-container {
   margin-top: 30px;
 }
@@ -23,7 +18,7 @@
 }
 
 .requests-section-container section > div {
-  padding: 15px;
+  padding: 20px;
   width: 100%;
 }
 
@@ -275,6 +270,10 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .Requests-Page-Merchant .tables-container {
+    padding: 20px;
+  }
+
   .request-offer-body-container > div:nth-child(1) > div {
     border-bottom: 1px solid #efefef;
   }

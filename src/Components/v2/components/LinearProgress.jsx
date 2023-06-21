@@ -17,17 +17,15 @@ export const MuiLinearProgress = ({ value, completedValue }) => {
       alignItems="center"
       justifyItems="space-between"
     >
-      <Box
-        className={
-          normalisedValue > 100
-            ? "linear_progress linear_progress_bad"
-            : "linear_progress"
-        }
-        sx={{ width: "100%", mr: 1 }}
-      >
+      <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress
-          color="inherit"
           variant="determinate"
+          className={
+            normalisedValue === 100
+              ? "linear_progress_good"
+              : "linear_progress_normal"
+          }
+          color={normalisedValue > 100 ? "error" : "inherit"}
           value={normalisedValue > 100 ? 100 : normalisedValue}
         />
       </Box>

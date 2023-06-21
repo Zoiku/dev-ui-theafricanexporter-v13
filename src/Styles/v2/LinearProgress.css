@@ -1,5 +1,9 @@
-.linear_progress {
-  color: #777;
+.linear_progress_normal {
+  color: #999;
+}
+
+.linear_progress_good {
+  color: #555;
 }
 
 .linear_progress_bad {

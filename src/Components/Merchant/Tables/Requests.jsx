@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import MerchantService from "../../../Services/Merchant";
-import { Box, Stack, Pagination, TextField } from "@mui/material";
+import { Box, Stack, TextField } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
 import "../../../Styles/v2/Pagination.css";
 import DrawerModal from "../../v2/components/DrawerModal";
@@ -12,19 +12,33 @@ import { SmallSecondary } from "../../../Material/Button";
 import { OfferTableV1 } from "../../v2/components/OfferTable";
 import { AddRounded, RemoveRounded } from "@mui/icons-material/";
 import LinearProgress from "@mui/material/LinearProgress";
-import { SearchBox } from "../../v2/components/SearchBox";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 import MuiDialog from "../../v2/components/Dialog";
 import { Button1 } from "../../v2/components/Buttons";
 import NoRowsOverlay from "../../../Material/Overlay";
+import TablePagination from "@mui/material/TablePagination";
+import { Skeleton } from "@mui/material";
 
 const Requests = () => {
-  const [page, setPage] = useState(1);
-  const [paginationCount, setPagination] = useState(0);
+  const [paging, setPaging] = useState({
+    page: 0,
+    totalCount: 0,
+    size: 10,
+  });
   const handlePaginationChange = (_e, value) => {
-    setPage(value);
+    setPaging({
+      ...paging,
+      page: value,
+    });
     window.scroll(0, 0);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setPaging({
+      ...paging,
+      page: 0,
+      size: parseInt(event.target.value, 10),
+    });
   };
 
   const [reloadTable, setReloadTable] = useState(false);
@@ -64,8 +78,7 @@ const Requests = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          const updatedPaginationCount = Math.ceil(data.data.totalCount / 5);
-          setPagination(updatedPaginationCount);
+          setPaging({ ...paging, totalCount: data.data.totalCount });
           const filteredData = data.data.data.map((request, index) => {
             const quotationProduct = request?.quotationProducts?.at(0);
             return {
@@ -100,7 +113,6 @@ const Requests = () => {
               },
             };
           });
-
           filteredData.sort((a, b) => b.requestNo - a.requestNo);
           setRows(filteredData);
         }
@@ -110,68 +122,135 @@ const Requests = () => {
       setRowsLoading(false);
     };
     fetchData();
+    // eslint-disable-next-line
   }, [reloadTable]);
 
   const RequestsView = () => {
     return (
-      <Box className="request_rows_container">
+      <Box className="requests_view_container">
         {rowsLoading ? (
-          <Box>
+          <Stack marginTop={1} direction="column" spacing={1}>
             <LinearProgress />
-            <Stack marginTop={1} direction="column" spacing={1}>
-              <div className="request_row_container_loading_search"></div>
-              {Array.from(Array(4)).map((_, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="request_row_container_loading"
-                  ></div>
-                );
-              })}
-            </Stack>
-          </Box>
-        ) : rows && rows.length > 0 ? (
-          <div>
-            <Stack marginBottom={1}>
-              <SearchBox />
-            </Stack>
-            {rows.slice(5 * page - 5, page * 5 - 1).map((request, index) => (
-              <Stack
-                onClick={handleOpenRequestView(request?.id)}
-                className="request_row_container"
-                direction="column"
+            {Array.from(Array(10)).map((_, index) => (
+              <Skeleton
+                variant="rounded"
                 key={index}
-                spacing={2}
-              >
-                <Stack
-                  className="request_row_inner_container"
-                  direction="row"
-                  justifyContent="space-between"
-                  spacing={1}
-                >
-                  <div>Request Number {request?.requestNo}</div>
-                  <div>{request?.destination}</div>
-                </Stack>
-                <Stack
-                  spacing={1}
-                  className="request_row_inner_container"
-                  direction="row"
-                  justifyContent="space-between"
-                >
-                  <div>{request?.createdOn}</div>
-                  <div>{request?.productName}</div>
-                </Stack>
-              </Stack>
+                animation="pulse"
+                height={80}
+              />
             ))}
-          </div>
+          </Stack>
         ) : (
-          <div className="request_no_request_rows_container">
-            <NoRowsOverlay label="Requests" />
-          </div>
+          <Box className="requests_view_inner">
+            {rows && rows.length > 0 ? (
+              <Box className="request_items_container">
+                {rows
+                  .slice(
+                    paging.page * paging.size,
+                    paging.page * paging.size + paging.size
+                  )
+                  .map((request) => (
+                    <Stack
+                      className="request_item"
+                      onClick={handleOpenRequestView(request?.id)}
+                      spacing={2}
+                    >
+                      <Stack
+                        spacing={1}
+                        className="request_item_row"
+                        direction="row"
+                        justifyContent="space-between"
+                      >
+                        <div>Request Number: {request?.requestNo}</div>
+                        <div>{request?.destination}</div>
+                      </Stack>
+                      <Stack
+                        spacing={1}
+                        className="request_item_row"
+                        direction="row"
+                        justifyContent="space-between"
+                      >
+                        <div>{request?.createdOn}</div>
+                        <div>{request?.productName}</div>
+                      </Stack>
+                    </Stack>
+                  ))}
+              </Box>
+            ) : (
+              <Stack
+                display="grid"
+                alignContent="center"
+                justifyContent="center"
+                height={"100%"}
+                borderTop={"1px solid rgba(224, 224, 224, 1)"}
+              >
+                <NoRowsOverlay label="Requests" />
+              </Stack>
+            )}
+          </Box>
         )}
       </Box>
     );
   };
+
+  // const RequestsView = () => {
+  //   return (
+  //     <Box className="request_rows_container">
+  //       {rowsLoading ? (
+  //         <Box>
+  //           <LinearProgress />
+  //           <Stack marginTop={1} direction="column" spacing={1}>
+  //             {Array.from(Array(10)).map((_, index) => {
+  //               return (
+  //                 <div
+  //                   key={index}
+  //                   className="request_row_container_loading"
+  //                 ></div>
+  //               );
+  //             })}
+  //           </Stack>
+  //         </Box>
+  //       ) : rows && rows.length > 0 ? (
+  //         <div>
+  //           <div className="request_row_container_inner_container">
+  //             {rows.map((request, index) => (
+  //               <Stack
+  //                 onClick={handleOpenRequestView(request?.id)}
+  //                 className="request_row_container"
+  //                 direction="column"
+  //                 key={index}
+  //                 spacing={2}
+  //               >
+  //                 <Stack
+  //                   className="request_row_inner_container"
+  //                   direction="row"
+  //                   justifyContent="space-between"
+  //                   spacing={1}
+  //                 >
+  //                   <div>Request Number {request?.requestNo}</div>
+  //                   <div>{request?.destination}</div>
+  //                 </Stack>
+  //                 <Stack
+  //                   spacing={1}
+  //                   className="request_row_inner_container"
+  //                   direction="row"
+  //                   justifyContent="space-between"
+  //                 >
+  //                   <div>{request?.createdOn}</div>
+  //                   <div>{request?.productName}</div>
+  //                 </Stack>
+  //               </Stack>
+  //             ))}
+  //           </div>
+  //         </div>
+  //       ) : (
+  //         <div className="request_no_request_rows_container">
+  //           <NoRowsOverlay label="Requests" />
+  //         </div>
+  //       )}
+  //     </Box>
+  //   );
+  // };
 
   const RequestView = () => {
     const requestID = selectedRequest?.id;
@@ -241,6 +320,7 @@ const Requests = () => {
             <Button1
               variant="text"
               color="inherit"
+              disabled={dialogButtonState}
               onClick={toggleOpenPostOfferDialog(false)}
             >
               No
@@ -408,14 +488,14 @@ const Requests = () => {
         <RequestView />
       </DrawerModal>
 
-      <Pagination
-        className="request_pagination"
-        showFirstButton
-        showLastButton
-        onChange={handlePaginationChange}
-        siblingCount={2}
-        boundaryCount={0}
-        count={paginationCount}
+      <TablePagination
+        component="div"
+        rowsPerPageOptions={[10, 20, 30, 40, 50]}
+        count={paging.totalCount}
+        page={paging.page}
+        rowsPerPage={paging.size}
+        onPageChange={handlePaginationChange}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </main>
   );

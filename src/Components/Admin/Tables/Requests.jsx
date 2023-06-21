@@ -118,9 +118,10 @@ const Requests = () => {
           paging
         );
         if (errors.length === 0) {
+          setPaging({ ...paging, totalCount: data.data.totalCount });
           const filteredData = data.data.data.map((request, index) => {
             return {
-              index: index + 1,
+              index: paging.size * paging.page - (paging.size - index) + 1,
               id: request?.id,
               requestNo: request?.requestNo,
               expiryDate: request?.expiryDate,
@@ -170,7 +171,8 @@ const Requests = () => {
     };
 
     fetchData();
-  }, [paging]);
+    // eslint-disable-next-line
+  }, [paging.page, paging.size]);
 
   const RequestView = () => {
     return (
