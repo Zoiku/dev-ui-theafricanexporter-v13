@@ -28,6 +28,8 @@ const Requests = () => {
     loading: false,
   });
 
+  const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
+
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openRequestView, setOpenRequestView] = useState(false);
   const toggleOpenRequestView = (open) => () => {
@@ -90,6 +92,47 @@ const Requests = () => {
       });
     };
     fetchData();
+  };
+  const [selectionModel, setSelectionModel] = useState(null);
+  const [selectedModelQuantity, setSelectedModelQuantity] = useState(0);
+  const handleSelectionModel = (model) => {
+    const totalCount =
+      selectedOffers &&
+      selectedOffers
+        .filter((offer) => model.find((id) => id === offer.id))
+        .map((filterdOffer) => filterdOffer.quantity)
+        .reduce((a, b) => a + b, 0);
+    const selections = selectedOffers
+      .filter((offer) => model.includes(offer.id))
+      .map((filteredData) => {
+        return {
+          offerID: filteredData.id,
+          merchantID: filteredData.merchant.id,
+          orderQuantity: filteredData.quantity,
+        };
+      });
+    setSelectionModel(selections);
+    setSelectedModelQuantity(totalCount);
+  };
+  const handleAcceptOrder = () => {
+    const doAction = async () => {
+      setPlaceOrderLoading(true);
+      setRowButtonState({});
+      const buyerService = new BuyerService();
+      try {
+        const { errors } = await buyerService.acceptOffer(selectionModel);
+        if (errors.length === 0) {
+          setOpenOffersView(false);
+          setSelectedOffers(null);
+          setReloadTable((prev) => !prev);
+          triggerSnackBarAlert("Your order was successfully placed", "success");
+        }
+      } catch (error) {
+        throw error;
+      }
+      setPlaceOrderLoading(false);
+    };
+    doAction();
   };
 
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -362,158 +405,6 @@ const Requests = () => {
     );
   };
 
-  const OffersView = () => {
-    const [selectionModel, setSelectionModel] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [selectedModelQuantity, setSelectedModelQuantity] = useState(0);
-    const handleSelectionModel = (model) => {
-      const totalCount =
-        selectedOffers &&
-        selectedOffers
-          .filter((offer) => model.find((id) => id === offer.id))
-          .map((filterdOffer) => filterdOffer.quantity)
-          .reduce((a, b) => a + b, 0);
-
-      const selections = selectedOffers
-        .filter((offer) => model.includes(offer.id))
-        .map((filteredData) => {
-          return {
-            offerID: filteredData.id,
-            merchantID: filteredData.merchant.id,
-            orderQuantity: filteredData.quantity,
-          };
-        });
-
-      setSelectionModel(selections);
-      setSelectedModelQuantity(totalCount);
-    };
-
-    const handleAcceptOrder = () => {
-      const doAction = async () => {
-        setLoading(true);
-        const buyerService = new BuyerService();
-        try {
-          const { errors } = await buyerService.acceptOffer(selectionModel);
-          if (errors.length === 0) {
-            setOpenOffersView(false);
-            setSelectedOffers(null);
-            setReloadTable((prev) => !prev);
-            triggerSnackBarAlert(
-              "Your order was successfully placed",
-              "success"
-            );
-          }
-        } catch (error) {
-          throw error;
-        }
-        setLoading(false);
-      };
-      doAction();
-    };
-
-    return (
-      selectedOffers && (
-        <Box>
-          <Stack
-            direction="row"
-            alignItems="flex-start"
-            className="request_placing_order_note"
-            spacing={2}
-            marginBottom={1}
-          >
-            <ErrorOutline fontSize="small" color="inherit" />
-            <small>
-              The total quantity of the offers you select must be equal to your
-              requested quantity
-            </small>
-          </Stack>
-
-          <Stack width={"100%"} spacing={1} marginBottom={2}>
-            <MuiLinearProgress
-              value={selectedModelQuantity}
-              completedValue={buyerRequestedQuantity}
-            />
-          </Stack>
-
-          <MuiTableV2
-            rows={selectedOffers}
-            columns={columnsOffers}
-            handleSelectionModel={handleSelectionModel}
-          />
-          <Stack>
-            <SmallSecondaryV2
-              variant="contained"
-              onClick={handleAcceptOrder}
-              loading={loading}
-              disabled={selectedModelQuantity !== buyerRequestedQuantity}
-            >
-              Place Order
-            </SmallSecondaryV2>
-          </Stack>
-        </Box>
-      )
-    );
-  };
-
-  const OfferView = () => {
-    return (
-      selectedOffer && (
-        <Box>
-          <div>
-            <SectionItem sectionTitle="Request Summary">
-              <StackItem
-                title="Product Name"
-                value={selectedOffer?.requestSummary?.productName}
-              />
-              <StackItem
-                title="Terms"
-                value={selectedOffer?.requestSummary?.terms}
-              />
-              <StackItem
-                title="Destination"
-                value={selectedOffer?.requestSummary?.destination}
-              />
-            </SectionItem>
-
-            <SectionItem sectionTitle="Offer Table">
-              <OfferTable
-                offerRows={selectedOffer?.offerRows}
-                product={selectedOffer?.requestSummary?.productName}
-                incoterm={selectedOffer?.requestSummary?.terms}
-              />
-            </SectionItem>
-
-            <SectionItem sectionTitle="Company Profile">
-              <StackItem
-                title="Merchant Name"
-                value={selectedOffer?.requestSummary?.merchantName}
-              />
-              <StackItem title="Company" value={selectedOffer?.companyName} />
-              <StackItem title="Address" value={selectedOffer?.address} />
-              <StackItem title="City" value={selectedOffer?.city} />
-              <StackItem
-                title="Member Since"
-                value={selectedOffer?.memberSince}
-              />
-              <StackItem
-                title="Business Type"
-                value={selectedOffer?.businessType}
-              />
-              <StackItem
-                title="Number of Employees"
-                value={selectedOffer?.numEmployees}
-              />
-              <StackItem
-                title="Supply Ability"
-                value={selectedOffer?.supplyAbility}
-              />
-            </SectionItem>
-          </div>
-        </Box>
-      )
-    );
-  };
-
   return (
     <main>
       <DrawerModal
@@ -531,7 +422,46 @@ const Requests = () => {
         toggleOpenState={toggleOpenOffersView}
         title="Offers Details"
       >
-        <OffersView />
+        {selectedOffers && (
+          <Box>
+            <Stack
+              direction="row"
+              alignItems="flex-start"
+              className="request_placing_order_note"
+              spacing={2}
+              marginBottom={1}
+            >
+              <ErrorOutline fontSize="small" color="inherit" />
+              <small>
+                The total quantity of the offers you select must be equal to
+                your requested quantity
+              </small>
+            </Stack>
+
+            <Stack width={"100%"} spacing={1} marginBottom={2}>
+              <MuiLinearProgress
+                value={selectedModelQuantity}
+                completedValue={buyerRequestedQuantity}
+              />
+            </Stack>
+
+            <MuiTableV2
+              rows={selectedOffers}
+              columns={columnsOffers}
+              handleSelectionModel={handleSelectionModel}
+            />
+            <Stack>
+              <SmallSecondaryV2
+                variant="contained"
+                onClick={handleAcceptOrder}
+                loading={placeOrderLoading}
+                disabled={selectedModelQuantity !== buyerRequestedQuantity}
+              >
+                Place Order
+              </SmallSecondaryV2>
+            </Stack>
+          </Box>
+        )}
       </DrawerModal>
 
       <DrawerModal
@@ -540,7 +470,60 @@ const Requests = () => {
         toggleOpenState={toggleOpenOfferView}
         title="Offer Details"
       >
-        <OfferView />
+        {selectedOffer && (
+          <Box>
+            <div>
+              <SectionItem sectionTitle="Request Summary">
+                <StackItem
+                  title="Product Name"
+                  value={selectedOffer?.requestSummary?.productName}
+                />
+                <StackItem
+                  title="Terms"
+                  value={selectedOffer?.requestSummary?.terms}
+                />
+                <StackItem
+                  title="Destination"
+                  value={selectedOffer?.requestSummary?.destination}
+                />
+              </SectionItem>
+
+              <SectionItem sectionTitle="Offer Table">
+                <OfferTable
+                  offerRows={selectedOffer?.offerRows}
+                  product={selectedOffer?.requestSummary?.productName}
+                  incoterm={selectedOffer?.requestSummary?.terms}
+                />
+              </SectionItem>
+
+              <SectionItem sectionTitle="Company Profile">
+                <StackItem
+                  title="Merchant Name"
+                  value={selectedOffer?.requestSummary?.merchantName}
+                />
+                <StackItem title="Company" value={selectedOffer?.companyName} />
+                <StackItem title="Address" value={selectedOffer?.address} />
+                <StackItem title="City" value={selectedOffer?.city} />
+                <StackItem
+                  title="Member Since"
+                  value={selectedOffer?.memberSince}
+                />
+                <StackItem
+                  title="Business Type"
+                  value={selectedOffer?.businessType}
+                />
+                <StackItem
+                  title="Number of Employees"
+                  value={selectedOffer?.numEmployees}
+                />
+                <StackItem
+                  title="Supply Ability"
+                  value={selectedOffer?.supplyAbility}
+                />
+              </SectionItem>
+            </div>
+          </Box>
+        )}
       </DrawerModal>
 
       <MuiTableV1
