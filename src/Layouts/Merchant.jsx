@@ -1,10 +1,7 @@
 import "../Styles/AppLayout.css";
 import { Outlet } from "react-router-dom";
 import Nav from "../Components/Merchant/Nav";
-import Menu from "../Components/Merchant/Menu";
-import AppNav from "../Components/Merchant/AppNav";
 import { useEffect, useState, useReducer } from "react";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Drawer from "@mui/material/Drawer";
 import { useDispatch } from "react-redux";
@@ -22,6 +19,8 @@ import MerchantService from "../Services/Merchant";
 import { fillScreen } from "../Styles/Modal";
 import Modal from "@mui/material/Modal";
 import Tutorial from "../Components/Tutorial";
+import { Box, Stack } from "@mui/material";
+import AppMenu from "../Components/v2/components/AppMenu";
 
 const MerchantLayout = ({ session }) => {
   const { user } = session;
@@ -220,21 +219,25 @@ const MerchantLayout = ({ session }) => {
         </Drawer>
       </div>
 
-      <Nav session={session} />
-
-      <div className="app-container">
-        <div className="app-menu-container">
-          <Menu />
+      <Stack direction="column" className="app-layout">
+        <div className="app-layout-nav">
+          <Nav session={session} />
         </div>
-        <div className="app-body-container">
-          <div className="app-body">
-            <Outlet />
+        <Stack className="app-layout-workspace" direction="row">
+          <div className="app-layout-menu">
+            <AppMenu />
           </div>
-        </div>
-        <div className="app-bottom-navigation">
-          <AppNav />
-        </div>
-      </div>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            className="app-layout-body-container"
+          >
+            <div className="app-layout-body">
+              <Outlet />
+            </div>
+          </Stack>
+        </Stack>
+      </Stack>
     </div>
   );
 };

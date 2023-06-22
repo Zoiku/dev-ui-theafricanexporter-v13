@@ -1,3 +1,12 @@
+export const addCommas = (num) => {
+  const str = num.toString();
+  if (str.length <= 3) {
+    return str;
+  } else {
+    return addCommas(str.slice(0, -3)) + "," + str.slice(-3);
+  }
+};
+
 export const getToken = () => {
   const token =
     sessionStorage.getItem("token") !== null

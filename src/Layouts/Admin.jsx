@@ -1,27 +1,30 @@
 import "../Styles/AppLayout.css";
 import { Outlet } from "react-router-dom";
 import Nav from "../Components/Admin/Nav";
-import Menu from "../Components/Admin/Menu";
-import AppNav from "../Components/Admin/AppNav";
+import { Box, Stack } from "@mui/material";
+import AppMenu from "../Components/v2/components/AppMenu";
 
 const AdminLayout = () => {
   return (
-    <div className="Admin-Layout App-Layout">
-      <Nav />
-      <div className="app-container">
-        <div className="app-menu-container">
-          <Menu />
+    <Stack direction="column" className="app-layout">
+      <div className="app-layout-nav">
+        <Nav />
+      </div>
+      <Stack className="app-layout-workspace" direction="row">
+        <div className="app-layout-menu">
+          <AppMenu />
         </div>
-        <div className="app-body-container">
-          <div className="app-body">
+        <Stack
+          direction="row"
+          justifyContent="center"
+          className="app-layout-body-container"
+        >
+          <div className="app-layout-body">
             <Outlet />
           </div>
-        </div>
-        <div className="app-bottom-navigation">
-          <AppNav />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 };
 

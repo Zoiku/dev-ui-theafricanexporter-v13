@@ -13,7 +13,7 @@ export const smallBox = {
 export const xSmallBox = {
   position: "relative",
   top: "50%",
-  left: "58.3%",
+  left: "50%",
   transform: "translate(-50%, -50%)",
   width: 350,
   borderRadius: "5px",
@@ -25,7 +25,7 @@ export const xSmallBox = {
 export const xMediumBox = {
   position: "relative",
   top: "50%",
-  left: "58.3%",
+  left: "50%",
   transform: "translate(-50%, -50%)",
   width: 450,
   borderRadius: "5px",
@@ -37,7 +37,7 @@ export const xMediumBox = {
 export const normalBox = {
   position: "relative",
   top: "50%",
-  left: "58.3%",
+  left: "50%",
   transform: "translate(-50%, -50%)",
   width: 500,
   borderRadius: "5px",
@@ -49,7 +49,7 @@ export const normalBox = {
 export const wideBox = {
   position: "relative",
   top: "50%",
-  left: "58.3%",
+  left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
   borderRadius: "5px",
@@ -61,7 +61,7 @@ export const wideBox = {
 export const widerBox = {
   position: "relative",
   top: "50%",
-  left: "58.3%",
+  left: "50%",
   transform: "translate(-50%, -50%)",
   width: 1000,
   borderRadius: "5px",

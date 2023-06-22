@@ -4,7 +4,7 @@ import Footer from "../Components/Footer";
 
 const Default = ({ session }) => {
   return (
-    <div className="Default-Layout">
+    <div>
       <Nav session={session} />
       <Outlet />
       <Footer />

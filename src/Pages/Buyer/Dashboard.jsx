@@ -8,9 +8,7 @@ const Dashboard = ({ session }) => {
 
   return (
     <div className="Buyer-Dashboard">
-      <div>
-        <Salutation name={user?.profile?.firstName} />
-      </div>
+      <Salutation name={user?.profile?.firstName} />
 
       <div className="buyer-dashboard-body-container">
         <div>

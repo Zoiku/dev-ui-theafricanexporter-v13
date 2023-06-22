@@ -1,10 +1,11 @@
 import "../Styles/AppLayout.css";
 import { Outlet } from "react-router-dom";
 import Nav from "../Components/Buyer/Nav";
-import Menu from "../Components/Buyer/Menu";
-import AppNav from "../Components/Buyer/AppNav";
+// import Menu from "../Components/Buyer/Menu";
 import { useState, useEffect } from "react";
 import Tutorial from "../Components/Tutorial";
+import AppMenu from "../Components/v2/components/AppMenu";
+import { Stack } from "@mui/material";
 
 const BuyerLayout = ({ session }) => {
   const { user } = session;
@@ -27,22 +28,25 @@ const BuyerLayout = ({ session }) => {
   return notLoggedBefore ? (
     <Tutorial user={user} openDrawer={notLoggedBefore} />
   ) : (
-    <div className="Buyer-Layout App-Layout">
-      <Nav session={session} />
-      <div className="app-container">
-        <div className="app-menu-container">
-          <Menu />
+    <Stack direction="column" className="app-layout">
+      <div className="app-layout-nav">
+        <Nav session={session} />
+      </div>
+      <Stack className="app-layout-workspace" direction="row">
+        <div className="app-layout-menu">
+          <AppMenu />
         </div>
-        <div className="app-body-container">
-          <div className="app-body">
+        <Stack
+          direction="row"
+          justifyContent="center"
+          className="app-layout-body-container"
+        >
+          <div className="app-layout-body">
             <Outlet />
           </div>
-        </div>
-        <div className="app-bottom-navigation">
-          <AppNav />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 };
 

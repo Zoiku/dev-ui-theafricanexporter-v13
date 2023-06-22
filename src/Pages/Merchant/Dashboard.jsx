@@ -11,15 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { SEND_REQUEST, REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../../Reducers/Actions";
 import { useReducer } from "react";
 import empty from "../../Assets/Croods - Chart.png";
-
-const addCommas = (num) => {
-    const str = num.toString();
-    if (str.length <= 3) {
-        return str;
-    } else {
-        return addCommas(str.slice(0, -3)) + ',' + str.slice(-3);
-    }
-}
+import { addCommas } from "../../Components/Functions";
 
 const Dashboard = ({ session }) => {
     const { user } = session;

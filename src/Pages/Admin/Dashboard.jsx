@@ -194,9 +194,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="Admin-DashBoard">
-      <div>
-        <Salutation name={"Admin"} />
-      </div>
+      <Salutation name={"Admin"} />
 
       <div className="dashboard-body-container">
         <div>
