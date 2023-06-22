@@ -1,0 +1,20 @@
+.page_table_box {
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #c5c5c5;
+}
+
+.page_title {
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.page_helper {
+  color: gray;
+  font-size: small;
+  font-weight: 500;
+}
+
+.page_table {
+  height: 100%;
+}

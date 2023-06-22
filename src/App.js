@@ -135,7 +135,6 @@ const App = () => {
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/legal" element={<LegalPage />} />
           <Route exact path="/faq" element={<FAQ2 />} />
-          {/* <Route exact path="/faq2" element={<FAQ2 />} /> */}
         </Route>
 
         <Route element={<ProtectedAdminRoutes session={session} />}>

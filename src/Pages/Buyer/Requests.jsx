@@ -1,20 +1,17 @@
 import RequestsTable from "../../Components/Buyer/Tables/Requests";
-import "../../Styles/Tables.css";
+import MainBox from "../../Components/v2/components/MainBox";
 
-const Requests = () => {
+const Orders = () => {
   return (
-    <div className="Requests-Page">
-      <div className="tables-container">
-        <div className="dash-items-title-container">
-          <div>Requests</div>
-          <div>Timeline of all eligible requests from buyer</div>
-        </div>
-        <div>
-          <RequestsTable />
-        </div>
-      </div>
+    <div>
+      <MainBox
+        title="Requests"
+        helper="Responses to buyer requests"
+      >
+        <RequestsTable />
+      </MainBox>
     </div>
   );
 };
 
-export default Requests;
+export default Orders;

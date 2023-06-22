@@ -1,21 +1,17 @@
 import RequestsTable from "../../Components/Merchant/Tables/Requests";
-import "../../Styles/Tables.css";
-import "../../Styles/Requests.css";
+import MainBox from "../../Components/v2/components/MainBox";
 
 const Requests = () => {
-    return (
-        <div className="Requests-Page-Merchant">
-            <div className="tables-container">
-                <div className="dash-items-title-container">
-                    <div>Requests Timeline</div>
-                    <div>Timeline of all eligible requests</div>
-                </div>
-                <div>
-                    <RequestsTable />
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="main_page">
+      <MainBox
+        title="Requests Timeline"
+        helper="Timeline of all eligible requests"
+      >
+        <RequestsTable />
+      </MainBox>
+    </div>
+  );
+};
 
 export default Requests;

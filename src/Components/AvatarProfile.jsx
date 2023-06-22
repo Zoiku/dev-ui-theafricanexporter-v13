@@ -2,17 +2,23 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 import { StyledBadge } from "../Material/Avatar";
 
-const AvatarProfile = ({ fullName }) => {
+const AvatarProfile = ({
+  fullName,
+  variant = "rounded",
+  width = 100,
+  height = 100,
+  fontSize = 50,
+}) => {
   return (
     <div>
       <StyledBadge
-        overlap="rectangular"
+        overlap={variant}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >
         <Avatar
-          variant="rounded"
-          sx={{ width: 100, height: 100, fontSize: 50 }}
+          variant={variant}
+          sx={{ width: width, height: height, fontSize: fontSize }}
           alt={fullName}
           src="/"
         />

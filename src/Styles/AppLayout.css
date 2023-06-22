@@ -1,21 +1,29 @@
-.app-layout {
-  height: 100vh;
+/* .app-layout {
+  border: 5px solid red;
 }
 
-.app-layout-menu {
-  height: 100%;
+.app-layout-nav {
+  border: 5px solid blue;
+  z-index: 10;
+  position: sticky;
+  top: 0;
 }
 
 .app-layout-workspace {
-  height: fit-content;
+  border: 5px solid green;
   height: 100%;
+}
+
+.app-layout-menu {
+  border: 5px solid brown;
 }
 
 .app-layout-body-container {
   width: 100%;
+  border: 5px solid orange;
 }
 
 .app-layout-body {
   width: 1000px;
-  margin: 30px 0;
-}
+  border: 5px solid rosybrown;
+} */

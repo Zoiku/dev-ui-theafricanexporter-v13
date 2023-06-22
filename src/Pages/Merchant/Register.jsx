@@ -1,5 +1,8 @@
 import "../../Styles/Register.css";
-import { strictMatch, capitalizeFirstLetter } from "../../Components/Functions/";
+import {
+  strictMatch,
+  capitalizeFirstLetter,
+} from "../../Components/Functions/";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { PrimaryButton } from "../../Material/Button";
