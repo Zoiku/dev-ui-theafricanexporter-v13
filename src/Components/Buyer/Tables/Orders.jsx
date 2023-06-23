@@ -788,7 +788,10 @@ const Orders = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          const filteredData = data.data.data;
+          const filteredData = data.data.data.map((order) => {
+            return order?.doc?.at(0);
+          });
+
           Promise.all(
             filteredData.map(async (order, index) => {
               order.id = order._id;
