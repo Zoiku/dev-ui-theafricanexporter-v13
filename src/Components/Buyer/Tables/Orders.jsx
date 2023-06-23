@@ -11,6 +11,9 @@ import DrawerModal from "../../v2/components/DrawerModal";
 import { SmallPrimary } from "../../../Material/Button";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
+import { checkConfirmation } from "../../Functions";
+import "../../../Styles/v2/Orders.css";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const Orders = () => {
   const [rows, setRows] = useState([]);
@@ -48,7 +51,6 @@ const Orders = () => {
       try {
         const { data, errors } = await buyerService.getOrderList(ref);
         if (errors.length === 0) {
-          console.log(data.data.data);
           const filteredData = data.data.data.map((orders, index) => {
             const quotationProduct = orders?.request?.quotationProducts?.at(0);
             return {
@@ -93,13 +95,18 @@ const Orders = () => {
     setOpenOrderView(true);
   };
 
+  const [openConfirmForm, setOpenConfirmForm] = useState(false);
+  const toggleOpenConfirmForm = (open) => () => {
+    setOpenConfirmForm(open);
+  };
+
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "orderNo", headerName: "Order #", width: 100 },
-    { field: "productName", headerName: "Product", width: 150 },
+    { field: "productName", headerName: "Product", width: 180 },
     { field: "incoterm", headerName: "Terms", width: 100 },
     { field: "quantity", headerName: "Quantity", width: 100 },
-    { field: "destination", headerName: "Destination", width: 150 },
+    { field: "destination", headerName: "Destination", width: 180 },
     {
       field: "timeLeft",
       headerName: "Time Left",
@@ -127,6 +134,11 @@ const Orders = () => {
               <MenuItem onClick={handleOpenOrdersView(row.id, row.ref)}>
                 View
               </MenuItem>
+              {row.confirmedStatus && (
+                <MenuItem onClick={toggleOpenConfirmForm(true)}>
+                  Confirm
+                </MenuItem>
+              )}
             </MuiMoreV1>
           )}
         </Stack>
@@ -167,12 +179,15 @@ const Orders = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          const filteredData = data.data.data.map((order, index) => {
+          const filteredData = data.data.data.map((orderOffers, index) => {
+            const order = orderOffers?.doc?.at(0);
             const quotationProduct = order?.request?.quotationProducts.at(0);
             return {
               index: index + 1,
               id: order?._id,
-              ref: order?.referenceCode,
+              ref: orderOffers?._id,
+              confirmedStatus: checkConfirmation(orderOffers?.OrderStatus),
+              offerList: orderOffers?.doc,
               orderNo: order?.orderNo,
               productName: quotationProduct?.product?.name,
               destination: order?.request?.destination,
@@ -250,6 +265,27 @@ const Orders = () => {
             </div>
           </Box>
         )}
+      </DrawerModal>
+
+      <DrawerModal
+        title="Confirm Order"
+        boxStyle={xMediumBox}
+        openState={openConfirmForm}
+        toggleOpenState={toggleOpenConfirmForm}
+      >
+        <Stack direction="column" spacing={2}>
+          <Stack
+            className="order_confirmation_note"
+            direction="row"
+            alignContent="center"
+            spacing={1}
+          >
+            <div>
+              <InfoOutlinedIcon />
+            </div>
+            <div>Please fill all required fields</div>
+          </Stack>
+        </Stack>
       </DrawerModal>
 
       <MuiTableV1

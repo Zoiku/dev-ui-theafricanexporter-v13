@@ -203,8 +203,8 @@ const Requests = () => {
     { field: "index", headerName: "Number", width: 80 },
     { field: "requestNo", headerName: "Request #", width: 100 },
     { field: "productName", headerName: "Product", width: 150 },
-    { field: "origin", headerName: "Origin", width: 100 },
-    { field: "destination", headerName: "Destination", width: 100 },
+    { field: "origin", headerName: "Origin", width: 130 },
+    { field: "destination", headerName: "Destination", width: 150 },
     { field: "quantity", headerName: "Quantity", width: 100 },
     {
       field: "timeLeft",

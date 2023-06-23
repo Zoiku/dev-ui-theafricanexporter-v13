@@ -168,11 +168,11 @@ const Orders = ({ recentOrdersFilter = false }) => {
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "orderNo", headerName: "Order #", width: 100 },
-    { field: "productName", headerName: "Product", width: 150 },
+    { field: "productName", headerName: "Product", width: 180 },
     { field: "terms", headerName: "Terms", width: 100 },
     { field: "destination", headerName: "Destination", width: 100 },
     { field: "quantity", headerName: "Quantity", width: 100 },
-    { field: "status", headerName: "Status", width: 150 },
+    { field: "status", headerName: "Status", width: 180 },
     {
       field: "actions",
       headerName: "",

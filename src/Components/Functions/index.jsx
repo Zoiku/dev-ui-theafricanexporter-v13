@@ -1,3 +1,12 @@
+export const checkConfirmation = (array) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] !== "CONFIRMED") {
+      return false;
+    }
+  }
+  return true;
+};
+
 export const checkAllZero = (array) => {
   return array.every((value) => value === 0);
 };

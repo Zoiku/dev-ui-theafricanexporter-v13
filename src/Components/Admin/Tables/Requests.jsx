@@ -75,9 +75,9 @@ const Requests = () => {
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "requestNo", headerName: "Request #", width: 100 },
-    { field: "product", headerName: "Product", width: 150 },
+    { field: "product", headerName: "Product", width: 180 },
     { field: "terms", headerName: "Terms", width: 100 },
-    { field: "destination", headerName: "Destination", width: 100 },
+    { field: "destination", headerName: "Destination", width: 150 },
     { field: "quantity", headerName: "Quantity", width: 100 },
     {
       field: "timeLeft",
