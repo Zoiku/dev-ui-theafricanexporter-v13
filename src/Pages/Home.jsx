@@ -54,7 +54,6 @@ const Home = ({ session }) => {
       setPageLoad(false);
     };
     fetchData();
-
     return () => abortController.abort();
   }, []);
 

@@ -16,7 +16,7 @@ import { MenuItem } from "@mui/material";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 
-const Orders = () => {
+const Orders = ({ recentOrdersFilter = false }) => {
   const [paging, setPaging] = useState({
     page: 1,
     size: 10,
@@ -260,6 +260,10 @@ const Orders = () => {
               },
             };
           });
+          {
+            recentOrdersFilter &&
+              filteredData.sort((a, b) => b.orderNo - a.orderNo).slice(0, 10);
+          }
           setRows(filteredData);
         }
       } catch (error) {
@@ -267,8 +271,8 @@ const Orders = () => {
       }
       setRowsLoading(false);
     };
-
     fetchData();
+    return () => abortController.abort();
     // eslint-disable-next-line
   }, [paging.page, paging.size, reloadTable]);
 
@@ -284,7 +288,7 @@ const Orders = () => {
                 value={selectedOrder?.product?.species}
               />
               <StackItem
-                title="Type of Species"
+                title="Type Of Species"
                 value={selectedOrder?.product?.speciesType}
               />
               <StackItem title="Origin" value={selectedOrder?.origin} />

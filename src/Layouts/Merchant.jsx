@@ -1,9 +1,7 @@
 import "../Styles/v2/AppLayout.css";
-import { Outlet } from "react-router-dom";
 import Nav from "../Components/Merchant/Nav";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState, useReducer } from "react";
-import TextField from "@mui/material/TextField";
-import Drawer from "@mui/material/Drawer";
 import { useDispatch } from "react-redux";
 import { initCompany } from "../Redux/Features/Session";
 import { PrimaryButton } from "../Material/Button";
@@ -15,19 +13,39 @@ import {
   REQUEST_FAILED,
 } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js";
-import MerchantService from "../Services/Merchant";
-import { fillScreen } from "../Styles/Modal";
-import Modal from "@mui/material/Modal";
-import Tutorial from "../Components/Tutorial";
-import { Box } from "@mui/material";
 import AppLayout from "./AppLayout";
+import MerchantService from "../Services/Merchant";
+import Tutorial from "../Components/Tutorial";
+import DrawerModal from "../Components/v2/components/DrawerModal";
+import { normalBox } from "../Styles/v2/box";
+import { Box, TextField, Stack } from "@mui/material";
+
+const CompanyInputRow = ({ children }) => {
+  return (
+    <Stack direction="row" justifyContent="space-between" spacing={1}>
+      {children}
+    </Stack>
+  );
+};
 
 const MerchantLayout = ({ session }) => {
-  const { user } = session;
-  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const user = session?.user;
   const rootDispatch = useDispatch();
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [notLoggedBefore, setNotLoggedBefore] = useState(false);
+  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+
+  const [openCompanyForm, setOpenCompanyForm] = useState(false);
+  const toggleOpenCompanyForm = (open) => () => {
+    setOpenCompanyForm(open);
+  };
+
+  const triggerSnackBarAlert = (message, severity) => {
+    const payload = {
+      severity,
+      message,
+    };
+    rootDispatch(setAlert(payload));
+  };
 
   const handleChange = (e) => {
     dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
@@ -42,42 +60,25 @@ const MerchantLayout = ({ session }) => {
         state.payload
       );
       if (errors.length === 0) {
-        rootDispatch(initCompany(state.payload));
         dispatch({ type: REQUEST_SUCCESSFUL });
-        handleSuccessfulRequest("Company details updated successfully", 3000);
-        setOpenDrawer(false);
+        rootDispatch(initCompany(state.payload));
+        setOpenCompanyForm(false);
+        triggerSnackBarAlert("Company details updated successfully", "success");
       } else {
         dispatch({ type: REQUEST_FAILED });
-        handleFailedRequest(
+        triggerSnackBarAlert(
           "Could not process request, please try again",
-          5000
+          "error"
         );
       }
-    } catch (error) {}
-  };
-
-  const handleFailedRequest = (message, timeOut) => {
-    const payload = {
-      severity: "error",
-      message,
-      timeOut,
-    };
-    rootDispatch(setAlert(payload));
-  };
-
-  const handleSuccessfulRequest = (message, timeOut) => {
-    const payload = {
-      severity: "success",
-      message,
-      timeOut,
-    };
-    rootDispatch(setAlert(payload));
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {
     if (user.hasOwnProperty("profile")) {
       const isLoggedBefore = user.profile.user?.isLoggedBefore;
-
       if (isLoggedBefore !== undefined) {
         if (isLoggedBefore) {
           setNotLoggedBefore(false);
@@ -92,132 +93,104 @@ const MerchantLayout = ({ session }) => {
     if (user.hasOwnProperty("profile")) {
       const { company } = user.profile;
       if (!company) {
-        setOpenDrawer(true);
+        setOpenCompanyForm(true);
       }
     }
   }, [user]);
 
-  const list = () => (
-    <Box
-      role="presentation"
-      component="form"
-      onSubmit={handleSubmit}
-      className="otp-password-container-container"
-    >
-      <div className="otp-content-container">
+  const companyFormView = () => {
+    return (
+      <Box component="form" onSubmit={handleSubmit}>
         <div>
-          <div className="registration-form-verification-code-container">
-            <div>Almost Done!</div>
-            <div>Kindly fill in the following company details.</div>
+          <div style={{ fontWeight: 600, fontSize: "x-large" }}>
+            Almost Done!
           </div>
-
-          <div className="form-controller-container">
-            <div className="form-controller-input form-controller-duo-input">
-              <TextField
-                inputProps={{ pattern: ".{4}" }}
-                required
-                name="year"
-                onChange={handleChange}
-                fullWidth
-                label="Year Established"
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: 1 }}
-                required
-                type="number"
-                name="noOfEmployees"
-                onChange={handleChange}
-                fullWidth
-                label="No Employees"
-                variant="outlined"
-              />
-            </div>
-
-            <div className="form-controller-input">
-              <TextField
-                inputProps={{ min: 1 }}
-                required
-                type="number"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <div
-                      style={{
-                        width: "280px",
-                        textAlign: "right",
-                        fontSize: "12px",
-                        color: "gray",
-                      }}
-                    >
-                      20ft container per month
-                    </div>
-                  ),
-                }}
-                fullWidth
-                label="Supply Ability"
-                name="supplyAbility"
-                variant="outlined"
-              />
-            </div>
-
-            <div className="form-controller-input">
-              <TextField
-                required
-                rows={3}
-                onChange={handleChange}
-                multiline
-                fullWidth
-                label="Company History"
-                placeholder="Write something about your company, its founders, mission, vision, achievements, etc"
-                name="introduction"
-                variant="outlined"
-              />
-            </div>
-          </div>
-
-          <div>
-            <PrimaryButton
-              loading={state.requestState.loading}
-              type="submit"
-              variant="contained"
-              sx={{ width: "100%" }}
-            >
-              Complete Profile
-            </PrimaryButton>
-          </div>
+          <small>Kindly fill in the following company details</small>
         </div>
-      </div>
-    </Box>
-  );
+        <Stack marginY={3} spacing={2}>
+          <CompanyInputRow>
+            <TextField
+              name="year"
+              label="Year Established"
+              onChange={handleChange}
+              inputProps={{ pattern: ".{4}" }}
+              required
+              fullWidth
+            />
+            <TextField
+              required
+              inputProps={{ min: 1 }}
+              type="number"
+              name="noOfEmployees"
+              onChange={handleChange}
+              label="No of Employees"
+              fullWidth
+            />
+          </CompanyInputRow>
+          <CompanyInputRow>
+            <TextField
+              name="supplyAbility"
+              type="number"
+              label="Supply Ability"
+              inputProps={{ min: 1 }}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <div
+                    style={{
+                      width: "280px",
+                      textAlign: "right",
+                      fontSize: "12px",
+                      color: "gray",
+                    }}
+                  >
+                    20ft container per month
+                  </div>
+                ),
+              }}
+              fullWidth
+              required
+            />
+          </CompanyInputRow>
+          <CompanyInputRow>
+            <TextField
+              name="introduction"
+              label="Company History"
+              placeholder="Write something about your company, its founders, mission, vision, achievements, etc"
+              onChange={handleChange}
+              rows={3}
+              multiline
+              required
+              fullWidth
+            />
+          </CompanyInputRow>
+        </Stack>
+        <PrimaryButton
+          loading={state.requestState.loading}
+          type="submit"
+          variant="contained"
+          fullWidth
+          sx={{ width: "100%" }}
+        >
+          Complete Profile
+        </PrimaryButton>
+      </Box>
+    );
+  };
 
   return notLoggedBefore ? (
     <Tutorial user={user} openDrawer={notLoggedBefore} />
   ) : (
-    <div className="Merchant-Layout App-Layout">
-      <div>
-        <Modal
-          open={openDrawer}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          className="modal-container"
-        >
-          <Box sx={fillScreen}>
-            <div className="modal-body">{list()}</div>
-          </Box>
-        </Modal>
-      </div>
-
-      <div>
-        <Drawer
-          className="drawer-container"
-          variant="temporary"
-          anchor="bottom"
-          open={openDrawer}
-        >
-          <div className="drawer-body otp-drawer-body">{list()}</div>
-        </Drawer>
-      </div>
+    <div>
+      <DrawerModal
+        openState={openCompanyForm}
+        boxStyle={normalBox}
+        toggleOpenState={toggleOpenCompanyForm}
+        title="Fill the Form"
+        showCloseButton={false}
+      >
+        {companyFormView()}
+      </DrawerModal>
 
       <AppLayout nav={<Nav session={session} />} userType="merchant">
         <Outlet />

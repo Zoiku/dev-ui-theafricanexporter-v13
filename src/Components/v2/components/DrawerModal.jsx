@@ -12,6 +12,7 @@ const DrawerModal = ({
   children,
   title,
   boxStyle,
+  showCloseButton = true,
 }) => {
   return (
     <>
@@ -22,7 +23,9 @@ const DrawerModal = ({
         anchor="bottom"
         open={openState}
         onOpen={toggleOpenState(true)}
-        onClose={toggleOpenState(false)}
+        onClose={
+          showCloseButton ? toggleOpenState(false) : toggleOpenState(true)
+        }
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
       >
@@ -38,7 +41,9 @@ const DrawerModal = ({
       <Modal
         className="ModalComponent"
         open={openState}
-        onClose={toggleOpenState(false)}
+        onClose={
+          showCloseButton ? toggleOpenState(false) : toggleOpenState(true)
+        }
         keepMounted
       >
         <Box className="modal_container" sx={boxStyle}>
@@ -49,9 +54,14 @@ const DrawerModal = ({
             className="modal_title_container"
           >
             <div>{title}</div>
-            <IconButton onClick={toggleOpenState(false)} sx={{ padding: 0.1 }}>
-              <Close />
-            </IconButton>
+            {showCloseButton && (
+              <IconButton
+                onClick={toggleOpenState(false)}
+                sx={{ padding: 0.1 }}
+              >
+                <Close />
+              </IconButton>
+            )}
           </Stack>
           <div className="modal_body_container">{children}</div>
         </Box>

@@ -1,3 +1,7 @@
+export const checkAllZero = (array) => {
+  return array.every((value) => value === 0);
+};
+
 export const addCommas = (num) => {
   const str = num.toString();
   if (str.length <= 3) {

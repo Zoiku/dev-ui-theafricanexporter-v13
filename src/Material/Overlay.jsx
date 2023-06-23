@@ -5,6 +5,8 @@ import { styled } from "@mui/material/styles";
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
   fontWeight: 500,
+  fontSize: "small",
+  color: "#999",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",

@@ -5,6 +5,7 @@ import { StyledBadge } from "../Material/Avatar";
 const AvatarProfile = ({
   fullName,
   variant = "rounded",
+  overlap = "rectangular",
   width = 100,
   height = 100,
   fontSize = 50,
@@ -12,7 +13,7 @@ const AvatarProfile = ({
   return (
     <div>
       <StyledBadge
-        overlap={variant}
+        overlap={overlap}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >

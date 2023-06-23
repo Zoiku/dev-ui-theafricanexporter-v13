@@ -1,37 +1,40 @@
-import "../../Styles/DashboardAdmin.css";
-import SalesChart from "../../Components/Charts/Sales";
-import CategoriesChart from "../../Components/Charts/Categories";
-import OrdersTable from "../../Components/Admin/Tables/Orders";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import "../../Styles/v2/AdminDash.css";
+import { Stack, LinearProgress } from "@mui/material";
 import Salutation from "../../Components/Salutation";
-import { useEffect } from "react";
+import RecentOrdersTable from "../../Components/Admin/Tables/Orders";
+import MainBox from "../../Components/v2/components/MainBox";
 import AdminService from "../../Services/Admin";
-import CircularProgress from "@mui/material/CircularProgress";
-import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
-import { useReducer } from "react";
 import {
   SEND_REQUEST,
   REQUEST_FAILED,
   REQUEST_SUCCESSFUL,
 } from "../../Reducers/Actions";
-import {
-  InactiveUser,
-  PendingOrders,
-  Delivered,
-  Group,
-} from "../../Components/Icons";
+import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
+import { useReducer, useEffect } from "react";
+import ChartSales from "../../Components/Charts/Sales";
+import ChartCategories from "../../Components/Charts/Categories";
+import NoRowsOverlay from "../../Material/Overlay";
+import { checkAllZero } from "../../Components/Functions";
 
-const AdminDashboard = () => {
+const AdminInfoCard = ({ title, value, loading, error }) => {
+  return (
+    <Stack className="admin-info-card" spacing={1}>
+      <div className="admin-info-title">{title}</div>
+      <div className="admin-info-value">
+        {loading ? (
+          <div className="admin-info-value-loading">Loading...</div>
+        ) : error ? (
+          <>oops</>
+        ) : (
+          <>{value}</>
+        )}
+      </div>
+    </Stack>
+  );
+};
+
+const AdminInfoCards = () => {
   const [merchantBuyerRatio, dispatchMerchantBuyerRatio] = useReducer(
-    formReducer,
-    INITIAL_STATE
-  );
-  const [salesChartData, dispatchSales] = useReducer(
-    formReducer,
-    INITIAL_STATE
-  );
-  const [categoriesChartData, dispatchCategories] = useReducer(
     formReducer,
     INITIAL_STATE
   );
@@ -67,51 +70,6 @@ const AdminDashboard = () => {
         }
       } catch (error) {}
     };
-
-    fecthData();
-    return () => abortController.abort();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    dispatchSales({ type: SEND_REQUEST });
-    const abortController = new AbortController();
-    const fecthData = async () => {
-      const adminService = new AdminService();
-      try {
-        const { errors, data } = await adminService.getRequestsSalesData(
-          abortController.signal
-        );
-        if (errors.length === 0) {
-          dispatchSales({ type: REQUEST_SUCCESSFUL, payload: data });
-        } else {
-          dispatchSales({ type: REQUEST_FAILED, error: errors });
-        }
-      } catch (error) {}
-    };
-
-    fecthData();
-    return () => abortController.abort();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    dispatchCategories({ type: SEND_REQUEST });
-    const abortController = new AbortController();
-    const fecthData = async () => {
-      const adminService = new AdminService();
-      try {
-        const { errors, data } = await adminService.getRequestsCategories(
-          abortController.signal
-        );
-        if (errors.length === 0) {
-          dispatchCategories({ type: REQUEST_SUCCESSFUL, payload: data });
-        } else {
-          dispatchCategories({ type: REQUEST_FAILED });
-        }
-      } catch (error) {}
-    };
-
     fecthData();
     return () => abortController.abort();
     // eslint-disable-next-line
@@ -136,7 +94,6 @@ const AdminDashboard = () => {
         }
       } catch (error) {}
     };
-
     fecthData();
     return () => abortController.abort();
     // eslint-disable-next-line
@@ -161,7 +118,6 @@ const AdminDashboard = () => {
         }
       } catch (error) {}
     };
-
     fecthData();
     return () => abortController.abort();
     // eslint-disable-next-line
@@ -186,176 +142,163 @@ const AdminDashboard = () => {
         }
       } catch (error) {}
     };
-
     fecthData();
     return () => abortController.abort();
     // eslint-disable-next-line
   }, []);
 
   return (
-    <div className="Admin-DashBoard">
-      <Salutation name={"Admin"} />
-
-      <div className="dashboard-body-container">
-        <div>
-          <div className="dash-items-title-container">
-            <div>Merchant to Buyer Ratio</div>
-            <div>
-              A positive merchant to buyers ratio should be at least 1:5
-            </div>
-          </div>
-          <div className="dash-item-value-container">
-            <div className="admin-card-icon-container">
-              <Group />
-            </div>
-            <div>
-              {merchantBuyerRatio.requestState.loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : !merchantBuyerRatio.requestState.error ? (
-                merchantBuyerRatio.requestState?.data?.value
-              ) : (
-                <div className="dash-item-no-data-container">...</div>
-              )}
-            </div>
-          </div>
-        </div>
-        <Swiper
-          direction={"vertical"}
-          loop={true}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[Pagination]}
-        >
-          <SwiperSlide>
-            <div className="dash-items-title-container">
-              <div>Unactivated Users</div>
-              <div>Check the users tab to activate registered accounts</div>
-            </div>
-            <div className="dash-item-value-container">
-              <div className="admin-card-icon-container">
-                <InactiveUser />
-              </div>
-              <div>
-                {unactivatedUsers.requestState.loading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : !unactivatedUsers.requestState.error ? (
-                  unactivatedUsers.requestState.data?.value
-                ) : (
-                  <div className="dash-item-no-data-container">...</div>
-                )}
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="dash-items-title-container">
-              <div>Pending Orders</div>
-              <div>Check the orders tab to approve orders</div>
-            </div>
-            <div className="dash-item-value-container">
-              <div className="admin-card-icon-container">
-                <PendingOrders />
-              </div>
-              <div>
-                {pendingOrders.requestState.loading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : !pendingOrders.requestState.error ? (
-                  pendingOrders.requestState.data?.value
-                ) : (
-                  <div className="dash-item-no-data-container">...</div>
-                )}
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="dash-items-title-container">
-              <div>Delivered Orders</div>
-              <div>Orders that have been delivered to buyers</div>
-            </div>
-            <div className="dash-item-value-container">
-              <div className="admin-card-icon-container">
-                <Delivered />
-              </div>
-              <div>
-                {deliveredOrders.requestState.loading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : !deliveredOrders.requestState.error ? (
-                  deliveredOrders.requestState.data?.value
-                ) : (
-                  <div className="dash-item-no-data-container">...</div>
-                )}
-              </div>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-
-        <div>
-          <div
-            className="dash-items-title-container"
-            style={{ marginBottom: 20 }}
-          >
-            <div>Categories per Request</div>
-            <div>Trends on the most requested products</div>
-          </div>
-          <div className="dash-item-category-chart-container">
-            {categoriesChartData.requestState.loading ? (
-              <div className="circular-progress-container">
-                <CircularProgress size={20} color="inherit" />
-              </div>
-            ) : !categoriesChartData.requestState.error ? (
-              <CategoriesChart
-                labels={Object.keys(categoriesChartData.requestState.data)}
-                values={Object.values(categoriesChartData.requestState.data)}
-              />
-            ) : (
-              <div className="dash-item-no-data-container">No data</div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <div className="dash-items-title-container">
-            <div>This Year: Sales Activity</div>
-            <div>Total Requests from sales per month</div>
-          </div>
-          <div>
-            {salesChartData.requestState.loading ? (
-              <div className="dash-item-loading-container">
-                <CircularProgress size={20} color="inherit" />
-              </div>
-            ) : !salesChartData.requestState.error ? (
-              <SalesChart
-                yAxesLabel={"Quantity"}
-                xAxesLabel={"Month"}
-                labels={Object.keys(salesChartData.requestState.data)}
-                values={Object.values(salesChartData.requestState.data)}
-              />
-            ) : (
-              <div className="dash-item-no-data-container">No data</div>
-            )}
-          </div>
-        </div>
-        <div>
-          <div className="dash-items-title-container">
-            <div>Upcoming Products</div>
-            <div>Products coming soon</div>
-          </div>
-          <div>
-            <div className="dash-item-no-data-container">No data</div>
-          </div>
-        </div>
-        <div>
-          <div className="dash-items-title-container">
-            <div>Recent Orders</div>
-            <div>Orders made in the past 24 hours</div>
-          </div>
-          <div>
-            <OrdersTable />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Stack
+      className="admin-info-cards"
+      direction="row"
+      justifyItems="space-between"
+      spacing={1}
+    >
+      <AdminInfoCard
+        title="Pending Orders"
+        loading={pendingOrders?.requestState?.loading}
+        error={pendingOrders?.requestState?.error}
+        value={pendingOrders?.requestState?.data?.value}
+      />
+      <AdminInfoCard
+        title="Delivered Orders"
+        loading={deliveredOrders?.requestState?.loading}
+        error={deliveredOrders?.requestState?.error}
+        value={deliveredOrders?.requestState?.data?.value}
+      />
+      <AdminInfoCard
+        title="Unactivated Users"
+        loading={unactivatedUsers?.requestState?.loading}
+        error={unactivatedUsers?.requestState?.error}
+        value={unactivatedUsers?.requestState?.data?.value}
+      />
+      <AdminInfoCard
+        title="Merchant to Buyer Ratio"
+        loading={merchantBuyerRatio?.requestState?.loading}
+        error={merchantBuyerRatio?.requestState?.error}
+        value={merchantBuyerRatio?.requestState?.data?.value}
+      />
+    </Stack>
   );
 };
 
-export default AdminDashboard;
+const AdminCharts = () => {
+  const [sales, dispatchSales] = useReducer(formReducer, INITIAL_STATE);
+  const [categories, dispatchCategories] = useReducer(
+    formReducer,
+    INITIAL_STATE
+  );
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      dispatchSales({ type: SEND_REQUEST });
+      const merchantService = new AdminService();
+      try {
+        const { data, errors } = await merchantService.getRequestsSalesData(
+          abortController.signal
+        );
+        if (errors.length === 0) {
+          dispatchSales({ type: REQUEST_SUCCESSFUL, payload: data });
+        } else {
+          dispatchSales({ type: REQUEST_FAILED });
+        }
+      } catch (error) {
+        dispatchSales({ type: REQUEST_FAILED });
+      }
+    };
+    fetchData();
+    return () => abortController.abort();
+  }, []);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      dispatchCategories({ type: SEND_REQUEST });
+      const merchantService = new AdminService();
+      try {
+        const { data, errors } = await merchantService.getRequestsCategories(
+          abortController.signal
+        );
+        if (errors.length === 0) {
+          dispatchCategories({ type: REQUEST_SUCCESSFUL, payload: data });
+        } else {
+          dispatchCategories({ type: REQUEST_FAILED });
+        }
+      } catch (error) {
+        dispatchCategories({ type: REQUEST_FAILED });
+      }
+    };
+    fetchData();
+    return () => abortController.abort();
+  }, []);
+
+  return (
+    <Stack
+      className="admin-charts"
+      direction="row"
+      justifyItems="space-between"
+      spacing={1}
+    >
+      <MainBox
+        title="Monthly Sales"
+        helper="Trends on the orders delivered per month"
+      >
+        {sales?.requestState?.loading ? (
+          <LinearProgress />
+        ) : !sales.requestState.error ? (
+          Object.keys(sales.requestState.data).length > 0 ? (
+            checkAllZero(Object.values(sales.requestState.data)) ? (
+              <NoRowsOverlay label="Data" />
+            ) : (
+              <ChartSales
+                xAxesLabel={"Months"}
+                yAxesLabel={"Quantity"}
+                labels={Object.keys(sales.requestState.data)}
+                values={Object.values(sales.requestState.data)}
+              />
+            )
+          ) : (
+            <NoRowsOverlay label="Data" />
+          )
+        ) : (
+          <>oops</>
+        )}
+      </MainBox>
+      <MainBox
+        title="Categories per Delivery"
+        helper="Trends on your most delivered products"
+      >
+        {categories?.requestState?.loading ? (
+          <LinearProgress />
+        ) : !categories.requestState.error ? (
+          Object.keys(categories.requestState.data).length > 0 ? (
+            <ChartCategories
+              labels={Object.keys(categories.requestState.data)}
+              values={Object.values(categories.requestState.data)}
+            />
+          ) : (
+            <NoRowsOverlay label="Data" />
+          )
+        ) : (
+          <>oops</>
+        )}
+      </MainBox>
+    </Stack>
+  );
+};
+
+const Dashboard = () => {
+  return (
+    <Stack className="main-page" direction="column" spacing={2}>
+      <Salutation name="Admin" />
+      <AdminInfoCards />
+      <AdminCharts />
+      <MainBox title="Recent Orders" helper="Latest Updated Orders">
+        <RecentOrdersTable recentOrdersFilter={true} />
+      </MainBox>
+    </Stack>
+  );
+};
+
+export default Dashboard;

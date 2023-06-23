@@ -1,13 +1,15 @@
 .app-menu {
-  height: 100%;
+  height: calc(100vh - 80px);
   width: 60px;
   padding: 30px 5px;
   transition: all 0.2s ease-in-out;
   overflow: clip;
+  position: sticky;
+  top: 80px;
 }
 
 .app-menu:hover {
-  width: 150px;
+  width: 180px;
 }
 
 .app-menu-items {
@@ -17,7 +19,7 @@
 .app-menu-item {
   text-decoration: none;
   color: gray;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .app-menu-icon {

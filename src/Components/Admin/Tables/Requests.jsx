@@ -171,6 +171,7 @@ const Requests = () => {
     };
 
     fetchData();
+    return () => abortController.abort();
     // eslint-disable-next-line
   }, [paging.page, paging.size]);
 

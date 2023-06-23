@@ -16,7 +16,7 @@ import { Button1 } from "../../v2/components/Buttons";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 
-const Orders = () => {
+const Orders = ({ recentOrdersFilter = false }) => {
   const rootDispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
@@ -197,6 +197,7 @@ const Orders = () => {
       setRowsLoading(false);
     };
     fetchData();
+    return () => abortController.abort();
   }, [tableReload]);
 
   const OrderView = () => {

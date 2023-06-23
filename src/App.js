@@ -101,9 +101,7 @@ const App = () => {
         }
       } catch (error) { }
     };
-
     session.isLogged && fetchData();
-
     return () => abortController.abort();
     // eslint-disable-next-line
   }, [session.isLogged]);
@@ -173,7 +171,7 @@ const App = () => {
             />
             <Route path="/buyer/requests" element={<BuyerRequests />} />
             <Route path="/buyer/orders" element={<BuyerOrders />} />
-            <Route path="/buyer/settings" element={<BuyerSettings />} />
+            <Route path="/buyer/settings" element={<BuyerSettings profile={profile} />} />
           </Route>
         </Route>
 

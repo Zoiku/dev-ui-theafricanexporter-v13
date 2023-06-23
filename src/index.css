@@ -29,6 +29,10 @@ html {
     "Segoe UI Symbol";
 }
 
+.css-12dxq6v-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: var(--tae-orange) !important;
+}
+
 .styles-module_next__1uQwZ {
   display: none !important;
 }

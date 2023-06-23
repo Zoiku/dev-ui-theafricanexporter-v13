@@ -344,6 +344,7 @@ const Requests = () => {
       setRowsLoading(false);
     };
     fetchData();
+    return () => abortController.abort();
   }, [reloadTable]);
 
   const RequestView = () => {

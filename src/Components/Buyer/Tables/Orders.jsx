@@ -189,6 +189,7 @@ const Orders = () => {
       setRowsLoading(false);
     };
     fetchData();
+    return () => abortController.abort();
   }, []);
 
   return (

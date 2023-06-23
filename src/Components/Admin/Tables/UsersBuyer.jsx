@@ -189,6 +189,7 @@ const UsersBuyer = () => {
       setRowsLoading(false);
     };
     fetchData();
+    return () => abortController.abort();
     // eslint-disable-next-line
   }, [paging.page, paging.size, reloadTable]);
 

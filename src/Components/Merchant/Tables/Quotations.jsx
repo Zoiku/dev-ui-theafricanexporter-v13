@@ -115,8 +115,8 @@ const Quotations = () => {
       }
       setRowsLoading(false);
     };
-
     fetchData();
+    return () => abortController.abort();
   }, []);
 
   const QuoteView = () => {

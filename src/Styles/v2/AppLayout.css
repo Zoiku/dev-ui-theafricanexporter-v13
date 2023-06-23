@@ -9,7 +9,7 @@
 }
 
 .app-layout-workspace {
-  min-height: calc(100vh - 83px);
+  min-height: calc(100vh - 80px);
 }
 
 .app-layout-body-container {

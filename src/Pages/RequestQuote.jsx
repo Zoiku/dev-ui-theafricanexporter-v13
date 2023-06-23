@@ -266,7 +266,7 @@ const RequestQuote = ({ session }) => {
           <div>
             <SectionItem sectionTitle="1. Product Information">
               <StackItem
-                title="Type of Species"
+                title="Type Of Species"
                 value={parsedProduct?.speciesType}
               />
               <StackItem title="Species" value={parsedProduct.species} />

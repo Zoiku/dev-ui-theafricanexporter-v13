@@ -5,7 +5,7 @@ const Orders = () => {
   return (
     <div className="main_page">
       <MainBox title="Orders" helper="Converted quotations">
-        <OrdersTable />
+        <OrdersTable  />
       </MainBox>
     </div>
   );

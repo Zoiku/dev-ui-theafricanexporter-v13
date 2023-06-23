@@ -122,6 +122,7 @@ const Requests = () => {
       setRowsLoading(false);
     };
     fetchData();
+    return () => abortController.abort();
     // eslint-disable-next-line
   }, [reloadTable]);
 
@@ -149,8 +150,9 @@ const Requests = () => {
                     paging.page * paging.size,
                     paging.page * paging.size + paging.size
                   )
-                  .map((request) => (
+                  .map((request, index) => (
                     <Stack
+                      key={index}
                       className="request_item"
                       onClick={handleOpenRequestView(request?.id)}
                       spacing={2}
@@ -192,65 +194,6 @@ const Requests = () => {
       </Box>
     );
   };
-
-  // const RequestsView = () => {
-  //   return (
-  //     <Box className="request_rows_container">
-  //       {rowsLoading ? (
-  //         <Box>
-  //           <LinearProgress />
-  //           <Stack marginTop={1} direction="column" spacing={1}>
-  //             {Array.from(Array(10)).map((_, index) => {
-  //               return (
-  //                 <div
-  //                   key={index}
-  //                   className="request_row_container_loading"
-  //                 ></div>
-  //               );
-  //             })}
-  //           </Stack>
-  //         </Box>
-  //       ) : rows && rows.length > 0 ? (
-  //         <div>
-  //           <div className="request_row_container_inner_container">
-  //             {rows.map((request, index) => (
-  //               <Stack
-  //                 onClick={handleOpenRequestView(request?.id)}
-  //                 className="request_row_container"
-  //                 direction="column"
-  //                 key={index}
-  //                 spacing={2}
-  //               >
-  //                 <Stack
-  //                   className="request_row_inner_container"
-  //                   direction="row"
-  //                   justifyContent="space-between"
-  //                   spacing={1}
-  //                 >
-  //                   <div>Request Number {request?.requestNo}</div>
-  //                   <div>{request?.destination}</div>
-  //                 </Stack>
-  //                 <Stack
-  //                   spacing={1}
-  //                   className="request_row_inner_container"
-  //                   direction="row"
-  //                   justifyContent="space-between"
-  //                 >
-  //                   <div>{request?.createdOn}</div>
-  //                   <div>{request?.productName}</div>
-  //                 </Stack>
-  //               </Stack>
-  //             ))}
-  //           </div>
-  //         </div>
-  //       ) : (
-  //         <div className="request_no_request_rows_container">
-  //           <NoRowsOverlay label="Requests" />
-  //         </div>
-  //       )}
-  //     </Box>
-  //   );
-  // };
 
   const RequestView = () => {
     const requestID = selectedRequest?.id;
@@ -340,7 +283,7 @@ const Requests = () => {
               <StackItem title="Product" value={selectedRequest?.productName} />
               <StackItem title="Species" value={selectedRequest?.species} />
               <StackItem
-                title="Type of Species"
+                title="Type Of Species"
                 value={selectedRequest?.speciesType}
               />
               <StackItem title="Origin" value={selectedRequest?.origin} />
@@ -412,7 +355,7 @@ const Requests = () => {
                   </div>
                 </div>
                 <Stack direction="column" marginTop={2} spacing={2}>
-                  <TextField
+                  {/* <TextField
                     name="quantity"
                     label="Quantity"
                     type="number"
@@ -428,14 +371,14 @@ const Requests = () => {
                     }}
                     onChange={handleChange}
                     required
-                  />
-                  <OfferTableV1
+                  /> */}
+                  {/* <OfferTableV1
                     product={selectedRequest?.productName}
                     incoterm={selectedRequest?.terms}
                     offerRows={offerRows}
                     setQuotation={setQuotation}
                     quotation={quotation}
-                  />
+                  /> */}
                   <Stack direction="row" spacing={1}>
                     <Stack
                       onClick={handleChangeOfferRows("MORE")}
