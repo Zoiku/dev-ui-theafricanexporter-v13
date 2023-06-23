@@ -1,5 +1,25 @@
 .order_confirmation_note {
-  background: #efefef;
   border-radius: 5px;
   padding: 10px;
+  background: var(--tae-orange-faded);
+}
+
+.order_confirm_order_section {
+  background: #efefef;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.order_confirm_order_title {
+  font-weight: 500;
+}
+
+.order_confirm_order_content {
+  /* border: 1px solid red; */
+}
+
+.orders_confirmation_document {
+  border: 1px solid red;
+  height: 200px;
+  overflow: auto;
 }

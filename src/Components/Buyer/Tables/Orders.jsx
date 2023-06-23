@@ -2,18 +2,36 @@ import { useEffect, useState } from "react";
 import Countdown from "../../Countdown";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
-import { Box, CircularProgress, Stack } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Stack,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
-import { widerBox, xMediumBox } from "../../../Styles/v2/box";
+import { widerBox, xMediumBox, xSmallBox } from "../../../Styles/v2/box";
 import DrawerModal from "../../v2/components/DrawerModal";
-import { SmallPrimary } from "../../../Material/Button";
+import { SmallPrimary, TextButton } from "../../../Material/Button";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import { checkConfirmation } from "../../Functions";
-import "../../../Styles/v2/Orders.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import "../../../Styles/v2/Orders.css";
+
+const ConfirmOrderFormSection = ({ title, children }) => {
+  return (
+    <section className="order_confirm_order_section">
+      <Stack spacing={2}>
+        <div className="order_confirm_order_title">{title}</div>
+        <div className="order_confirm_order_content">{children}</div>
+      </Stack>
+    </section>
+  );
+};
 
 const Orders = () => {
   const [rows, setRows] = useState([]);
@@ -98,6 +116,11 @@ const Orders = () => {
   const [openConfirmForm, setOpenConfirmForm] = useState(false);
   const toggleOpenConfirmForm = (open) => () => {
     setOpenConfirmForm(open);
+  };
+
+  const [openPurchaseAgreement, setOpenPurchaseAgreement] = useState(false);
+  const toggleOpenPurchaseAgreement = (open) => () => {
+    setOpenPurchaseAgreement(open);
   };
 
   const columns = [
@@ -277,13 +300,39 @@ const Orders = () => {
           <Stack
             className="order_confirmation_note"
             direction="row"
-            alignContent="center"
+            alignItems="center"
             spacing={1}
           >
-            <div>
-              <InfoOutlinedIcon />
-            </div>
-            <div>Please fill all required fields</div>
+            <InfoOutlinedIcon className="order_confirmation_note_icon" />
+            <div>Please fill all fields</div>
+          </Stack>
+          <Stack spacing={2} className="order_confirm_order_sections">
+            <ConfirmOrderFormSection title="B. Please provide your shipping address">
+              <TextField fullWidth multiline rows={3} />
+            </ConfirmOrderFormSection>
+
+            <ConfirmOrderFormSection title="C. Sales and purchase agreement">
+              <div onClick={toggleOpenPurchaseAgreement(true)}>
+                Click to open sales and purchase agreement
+              </div>
+            </ConfirmOrderFormSection>
+          </Stack>
+        </Stack>
+      </DrawerModal>
+
+      <DrawerModal
+        title="Accept T&Cs"
+        boxStyle={xSmallBox}
+        openState={openPurchaseAgreement}
+        toggleOpenState={toggleOpenPurchaseAgreement}
+      >
+        <Stack spacing={1}>
+          <div className="orders_confirmation_document"></div>
+          <Stack direction="row" spacing={1}>
+            <TextButton>Accept</TextButton>
+            <TextButton onClick={toggleOpenPurchaseAgreement(false)}>
+              Cancel
+            </TextButton>
           </Stack>
         </Stack>
       </DrawerModal>
