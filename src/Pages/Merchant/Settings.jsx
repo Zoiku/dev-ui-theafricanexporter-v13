@@ -207,7 +207,7 @@ const Settings = ({ profile }) => {
               multiline
               rows={4}
               onChange={handleChange}
-              value={state.payload?.companyIntroduction}
+              value={state.payload?.companyIntroduction ?? ""}
               disabled={!updateProfileButton}
               fullWidth
             />
@@ -216,7 +216,7 @@ const Settings = ({ profile }) => {
             <TextField
               name="companyName"
               label="Company Name"
-              value={profile.user.companyName}
+              value={profile.user.companyName ?? ""}
               disabled={true}
               fullWidth
             />
@@ -224,7 +224,7 @@ const Settings = ({ profile }) => {
               name="companyAddress"
               label="Company Address"
               onChange={handleChange}
-              value={state?.payload?.companyAddress}
+              value={state?.payload?.companyAddress ?? ""}
               disabled={!updateProfileButton}
               fullWidth
             />
@@ -233,7 +233,7 @@ const Settings = ({ profile }) => {
             <TextField
               name="companyYear"
               label="Company Year"
-              value={profile?.company?.year}
+              value={profile?.company?.year ?? ""}
               disabled={true}
               fullWidth
             />
@@ -241,7 +241,7 @@ const Settings = ({ profile }) => {
               name="companyNoEmployees"
               label="Number of Employees"
               onChange={handleChange}
-              value={state?.payload?.companyNoEmployees}
+              value={state?.payload?.companyNoEmployees ?? ""}
               disabled={!updateProfileButton}
               fullWidth
             />
@@ -254,7 +254,7 @@ const Settings = ({ profile }) => {
                 name="businessType"
                 label="Business Type"
                 value={
-                  state.payload?.businessType ? state.payload?.businessType : ""
+                  state.payload?.businessType ?? ""
                 }
               >
                 <MenuItem value="Manufacturer/Producer">
@@ -276,7 +276,7 @@ const Settings = ({ profile }) => {
                 ),
               }}
               onChange={handleChange}
-              value={state?.payload?.supplyAbility}
+              value={state?.payload?.supplyAbility ?? ""}
               disabled={!updateProfileButton}
               fullWidth
             />
