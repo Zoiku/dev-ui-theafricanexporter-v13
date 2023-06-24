@@ -14,12 +14,25 @@
   font-weight: 500;
 }
 
-.order_confirm_order_content {
-  /* border: 1px solid red; */
-}
-
 .orders_confirmation_document {
-  border: 1px solid red;
   height: 200px;
   overflow: auto;
+  font-size: small;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.order_radio_label_links {
+  text-decoration: underline;
+  color: blue;
+  font-weight: 500;
+}
+
+.order_confirmation_underlined {
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.order_confirmation_underlined:hover {
+  text-decoration: underline;
 }

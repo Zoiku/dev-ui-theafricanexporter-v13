@@ -7,7 +7,11 @@ import { Box, Stack, MenuItem } from "@mui/material";
 import { wideBox, xMediumBox } from "../../../Styles/v2/box";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import MuiBadge from "../../v2/components/Badge";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
+import {
+  SectionItem,
+  StackItem,
+  SectionItemCollapsable,
+} from "../../v2/components/Lists";
 import { SmallPrimary, SmallSecondaryV2 } from "../../../Material/Button";
 import OfferTable from "../../v2/components/OfferTable";
 import { setAlert } from "../../../Redux/Features/Alert";
@@ -319,9 +323,7 @@ const Requests = () => {
                 incoterm: request?.buyerQuotationIncoterm?.label,
                 species: quotationProduct?.product?.species?.label,
                 speciesType: quotationProduct?.product?.species?.type?.label,
-                containerSize:
-                  quotationProduct?.product?.supportedShippingContainers[0]
-                    ?.label,
+                containerSize: "20ft Container",
                 specification: {
                   diameter: quotationProduct?.specification?.diameter,
                   diameterUnit: quotationProduct?.specification?.diameterUnit,
@@ -448,11 +450,11 @@ const Requests = () => {
               spacing={2}
               marginBottom={1}
             >
-              <ErrorOutline fontSize="small" color="inherit" />
-              <small>
+              <ErrorOutline color="inherit" />
+              <div>
                 The total quantity of the offers you select must be equal to
                 your requested quantity
-              </small>
+              </div>
             </Stack>
 
             <Stack width={"100%"} spacing={1} marginBottom={2}>
@@ -513,7 +515,7 @@ const Requests = () => {
                 />
               </SectionItem>
 
-              <SectionItem sectionTitle="Company Profile">
+              <SectionItemCollapsable sectionTitle="Company Profile">
                 <StackItem
                   title="Merchant Name"
                   value={selectedOffer?.requestSummary?.merchantName}
@@ -537,7 +539,7 @@ const Requests = () => {
                   title="Supply Ability"
                   value={selectedOffer?.supplyAbility}
                 />
-              </SectionItem>
+              </SectionItemCollapsable>
             </div>
           </Box>
         )}

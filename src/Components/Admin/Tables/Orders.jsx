@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import MuiTable from "../../v2/components/Table";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
+import {
+  SectionItem,
+  SectionItemCollapsable,
+  StackItem,
+} from "../../v2/components/Lists";
 import AdminService from "../../../Services/Admin";
 import BuyerService from "../../../Services/Buyer";
 import { MuiMoreV1 } from "../../More";
@@ -16,7 +20,7 @@ import { MenuItem } from "@mui/material";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 
-const Orders = ({ recentOrdersFilter = false }) => {
+const Orders = () => {
   const [paging, setPaging] = useState({
     page: 1,
     size: 10,
@@ -73,17 +77,24 @@ const Orders = ({ recentOrdersFilter = false }) => {
         const { data, errors } = await buyerService.getOrderList(order.ref);
         if (errors.length === 0) {
           setOpenOrderView(true);
-          const filteredData = data.data.data.map((offer) => {
+          const unfilteredBuyer = data.data.data?.at(0)?.user;
+          const buyer = {
+            name: `${unfilteredBuyer?.firstName} ${unfilteredBuyer?.lastName}`,
+            email: unfilteredBuyer?.email,
+            mobile: unfilteredBuyer?.mobileNo,
+          };
+          const merchants = data.data.data.map((offer) => {
             return {
-              merchant: {
-                name:
-                  offer?.merchant?.firstName + " " + offer?.merchant?.lastName,
-                email: offer?.merchant?.email,
-                mobile: offer?.merchant?.mobileNo,
-              },
+              name: `${offer?.merchant?.firstName} ${offer?.merchant?.lastName}`,
+              email: offer?.merchant?.email,
+              mobile: offer?.merchant?.mobileNo,
             };
           });
-          setSelectedOffers(filteredData);
+          const offers = {
+            buyer,
+            merchants,
+          };
+          setSelectedOffers(offers);
         }
       } catch (error) {
         throw error;
@@ -251,19 +262,13 @@ const Orders = ({ recentOrdersFilter = false }) => {
                 species: quotationProduct?.product?.species?.label,
                 speciesType: quotationProduct?.product?.species?.type?.label,
                 specification: {
-                  containerSize:
-                    quotationProduct?.product?.supportedShippingContainers[0]
-                      ?.label,
+                  containerSize: "20ft Container",
                   volume: quotationProduct?.product?.volume?.value,
                   volumeUnit: quotationProduct?.product?.volume?.unit,
                 },
               },
             };
           });
-          {
-            recentOrdersFilter &&
-              filteredData.sort((a, b) => b.orderNo - a.orderNo).slice(0, 10);
-          }
           setRows(filteredData);
         }
       } catch (error) {
@@ -326,24 +331,33 @@ const Orders = ({ recentOrdersFilter = false }) => {
               />
             </SectionItem>
 
-            {selectedOffers &&
-              selectedOffers.length > 0 &&
-              selectedOffers.map((offer, index) => (
-                <SectionItem
+            <SectionItemCollapsable sectionTitle="Buyer Details">
+              <StackItem
+                title="Full Name"
+                value={selectedOffers?.buyer?.name}
+              />
+              <StackItem title="Email" value={selectedOffers?.buyer?.email} />
+              <StackItem
+                title="Mobile"
+                value={`+${selectedOffers?.buyer?.mobile}`}
+              />
+            </SectionItemCollapsable>
+
+            {selectedOffers?.merchants &&
+              selectedOffers?.merchants?.length > 0 &&
+              selectedOffers?.merchants.map((merchant, index) => (
+                <SectionItemCollapsable
                   key={index}
-                  sectionTitle={`Merchant Details [${index + 1}]`}
+                  sectionTitle={`Merchant Details ${index + 1}`}
                 >
-                  <StackItem title={"Name"} value={offer?.merchant?.name} />
-                  <StackItem
-                    title={"Telephone"}
-                    value={`+${offer?.merchant?.mobile}`}
-                  />
-                  <StackItem title={"Email"} value={offer?.merchant?.email} />
-                </SectionItem>
+                  <StackItem title="Full Name" value={merchant.name} />
+                  <StackItem title="Email" value={merchant.email} />
+                  <StackItem title="Mobile" value={`+${merchant.mobile}`} />
+                </SectionItemCollapsable>
               ))}
 
             <SectionItem sectionTitle="Track Order">
-              <Stack paddingY={1} direction="column" width="100%" spacing={2}>
+              <Stack paddingBottom={3} direction="column" width="100%">
                 <ProgressBar status={selectedOrder?.status} />
                 <MuiStepper activeStep={selectedOrder?.status} />
               </Stack>

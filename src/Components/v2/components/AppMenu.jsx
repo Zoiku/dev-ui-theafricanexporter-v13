@@ -1,7 +1,11 @@
 import { Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import "../../../Styles/v2/AppMenu.css";
-import { menuList } from "./AppMenuLists";
+import { menuList, bottomMenuList } from "./AppMenuLists";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AppMenu = ({ base }) => {
   return (
@@ -24,6 +28,31 @@ const AppMenu = ({ base }) => {
           </div>
         ))}
       </div>
+    </menu>
+  );
+};
+
+export const AppBottomMenu = ({ base }) => {
+  const pathname = window.location.pathname;
+  const [value, setValue] = useState(pathname);
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <menu className="app-bottom-menu" style={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
+      <BottomNavigation showLabels value={value} onChange={handleChange}>
+        {bottomMenuList[base]?.map((menuLink, index) => (
+          <BottomNavigationAction
+            key={index}
+            component={Link}
+            to={`/${base}/${menuLink.to}`}
+            value={`/${base}/${menuLink.to}`}
+            label={menuLink.label}
+            icon={menuLink.icon}
+          />
+        ))}
+      </BottomNavigation>
     </menu>
   );
 };

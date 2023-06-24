@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import Countdown from "../../Countdown";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
@@ -12,15 +12,69 @@ import {
 } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
+import {
+  SectionItem,
+  SectionItemCollapsable,
+  StackItem,
+} from "../../v2/components/Lists";
 import { widerBox, xMediumBox, xSmallBox } from "../../../Styles/v2/box";
 import DrawerModal from "../../v2/components/DrawerModal";
-import { SmallPrimary, TextButton } from "../../../Material/Button";
+import {
+  SmallPrimary,
+  SmallSecondary,
+  TextButton,
+} from "../../../Material/Button";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import { checkConfirmation } from "../../Functions";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import "../../../Styles/v2/Orders.css";
+import TandCs from "../../v2/components/TandCs";
+import {
+  INPUTING,
+  SEND_REQUEST,
+  REQUEST_SUCCESSFUL,
+  REQUEST_FAILED,
+} from "../../../Reducers/Actions";
+import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
+import { setAlert } from "../../../Redux/Features/Alert.js";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+
+const ConfirmationRadios = ({ onChange }) => {
+  return (
+    <RadioGroup onChange={onChange} name="orderPayment" required>
+      <ConfirmationRadio
+        to="/about/#payment-options-cash-against-document"
+        value="Cash against documents (10%) Escrow deposit required"
+      />
+      <ConfirmationRadio
+        to="/about/#payment-options-letter-of-credit"
+        value="Letter of credit"
+      />
+      <ConfirmationRadio
+        to="/about/#payment-options-cash-bank-transfer"
+        value=" Bank transfer"
+      />
+    </RadioGroup>
+  );
+};
+
+const ConfirmationRadio = ({ value, to }) => {
+  return (
+    <Stack direction="row" alignItems="center" spacing={1}>
+      <Radio size="small" value={value} />
+      <NavLink
+        className="order_radio_label_links"
+        target="_blank"
+        rel="noopener noreferrer"
+        to={to}
+      >
+        <div style={{ fontSize: "14px" }}>{value}</div>
+      </NavLink>
+    </Stack>
+  );
+};
 
 const ConfirmOrderFormSection = ({ title, children }) => {
   return (
@@ -34,7 +88,12 @@ const ConfirmOrderFormSection = ({ title, children }) => {
 };
 
 const Orders = () => {
+  const rootDispatch = useDispatch();
+  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+
   const [rows, setRows] = useState([]);
+  const [reloadTable, setReloadTable] = useState(false);
+  const [selectedOrderRef, setSelectedOrderRef] = useState(null);
   const [rowsLoading, setRowsLoading] = useState(false);
   const [paging, setPaging] = useState({
     page: 1,
@@ -52,6 +111,18 @@ const Orders = () => {
     id: null,
     loading: false,
   });
+
+  const handleChange = (e) => {
+    dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
+  };
+
+  const triggerSnackBarAlert = (message, severity) => {
+    const payload = {
+      severity,
+      message,
+    };
+    rootDispatch(setAlert(payload));
+  };
 
   const [selectedOrders, setSelectedOrders] = useState(null);
   const [openOrdersView, setOpenOrdersView] = useState(false);
@@ -80,6 +151,7 @@ const Orders = () => {
               quantity: orders?.orderQuantity,
               destination: orders?.request?.destination,
               terms: orders?.request?.buyerQuotationIncoterm?.label,
+              createdOn: new Date(orders?.createdOn).toDateString(),
               merchant: {
                 name: `${orders?.merchant?.firstName} ${orders?.merchant?.lastName} `,
                 email: orders?.merchant?.email,
@@ -114,13 +186,54 @@ const Orders = () => {
   };
 
   const [openConfirmForm, setOpenConfirmForm] = useState(false);
-  const toggleOpenConfirmForm = (open) => () => {
+  const toggleOpenConfirmForm = (open, ref) => () => {
+    if (open) {
+      setSelectedOrderRef(ref);
+    } else {
+      setSelectedOrderRef(null);
+      setPurchaseAgreementStatus(false);
+      state.payload = {};
+    }
     setOpenConfirmForm(open);
   };
 
   const [openPurchaseAgreement, setOpenPurchaseAgreement] = useState(false);
   const toggleOpenPurchaseAgreement = (open) => () => {
     setOpenPurchaseAgreement(open);
+  };
+
+  const [purchaseAgreementStatus, setPurchaseAgreementStatus] = useState(false);
+  const togglePurchaseAgreementStatus = (open) => () => {
+    setOpenPurchaseAgreement(false);
+    setPurchaseAgreementStatus(open);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch({ type: SEND_REQUEST });
+    const buyerService = new BuyerService();
+    if (selectedOrderRef) {
+      try {
+        const { errors } = await buyerService.confirmOrder(
+          selectedOrderRef,
+          state.payload
+        );
+        if (errors.length === 0) {
+          dispatch({ type: REQUEST_SUCCESSFUL });
+          setReloadTable((prev) => !prev);
+          triggerSnackBarAlert(
+            "Merchant will be notified to commence fulfillment of your order once proof of payment is confirmed",
+            "success"
+          );
+          toggleOpenConfirmForm(false)();
+        } else {
+          dispatch({ type: REQUEST_FAILED });
+          triggerSnackBarAlert("Could not process your request", "error");
+        }
+      } catch (error) {
+        throw error;
+      }
+    }
   };
 
   const columns = [
@@ -158,7 +271,7 @@ const Orders = () => {
                 View
               </MenuItem>
               {row.confirmedStatus && (
-                <MenuItem onClick={toggleOpenConfirmForm(true)}>
+                <MenuItem onClick={toggleOpenConfirmForm(true, row.ref)}>
                   Confirm
                 </MenuItem>
               )}
@@ -228,7 +341,7 @@ const Orders = () => {
     };
     fetchData();
     return () => abortController.abort();
-  }, []);
+  }, [reloadTable]);
 
   return (
     <main>
@@ -258,18 +371,6 @@ const Orders = () => {
         {selectedOrder && (
           <Box>
             <div>
-              <SectionItem sectionTitle="Merchant Information">
-                <StackItem title="Name" value={selectedOrder?.merchant?.name} />
-                <StackItem
-                  title="Email"
-                  value={selectedOrder?.merchant?.email}
-                />
-                <StackItem
-                  title="Telephone"
-                  value={`+${selectedOrder?.merchant?.mobile}`}
-                />
-              </SectionItem>
-
               <SectionItem sectionTitle="Product Information">
                 <StackItem title="Product" value={selectedOrder?.productName} />
                 <StackItem title="Terms" value={selectedOrder?.terms} />
@@ -277,10 +378,26 @@ const Orders = () => {
                   title="Quantity"
                   value={`${selectedOrder?.quantity} 20ft Container`}
                 />
+                <StackItem
+                  title="Requested Date"
+                  value={selectedOrder?.createdOn}
+                />
               </SectionItem>
 
+              <SectionItemCollapsable sectionTitle="Merchant Details">
+                <StackItem title="Name" value={selectedOrder?.merchant?.name} />
+                <StackItem
+                  title="Email"
+                  value={selectedOrder?.merchant?.email}
+                />
+                <StackItem
+                  title="Mobile"
+                  value={`+${selectedOrder?.merchant?.mobile}`}
+                />
+              </SectionItemCollapsable>
+
               <SectionItem sectionTitle="Track Order">
-                <Stack paddingY={1} direction="column" width="100%" spacing={2}>
+                <Stack paddingBottom={3} direction="column" width="100%">
                   <ProgressBar status={selectedOrder?.status} />
                   <MuiStepper activeStep={selectedOrder?.status} />
                 </Stack>
@@ -296,41 +413,78 @@ const Orders = () => {
         openState={openConfirmForm}
         toggleOpenState={toggleOpenConfirmForm}
       >
-        <Stack direction="column" spacing={2}>
-          <Stack
-            className="order_confirmation_note"
-            direction="row"
-            alignItems="center"
-            spacing={1}
-          >
-            <InfoOutlinedIcon className="order_confirmation_note_icon" />
-            <div>Please fill all fields</div>
-          </Stack>
-          <Stack spacing={2} className="order_confirm_order_sections">
-            <ConfirmOrderFormSection title="B. Please provide your shipping address">
-              <TextField fullWidth multiline rows={3} />
-            </ConfirmOrderFormSection>
-
-            <ConfirmOrderFormSection title="C. Sales and purchase agreement">
-              <div onClick={toggleOpenPurchaseAgreement(true)}>
-                Click to open sales and purchase agreement
-              </div>
-            </ConfirmOrderFormSection>
-          </Stack>
-        </Stack>
+        {selectedOrderRef && (
+          <Box component="form" onSubmit={handleSubmit}>
+            <Stack direction="column" spacing={2}>
+              <Stack
+                className="order_confirmation_note"
+                direction="row"
+                alignItems="flex-start"
+                spacing={2}
+              >
+                <InfoOutlinedIcon className="order_confirmation_note_icon" />
+                <div>
+                  Please read carefully and accept our{" "}
+                  <u
+                    className="order_confirmation_underlined"
+                    onClick={toggleOpenPurchaseAgreement(true)}
+                  >
+                    sales and purchase agreement here
+                  </u>{" "}
+                  to proceed with confirming your order
+                </div>
+              </Stack>
+              <Stack spacing={2} className="order_confirm_order_sections">
+                <ConfirmOrderFormSection title="A. Kindly choose one of the payment options below">
+                  <ConfirmationRadios onChange={handleChange} />
+                </ConfirmOrderFormSection>
+                <ConfirmOrderFormSection title="B. Please provide your shipping address">
+                  <TextField
+                    name="shippingAddress"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    sx={{ background: "#fff" }}
+                    onChange={handleChange}
+                  />
+                </ConfirmOrderFormSection>
+                <Stack>
+                  <SmallSecondary
+                    variant="contained"
+                    type="submit"
+                    disabled={!purchaseAgreementStatus}
+                    loading={state?.requestState?.loading}
+                  >
+                    Confirm Order
+                  </SmallSecondary>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Box>
+        )}
       </DrawerModal>
 
       <DrawerModal
-        title="Accept T&Cs"
+        title="Sales & Purchase Agreement"
         boxStyle={xSmallBox}
         openState={openPurchaseAgreement}
         toggleOpenState={toggleOpenPurchaseAgreement}
       >
-        <Stack spacing={1}>
-          <div className="orders_confirmation_document"></div>
+        <Stack spacing={2}>
+          <div className="orders_confirmation_document">
+            <TandCs />
+          </div>
           <Stack direction="row" spacing={1}>
-            <TextButton>Accept</TextButton>
-            <TextButton onClick={toggleOpenPurchaseAgreement(false)}>
+            <TextButton
+              variant="text"
+              onClick={togglePurchaseAgreementStatus(true)}
+            >
+              Accept
+            </TextButton>
+            <TextButton
+              variant="text"
+              onClick={togglePurchaseAgreementStatus(false)}
+            >
               Cancel
             </TextButton>
           </Stack>

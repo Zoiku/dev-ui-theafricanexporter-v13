@@ -307,7 +307,28 @@ export const SmallCancel = styled(LoadingButton)({
 });
 
 export const TextButton = styled(LoadingButton)({
-  // fontWeight: 500
+  textTransform: "none",
+  boxShadow: "none",
+  color: "black",
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:hover": {
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+  },
+  "&:focus": {},
 });
 
 export const EmptyButton = styled(LoadingButton)({

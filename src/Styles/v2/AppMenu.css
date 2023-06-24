@@ -46,3 +46,12 @@
 .app-menu-item:hover .app-menu-icon {
   background: #efefef;
 }
+
+.app-bottom-menu {
+  height: 80px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(12.3px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 10px 10px 0 0 !important;
+  z-index: 100;
+}

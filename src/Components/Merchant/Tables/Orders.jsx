@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import MerchantService from "../../../Services/Merchant";
 import { MuiTableV1 } from "../../v2/components/Table";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
+import {
+  SectionItem,
+  SectionItemCollapsable,
+  StackItem,
+} from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
 import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
@@ -10,13 +14,16 @@ import { widerBox } from "../../../Styles/v2/box";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import { MenuItem } from "@mui/material";
-import { ORDER_STATUS } from "../../v2/components/OrderStatus";
+import {
+  ORDER_STATUS,
+  ORDER_STATUS_STEPS,
+} from "../../v2/components/OrderStatus";
 import MuiDialog from "../../v2/components/Dialog";
 import { Button1 } from "../../v2/components/Buttons";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 
-const Orders = ({ recentOrdersFilter = false }) => {
+const Orders = () => {
   const rootDispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
@@ -50,7 +57,6 @@ const Orders = ({ recentOrdersFilter = false }) => {
   };
 
   const [dialogButtonLoading, setDialogButtonLoading] = useState(false);
-
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = (open) => () => {
     setOpenConfirmDialog(open);
@@ -187,6 +193,8 @@ const Orders = ({ recentOrdersFilter = false }) => {
               expiryDate: order?.request?.expiryDate,
               status: order?.status,
               quantity: order?.orderQuantity,
+              buyer: order?.user,
+              requestedDate: new Date(order?.createdOn).toDateString(),
             };
           });
           setRows(filteredData);
@@ -212,10 +220,28 @@ const Orders = ({ recentOrdersFilter = false }) => {
                 title="Quantity"
                 value={`${selectedOrder?.quantity} 20ft Container`}
               />
+              <StackItem
+                title="Requested Date"
+                value={selectedOrder?.requestedDate}
+              />
             </SectionItem>
 
+            {ORDER_STATUS_STEPS[selectedOrder?.status] > 2 && (
+              <SectionItemCollapsable sectionTitle="Buyer Details">
+                <StackItem
+                  title="Full Name"
+                  value={`${selectedOrder?.buyer?.firstName} ${selectedOrder?.buyer?.lastName}`}
+                />
+                <StackItem title="Email" value={selectedOrder?.buyer?.email} />
+                <StackItem
+                  title="Mobile"
+                  value={`+${selectedOrder?.buyer?.mobileNo}`}
+                />
+              </SectionItemCollapsable>
+            )}
+
             <SectionItem sectionTitle="Track Order">
-              <Stack paddingY={1} direction="column" width="100%" spacing={2}>
+              <Stack paddingBottom={3} direction="column" width="100%">
                 <ProgressBar status={selectedOrder?.status} />
                 <MuiStepper activeStep={selectedOrder?.status} />
               </Stack>

@@ -40,28 +40,10 @@
   margin: 100px 0 0 0;
 }
 
-.request_quotation_box_title_container {
-  position: relative;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: underline;
-}
-
 .request_quotation_box_title {
-  background: white;
-  z-index: 2;
-  padding: 0 20px;
   font-weight: bold;
-}
-
-.request_quotation_box_title_container::after {
-  content: "";
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  z-index: 1;
+  padding: 0 0 5px 0;
+  border-bottom: 1px solid #c5c5c5;
 }
 
 .request_quote_managae_rows {
@@ -82,8 +64,8 @@
 
 .request_placing_order_note {
   padding: 10px;
-  background: #efefef;
   border-radius: 3px;
+  background: var(--tae-orange-faded);
 }
 
 @keyframes flashing {

@@ -30,3 +30,17 @@
 .merchant-charts > div:nth-child(2) {
   width: 30%;
 }
+
+@media screen and (max-width: 1024px) {
+  .merchant-info-cards,
+  .merchant-charts {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .merchant-info-card,
+  .merchant-charts > div {
+    margin: 0 0 10px 0 !important;
+    width: 100% !important;
+  }
+}

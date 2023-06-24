@@ -90,8 +90,8 @@ const Quotations = () => {
               origin: quotationProduct?.product?.origin?.country,
               port: quotationRequest?.port,
               quantity: quote?.offerQuantity,
-              species: quote?.offerQuantity,
-              speciesType: quote?.offerQuantity,
+              species: quotationProduct?.product?.species?.label,
+              speciesType: quotationProduct?.product?.species?.type?.label,
               validity: quotationRequest?.validity,
               offerRows: quotationOfferRows,
               specifications: {
@@ -128,7 +128,7 @@ const Quotations = () => {
               <StackItem title="Product" value={selectedQuote?.productName} />
               <StackItem title="Species" value={selectedQuote?.species} />
               <StackItem
-                title="Species Type"
+                title="Type Of Species"
                 value={selectedQuote?.speciesType}
               />
               <StackItem title="Origin" value={selectedQuote?.origin} />

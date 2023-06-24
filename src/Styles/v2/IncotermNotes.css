@@ -1,5 +1,6 @@
 .incoterm_note_container {
   padding: 10px;
+  border-radius: 3px;
   font-size: small;
   background: var(--tae-orange-faded);
 }

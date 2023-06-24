@@ -18,6 +18,7 @@
 
 .section_content_row_container > div {
   width: 50%;
+  word-wrap: break-word;
 }
 
 .section_content_row_container > div:nth-child(1) {

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import BuyerService from "../../../Services/Buyer";
 import MuiTable from "../../v2/components/Table";
-import { SectionItem, StackItem } from "../../v2/components/Lists";
+import {
+  SectionItem,
+  SectionItemCollapsable,
+  StackItem,
+} from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
 import { SmallPrimary } from "../../../Material/Button";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { wideBox } from "../../../Styles/v2/box";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
 import OfferTable from "../../v2/components/OfferTable";
 
@@ -134,9 +138,7 @@ const Requests = () => {
               species: request?.quotationProducts[0]?.product?.species?.label,
               speciesType:
                 request?.quotationProducts[0]?.product?.species?.type?.label,
-              containerSize:
-                request?.quotationProducts[0]?.product
-                  ?.supportedShippingContainers[0]?.label,
+              containerSize: "20ft Container",
               quantity: request?.quotationProducts[0]?.specification?.quantity,
               buyer: request?.user,
               specification: {
@@ -229,59 +231,80 @@ const Requests = () => {
               )}
               <StackItem
                 title="Quantity"
-                value={selectedRequest.quantity + " 20ft Container"}
+                value={selectedRequest?.quantity + " 20ft Container"}
               />
             </SectionItem>
 
             <SectionItem sectionTitle="Pricing and Delivery Information">
-              <StackItem title="Incoterm" value={selectedRequest.terms} />
+              <StackItem title="Incoterm" value={selectedRequest?.terms} />
               <StackItem
                 title="Destination"
-                value={selectedRequest.destination}
+                value={selectedRequest?.destination}
               />
               <StackItem
                 title="Destination Port"
-                value={selectedRequest.port}
+                value={selectedRequest?.port}
               />
             </SectionItem>
 
             <SectionItem sectionTitle="Request Settings">
-              <StackItem title="Validity" value={selectedRequest.product} />
+              <StackItem title="Validity" value={selectedRequest?.product} />
             </SectionItem>
+
+            <SectionItemCollapsable sectionTitle="Buyer Details">
+              <StackItem
+                title="Full Name"
+                value={`${selectedRequest?.buyer?.firstName} ${selectedRequest?.buyer?.lastName}`}
+              />
+              <StackItem
+                title="Company"
+                value={selectedRequest?.buyer?.companyName}
+              />
+              <StackItem
+                title="Customer Since"
+                value={new Date(
+                  selectedRequest?.buyer?.createdOn
+                ).toDateString()}
+              />
+              <StackItem title="Email" value={selectedRequest?.buyer?.email} />
+              <StackItem
+                title="Mobile"
+                value={`+${selectedRequest?.buyer?.mobileNo}`}
+              />
+              <StackItem
+                title="Country"
+                value={selectedRequest?.buyer?.country}
+              />
+            </SectionItemCollapsable>
 
             {selectedRequestOffers &&
               selectedRequestOffers.length > 0 &&
               selectedRequestOffers.map((selectedRequestOffer, index) => (
-                <React.Fragment key={index}>
-                  <SectionItem
-                    sectionTitle={`Merchant Information Details [${
-                      index + 1
-                    }] `}
-                  >
-                    <StackItem
-                      title="Name"
-                      value={selectedRequestOffer?.merchant?.name}
-                    />
-                    <StackItem
-                      title="Company Name"
-                      value={selectedRequestOffer?.merchant?.company}
-                    />
-                    <StackItem
-                      title="Telephone"
-                      value={`+${selectedRequestOffer?.merchant?.telephone}`}
-                    />
-                  </SectionItem>
-
-                  <SectionItem
-                    sectionTitle={`Merchant Offer Details [${index + 1}] `}
-                  >
+                <SectionItemCollapsable
+                  key={index}
+                  sectionTitle={`Merchant Details ${index + 1}`}
+                >
+                  <StackItem
+                    title="Name"
+                    value={selectedRequestOffer?.merchant?.name}
+                  />
+                  <StackItem
+                    title="Company Name"
+                    value={selectedRequestOffer?.merchant?.company}
+                  />
+                  <StackItem
+                    title="Mobile"
+                    value={`+${selectedRequestOffer?.merchant?.telephone}`}
+                  />
+                  <Stack marginTop={1} spacing={1}>
+                    <div style={{ color: "gray" }}>Offer Table:</div>
                     <OfferTable
                       offerRows={selectedRequestOffer?.offer}
                       product={selectedRequest?.product}
                       incoterm={selectedRequest?.terms}
                     />
-                  </SectionItem>
-                </React.Fragment>
+                  </Stack>
+                </SectionItemCollapsable>
               ))}
           </div>
         </Box>

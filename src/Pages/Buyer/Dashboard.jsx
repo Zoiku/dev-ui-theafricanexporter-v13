@@ -11,7 +11,7 @@ const Dashboard = ({ session }) => {
   return (
     <Stack className="main-page" direction="column" spacing={2}>
       <Salutation name={user?.profile?.firstName} />
-      <Stack className="buyer_dashboard" direction="row" spacing={1}>
+      <Stack className="buyer_main_boxes" direction="row" spacing={1}>
         <MainBox title="Requests" helper="Responses to buyer requests">
           <RequestsTable />
         </MainBox>

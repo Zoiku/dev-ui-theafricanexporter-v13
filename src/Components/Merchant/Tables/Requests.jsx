@@ -5,7 +5,7 @@ import { Box, Stack, TextField } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
 import "../../../Styles/v2/Pagination.css";
 import DrawerModal from "../../v2/components/DrawerModal";
-import { widerBox } from "../../../Styles/v2/box";
+import { wideBox } from "../../../Styles/v2/box";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import { incotermNote } from "../../v2/components/IncotermNotes";
 import { SmallSecondary } from "../../../Material/Button";
@@ -95,9 +95,7 @@ const Requests = () => {
               destination: request?.destination,
               port: request?.port,
               validity: request?.validity,
-              containerSize:
-                quotationProduct?.product?.supportedShippingContainers[0]
-                  ?.label,
+              containerSize: "20ft Container",
               volume: quotationProduct?.product?.volume?.value,
               volumeUnit: quotationProduct?.product?.volume?.unit,
               specification: {
@@ -355,7 +353,7 @@ const Requests = () => {
                   </div>
                 </div>
                 <Stack direction="column" marginTop={2} spacing={2}>
-                  {/* <TextField
+                  <TextField
                     name="quantity"
                     label="Quantity"
                     type="number"
@@ -371,14 +369,14 @@ const Requests = () => {
                     }}
                     onChange={handleChange}
                     required
-                  /> */}
-                  {/* <OfferTableV1
+                  />
+                  <OfferTableV1
                     product={selectedRequest?.productName}
                     incoterm={selectedRequest?.terms}
                     offerRows={offerRows}
                     setQuotation={setQuotation}
                     quotation={quotation}
-                  /> */}
+                  />
                   <Stack direction="row" spacing={1}>
                     <Stack
                       onClick={handleChangeOfferRows("MORE")}
@@ -423,7 +421,7 @@ const Requests = () => {
       <RequestsView />
 
       <DrawerModal
-        boxStyle={widerBox}
+        boxStyle={wideBox}
         openState={openRequestView}
         toggleOpenState={toggleOpenRequestView}
         title="Request Details"

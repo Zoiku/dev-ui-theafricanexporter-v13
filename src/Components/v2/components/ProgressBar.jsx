@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 
 export const ProgressBar = ({ status }) => {
   return (
-    <Stack direction="column" width={"100%"}>
+    <Stack marginY={1} direction="column" width={"100%"}>
       <div style={{ color: "gray" }}>
         {ORDER_STATUS_LEVELS[status]}% Complete
       </div>

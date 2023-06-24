@@ -199,7 +199,7 @@ const MerchantCharts = () => {
       spacing={1}
     >
       <MainBox
-        title="Monthly Sales"
+        title={`Monthly Sales, ${new Date().getFullYear()}`}
         helper="Trends on the orders delivered per month"
       >
         {sales?.requestState?.loading ? (
