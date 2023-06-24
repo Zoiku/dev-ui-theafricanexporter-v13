@@ -59,8 +59,11 @@ html {
 .css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root {
   min-width: 19% !important;
   max-width: 19% !important;
+}
 
-  border: 3px solid red !important;
+.css-sxw2zh {
+  min-width: 19% !important;
+  max-width: 19% !important;
 }
 
 .MuiBottomNavigationAction-label {
