@@ -29,6 +29,10 @@ html {
     "Segoe UI Symbol";
 }
 
+.css-fy2uxz {
+  border-radius: 10px 10px 0 0 !important;
+}
+
 .css-9emuhu-MuiPaper-root-MuiDrawer-paper {
   border-radius: 10px 10px 0 0 !important;
 }
@@ -321,7 +325,6 @@ html {
   font-size: small;
   font-weight: 500;
 }
-
 
 @keyframes dropping {
   from {
