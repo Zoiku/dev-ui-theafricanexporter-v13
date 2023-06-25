@@ -318,17 +318,6 @@ html {
   font-weight: 500;
 }
 
-.good-selected {
-  color: black;
-}
-
-.bad-selected {
-  color: rgba(185, 0, 0, 0.767);
-}
-
-.default-selected {
-  color: #88888888;
-}
 
 @keyframes dropping {
   from {

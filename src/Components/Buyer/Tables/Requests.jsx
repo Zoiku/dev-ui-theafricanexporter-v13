@@ -18,6 +18,8 @@ import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 import { MuiLinearProgress } from "../../v2/components/LinearProgress";
 import Tip from "../../v2/components/Tip";
+import MuiDialog from "../../v2/components/Dialog";
+import { Button1 } from "../../v2/components/Buttons";
 
 const Requests = () => {
   const rootDispatch = useDispatch();
@@ -195,6 +197,37 @@ const Requests = () => {
     fetchData();
   };
 
+  const [dialogButtonState, setDialogButtonState] = useState(false);
+  const [repostRequestId, setRepostRequestId] = useState(null);
+  const [openRepostDialog, setOpenRepostDialog] = useState(false);
+  const triggerOpenRepostDialog =
+    (open, id = null) =>
+    () => {
+      setRepostRequestId(id);
+      setOpenRepostDialog(open);
+    };
+  const dialogActionReposet_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonState(true);
+      const buyerService = new BuyerService();
+      try {
+        const { errors } = await buyerService.repostRequest(repostRequestId);
+        if (errors.length === 0) {
+          triggerOpenRepostDialog(false)();
+          setReloadTable((prev) => !prev);
+          triggerSnackBarAlert(
+            "Your request has been reposted successfully",
+            "success"
+          );
+        }
+      } catch (error) {
+        throw error;
+      }
+      setDialogButtonState(false);
+    };
+    doAction();
+  };
+
   const triggerSnackBarAlert = (message, severity) => {
     const payload = {
       severity,
@@ -242,6 +275,11 @@ const Requests = () => {
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
           <MuiMoreV1>
             <MenuItem onClick={handleOpenRequestView(row.id)}>View</MenuItem>
+            {new Date() > new Date(row.expiryDate) && (
+              <MenuItem onClick={triggerOpenRepostDialog(true, row.id)}>
+                Repost
+              </MenuItem>
+            )}
           </MuiMoreV1>
         </Stack>
       ),
@@ -426,6 +464,29 @@ const Requests = () => {
 
   return (
     <main>
+      <MuiDialog
+        openDialog={openRepostDialog}
+        toggleOpenDialog={triggerOpenRepostDialog}
+        dialogTitle="Do you want to repost this request?"
+      >
+        <Button1
+          variant="text"
+          color="inherit"
+          disabled={dialogButtonState}
+          onClick={triggerOpenRepostDialog(false)}
+        >
+          No
+        </Button1>
+        <Button1
+          variant="text"
+          color="inherit"
+          loading={dialogButtonState}
+          onClick={dialogActionReposet_Yes}
+        >
+          Yes
+        </Button1>
+      </MuiDialog>
+
       <DrawerModal
         boxStyle={wideBox}
         openState={openRequestView}

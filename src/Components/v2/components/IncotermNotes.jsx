@@ -1,21 +1,14 @@
-import "../../../Styles/v2/IncotermNotes.css";
 import { Stack } from "@mui/material";
-import { ErrorOutline } from "@mui/icons-material/";
+import { Tip } from "../components/Tip";
 
 const IncotermNotes = ({ title, children }) => {
   return (
-    <Stack direction="column" spacing={1} className="incoterm_note_container">
-      <Stack
-        direction="row"
-        alignItems="center"
-        className="incoterm_note_title"
-        spacing={2}
-      >
-        <ErrorOutline fontSize="small" />
-        <div>Additional Notes for {title}</div>
+    <Tip>
+      <Stack>
+        <div style={{ fontWeight: 700, marginBottom: 2 }}>Additional Notes for {title}</div>
+        {children}
       </Stack>
-      <div className="incoterm_note">{children}</div>
-    </Stack>
+    </Tip>
   );
 };
 
