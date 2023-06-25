@@ -3,13 +3,13 @@ import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 
 const Default = ({ session }) => {
-    return (
-        <div className="Default-Layout">
-            <Nav session={session} />
-            <Outlet />
-            <Footer />
-        </div>
-    );
-}
+  return (
+    <>
+      <Nav session={session} />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
 
 export default Default;

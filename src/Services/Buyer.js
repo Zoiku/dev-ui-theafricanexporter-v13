@@ -14,7 +14,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -31,7 +31,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
   async getOrderList(referenceCode) {
@@ -47,7 +47,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -64,7 +64,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -81,7 +81,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -98,7 +98,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -115,7 +115,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -132,7 +132,24 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
+    };
+  }
+
+  async getOffersTotalCount(id) {
+    let errors = [];
+    let data = null;
+    const url = `/buyer/quotation/offers/request/totalCount/${id}`;
+
+    try {
+      data = await AxiosInstance().get(url);
+    } catch (error) {
+      errors.push(error);
+    }
+
+    return {
+      errors,
+      data,
     };
   }
 
@@ -147,7 +164,7 @@ export default class BuyerService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -162,7 +179,7 @@ export default class BuyerService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -179,7 +196,7 @@ export default class BuyerService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -194,7 +211,7 @@ export default class BuyerService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -209,7 +226,7 @@ export default class BuyerService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 }

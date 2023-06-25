@@ -1,0 +1,46 @@
+.merchant-info-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 3px;
+  background: #d88c00;
+}
+
+.merchant-info-title {
+  color: whitesmoke;
+}
+
+.merchant-info-value {
+  font-size: xx-large;
+  font-weight: 600;
+  color: #fff;
+}
+
+.merchant-info-value-loading {
+  color: #efefef;
+}
+
+.merchant-charts > div {
+  height: 400px;
+}
+
+.merchant-charts > div:nth-child(1) {
+  width: 70%;
+}
+
+.merchant-charts > div:nth-child(2) {
+  width: 30%;
+}
+
+@media screen and (max-width: 1024px) {
+  .merchant-info-cards,
+  .merchant-charts {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .merchant-info-card,
+  .merchant-charts > div {
+    margin: 0 0 10px 0 !important;
+    width: 100% !important;
+  }
+}

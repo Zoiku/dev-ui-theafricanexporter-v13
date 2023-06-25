@@ -33,8 +33,6 @@ import ProtectedMerchantRoutes from "./Protected/MerchantRoutes";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAlerts } from "./Redux/Features/Alert";
 import { initPath, initUser } from "./Redux/Features/Session";
-import { MaterialAlert } from "./Material/Alert";
-import Snackbar from "@mui/material/Snackbar";
 import { formReducer, INITIAL_STATE } from "./Reducers/FormReducer";
 import {
   REQUEST_FAILED,
@@ -43,8 +41,9 @@ import {
 } from "./Reducers/Actions";
 import AOS from "aos";
 import "aos/dist/aos.css";
-// import FAQ from "./Pages/FAQ";
 import FAQ2 from "./Pages/FAQ2";
+import "./Styles/v2/SectionContent.css";
+import MuiSnackbar from "./Components/v2/components/Snackbar";
 
 AOS.init();
 
@@ -60,6 +59,7 @@ const App = () => {
   );
   const { profile } = useSelector((state) => state.session.user);
   const { session } = useSelector((state) => state);
+
   const { alert } = useSelector((state) => state);
   const [openSnackBar, setOpenSnackBar] = useState(alert.active);
   const handleOpenSnackBar = () => setOpenSnackBar(true);
@@ -101,9 +101,7 @@ const App = () => {
         }
       } catch (error) { }
     };
-
     session.isLogged && fetchData();
-
     return () => abortController.abort();
     // eslint-disable-next-line
   }, [session.isLogged]);
@@ -116,21 +114,10 @@ const App = () => {
     <div>
       <SessionTimeout session={session} />
 
-      {alert.active && (
-        <Snackbar
-          open={openSnackBar}
-          autoHideDuration={alert.timeOut}
-          onClose={handleCloseSnackBar}
-        >
-          <MaterialAlert
-            onClose={handleCloseSnackBar}
-            severity={alert.severity}
-            sx={{ width: "100%" }}
-          >
-            {alert.message}
-          </MaterialAlert>
-        </Snackbar>
-      )}
+      {
+        alert.active &&
+        <MuiSnackbar open={openSnackBar} handleClose={handleCloseSnackBar} message={alert?.message} severity={alert?.severity} />
+      }
 
       <Routes>
         <Route element={<DefaultLayout session={session} />}>
@@ -146,7 +133,6 @@ const App = () => {
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/legal" element={<LegalPage />} />
           <Route exact path="/faq" element={<FAQ2 />} />
-          {/* <Route exact path="/faq2" element={<FAQ2 />} /> */}
         </Route>
 
         <Route element={<ProtectedAdminRoutes session={session} />}>
@@ -185,7 +171,7 @@ const App = () => {
             />
             <Route path="/buyer/requests" element={<BuyerRequests />} />
             <Route path="/buyer/orders" element={<BuyerOrders />} />
-            <Route path="/buyer/settings" element={<BuyerSettings />} />
+            <Route path="/buyer/settings" element={<BuyerSettings profile={profile} />} />
           </Route>
         </Route>
 

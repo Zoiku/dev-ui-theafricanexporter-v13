@@ -1,10 +1,10 @@
-import UsersBuyer from "../../Components/Admin/Tables/UsersBuyer";
-import UsersMerchant from "../../Components/Admin/Tables/UsersMerchant";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { TabPanel, a11yProps } from "../../Material/Tabs";
 import { useState } from "react";
+import { Tabs, Tab, Box } from "@mui/material/";
+import { TabPanel, a11yProps } from "../../Material/Tabs";
+
+import MainBox from "../../Components/v2/components/MainBox";
+import BuyerTable from "../../Components/Admin/Tables/UsersBuyer";
+import MerchantTable from "../../Components/Admin/Tables/UsersMerchant";
 
 const ROLES = {
   MERCHANT: 0,
@@ -18,52 +18,40 @@ const Users = () => {
   };
 
   return (
-    <div className="Users-Page">
-      <Box sx={{ marginBottom: 3 }}>
+    <main>
+      <Box sx={{ marginBottom: 2 }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
           <Tab
-            disableRipple
-            sx={{ fontSize: "medium", fontWeight: 700 }}
+            sx={{ fontWeight: 700 }}
             label="Merchant"
+            disableRipple
             {...a11yProps(ROLES.MERCHANT)}
           />
           <Tab
-            disableRipple
-            sx={{ fontSize: "medium", fontWeight: 700 }}
+            sx={{ fontWeight: 700 }}
             label="Buyer"
+            disableRipple
             {...a11yProps(ROLES.BUYER)}
           />
         </Tabs>
       </Box>
 
       <TabPanel value={value} index={ROLES.MERCHANT}>
-        <div className="tables-container">
-          <div className="dash-items-title-container">
-            <div>Merchants</div>
-            <div>Merchant Accounts</div>
-          </div>
-          <div>
-            <UsersMerchant />
-          </div>
-        </div>
+        <MainBox title="Merchants" helper="Merchant Accounts">
+          <MerchantTable />
+        </MainBox>
       </TabPanel>
 
       <TabPanel value={value} index={ROLES.BUYER}>
-        <div className="tables-container">
-          <div className="dash-items-title-container">
-            <div>Buyers</div>
-            <div>Buyer Accounts</div>
-          </div>
-          <div>
-            <UsersBuyer />
-          </div>
-        </div>
+        <MainBox title="Buyers" helper="Buyer Accounts">
+          <BuyerTable />
+        </MainBox>
       </TabPanel>
-    </div>
+    </main>
   );
 };
 

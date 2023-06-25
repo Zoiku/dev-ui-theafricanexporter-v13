@@ -1,15 +1,23 @@
-.Menu {
+/* .Menu {
   padding: 10px;
   height: 100%;
   position: relative;
+  border: 2px solid red;
+  width: 80px;
+  transition: all 0.2s ease;
+}
+
+.Menu:hover {
+  width: 250px;
 }
 
 .menu-links-container {
   position: sticky;
   top: 130px;
-}
+  display: none;
+} */
 
-.menu-links {
+/* .menu-links {
   display: block;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -19,10 +27,10 @@
   align-items: center;
   font-weight: 500;
   position: relative;
-}
+} */
 
-.menu-links-container .active {
+/* .menu-links-container .active {
   background: var(--tae-orange);
   transition: all 0.1s ease;
   color: white;
-}
+} */

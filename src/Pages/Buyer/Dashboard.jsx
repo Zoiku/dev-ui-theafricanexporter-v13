@@ -1,38 +1,25 @@
-import "../../Styles/DashboardBuyer.css";
+import "../../Styles/v2/DashboardBuyer.css";
+import { Stack } from "@mui/material";
+import MainBox from "../../Components/v2/components/MainBox";
+import OrdersTable from "../../Components/Buyer/Tables/Orders";
+import RequestsTable from "../../Components/Buyer/Tables/Requests";
 import Salutation from "../../Components/Salutation";
-import Orders from "../../Components/Buyer/Tables/Orders";
-import Requests from "../../Components/Buyer/Tables/Requests";
 
 const Dashboard = ({ session }) => {
-  const { user } = session;
+  const user = session?.user;
 
   return (
-    <div className="Buyer-Dashboard">
-      <div>
-        <Salutation name={user?.profile?.firstName} />
-      </div>
-
-      <div className="buyer-dashboard-body-container">
-        <div>
-          <div className="dash-items-title-container">
-            <div>Requests</div>
-            <div>Responses to buyer requests</div>
-          </div>
-          <div>
-            <Requests />
-          </div>
-        </div>
-        <div>
-          <div className="dash-items-title-container">
-            <div>Orders</div>
-            <div>Converted quotations</div>
-          </div>
-          <div>
-            <Orders />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Stack className="main-page" direction="column" spacing={2}>
+      <Salutation name={user?.profile?.firstName} />
+      <Stack className="buyer_main_boxes" direction="row" spacing={1}>
+        <MainBox title="Requests" helper="Responses to buyer requests">
+          <RequestsTable />
+        </MainBox>
+        <MainBox title="Orders" helper="Converted Quotations">
+          <OrdersTable />
+        </MainBox>
+      </Stack>
+    </Stack>
   );
 };
 

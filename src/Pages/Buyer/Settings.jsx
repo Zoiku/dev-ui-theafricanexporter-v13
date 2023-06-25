@@ -1,69 +1,54 @@
-import "../../Styles/Settings.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
-import { StyledBadge } from "../../Material/Avatar";
-import { useSelector } from "react-redux";
-
-const Settings = () => {
-  const { profile } = useSelector((state) => state.session.user);
+import "../../Styles/v2/SettingsPage.css";
+import { Stack, Box, TextField } from "@mui/material";
+import AvatarProfile from "../../Components/AvatarProfile";
+import { ProfileSection, ProfileSectionRow } from "../SettingsPageSections";
+const Settings = ({ profile }) => {
   return (
-    <div className="Settings-Page">
-      <div className="user-profile-container">
-        <StyledBadge
+    <Box>
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <AvatarProfile
+          variant="circular"
           overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-        >
-          <Avatar className="user-avatar" alt={profile.firstName} src="/" />
-        </StyledBadge>
-        <div className="user-short-desc-container">
-          <div>
-            {profile.firstName} {profile.lastName}
+          height={180}
+          width={180}
+          fontSize={70}
+          fullName={profile?.user?.firstName}
+        />
+        <div>
+          <div style={{ fontSize: 40, fontWeight: 700 }}>
+            {profile?.firstName} {profile?.lastName}
           </div>
-          <div>{profile.email}</div>
+          <div>{profile?.email}</div>
         </div>
-      </div>
+      </Stack>
 
-      <div className="user-profile-sections-container">
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { width: "100%", margin: "50px 0" },
-          }}
-          autoComplete="off"
-        >
-          <section>
-            <div className="user-profile-section-title">Personal Details</div>
-            <div className="form-controller-input-duo form-controller">
-              <TextField
-                disabled
-                value={profile.firstName}
-                fullWidth
-                label="First Name"
-                variant="outlined"
-              />
-              <TextField
-                disabled
-                value={profile.lastName}
-                fullWidth
-                label="Last Name"
-                variant="outlined"
-              />
-            </div>
-            <div className="form-controller-input form-controller">
-              <TextField
-                disabled
-                value={profile.email}
-                fullWidth
-                label="Email"
-                variant="outlined"
-              />
-            </div>
-          </section>
-        </Box>
+      <div className="profile_sections">
+        <ProfileSection title="Personal Details">
+          <ProfileSectionRow>
+            <TextField
+              fullWidth
+              label="First Name"
+              value={profile?.firstName}
+              disabled={true}
+            />
+            <TextField
+              fullWidth
+              label="Last Name"
+              value={profile?.lastName}
+              disabled={true}
+            />
+          </ProfileSectionRow>
+          <ProfileSectionRow>
+            <TextField
+              fullWidth
+              label="Email"
+              value={profile?.email}
+              disabled={true}
+            />
+          </ProfileSectionRow>
+        </ProfileSection>
       </div>
-    </div>
+    </Box>
   );
 };
 

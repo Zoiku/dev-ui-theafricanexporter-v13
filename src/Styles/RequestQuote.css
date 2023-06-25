@@ -58,7 +58,7 @@
   font-weight: 700;
 }
 
-.RequestQuote-Page > div:nth-child(3) {
+.request_quote_page_main_inner_container {
   width: 900px;
   padding: 30px 0;
 }
@@ -269,8 +269,8 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .RequestQuote-Page > div:nth-child(3) {
-    width: 94%;
+  .request_quote_page_main_inner_container {
+    width: 95%;
   }
 
   .select-input-form-with-units > div:nth-child(2) {

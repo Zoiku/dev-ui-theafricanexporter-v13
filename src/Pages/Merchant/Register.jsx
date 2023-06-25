@@ -1,5 +1,8 @@
 import "../../Styles/Register.css";
-import { strictMatch } from "../RequestQuote";
+import {
+  strictMatch,
+  capitalizeFirstLetter,
+} from "../../Components/Functions/";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { PrimaryButton } from "../../Material/Button";
@@ -38,9 +41,6 @@ import Modal from "@mui/material/Modal";
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from "react-otp-input";
 import successImg from "../../Assets/Charco - Good Job.png";
-
-const capitalizeFirstLetter = (string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
 
 const Register = () => {
   const [errorBoxes, setErrorBoxes] = useState([]);

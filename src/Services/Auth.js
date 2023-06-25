@@ -1,10 +1,7 @@
 import AxiosInstance from "./AxiosInstance";
 import { JSEncrypt } from "jsencrypt";
 import decode from "jwt-decode";
-
-const setSessionToken = (token) => {
-  sessionStorage.setItem("token", token);
-};
+import { setSessionToken } from "../Components/Functions";
 
 export default class AuthService {
   async isLoggedBefore(id) {
@@ -18,7 +15,7 @@ export default class AuthService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -33,7 +30,7 @@ export default class AuthService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -57,7 +54,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -72,7 +69,7 @@ export default class AuthService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -87,7 +84,7 @@ export default class AuthService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -104,7 +101,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -121,7 +118,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -136,7 +133,7 @@ export default class AuthService {
 
     try {
       data = await AxiosInstance().post(url, {
-        password: password
+        password: password,
       });
     } catch (error) {
       errors.push(error);
@@ -144,7 +141,7 @@ export default class AuthService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 }

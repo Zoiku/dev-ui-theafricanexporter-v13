@@ -193,7 +193,7 @@ const AdminNav = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
               >
-                <Avatar src="/" sx={{ background: "#ee9b00" }}></Avatar>
+                <Avatar src="/" alt="a" sx={{ background: "#ee9b00" }}></Avatar>
               </IconButton>
             </Tooltip>
           </Box>

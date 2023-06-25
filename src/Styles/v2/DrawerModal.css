@@ -1,0 +1,56 @@
+.DrawerComponent {
+  display: none;
+}
+
+.ModalComponent {
+  display: block;
+}
+
+.modal_container {
+  max-height: 500px;
+  overflow-y: auto !important;
+}
+
+.drawer_container {
+  max-height: 90%;
+  overflow-y: auto !important;
+}
+
+.modal_title_container,
+.drawer-title-container {
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.modal_body_container,
+.drawer-body-container {
+  padding: 10px;
+}
+
+.modal_title_container {
+  z-index: 100;
+  background: white;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  font-weight: 600;
+}
+
+.drawer-title-container {
+  padding: 30px 10px 15px 10px;
+  font-weight: 700;
+}
+
+.drawer-title-text {
+  text-align: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .DrawerComponent {
+    display: block;
+  }
+
+  .ModalComponent {
+    display: none;
+  }
+}

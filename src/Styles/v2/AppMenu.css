@@ -1,0 +1,57 @@
+.app-menu {
+  height: calc(100vh - 80px);
+  width: 60px;
+  padding: 30px 5px;
+  transition: all 0.2s ease-in-out;
+  overflow: clip;
+  position: sticky;
+  top: 80px;
+}
+
+.app-menu:hover {
+  width: 180px;
+}
+
+.app-menu-items {
+  height: 100%;
+}
+
+.app-menu-item {
+  text-decoration: none;
+  color: gray;
+  font-weight: 600;
+}
+
+.app-menu-icon {
+  min-width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  place-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.app-menu-label {
+  transition: all 0.3s ease-in-out;
+}
+
+.active .app-menu-icon {
+  background: var(--tae-orange) !important;
+  color: #fff;
+}
+
+.active .app-menu-label {
+  color: var(--tae-orange);
+}
+
+.app-menu-item:hover .app-menu-icon {
+  background: #efefef;
+}
+
+.app-bottom-menu {
+  height: 80px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(12.3px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 10px 10px 0 0 !important;
+  z-index: 100;
+}

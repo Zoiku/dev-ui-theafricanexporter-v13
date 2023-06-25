@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   severity: null,
   message: null,
-  timeOut: 0,
   active: false
 };
 
@@ -15,7 +14,6 @@ const alertReducer = createSlice({
       return {
         severity: action.payload.severity,
         message: action.payload.message,
-        timeOut: action.payload.timeOut,
         active: true
       };
     },

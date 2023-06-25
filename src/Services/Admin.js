@@ -1,60 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-
-const calculateRatio = (a, b) => {
-  if (b !== 0) {
-    const gcd = calculateGCD(a, b);
-    const ratio = `${a / gcd}:${b / gcd}`;
-    return ratio;
-  } else {
-    throw new Error("Cannot divide by zero.");
-  }
-};
-
-const calculateGCD = (a, b) => {
-  if (b === 0) {
-    return a;
-  } else {
-    return calculateGCD(b, a % b);
-  }
-};
-
-const reduce = (array) => {
-  const count = {};
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-  return count;
-};
-
-const monthReduce = (array) => {
-  const count = {
-    January: 0,
-    February: 0,
-    March: 0,
-    April: 0,
-    May: 0,
-    June: 0,
-    July: 0,
-    August: 0,
-    September: 0,
-    October: 0,
-    November: 0,
-    December: 0
-  };
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-
-  return count;
-};
+import { calculateRatio, monthReduce, reduce } from "../Components/Functions/";
 
 export default class AdminService {
   async getRequests(signal, paging) {
@@ -71,7 +16,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -89,7 +34,7 @@ export default class AdminService {
         if (currentYear === requestYear) {
           months.push(
             new Date(request.createdOn).toLocaleDateString("default", {
-              month: "long"
+              month: "long",
             })
           );
         }
@@ -107,7 +52,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -128,7 +73,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -145,7 +90,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -162,7 +107,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -179,7 +124,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -196,7 +141,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -214,7 +159,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -232,7 +177,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -250,7 +195,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -261,10 +206,10 @@ export default class AdminService {
     const buyersUrl = "/buyers";
     try {
       const merchants = await AxiosInstance().get(merchantsUrl, {
-        signal
+        signal,
       });
       const buyers = await AxiosInstance().get(buyersUrl, {
-        signal
+        signal,
       });
 
       let merchantCount = Number(merchants.data.totalCount);
@@ -276,7 +221,7 @@ export default class AdminService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -291,7 +236,7 @@ export default class AdminService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -306,7 +251,7 @@ export default class AdminService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -321,7 +266,7 @@ export default class AdminService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -336,7 +281,7 @@ export default class AdminService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 }

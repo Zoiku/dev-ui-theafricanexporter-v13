@@ -3,7 +3,6 @@
 }
 
 .TutorialComponentContainer {
-  overflow: clip;
   background: #00000000;
 }
 
@@ -112,16 +111,20 @@
 }
 
 .tutorialSkipContainer {
-  margin: 40px 0 0 0;
+  position: fixed;
+  width: 100%;
+  bottom: -60px;
   text-align: center;
-  font-weight: 600;
   cursor: pointer;
+  font-weight: 700;
 }
 
-.tutorialCircularLoadingProgress {
+.tutorialLoadingProgress {
+  position: fixed;
+  bottom: -48px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin: 40px 0 0 0;
 }
 
 .tutorialCompleteHelper {
@@ -154,7 +157,7 @@
 .TutorialTutorialComponentContainerComponent .swiper-pagination-custom,
 .TutorialComponentContainer .swiper-pagination-fraction {
   position: fixed;
-  bottom: 30px;
+  bottom: -30px;
 }
 
 .tutorialCompleted {

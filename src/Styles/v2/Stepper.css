@@ -1,0 +1,17 @@
+.web_stepper {
+  display: contents;
+}
+
+.mobile_stepper {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .web_stepper {
+    display: none;
+  }
+
+  .mobile_stepper {
+    display: contents;
+  }
+}

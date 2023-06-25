@@ -14,7 +14,7 @@ export default class ProductService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -31,7 +31,7 @@ export default class ProductService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 }

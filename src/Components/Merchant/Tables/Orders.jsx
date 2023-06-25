@@ -1,352 +1,174 @@
-import { DataGrid } from "@mui/x-data-grid";
-import LinearProgress from "@mui/material/LinearProgress";
-import Toolbar from "../../../Material/Toolbar";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { useState, useEffect, useReducer } from "react";
-import Box from "@mui/material/Box";
-import { Puller } from "../../../Material/Drawer";
+import { useEffect, useState } from "react";
 import MerchantService from "../../../Services/Merchant";
+import { MuiTableV1 } from "../../v2/components/Table";
+import {
+  SectionItem,
+  SectionItemCollapsable,
+  StackItem,
+} from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
-import "../../../Styles/Order.css";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
+import { MuiMoreV1 } from "../../More";
+import DrawerModal from "../../v2/components/DrawerModal";
+import { Box, Stack } from "@mui/material";
+import { widerBox } from "../../../Styles/v2/box";
+import MuiStepper from "../../v2/components/Stepper";
+import { ProgressBar } from "../../v2/components/ProgressBar";
+import { MenuItem } from "@mui/material";
+import {
+  ORDER_STATUS,
+  ORDER_STATUS_STEPS,
+} from "../../v2/components/OrderStatus";
+import MuiDialog from "../../v2/components/Dialog";
+import { Button1 } from "../../v2/components/Buttons";
+import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
-import { setAlert } from "../../../Redux/Features/Alert.js";
-import Tooltip from "@mui/material/Tooltip";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import { inAppWider } from "../../../Styles/Modal";
-import Modal from "@mui/material/Modal";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Transition } from "../../../Material/Dialog";
-import {
-  GenericSecondary,
-  GenericPrimaryButton,
-} from "../../../Material/Button";
-import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
-import {
-  REQUEST_FAILED,
-  REQUEST_SUCCESSFUL,
-  SEND_REQUEST,
-} from "../../../Reducers/Actions";
-import { inAppDialog } from "../../../Styles/Dialog";
-import Overlay from "../../../Material/Overlay";
-
-const ORDER_STATUS_LEVELS = {
-  RECEIVED: 10,
-  CONFIRMED: 30,
-  "AWAITING PROOF OF PAYMENT": 30,
-  "PROOF OF PAYMENT APPROVED": 40,
-  PROCESSING: 60,
-  SHIPPED: 80,
-  DELIVERED: 100,
-};
-
-const ORDER_STATUS_STEPS = {
-  RECEIVED: 0,
-  CONFIRMED: 2,
-  "AWAITING PROOF OF PAYMENT": 2,
-  "PROOF OF PAYMENT APPROVED": 3,
-  PROCESSING: 4,
-  SHIPPED: 5,
-  DELIVERED: 6,
-};
-
-const steps = [
-  {
-    label: "Order placed",
-    description: "Order has been placed",
-  },
-  {
-    label: "Order Confirmed",
-    description: "Confirm the order",
-  },
-  {
-    label: "Order Approved",
-    description: "Order is pending approval",
-  },
-  {
-    label: "Processing",
-    description: "Please wait while the order is being processed",
-  },
-  {
-    label: "Shipped",
-    description: "The order is being shipped",
-  },
-  {
-    label: "Delivered",
-    description: "The order is being delivered",
-  },
-];
-
-const ProgressBar = ({ status }) => {
-  return (
-    <div className="progress-bar-container">
-      <div>
-        <span>{ORDER_STATUS_LEVELS[status]}% Complete</span>
-      </div>
-      <div>
-        <progress
-          className="order-status-progress"
-          max="100"
-          value={ORDER_STATUS_LEVELS[status]}
-        />
-      </div>
-    </div>
-  );
-};
 
 const Orders = () => {
-  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const [refreshTable, setRefreshTable] = useState(false);
   const rootDispatch = useDispatch();
-  const iOS =
-    typeof navigator !== "undefined" &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [rows, setRows] = useState([]);
   const [rowsLoading, setRowsLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(10);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const selectOrder = (id) => setSelectedOrderId(id);
-  const selectedOrder = rows && rows.find((row) => row.id === selectedOrderId);
-
-  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
-  const handleClickOpenDialogConfirm = () => {
-    setOpenDialogConfirm(true);
+  const [tableReload, setTableReload] = useState(false);
+  const [paging, setPaging] = useState({
+    page: 1,
+    size: 10,
+    totalCount: 0,
+  });
+  const handlePageChange = (page) => {
+    setPaging({ ...paging, page: page + 1 });
   };
-  const handleCloseDialogConfirm = () => {
-    setOpenDialogConfirm(false);
-  };
-
-  const [openDialogReject, setOpenDialogReject] = useState(false);
-  const handleClickOpenDialogReject = () => {
-    setOpenDialogReject(true);
-  };
-  const handleCloseDialogReject = () => {
-    setOpenDialogReject(false);
+  const handlePageSizeChange = (size) => {
+    setPaging({ ...paging, size: size });
   };
 
-  const handleClick = (event, id) => {
-    setAnchorEl(event.currentTarget);
-    selectOrder(id);
+  const [selectedOrderId, setSelectedSelectedOrderId] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [openOrderView, setOpenOrderView] = useState(false);
+  const toggleOpenOrderView = (open) => () => {
+    setOpenOrderView(open);
+    if (!open) {
+      setSelectedOrder(null);
+      setSelectedSelectedOrderId(null);
+    }
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const toggleDrawer = (open) => (_event) => {
-    setOpenDrawer(open);
-  };
-
-  const handleCloseDrawer = () => {
-    setOpenDrawer(false);
-    setSelectedOrderId(null);
+  const handleOpenOrderView = (id) => () => {
+    const order = rows.find((row) => row.id === id);
+    setSelectedOrder(order);
+    setOpenOrderView(true);
   };
 
-  const handleConfirmOrder = async () => {
-    dispatch({ type: SEND_REQUEST });
-    const { id } = selectedOrder;
-    const merchantService = new MerchantService();
-    try {
-      const { errors } = await merchantService.orderConfirmation(id);
-      if (errors.length === 0) {
-        dispatch({ type: REQUEST_SUCCESSFUL });
-        setRefreshTable((prev) => !prev);
-        handleSuccessfulRequest(
-          "You will be notified immediately the buyer confirms the order",
-          3000
+  const [dialogButtonLoading, setDialogButtonLoading] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleOpenConfirmDialog = (open) => () => {
+    setOpenConfirmDialog(open);
+  };
+  const handleOpenConfirmDialog = (id) => () => {
+    setSelectedSelectedOrderId(id);
+    setOpenConfirmDialog(true);
+  };
+  const dialogActionConfirm_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonLoading(true);
+      try {
+        const merchantService = new MerchantService();
+        const { errors } = await merchantService.orderConfirmation(
+          selectedOrderId
         );
-        handleCloseDialogConfirm();
-      } else {
-        dispatch({ type: REQUEST_FAILED });
-        handleFailedRequest("Could not process your request", 5000);
+        if (errors.length === 0) {
+          setOpenConfirmDialog(false);
+          setTableReload((prev) => !prev);
+          triggerSnackBarAlert(
+            "You will be notified immediately the buyer confirms the order",
+            "success"
+          );
+        }
+      } catch (error) {
+        throw error;
       }
-    } catch (error) {}
+      setDialogButtonLoading(false);
+    };
+    doAction();
   };
 
-  const handleCancelOrder = async () => {
-    dispatch({ type: SEND_REQUEST });
-    const { id } = selectedOrder;
-    const merchantService = new MerchantService();
-    try {
-      const { errors } = await merchantService.orderRejection(id);
-      if (errors.length === 0) {
-        dispatch({ type: REQUEST_SUCCESSFUL });
-        setRefreshTable((prev) => !prev);
-        handleSuccessfulRequest(
-          "Order rejected, the buyer will be notified.",
-          3000
+  const [openRejectDialog, setOpenRejectDialog] = useState(false);
+  const toggleOpenRejectDialog = (open) => () => {
+    setOpenRejectDialog(open);
+  };
+  const handleOpenRejectDialog = (id) => () => {
+    setSelectedSelectedOrderId(id);
+    setOpenRejectDialog(true);
+  };
+  const dialogActionReject_Yes = () => {
+    const doAction = async () => {
+      setDialogButtonLoading(true);
+      try {
+        const merchantService = new MerchantService();
+        const { errors } = await merchantService.orderRejection(
+          selectedOrderId
         );
-        handleCloseDialogReject();
-      } else {
-        dispatch({ type: REQUEST_FAILED });
-        handleFailedRequest("Could not process your request", 5000);
+        if (errors.length === 0) {
+          setOpenRejectDialog(false);
+          setTableReload((prev) => !prev);
+          triggerSnackBarAlert(
+            "Order rejected, the buyer will be notified",
+            "success"
+          );
+        }
+      } catch (error) {
+        throw error;
       }
-    } catch (error) {}
+      setDialogButtonLoading(false);
+    };
+    doAction();
   };
 
-  const handleFailedRequest = (message, timeOut) => {
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
-      severity: "error",
+      severity,
       message,
-      timeOut,
     };
     rootDispatch(setAlert(payload));
   };
-
-  const handleSuccessfulRequest = (message, timeOut) => {
-    const payload = {
-      severity: "success",
-      message,
-      timeOut,
-    };
-    rootDispatch(setAlert(payload));
-  };
-
-  const More = ({ id }) => (
-    <div>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          position: "relative",
-        }}
-      >
-        <Tooltip title="More">
-          <IconButton
-            onClick={(event) => handleClick(event, id)}
-            size="small"
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <MoreHorizIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    </div>
-  );
 
   const columns = [
     { field: "index", headerName: "Number", width: 80 },
     { field: "orderNo", headerName: "Order #", width: 100 },
-    { field: "product", headerName: "Product", width: 150 },
+    { field: "productName", headerName: "Product", width: 180 },
     { field: "terms", headerName: "Terms", width: 100 },
     { field: "quantity", headerName: "Quantity", width: 100 },
+    { field: "status", headerName: "Status", width: 180 },
     {
       field: "timeLeft",
       headerName: "Time Left",
       width: 100,
       renderCell: ({ row }) => (
-        <div>
-          {" "}
-          <Countdown endDate={row.expiryDate} />{" "}
+        <div className="countdown-table-container">
+          <Countdown endDate={row.expiryDate} />
         </div>
       ),
     },
-    { field: "status", headerName: "Status", width: 100 },
     {
-      field: "action",
+      field: "actions",
       headerName: "",
-      width: 30,
+      width: 50,
       renderCell: ({ row }) => (
-        <div className="simple-center-div">
-          <More id={row.id} />
-        </div>
+        <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
+          <MuiMoreV1>
+            <MenuItem onClick={handleOpenOrderView(row.id)}>View</MenuItem>
+            {row.status === ORDER_STATUS.RECEIVED && (
+              <>
+                <MenuItem onClick={handleOpenConfirmDialog(row.id)}>
+                  Confirm
+                </MenuItem>
+                <MenuItem onClick={handleOpenRejectDialog(row.id)}>
+                  Reject
+                </MenuItem>
+              </>
+            )}
+          </MuiMoreV1>
+        </Stack>
       ),
     },
   ];
-
-  const list = (stepperOrientation) =>
-    selectedOrder && (
-      <Box role="presentation">
-        <div className="requests-sections-body">
-          <div className="requests-title-container">
-            <div>Order {selectedOrder.orderNo}</div>
-          </div>
-          <div className="requests-sections-container">
-            <section>
-              <div className="requests-section-title">Order Summary</div>
-              <div className="request-section-body">
-                {ORDER_STATUS_STEPS[selectedOrder.status] > 2 && (
-                  <div>
-                    <span>Buyer:</span>
-                    <span>
-                      {selectedOrder?.user?.firstName
-                        ? selectedOrder?.user?.firstName
-                        : "--"}{" "}
-                      {selectedOrder?.user?.lastName}
-                    </span>
-                  </div>
-                )}
-
-                <div>
-                  <span>Product:</span>
-                  <span>{selectedOrder.product}</span>
-                </div>
-                <div>
-                  <span>Terms:</span>
-                  <span>{selectedOrder.terms}</span>
-                </div>
-                <div>
-                  <span>Quantity:</span>
-                  <span>
-                    {selectedOrder.quantity} {selectedOrder.containerSize}
-                  </span>
-                </div>
-                <div>
-                  <span>Requested Date:</span>
-                  <span>{selectedOrder.createdOn}</span>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <div className="requests-section-title">Track Order</div>
-              <div className="order-section-body">
-                <div>
-                  {" "}
-                  <ProgressBar status={selectedOrder.status} />{" "}
-                </div>
-              </div>
-              <div className="order-section-stepper-container">
-                <Box>
-                  <Stepper
-                    activeStep={ORDER_STATUS_STEPS[selectedOrder.status]}
-                    orientation={stepperOrientation}
-                  >
-                    {steps.map((step) => (
-                      <Step key={step.label}>
-                        <StepLabel>{step.label}</StepLabel>
-                        {stepperOrientation === "vertical" && (
-                          <StepContent>
-                            <div>{step.description}</div>
-                            <Box sx={{ mb: 0 }}>
-                              <div></div>
-                            </Box>
-                          </StepContent>
-                        )}
-                      </Step>
-                    ))}
-                  </Stepper>
-                </Box>
-              </div>
-            </section>
-          </div>
-        </div>
-      </Box>
-    );
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -358,168 +180,144 @@ const Orders = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-          const filteredData = data.data.data;
-          filteredData.map((order, index) => {
-            order.index = index + 1;
-            order.id = order._id;
-            order.quantity = order.orderQuantity;
-            order.terms = order.request.buyerQuotationIncoterm.label;
-            order.containerSize =
-              order.request.quotationProducts[0].product.supportedShippingContainers[0].label;
-            order.product = order.request.quotationProducts[0].product.name;
-            order.createdOn = new Date(order.createdOn)
-              .toUTCString()
-              .slice(0, 16);
-            order.expiryDate = new Date(order?.request?.expiryDate)
-              .toUTCString()
-              .slice(0, 25);
-            return 1;
+          const filteredData = data.data.data.map((order, index) => {
+            const quotationProduct = order?.request?.quotationProducts.at(0);
+            return {
+              index: index + 1,
+              id: order?._id,
+              ref: order?.referenceCode,
+              orderNo: order?.orderNo,
+              productName: quotationProduct?.product?.name,
+              terms: order?.request?.buyerQuotationIncoterm?.label,
+              destination: order?.request?.destination,
+              expiryDate: order?.request?.expiryDate,
+              status: order?.status,
+              quantity: order?.orderQuantity,
+              buyer: order?.user,
+              requestedDate: new Date(order?.createdOn).toDateString(),
+            };
           });
-
-          filteredData.sort(
-            (a, b) => new Date(b.expiryDate) - new Date(a.expiryDate)
-          );
           setRows(filteredData);
         }
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
       setRowsLoading(false);
     };
-
     fetchData();
     return () => abortController.abort();
-  }, [refreshTable]);
+  }, [tableReload]);
+
+  const OrderView = () => {
+    return (
+      selectedOrder && (
+        <Box>
+          <div>
+            <SectionItem sectionTitle="Order Summary">
+              <StackItem title="Product" value={selectedOrder?.productName} />
+              <StackItem title="Terms" value={selectedOrder?.terms} />
+              <StackItem
+                title="Quantity"
+                value={`${selectedOrder?.quantity} 20ft Container`}
+              />
+              <StackItem
+                title="Requested Date"
+                value={selectedOrder?.requestedDate}
+              />
+            </SectionItem>
+
+            {ORDER_STATUS_STEPS[selectedOrder?.status] > 2 && (
+              <SectionItemCollapsable sectionTitle="Buyer Details">
+                <StackItem
+                  title="Full Name"
+                  value={`${selectedOrder?.buyer?.firstName} ${selectedOrder?.buyer?.lastName}`}
+                />
+                <StackItem title="Email" value={selectedOrder?.buyer?.email} />
+                <StackItem
+                  title="Mobile"
+                  value={`+${selectedOrder?.buyer?.mobileNo}`}
+                />
+              </SectionItemCollapsable>
+            )}
+
+            <SectionItem sectionTitle="Track Order">
+              <Stack paddingBottom={3} direction="column" width="100%">
+                <ProgressBar status={selectedOrder?.status} />
+                <MuiStepper activeStep={selectedOrder?.status} />
+              </Stack>
+            </SectionItem>
+          </div>
+        </Box>
+      )
+    );
+  };
 
   return (
-    <div className="Orders-Table">
-      <div>
-        <Dialog
-          open={openDialogConfirm}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleCloseDialogConfirm}
-          aria-describedby="alert-dialog-slide-description"
-          sx={inAppDialog}
-          className="inAppDialog"
+    <main>
+      <MuiDialog
+        openDialog={openConfirmDialog}
+        toggleOpenDialog={toggleOpenConfirmDialog}
+        dialogTitle="Do you want to confirm this order?"
+      >
+        <Button1
+          color="inherit"
+          variant="text"
+          onClick={toggleOpenConfirmDialog(false)}
+          disabled={dialogButtonLoading}
         >
-          <DialogTitle>{"Accept this order?"}</DialogTitle>
-          <DialogActions>
-            <GenericSecondary variant="text" onClick={handleCloseDialogConfirm}>
-              No
-            </GenericSecondary>
-            <GenericPrimaryButton
-              variant="contained"
-              loading={state.requestState.loading}
-              onClick={handleConfirmOrder}
-            >
-              Yes
-            </GenericPrimaryButton>
-          </DialogActions>
-        </Dialog>
-
-        <Dialog
-          open={openDialogReject}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleCloseDialogReject}
-          aria-describedby="alert-dialog-slide-description"
+          No
+        </Button1>
+        <Button1
+          variant="text"
+          color="inherit"
+          onClick={dialogActionConfirm_Yes}
+          loading={dialogButtonLoading}
         >
-          <DialogTitle>{"Reject this order?"}</DialogTitle>
-          <DialogActions>
-            <GenericSecondary variant="text" onClick={handleCloseDialogReject}>
-              No
-            </GenericSecondary>
-            <GenericPrimaryButton
-              variant="contained"
-              loading={state.requestState.loading}
-              onClick={handleCancelOrder}
-            >
-              Yes
-            </GenericPrimaryButton>
-          </DialogActions>
-        </Dialog>
-      </div>
+          Yes
+        </Button1>
+      </MuiDialog>
 
-      <div>
-        <Modal
-          open={openDrawer}
-          onClose={handleCloseDrawer}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          className="modal-container"
+      <MuiDialog
+        openDialog={openRejectDialog}
+        toggleOpenDialog={toggleOpenRejectDialog}
+        dialogTitle="Do you want to reject this order?"
+      >
+        <Button1
+          onClick={toggleOpenRejectDialog(false)}
+          variant="text"
+          color="inherit"
         >
-          <Box sx={inAppWider}>
-            <div className="modal-title-container">
-              <div>Order Details</div>
-              <div>
-                <CloseRoundedIcon onClick={handleCloseDrawer} />
-              </div>
-            </div>
-            <div className="modal-body">{list("horizontal")}</div>
-          </Box>
-        </Modal>
-      </div>
-
-      <div>
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={open}
-          onClose={handleClose}
-          onClick={handleClose}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          No
+        </Button1>
+        <Button1
+          onClick={dialogActionReject_Yes}
+          loading={dialogButtonLoading}
+          variant="text"
+          color="inherit"
         >
-          <MenuItem onClick={toggleDrawer(true)}>View</MenuItem>
-          {selectedOrder && !selectedOrder.isConfirmed && (
-            <div>
-              <MenuItem onClick={handleClickOpenDialogConfirm}>
-                Confirm
-              </MenuItem>
-              <MenuItem onClick={handleClickOpenDialogReject}>Reject</MenuItem>
-            </div>
-          )}
-        </Menu>
-      </div>
+          Yes
+        </Button1>
+      </MuiDialog>
 
-      <div>
-        <SwipeableDrawer
-          className="drawer-container"
-          variant="temporary"
-          anchor="bottom"
-          open={openDrawer}
-          onOpen={toggleDrawer(true)}
-          onClose={handleCloseDrawer}
-          disableBackdropTransition={!iOS}
-          disableDiscovery={iOS}
-        >
-          <div className="drawer-title-container">
-            <div>Order Details</div>
-            <Puller />
-          </div>
+      <DrawerModal
+        boxStyle={widerBox}
+        openState={openOrderView}
+        toggleOpenState={toggleOpenOrderView}
+        title="Order Details"
+      >
+        <OrderView />
+      </DrawerModal>
 
-          <div className="drawer-body">{list("vertical")}</div>
-        </SwipeableDrawer>
-      </div>
-
-      <DataGrid
-        components={{
-          Toolbar: Toolbar,
-          LoadingOverlay: LinearProgress,
-          NoRowsOverlay: () => <Overlay label="Orders" />,
-        }}
-        className="standard-table"
-        checkboxSelection
-        disableSelectionOnClick
-        pageSize={pageSize}
+      <MuiTableV1
+        label="Orders"
         rows={rows}
         columns={columns}
-        pagination
-        density="compact"
-        rowsPerPageOptions={[10, 20, 30, 40, 50]}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        loading={rowsLoading}
+        paging={paging}
+        rowsLoading={rowsLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
       />
-    </div>
+    </main>
   );
 };
 

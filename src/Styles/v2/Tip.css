@@ -1,0 +1,7 @@
+.tip_component {
+  background: var(--tae-orange-faded);
+  padding: 10px;
+  border-radius: 3px;
+  font-size: small;
+  font-weight: 500;
+}

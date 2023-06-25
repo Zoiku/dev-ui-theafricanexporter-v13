@@ -1,0 +1,42 @@
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-layout-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-layout-workspace {
+  min-height: calc(100vh - 80px);
+}
+
+.app-layout-body-container {
+  width: 100%;
+}
+
+.app-layout-body {
+  margin: 30px 0;
+  width: 1000px;
+}
+
+.app-layout-bottom-menu {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .app-layout-menu {
+    display: none;
+  }
+
+  .app-layout-body {
+    margin: 0;
+    width: 100%;
+    padding: 10px 10px 100px 10px;
+  }
+
+  .app-layout-bottom-menu {
+    display: contents;
+  }
+}

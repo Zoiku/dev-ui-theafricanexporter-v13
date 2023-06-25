@@ -1,12 +1,12 @@
 import "../Styles/PageLoadingAnimation.css";
-import CircularProgress from '@mui/material/CircularProgress';
+import CustomProgress from "./v2/components/CustomProgress";
 
 const PageLoadingAnimation = () => {
-    return (
-        <div className="PageLoadingAnimation">
-            <div><CircularProgress size={25} sx={{ color: "var(--tae-orange)" }} /></div>
-        </div>
-    )
+  return (
+    <div className="PageLoadingAnimation">
+      <CustomProgress pageLoading={true} size={50} />
+    </div>
+  );
 };
 
 export default PageLoadingAnimation;

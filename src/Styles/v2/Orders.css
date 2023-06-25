@@ -1,0 +1,38 @@
+.order_confirmation_note {
+  border-radius: 5px;
+  padding: 10px;
+  background: var(--tae-orange-faded);
+}
+
+.order_confirm_order_section {
+  background: #efefef;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.order_confirm_order_title {
+  font-weight: 500;
+}
+
+.orders_confirmation_document {
+  height: 200px;
+  overflow: auto;
+  font-size: small;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.order_radio_label_links {
+  text-decoration: underline;
+  color: blue;
+  font-weight: 500;
+}
+
+.order_confirmation_underlined {
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.order_confirmation_underlined:hover {
+  text-decoration: underline;
+}

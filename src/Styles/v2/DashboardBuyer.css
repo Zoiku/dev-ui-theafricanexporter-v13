@@ -1,0 +1,15 @@
+.buyer_main_boxes > div {
+  width: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  .buyer_main_boxes {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .buyer_main_boxes > div {
+    margin: 0 0 10px 0 !important;
+    width: 100%;
+  }
+}

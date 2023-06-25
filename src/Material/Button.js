@@ -21,17 +21,17 @@ export const PrimaryButton = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "var(--tae-orange-light)",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const GenericPrimaryButton = styled(LoadingButton)({
@@ -52,17 +52,17 @@ export const GenericPrimaryButton = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "black",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const GenericSecondary = styled(LoadingButton)({
@@ -82,16 +82,16 @@ export const GenericSecondary = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
-    color: "black"
+    color: "black",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SettingsPageUpdateButton = styled(LoadingButton)({
@@ -112,17 +112,17 @@ export const SettingsPageUpdateButton = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "var(--tae-orange-light)",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SettingsPageUpdateButtonSecondary = styled(LoadingButton)({
@@ -143,17 +143,17 @@ export const SettingsPageUpdateButtonSecondary = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "black",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SettingsPageCancelButton = styled(LoadingButton)({
@@ -173,16 +173,16 @@ export const SettingsPageCancelButton = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
-    color: "#000"
+    color: "#000",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SmallPrimary = styled(LoadingButton)({
@@ -203,17 +203,17 @@ export const SmallPrimary = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "var(--tae-orange-light)",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SmallSecondary = styled(LoadingButton)({
@@ -234,17 +234,17 @@ export const SmallSecondary = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "black",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const GenericSmall = styled(LoadingButton)({
@@ -264,15 +264,15 @@ export const GenericSmall = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const SmallCancel = styled(LoadingButton)({
@@ -293,21 +293,42 @@ export const SmallCancel = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
     background: "red",
-    color: "#fff"
+    color: "#fff",
   },
   "&:active": {
-    boxShadow: "none"
+    boxShadow: "none",
   },
-  "&:focus": {}
+  "&:focus": {},
 });
 
 export const TextButton = styled(LoadingButton)({
-  // fontWeight: 500
+  textTransform: "none",
+  boxShadow: "none",
+  color: "black",
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:hover": {
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+  },
+  "&:focus": {},
 });
 
 export const EmptyButton = styled(LoadingButton)({
@@ -328,7 +349,7 @@ export const EmptyButton = styled(LoadingButton)({
     "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
     boxShadow: "none",
@@ -340,5 +361,36 @@ export const EmptyButton = styled(LoadingButton)({
     color: "black",
     borderColor: "black",
   },
-  "&:focus": {}
+  "&:focus": {},
+});
+
+export const SmallSecondaryV2 = styled(LoadingButton)({
+  boxShadow: "none",
+  textTransform: "none",
+  background: "#444",
+  transition: "all 0.2s ease",
+  fontSize: "small",
+  color: "#fff",
+  lineHeight: 1.5,
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:hover": {
+    boxShadow: "none",
+    background: "#333",
+    color: "#fff",
+  },
+  "&:active": {
+    boxShadow: "none",
+  },
+  "&:focus": {},
 });

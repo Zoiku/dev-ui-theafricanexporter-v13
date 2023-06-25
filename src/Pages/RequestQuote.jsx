@@ -1,7 +1,28 @@
 import "../Styles/RequestQuote.css";
+import axios from "axios";
+import BuyerService from "../Services/Buyer";
+import { useDispatch } from "react-redux";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import "swiper/css/free-mode";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Thumbs, FreeMode } from "swiper";
+import PageLoadingAnimation from "../Components/PageLoadingAnimation";
+import ProgressiveImage from "react-progressive-graceful-image";
+import { KeyboardBackspaceRounded } from "@mui/icons-material/";
+import { productSpecifications } from "../Components/RequestQuoteSpecs";
+import { IMAGES_TO_DISPLAY } from "../Components/ProductImages";
+import { SectionItem, StackItem } from "../Components/v2/components/Lists";
+import DrawerModal from "../Components/v2/components/DrawerModal";
+import { smallBox } from "../Styles/v2/box";
+import { strictMatch, initPendingQuoteSession } from "../Components/Functions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import ProductService from "../Services/Product";
+import { useReducer } from "react";
+import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import {
   Stack,
   TextField,
@@ -17,8 +38,6 @@ import {
   GenericSecondary,
   SmallSecondary,
 } from "../Material/Button";
-import { useReducer } from "react";
-import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import {
   INPUTING,
   REQUEST_FAILED,
@@ -27,37 +46,7 @@ import {
   PUSH_FORM_DATA,
   CLEAR_FORM,
 } from "../Reducers/Actions";
-import axios from "axios";
-import BuyerService from "../Services/Buyer";
 import { setAlert } from "../Redux/Features/Alert.js";
-import { useDispatch } from "react-redux";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import "swiper/css/free-mode";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs, FreeMode } from "swiper";
-import PageLoadingAnimation from "../Components/PageLoadingAnimation";
-import ProgressiveImage from "react-progressive-graceful-image";
-import Modal from "@mui/material/Modal";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { standard } from "../Styles/Modal";
-import { Puller } from "../Material/Drawer";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { KeyboardBackspaceRounded } from "@mui/icons-material/";
-import { productSpecifications } from "../Components/RequestQuoteSpecs";
-import { IMAGES_TO_DISPLAY } from "../Components/ProductImages";
-
-const initPendingQuoteSession = (productId, pendingQuoteId) => {
-  const session = {
-    isExists: true,
-    productId,
-    pendingQuoteId,
-  };
-
-  sessionStorage.setItem("pq_id", JSON.stringify(session));
-};
 
 const endPendingQuoteSession = async () => {
   const pq_session = sessionStorage.getItem("pq_id");
@@ -76,69 +65,46 @@ const endPendingQuoteSession = async () => {
   window.scrollTo(0, 0);
 };
 
-export const strictMatch = (array, key) => {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === key) {
-      return array[i];
-    }
-  }
-  return null;
-};
-
 const RequestQuote = ({ session }) => {
-  const [errorBoxes, setErrorBoxes] = useState([]);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const navigate = useNavigate();
-  const handleRedirect = (redirect) => () => {
-    navigate(redirect, { replace: true });
-  };
-  const { isLogged } = session;
   const rootDispatch = useDispatch();
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
-  const [countries, setCountries] = useState(null);
+  const navigate = useNavigate();
+  const { isLogged } = session;
   const { search } = useLocation();
   const { pid } = useMemo(
     () => Object.fromEntries([...new URLSearchParams(search)]),
     [search]
   );
+
+  const [countries, setCountries] = useState(null);
+  const [errorBoxes, setErrorBoxes] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
   const [parsedProduct, setParsedProduct] = useState({});
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const toggleDrawer = (open) => (_event) => {
-    setOpenDrawer(open);
+  const [openRequestQuoteSummaryView, setOpenRequestQuoteSummaryView] =
+    useState(false);
+  const toggleOpenRequestQuoteSummaryView = (open) => () => {
+    setOpenRequestQuoteSummaryView(open);
   };
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const fetchData = async () => {
-      const productService = new ProductService();
-      try {
-        const { errors, data } = await productService.getProduct(
-          abortController.signal,
-          pid
-        );
-        if (errors.length === 0) {
-          const unfilteredData = data.data.data[0];
-          const filteredData = {
-            id: unfilteredData.id,
-            description: unfilteredData.description,
-            name: unfilteredData.name,
-            speciesType: unfilteredData.species.type.label,
-            species: unfilteredData.species.label,
-            volume: unfilteredData.volume.value,
-            volumeUnit: unfilteredData.volume.unit,
-            origin: unfilteredData.origin.country,
-            containerSize: unfilteredData.supportedShippingContainers[0].label,
-          };
-          setParsedProduct(filteredData);
-        }
-      } catch (error) {}
+  const triggerSnackBarAlert = (message, severity) => {
+    const payload = {
+      message,
+      severity,
     };
-    pid && fetchData();
-    return () => abortController.abort();
-  }, [pid]);
+    rootDispatch(setAlert(payload));
+  };
+
+  const handleRedirect = (redirect) => () => {
+    navigate(redirect, { replace: true });
+  };
 
   const handleChange = (e) => {
     dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
+  };
+
+  const onInvalidForm = () => {
+    triggerSnackBarAlert("Please fill all required fields correctly", "error");
   };
 
   const onInvalidFunction = (e) => {
@@ -166,11 +132,7 @@ const RequestQuote = ({ session }) => {
         diameterUnit: "cm",
       };
     }
-    setOpenDrawer(true);
-  };
-
-  const onInvalidForm = () => {
-    handleFailedRequest("Please fill all required fields correctly", 9000);
+    setOpenRequestQuoteSummaryView(true);
   };
 
   const handleSubmit = async (e) => {
@@ -178,22 +140,21 @@ const RequestQuote = ({ session }) => {
     dispatch({ type: SEND_REQUEST });
     state.payload.product = pid;
     const buyerService = new BuyerService();
-
     try {
       if (isLogged) {
         const { errors } = await buyerService.postQuote(state.payload);
         if (errors.length === 0) {
           dispatch({ type: REQUEST_SUCCESSFUL });
-          setOpenDrawer(false);
-          handleSuccessfullRequest(
+          setOpenRequestQuoteSummaryView(false);
+          dispatch({ type: CLEAR_FORM });
+          triggerSnackBarAlert(
             "Request successful, merchants will respond shortly",
-            6000
+            "success"
           );
           endPendingQuoteSession();
-          dispatch({ type: CLEAR_FORM });
         } else {
           dispatch({ type: REQUEST_FAILED });
-          handleFailedRequest("Could not process request", 5000);
+          triggerSnackBarAlert("Could not process request", "error");
         }
       } else {
         const { data, errors } = await buyerService.postPendingQuote(
@@ -203,197 +164,67 @@ const RequestQuote = ({ session }) => {
           const { _id } = data.data.data[0];
           initPendingQuoteSession(pid, _id);
           dispatch({ type: REQUEST_SUCCESSFUL });
-          setOpenDrawer(false);
-          handleSuccessfullRequest(
+          setOpenRequestQuoteSummaryView(false);
+          triggerSnackBarAlert(
             "Your request is pending, please log in to complete request",
-            6000
+            "success"
           );
           navigate("/login");
         } else {
           dispatch({ type: REQUEST_FAILED });
-          handleFailedRequest("Could not process request", 5000);
+          triggerSnackBarAlert("Could not process request", "error");
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const handleSuccessfullRequest = (message, timeOut) => {
-    const payload = {
-      severity: "success",
-      message,
-      timeOut,
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get("https://restcountries.com/v2/all", {
+          signal: abortController.signal,
+        });
+        setCountries(data);
+      } catch (error) {}
     };
-    rootDispatch(setAlert(payload));
-  };
+    fetchData();
+    return () => abortController.abort();
+  }, []);
 
-  const handleFailedRequest = (message, timeOut) => {
-    const payload = {
-      severity: "error",
-      message,
-      timeOut,
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      const productService = new ProductService();
+      try {
+        const { errors, data } = await productService.getProduct(
+          abortController.signal,
+          pid
+        );
+        if (errors.length === 0) {
+          const unfilteredData = data.data.data[0];
+          const filteredData = {
+            id: unfilteredData.id,
+            description: unfilteredData.description,
+            name: unfilteredData.name,
+            speciesType: unfilteredData.species.type.label,
+            species: unfilteredData.species.label,
+            volume: unfilteredData.volume.value,
+            volumeUnit: unfilteredData.volume.unit,
+            origin: unfilteredData.origin.country,
+            containerSize: unfilteredData.supportedShippingContainers[0].label,
+          };
+          setParsedProduct(filteredData);
+        }
+      } catch (error) {
+        throw error;
+      }
     };
-    rootDispatch(setAlert(payload));
-  };
-
-  const list = () =>
-    state.payload &&
-    parsedProduct && (
-      <Box
-        component="form"
-        role="presentation"
-        onSubmit={handleSubmit}
-        autoComplete="off"
-      >
-        <div className="request-summary-container">
-          <div>
-            <div>1. Product Introduction</div>
-            <div>
-              <div>
-                <span>Type of Species: </span>
-                <span>{parsedProduct.speciesType}</span>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <span>Container size: </span>
-                <span>20ft Container</span>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <span>Species: </span>
-                <span>{parsedProduct.species}</span>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <span>Origin: </span>
-                <span>{parsedProduct.origin}</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>2. Specifications</div>
-            <div>
-              <div>
-                <span>Length: </span>
-                <span>
-                  {state.payload.length} {state.payload.lengthUnit}
-                </span>
-              </div>
-            </div>
-
-            {state.payload?.diameter && (
-              <div>
-                <div>
-                  <span>Diameter: </span>
-                  <span>
-                    {state.payload.diameter} {state.payload.diameterUnit}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {state.payload?.thickness && (
-              <div>
-                <div>
-                  <span>Thickness: </span>
-                  <span>
-                    {state.payload.thickness} {state.payload.thicknessUnit}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {state.payload?.width && (
-              <div>
-                <div>
-                  <span>Width: </span>
-                  <span>
-                    {state.payload.width} {state.payload.widthUnit}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <div>
-              <div>
-                <span>Quantity: </span>
-                <span>{state.payload.quantity} 20ft container (s)</span>
-              </div>
-            </div>
-
-            {state.payload?.drying && (
-              <div>
-                <div>
-                  <span>Drying: </span>
-                  <span>Air Drying</span>
-                </div>
-              </div>
-            )}
-
-            <div>
-              <div>
-                <span>Additional Information: </span>
-                <span>
-                  {state.payload?.information
-                    ? state.payload?.information
-                    : "n/a"}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>3. Pricing and Delivery Information</div>
-            <div>
-              <div>
-                <span>Incoterm: </span>
-                <span>{state.payload.incoterm}</span>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <span>Destination: </span>
-                <span>{state.payload.destination}</span>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <span>Destination Port: </span>
-                <span>{state.payload.port}</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>4. Request Settings</div>
-            <div>
-              <div>
-                <span>Validity: </span>
-                <span>{state.payload.validity} days</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <SmallSecondary
-              type="submit"
-              loading={state?.requestState?.loading}
-              variant="contained"
-            >
-              Confirm Request
-            </SmallSecondary>
-          </div>
-        </div>
-      </Box>
-    );
+    fetchData();
+    return () => abortController.abort();
+  }, [pid]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -417,7 +248,9 @@ const RequestQuote = ({ session }) => {
               };
               dispatch({ type: PUSH_FORM_DATA, payload: pendingQuote });
             }
-          } catch (error) {}
+          } catch (error) {
+            throw error;
+          }
         };
         fetchData();
       }
@@ -425,62 +258,105 @@ const RequestQuote = ({ session }) => {
     return () => abortController.abort();
   }, [pid]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get("https://restcountries.com/v2/all", {
-          signal: abortController.signal,
-        });
-        setCountries(data);
-      } catch (error) {}
-    };
-    fetchData();
-    return () => abortController.abort();
-  }, []);
+  const RequestQuoteSummary = () => {
+    return (
+      state.payload &&
+      parsedProduct && (
+        <Box component="form" onSubmit={handleSubmit}>
+          <div>
+            <SectionItem sectionTitle="1. Product Information">
+              <StackItem
+                title="Type Of Species"
+                value={parsedProduct?.speciesType}
+              />
+              <StackItem title="Species" value={parsedProduct.species} />
+              <StackItem title="Origin:" value={parsedProduct.origin} />
+              <StackItem title="Container size" value="20ft Container" />
+            </SectionItem>
+
+            <SectionItem sectionTitle="2. Specifications">
+              <StackItem
+                title="Length"
+                value={`${state.payload.length} ${state.payload.lengthUnit}`}
+              />
+              {state.payload?.diameter && (
+                <StackItem
+                  title="Diameter"
+                  value={`${state.payload.diameter} ${state.payload.diameterUnit}`}
+                />
+              )}
+              {state.payload?.thickness && (
+                <StackItem
+                  title="Thickness"
+                  value={`${state.payload.thickness} ${state.payload.thicknessUnit}`}
+                />
+              )}
+              {state.payload?.width && (
+                <StackItem
+                  title="Thickness"
+                  value={`${state.payload.width} ${state.payload.widthUnit}`}
+                />
+              )}
+              <StackItem
+                title="Quantity"
+                value={`${state.payload.quantity} 20ft container (s)`}
+              />
+
+              {state.payload?.dryingLabel && (
+                <StackItem title="Drying" value={state.payload?.dryingLabel} />
+              )}
+              <StackItem
+                title="Additional Information"
+                value={
+                  state.payload?.information
+                    ? state.payload?.information
+                    : "n/a"
+                }
+              />
+            </SectionItem>
+            <SectionItem sectionTitle="3. Pricing and Delivery Information">
+              <StackItem title="Incoterm" value={state.payload.incoterm} />
+              <StackItem
+                title="Destination"
+                value={state.payload.destination}
+              />
+              <StackItem title="Destination Port" value={state.payload.port} />
+            </SectionItem>
+            <SectionItem sectionTitle="4. Request Settings">
+              <StackItem
+                title="Validity"
+                value={`${state.payload.validity} Days`}
+              />
+            </SectionItem>
+            <Stack>
+              <SmallSecondary
+                type="submit"
+                loading={state?.requestState?.loading}
+                variant="contained"
+              >
+                Confirm Request
+              </SmallSecondary>
+            </Stack>
+          </div>
+        </Box>
+      )
+    );
+  };
 
   return (
     <div className="RequestQuote-Page">
       <div>
-        <Modal
-          open={openDrawer}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          className="modal-container"
+        <DrawerModal
+          boxStyle={smallBox}
+          openState={openRequestQuoteSummaryView}
+          toggleOpenState={toggleOpenRequestQuoteSummaryView}
+          title="Request Summary"
         >
-          <Box sx={standard}>
-            <div className="modal-title-container">
-              <div>Request Summary</div>
-              <div>
-                <CloseRoundedIcon onClick={toggleDrawer(false)} />
-              </div>
-            </div>
-            <div className="modal-body">{list()}</div>
-          </Box>
-        </Modal>
+          <RequestQuoteSummary />
+        </DrawerModal>
       </div>
 
-      <div>
-        <SwipeableDrawer
-          className="drawer-container"
-          variant="temporary"
-          anchor="bottom"
-          open={openDrawer}
-          onOpen={toggleDrawer(true)}
-          onClose={toggleDrawer(false)}
-        >
-          <div className="drawer-title-container">
-            <div>Request Summary</div>
-            <div>
-              <Puller />
-            </div>
-          </div>
-
-          <div className="drawer-body">{list()}</div>
-        </SwipeableDrawer>
-      </div>
-
-      <div>
+      <div className="request_quote_page_main_inner_container">
         <div className="newGoBackContainer">
           <EmptyButton
             onClick={handleRedirect("/")}

@@ -33,8 +33,8 @@ import ImageViewer from "react-simple-image-viewer";
 import AuthService from "../Services/Auth";
 import { initUser } from "../Redux/Features/Session";
 import { useDispatch } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
 import { capitalizeFirstLetter } from "./Misc";
+import CustomProgress from "./v2/components/CustomProgress";
 
 const Tutorial = ({ user }) => {
   const { role } = user;
@@ -190,8 +190,10 @@ const Tutorial = ({ user }) => {
           </Swiper>
 
           {loading ? (
-            <div className="tutorialCircularLoadingProgress">
-              <CircularProgress size={15} sx={{ color: "var(--tae-orange)" }} />
+            <div className="tutorialLoadingProgress">
+              <div>
+                <CustomProgress size={13} tutorialLoading={true} />
+              </div>
             </div>
           ) : (
             <div onClick={handleAction} className="tutorialSkipContainer">

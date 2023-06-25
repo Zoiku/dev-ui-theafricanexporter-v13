@@ -1,0 +1,19 @@
+.profile_sections {
+  margin: 80px 0 0 0;
+}
+
+.profile_sections > section:not(:last-child) {
+  margin: 0 0 40px 0;
+}
+
+.profile_section_title {
+  font-weight: 600;
+}
+
+.profile_section_rows {
+  margin: 15px 0 0 0;
+}
+
+.profile_section_rows > div:not(:last-child) {
+  margin: 0 0 10px 0;
+}

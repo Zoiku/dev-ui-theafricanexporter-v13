@@ -1,20 +1,14 @@
 import OrdersTable from "../../Components/Merchant/Tables/Orders";
-import "../../Styles/Tables.css";
+import MainBox from "../../Components/v2/components/MainBox";
 
 const Orders = () => {
-    return (
-        <div className="Orders-Page">
-            <div className="tables-container">
-                <div className="dash-items-title-container">
-                    <div>Orders</div>
-                    <div>Converted quotations</div>
-                </div>
-                <div>
-                    <OrdersTable />
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="main_page">
+      <MainBox title="Orders" helper="Converted quotations">
+        <OrdersTable  />
+      </MainBox>
+    </div>
+  );
+};
 
 export default Orders;

@@ -1,52 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-
-const sumArray = (arr) => {
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (typeof arr[i] === "number") {
-      sum += arr[i];
-    }
-  }
-  return sum;
-};
-
-const reduce = (array) => {
-  const count = {};
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-  return count;
-};
-
-const monthReduce = (array) => {
-  const count = {
-    January: 0,
-    February: 0,
-    March: 0,
-    April: 0,
-    May: 0,
-    June: 0,
-    July: 0,
-    August: 0,
-    September: 0,
-    October: 0,
-    November: 0,
-    December: 0
-  };
-  for (const element of array) {
-    if (count[element]) {
-      count[element] += 1;
-    } else {
-      count[element] = 1;
-    }
-  }
-
-  return count;
-};
+import { monthReduce, sumArray, reduce } from "../Components/Functions";
 
 export default class MerchantService {
   async getRequests(signal) {
@@ -62,7 +15,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -79,7 +32,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -96,7 +49,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -111,7 +64,7 @@ export default class MerchantService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -126,7 +79,7 @@ export default class MerchantService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -141,7 +94,7 @@ export default class MerchantService {
     }
 
     return {
-      errors
+      errors,
     };
   }
 
@@ -158,7 +111,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -175,7 +128,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -192,7 +145,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -209,7 +162,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -231,7 +184,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -246,7 +199,7 @@ export default class MerchantService {
         const months = [];
         months.push(
           new Date(order.date).toLocaleDateString("default", {
-            month: "long"
+            month: "long",
           })
         );
 
@@ -263,7 +216,7 @@ export default class MerchantService {
 
     return {
       errors,
-      data
+      data,
     };
   }
 
@@ -279,16 +232,17 @@ export default class MerchantService {
       const allIncotermTotalAmounts = allIncoterms.map((incotermArray) =>
         incotermArray.map((incoterm) => incoterm.totalAmount)
       );
-      const incotermTotal = allIncotermTotalAmounts.map((incotermArray) => sumArray(incotermArray))
-      data = sumArray(incotermTotal)
-
+      const incotermTotal = allIncotermTotalAmounts.map((incotermArray) =>
+        sumArray(incotermArray)
+      );
+      data = sumArray(incotermTotal);
     } catch (error) {
       errors.push(error);
     }
 
     return {
       errors,
-      data
+      data,
     };
   }
 }
