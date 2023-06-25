@@ -12,7 +12,7 @@
 }
 
 .drawer_container {
-  max-height: 90vh !important;
+  max-height: 85vh !important;
   overflow-y: auto !important;
 }
 
