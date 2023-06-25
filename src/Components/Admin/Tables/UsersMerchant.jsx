@@ -341,7 +341,7 @@ const UsersMerchant = () => {
         rows={rows}
         rowsLoading={rowsLoading}
         columns={columns}
-        label="Users"
+        label="Merchants"
         paging={paging}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}

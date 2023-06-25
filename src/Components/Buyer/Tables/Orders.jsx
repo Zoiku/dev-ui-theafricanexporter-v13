@@ -2,14 +2,7 @@ import { useEffect, useState, useReducer } from "react";
 import Countdown from "../../Countdown";
 import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
-import {
-  Box,
-  CircularProgress,
-  Stack,
-  Radio,
-  RadioGroup,
-  TextField,
-} from "@mui/material";
+import { Box, Stack, Radio, RadioGroup, TextField } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import {
@@ -27,7 +20,6 @@ import {
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import { checkConfirmation } from "../../Functions";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import "../../../Styles/v2/Orders.css";
 import TandCs from "../../v2/components/TandCs";
 import {
@@ -40,6 +32,8 @@ import { INITIAL_STATE, formReducer } from "../../../Reducers/FormReducer";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import CustomProgress from "../../v2/components/CustomProgress";
+import { Tip } from "../../v2/components/Tip";
 
 const ConfirmationRadios = ({ onChange }) => {
   return (
@@ -63,7 +57,7 @@ const ConfirmationRadios = ({ onChange }) => {
 const ConfirmationRadio = ({ value, to }) => {
   return (
     <Stack direction="row" alignItems="center" spacing={1}>
-      <Radio size="small" value={value} />
+      <Radio required size="small" value={value} />
       <NavLink
         className="order_radio_label_links"
         target="_blank"
@@ -261,9 +255,7 @@ const Orders = () => {
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
           {rowsButtonState.id === row.id ? (
             rowsButtonState.loading && (
-              <div className="simple-center-div primary-tae-color">
-                <CircularProgress color="inherit" size={20} />
-              </div>
+              <CustomProgress tableRowsLoading={true} />
             )
           ) : (
             <MuiMoreV1>
@@ -352,13 +344,19 @@ const Orders = () => {
         title="Orders Details"
       >
         {selectedOrders && (
-          <Box>
-            <MuiTableV2
-              checkboxSelection={false}
-              rows={selectedOrders}
-              columns={columnsOrders}
+          <Stack spacing={2} direction="column">
+            <Tip
+              message="Kindly note that you will only be able to confirm this order
+                after confirmation from merchant(s)"
             />
-          </Box>
+            <Box>
+              <MuiTableV2
+                checkboxSelection={false}
+                rows={selectedOrders}
+                columns={columnsOrders}
+              />
+            </Box>
+          </Stack>
         )}
       </DrawerModal>
 
@@ -416,13 +414,7 @@ const Orders = () => {
         {selectedOrderRef && (
           <Box component="form" onSubmit={handleSubmit}>
             <Stack direction="column" spacing={2}>
-              <Stack
-                className="order_confirmation_note"
-                direction="row"
-                alignItems="flex-start"
-                spacing={2}
-              >
-                <InfoOutlinedIcon className="order_confirmation_note_icon" />
+              <Tip>
                 <div>
                   Please read carefully and accept our{" "}
                   <u
@@ -433,7 +425,7 @@ const Orders = () => {
                   </u>{" "}
                   to proceed with confirming your order
                 </div>
-              </Stack>
+              </Tip>
               <Stack spacing={2} className="order_confirm_order_sections">
                 <ConfirmOrderFormSection title="A. Kindly choose one of the payment options below">
                   <ConfirmationRadios onChange={handleChange} />
@@ -445,6 +437,7 @@ const Orders = () => {
                     multiline
                     rows={3}
                     sx={{ background: "#fff" }}
+                    required
                     onChange={handleChange}
                   />
                 </ConfirmOrderFormSection>

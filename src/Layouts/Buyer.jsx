@@ -7,24 +7,23 @@ import AppLayout from "./AppLayout";
 
 const BuyerLayout = ({ session }) => {
   const user = session?.user;
-  const [notLoggedBefore, setNotLoggedBefore] = useState(false);
+  const [openTutorialView, setOpenTutorialView] = useState(false);
 
   useEffect(() => {
     if (user.hasOwnProperty("profile")) {
-      const { isLoggedBefore } = user.profile;
-
+      const isLoggedBefore = user?.profile?.isLoggedBefore;
       if (isLoggedBefore !== undefined) {
         if (isLoggedBefore) {
-          setNotLoggedBefore(false);
+          setOpenTutorialView(false);
         } else {
-          setNotLoggedBefore(true);
+          setOpenTutorialView(true);
         }
       }
     }
   }, [user]);
 
-  return notLoggedBefore ? (
-    <Tutorial user={user} openDrawer={notLoggedBefore} />
+  return openTutorialView ? (
+    <Tutorial user={user} openDrawer={openTutorialView} />
   ) : (
     <AppLayout nav={<Nav session={session} />} userType="buyer">
       <Outlet />

@@ -211,7 +211,7 @@ const UsersBuyer = () => {
             <SectionItem sectionTitle="Personal Details">
               <StackItem title="Full Name" value={selectedUser?.name} />
               <StackItem title="Email" value={selectedUser?.email} />
-              <StackItem title="Mobile" value={"+" + selectedUser?.mobile} />
+              <StackItem title="Mobile" value={`+${selectedUser?.mobile}`} />
             </SectionItem>
 
             <SectionItem sectionTitle="Company Details">
@@ -242,7 +242,7 @@ const UsersBuyer = () => {
         rows={rows}
         rowsLoading={rowsLoading}
         columns={columns}
-        label=""
+        label="Buyers"
         paging={paging}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}

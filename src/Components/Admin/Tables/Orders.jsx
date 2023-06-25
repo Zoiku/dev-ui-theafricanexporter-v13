@@ -10,7 +10,7 @@ import BuyerService from "../../../Services/Buyer";
 import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { widerBox } from "../../../Styles/v2/box";
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { ProgressBar } from "../../v2/components/ProgressBar";
 import MuiStepper from "../../v2/components/Stepper";
 import { ORDER_STATUS } from "../../v2/components/OrderStatus";
@@ -19,6 +19,7 @@ import { Button1 } from "../../v2/components/Buttons";
 import { MenuItem } from "@mui/material";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
+import CustomProgress from "../../v2/components/CustomProgress";
 
 const Orders = () => {
   const [paging, setPaging] = useState({
@@ -191,9 +192,7 @@ const Orders = () => {
       renderCell: ({ row }) => (
         <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
           {rowsButtonState.id === row.id && rowsButtonState.loading ? (
-            <div className="simple-center-div primary-tae-color">
-              <CircularProgress color="inherit" size={20} />
-            </div>
+            <CustomProgress tableRowsLoading={true} />
           ) : (
             <MuiMoreV1>
               <MenuItem onClick={handleOpenOrder(row.id)}>View</MenuItem>

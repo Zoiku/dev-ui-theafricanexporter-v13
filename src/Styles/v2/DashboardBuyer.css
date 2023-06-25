@@ -1,5 +1,5 @@
 .buyer_main_boxes > div {
-  width: 100%;
+  width: 50%;
 }
 
 @media screen and (max-width: 1024px) {
@@ -10,5 +10,6 @@
 
   .buyer_main_boxes > div {
     margin: 0 0 10px 0 !important;
+    width: 100%;
   }
 }

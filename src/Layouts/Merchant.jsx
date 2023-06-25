@@ -31,12 +31,12 @@ const CompanyInputRow = ({ children }) => {
 const MerchantLayout = ({ session }) => {
   const user = session?.user;
   const rootDispatch = useDispatch();
-  const [notLoggedBefore, setNotLoggedBefore] = useState(false);
+  const [openTutorialView, setOpenTutoralView] = useState(false);
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
 
-  const [openCompanyForm, setOpenCompanyForm] = useState(false);
-  const toggleOpenCompanyForm = (open) => () => {
-    setOpenCompanyForm(open);
+  const [openCompanyFormView, setOpenCompanyFormView] = useState(false);
+  const toggleOpenCompanyFormView = (open) => () => {
+    setOpenCompanyFormView(open);
   };
 
   const triggerSnackBarAlert = (message, severity) => {
@@ -62,7 +62,7 @@ const MerchantLayout = ({ session }) => {
       if (errors.length === 0) {
         dispatch({ type: REQUEST_SUCCESSFUL });
         rootDispatch(initCompany(state.payload));
-        setOpenCompanyForm(false);
+        setOpenCompanyFormView(false);
         triggerSnackBarAlert("Company details updated successfully", "success");
       } else {
         dispatch({ type: REQUEST_FAILED });
@@ -81,9 +81,9 @@ const MerchantLayout = ({ session }) => {
       const isLoggedBefore = user.profile.user?.isLoggedBefore;
       if (isLoggedBefore !== undefined) {
         if (isLoggedBefore) {
-          setNotLoggedBefore(false);
+          setOpenTutoralView(false);
         } else {
-          setNotLoggedBefore(true);
+          setOpenTutoralView(true);
         }
       }
     }
@@ -93,7 +93,7 @@ const MerchantLayout = ({ session }) => {
     if (user.hasOwnProperty("profile")) {
       const { company } = user.profile;
       if (!company) {
-        setOpenCompanyForm(true);
+        setOpenCompanyFormView(true);
       }
     }
   }, [user]);
@@ -178,14 +178,14 @@ const MerchantLayout = ({ session }) => {
     );
   };
 
-  return notLoggedBefore ? (
-    <Tutorial user={user} openDrawer={notLoggedBefore} />
+  return openTutorialView ? (
+    <Tutorial user={user} openDrawer={openTutorialView} />
   ) : (
     <div>
       <DrawerModal
-        openState={openCompanyForm}
+        openState={openCompanyFormView}
         boxStyle={normalBox}
-        toggleOpenState={toggleOpenCompanyForm}
+        toggleOpenState={toggleOpenCompanyFormView}
         title="Fill the Form"
         showCloseButton={false}
       >

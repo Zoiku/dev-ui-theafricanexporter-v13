@@ -16,8 +16,8 @@ import { SmallPrimary, SmallSecondaryV2 } from "../../../Material/Button";
 import OfferTable from "../../v2/components/OfferTable";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
-import { ErrorOutline } from "@mui/icons-material/";
 import { MuiLinearProgress } from "../../v2/components/LinearProgress";
+import Tip from "../../v2/components/Tip";
 
 const Requests = () => {
   const rootDispatch = useDispatch();
@@ -442,21 +442,11 @@ const Requests = () => {
         title="Offers Details"
       >
         {selectedOffers && (
-          <Box>
-            <Stack
-              direction="row"
-              alignItems="flex-start"
-              className="request_placing_order_note"
-              spacing={2}
-              marginBottom={1}
-            >
-              <ErrorOutline color="inherit" />
-              <div>
-                The total quantity of the offers you select must be equal to
-                your requested quantity
-              </div>
-            </Stack>
-
+          <Stack direction="column" spacing={2}>
+            <Tip
+              message="The total quantity of the offers you select must be equal to
+                your requested quantity"
+            />
             <Stack width={"100%"} spacing={1} marginBottom={2}>
               <MuiLinearProgress
                 value={selectedModelQuantity}
@@ -464,11 +454,14 @@ const Requests = () => {
               />
             </Stack>
 
-            <MuiTableV2
-              rows={selectedOffers}
-              columns={columnsOffers}
-              handleSelectionModel={handleSelectionModel}
-            />
+            <Box>
+              <MuiTableV2
+                rows={selectedOffers}
+                columns={columnsOffers}
+                handleSelectionModel={handleSelectionModel}
+              />
+            </Box>
+
             <Stack>
               <SmallSecondaryV2
                 variant="contained"
@@ -479,7 +472,7 @@ const Requests = () => {
                 Place Order
               </SmallSecondaryV2>
             </Stack>
-          </Box>
+          </Stack>
         )}
       </DrawerModal>
 
