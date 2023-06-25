@@ -6,7 +6,6 @@ import {
   DialogActions,
 } from "@mui/material/";
 import { dialogStyle } from "../../../Styles/v2/dialog";
-import "../../../Styles/v2/Dialog.css";
 
 const MuiDialog = ({ dialogTitle, openDialog, toggleOpenDialog, children }) => {
   return (
