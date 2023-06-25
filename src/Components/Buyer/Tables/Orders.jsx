@@ -307,55 +307,6 @@ const Orders = () => {
           abortController.signal
         );
         if (errors.length === 0) {
-<<<<<<< HEAD
-          const filteredData = data.data.data.map((order) => {
-            return order?.doc?.at(0);
-          });
-
-          Promise.all(
-            filteredData.map(async (order, index) => {
-              order.id = order._id;
-              order.index = index + 1;
-              order.quantity =
-                order.request.quotationProducts[0].specification.quantity;
-              order.terms = order.request.buyerQuotationIncoterm.label;
-              order.containerSize =
-                order.request.quotationProducts[0].product.supportedShippingContainers[0].label;
-              order.product = order.request.quotationProducts[0].product.name;
-              order.createdOn = new Date(order.createdOn)
-                .toUTCString()
-                .slice(0, 16);
-              order.expiryDate = new Date(order?.request?.expiryDate)
-                .toUTCString()
-                .slice(0, 25);
-              order.merchant = await (
-                await buyerService.getOrder(order._id)
-              ).data.data.data[0]?.merchant;
-              order.orderList =
-                order.referenceCode &&
-                (await (
-                  await buyerService.getOrderList(order.referenceCode)
-                ).data.data.data.map((data, index) => {
-                  return {
-                    index: index + 1,
-                    id: data?._id,
-                    status: data?.status,
-                    quantity: data?.orderQuantity,
-                    company: data?.merchant?.companyName,
-                    destination: data?.request?.destination,
-                    paymentDetails: data?.orderPaymentDetails,
-                    orderNo: data?.orderNo,
-                    more: data,
-                  };
-                }));
-              return 1;
-            })
-          );
-
-          filteredData.sort(
-            (a, b) => new Date(b.expiryDate) - new Date(a.expiryDate)
-          );
-=======
           const filteredData = data.data.data.map((orderOffers, index) => {
             const order = orderOffers?.doc?.at(0);
             const quotationProduct = order?.request?.quotationProducts.at(0);
@@ -373,7 +324,6 @@ const Orders = () => {
               incoterm: order?.request?.buyerQuotationIncoterm?.label,
             };
           });
->>>>>>> latest-dev
           setRows(filteredData);
         }
       } catch (error) {
