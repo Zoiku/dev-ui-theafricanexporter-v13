@@ -232,7 +232,7 @@ const Orders = () => {
                   title="Full Name"
                   value={`${selectedOrder?.buyer?.firstName} ${selectedOrder?.buyer?.lastName}`}
                 />
-                <StackItem title="Email" value={selectedOrder?.buyer?.email} />
+                <StackItem capitalize={false} title="Email" value={selectedOrder?.buyer?.email} />
                 <StackItem
                   title="Mobile"
                   value={`+${selectedOrder?.buyer?.mobileNo}`}

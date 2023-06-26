@@ -385,6 +385,7 @@ const Orders = () => {
               <SectionItemCollapsable sectionTitle="Merchant Details">
                 <StackItem title="Name" value={selectedOrder?.merchant?.name} />
                 <StackItem
+                  capitalize={false}
                   title="Email"
                   value={selectedOrder?.merchant?.email}
                 />

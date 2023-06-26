@@ -31,6 +31,7 @@ html {
 
 .css-fy2uxz {
   border-radius: 10px 10px 0 0 !important;
+  overflow: clip;
 }
 
 .css-9emuhu-MuiPaper-root-MuiDrawer-paper {

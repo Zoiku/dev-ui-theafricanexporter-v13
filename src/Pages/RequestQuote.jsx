@@ -276,30 +276,34 @@ const RequestQuote = ({ session }) => {
 
             <SectionItem sectionTitle="2. Specifications">
               <StackItem
+                capitalize={false}
                 title="Length"
                 value={`${state.payload.length} ${state.payload.lengthUnit}`}
               />
               {state.payload?.diameter && (
                 <StackItem
+                  capitalize={false}
                   title="Diameter"
                   value={`${state.payload.diameter} ${state.payload.diameterUnit}`}
                 />
               )}
               {state.payload?.thickness && (
                 <StackItem
+                  capitalize={false}
                   title="Thickness"
                   value={`${state.payload.thickness} ${state.payload.thicknessUnit}`}
                 />
               )}
               {state.payload?.width && (
                 <StackItem
-                  title="Thickness"
+                  capitalize={false}
+                  title="Width"
                   value={`${state.payload.width} ${state.payload.widthUnit}`}
                 />
               )}
               <StackItem
                 title="Quantity"
-                value={`${state.payload.quantity} 20ft container (s)`}
+                value={`${state.payload.quantity} 20ft Container`}
               />
 
               {state.payload?.dryingLabel && (

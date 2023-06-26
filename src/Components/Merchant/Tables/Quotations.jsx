@@ -140,12 +140,14 @@ const Quotations = () => {
 
             <SectionItem sectionTitle="Specifications">
               <StackItem
+                capitalize={false}
                 title="Length"
                 value={`${selectedQuote?.specifications?.length} ${selectedQuote?.specifications?.lengthUnit}`}
               />
 
               {selectedQuote?.specifications?.diameter && (
                 <StackItem
+                  capitalize={false}
                   title="Diameter"
                   value={`${selectedQuote?.specifications?.diameter} ${selectedQuote?.specifications?.diameterUnit}`}
                 />
@@ -153,6 +155,7 @@ const Quotations = () => {
 
               {selectedQuote?.specifications?.thickness && (
                 <StackItem
+                  capitalize={false}
                   title="Thickness"
                   value={`${selectedQuote?.specifications?.thickness} ${selectedQuote?.specifications?.thicknessUnit}`}
                 />
@@ -160,6 +163,7 @@ const Quotations = () => {
 
               {selectedQuote?.specifications?.width && (
                 <StackItem
+                  capitalize={false}
                   title="Width"
                   value={`${selectedQuote?.specifications?.width} ${selectedQuote?.specifications?.widthUnit}`}
                 />
@@ -171,7 +175,6 @@ const Quotations = () => {
                   value={selectedQuote?.specifications?.drying}
                 />
               )}
-
               <StackItem
                 title="Quantity"
                 value={`${selectedQuote?.quantity} 20ft Container`}

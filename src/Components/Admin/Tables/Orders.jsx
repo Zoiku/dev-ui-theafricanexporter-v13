@@ -301,6 +301,7 @@ const Orders = () => {
                 value={selectedOrder?.product?.specification?.containerSize}
               />
               <StackItem
+                capitalize={false}
                 title="Volume"
                 value={`${selectedOrder?.product?.specification?.volume} ${selectedOrder?.product?.specification?.volumeUnit}`}
               />
@@ -335,7 +336,7 @@ const Orders = () => {
                 title="Full Name"
                 value={selectedOffers?.buyer?.name}
               />
-              <StackItem title="Email" value={selectedOffers?.buyer?.email} />
+              <StackItem capitalize={false} title="Email" value={selectedOffers?.buyer?.email} />
               <StackItem
                 title="Mobile"
                 value={`+${selectedOffers?.buyer?.mobile}`}
@@ -350,7 +351,7 @@ const Orders = () => {
                   sectionTitle={`Merchant Details ${index + 1}`}
                 >
                   <StackItem title="Full Name" value={merchant.name} />
-                  <StackItem title="Email" value={merchant.email} />
+                  <StackItem capitalize={false} title="Email" value={merchant.email} />
                   <StackItem title="Mobile" value={`+${merchant.mobile}`} />
                 </SectionItemCollapsable>
               ))}
