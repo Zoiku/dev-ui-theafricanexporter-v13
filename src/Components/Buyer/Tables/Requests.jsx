@@ -407,7 +407,7 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Specifications">
-              <StackItem title="Length" value={selectedRequest?.productName} />
+              <StackItem capitalize={false} title="Length" value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`} />
               {selectedRequest?.specification?.diameter && (
                 <StackItem
                   capitalize={false}
