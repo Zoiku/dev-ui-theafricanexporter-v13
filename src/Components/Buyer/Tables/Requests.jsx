@@ -407,21 +407,24 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Specifications">
-              <StackItem title="Length" value={selectedRequest?.productName} />
+              <StackItem capitalize={false} title="Length" value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`} />
               {selectedRequest?.specification?.diameter && (
                 <StackItem
+                  capitalize={false}
                   title="Diameter"
                   value={`${selectedRequest?.specification?.diameter} ${selectedRequest?.specification?.diameterUnit}`}
                 />
               )}
               {selectedRequest?.specification?.thickness && (
                 <StackItem
+                  capitalize={false}
                   title="Thickness"
                   value={`${selectedRequest?.specification?.thickness} ${selectedRequest?.specification?.thicknessUnit}`}
                 />
               )}
               {selectedRequest?.specification?.width && (
                 <StackItem
+                  capitalize={false}
                   title="Width"
                   value={`${selectedRequest?.specification?.width} ${selectedRequest?.specification?.widthUnit}`}
                 />

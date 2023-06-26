@@ -16,9 +16,12 @@
   overflow-y: auto !important;
 }
 
-.modal_title_container,
-.drawer-title-container {
+.modal_title_container {
   border-bottom: 1px solid #c5c5c5;
+}
+
+.drawer-title-container {
+  border-bottom: 1px solid #c5c5c556;
 }
 
 .modal_body_container,
@@ -28,7 +31,7 @@
 
 .modal_title_container {
   z-index: 100;
-  background: white;
+  background: #fff;
   padding: 10px;
   position: sticky;
   top: 0;

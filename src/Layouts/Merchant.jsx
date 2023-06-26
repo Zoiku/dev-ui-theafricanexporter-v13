@@ -17,7 +17,7 @@ import AppLayout from "./AppLayout";
 import MerchantService from "../Services/Merchant";
 import Tutorial from "../Components/Tutorial";
 import DrawerModal from "../Components/v2/components/DrawerModal";
-import { normalBox } from "../Styles/v2/box";
+import { xMediumBox } from "../Styles/v2/box";
 import { Box, TextField, Stack } from "@mui/material";
 
 const CompanyInputRow = ({ children }) => {
@@ -184,7 +184,7 @@ const MerchantLayout = ({ session }) => {
     <div>
       <DrawerModal
         openState={openCompanyFormView}
-        boxStyle={normalBox}
+        boxStyle={xMediumBox}
         toggleOpenState={toggleOpenCompanyFormView}
         title="Fill the Form"
         showCloseButton={false}

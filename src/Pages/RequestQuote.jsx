@@ -47,6 +47,7 @@ import {
   CLEAR_FORM,
 } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js";
+import { Tip } from "../Components/v2/components/Tip";
 
 const endPendingQuoteSession = async () => {
   const pq_session = sessionStorage.getItem("pq_id");
@@ -276,30 +277,34 @@ const RequestQuote = ({ session }) => {
 
             <SectionItem sectionTitle="2. Specifications">
               <StackItem
+                capitalize={false}
                 title="Length"
                 value={`${state.payload.length} ${state.payload.lengthUnit}`}
               />
               {state.payload?.diameter && (
                 <StackItem
+                  capitalize={false}
                   title="Diameter"
                   value={`${state.payload.diameter} ${state.payload.diameterUnit}`}
                 />
               )}
               {state.payload?.thickness && (
                 <StackItem
+                  capitalize={false}
                   title="Thickness"
                   value={`${state.payload.thickness} ${state.payload.thicknessUnit}`}
                 />
               )}
               {state.payload?.width && (
                 <StackItem
-                  title="Thickness"
+                  capitalize={false}
+                  title="Width"
                   value={`${state.payload.width} ${state.payload.widthUnit}`}
                 />
               )}
               <StackItem
                 title="Quantity"
-                value={`${state.payload.quantity} 20ft container (s)`}
+                value={`${state.payload.quantity} 20ft Container`}
               />
 
               {state.payload?.dryingLabel && (
@@ -464,24 +469,29 @@ const RequestQuote = ({ session }) => {
 
           <section>
             <div className="request-quote-section-title">2. Specifications</div>
-            <div className="request-quote-specification-note-container">
-              <div>
-                <div>How to specify dimensions</div>
-                <ul>
-                  <li>
-                    To specify a range: use a hyphen (-) separator. [Example:
-                    25-50 ("from 25 to 50")]
-                  </li>
-                  <li>
-                    To specify a lower bound only: add the "+" sign. [Example:
-                    25+ ("25 and more")]
-                  </li>
-                  <li>
-                    Please use a point (.) as decimal separator and NOT a comma.
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <Stack marginTop={2}>
+              <Tip smallText={false}>
+                <Stack spacing={1}>
+                  <div>
+                    <strong>How to specify dimensions</strong>
+                  </div>
+                  <ul style={{ marginLeft: 20 }}>
+                    <li>
+                      To specify a range: use a hyphen (-) separator. [Example:
+                      25-50 ("from 25 to 50")]
+                    </li>
+                    <li>
+                      To specify a lower bound only: add the "+" sign. [Example:
+                      25+ ("25 and more")]
+                    </li>
+                    <li>
+                      Please use a point (.) as decimal separator and NOT a
+                      comma.
+                    </li>
+                  </ul>
+                </Stack>
+              </Tip>
+            </Stack>
             <div className="request-quote-section-body select-input-form">
               {parsedProduct &&
                 productSpecifications[parsedProduct.name]?.map(

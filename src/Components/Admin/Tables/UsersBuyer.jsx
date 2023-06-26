@@ -204,13 +204,19 @@ const UsersBuyer = () => {
             alignItems="center"
           >
             <AvatarProfile fullName={selectedUser?.name} />
-            <strong style={{ fontSize: 25 }}>{selectedUser?.name}</strong>
+            <strong style={{ fontSize: 25, textTransform: "capitalize" }}>
+              {selectedUser?.name}
+            </strong>
           </Stack>
 
           <div>
             <SectionItem sectionTitle="Personal Details">
               <StackItem title="Full Name" value={selectedUser?.name} />
-              <StackItem title="Email" value={selectedUser?.email} />
+              <StackItem
+                capitalize={false}
+                title="Email"
+                value={selectedUser?.email}
+              />
               <StackItem title="Mobile" value={`+${selectedUser?.mobile}`} />
             </SectionItem>
 

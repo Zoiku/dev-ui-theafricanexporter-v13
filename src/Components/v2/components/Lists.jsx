@@ -50,13 +50,28 @@ export const SectionItem = ({ sectionTitle, children }) => {
   );
 };
 
-export const StackItem = ({ title, value }) => (
+export const StackItem = ({
+  title,
+  value,
+  capitalize = true,
+  auto = false,
+}) => (
   <Stack
     className="section_content_row_container"
     direction="row"
     justifyContent="space-between"
   >
     <div>{title}</div>
-    <div>{value}</div>
+    <div
+      style={
+        auto
+          ? {}
+          : capitalize
+          ? { textTransform: "capitalize" }
+          : { textTransform: "lowercase" }
+      }
+    >
+      {value}
+    </div>
   </Stack>
 );
