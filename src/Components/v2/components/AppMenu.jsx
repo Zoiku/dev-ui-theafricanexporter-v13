@@ -13,7 +13,7 @@ const AppMenu = ({ base }) => {
       <div className="app-menu-items">
         {menuList[base]?.map((menuLink, index) => (
           <div key={index} style={{ marginBottom: 15 }}>
-            <NavLink className="app-menu-item" to={`/${base}/${menuLink.to}`}>
+            <NavLink end className="app-menu-item" to={`/${base}/${menuLink.to}`}>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Stack
                   className="app-menu-icon"

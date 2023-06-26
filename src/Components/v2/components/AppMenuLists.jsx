@@ -8,6 +8,7 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 
 export const menuList = {
   buyer: [
+    { label: "Home", icon: <HomeRoundedIcon />, to: "" },
     { label: "Dashboard", icon: <BarChartRoundedIcon />, to: "dashboard" },
     { label: "Requests", icon: <DescriptionRoundedIcon />, to: "requests" },
     {
