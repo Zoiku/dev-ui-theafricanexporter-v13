@@ -51,6 +51,8 @@ const Sales = ({ labels, values, yAxesLabel, xAxesLabel, height = 200 }) => {
         ticks: {
           beginAtZero: true,
           fontSize: 12,
+          minRotation: 90,
+          maxRotation: 90,
         },
         title: {
           display: true,
