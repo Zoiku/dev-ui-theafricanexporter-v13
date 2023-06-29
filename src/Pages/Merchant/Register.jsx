@@ -1,7 +1,7 @@
 import "../../Styles/Register.css";
 import {
-  strictMatch,
   capitalizeFirstLetter,
+  strictMatch,
 } from "../../Components/Functions/";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -41,6 +41,7 @@ import Modal from "@mui/material/Modal";
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from "react-otp-input";
 import successImg from "../../Assets/Charco - Good Job.png";
+import { capitalize } from "@mui/material";
 
 const Register = () => {
   const [errorBoxes, setErrorBoxes] = useState([]);
@@ -160,7 +161,10 @@ const Register = () => {
           type: REQUEST_FAILED,
           error: errors[0].response.data.message,
         });
-        triggerSnackBarAlert(errors[0].response.data.message, "error");
+        triggerSnackBarAlert(
+          capitalize(errors[0].response.data.message),
+          "error"
+        );
       }
     } catch (error) {
       throw error;

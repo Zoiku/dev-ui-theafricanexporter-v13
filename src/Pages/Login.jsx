@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearPath, startSession } from "../Redux/Features/Session.js";
 import { setAlert, clearAlerts } from "../Redux/Features/Alert.js";
 import { useNavigate, NavLink } from "react-router-dom";
+import { capitalize } from "@mui/material";
 
 const ROLES = {
   ADMIN: "/admin/dashboard",
@@ -42,11 +43,11 @@ const Login = () => {
   const handleChange = (e) => {
     dispatch({ type: INPUTING, prop: e.target.name, value: e.target.value });
   };
-  const handleFailedRequest = (message, timeOut) => {
+
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
-      severity: "error",
       message,
-      timeOut,
+      severity,
     };
     rootDispatch(setAlert(payload));
   };
@@ -63,11 +64,11 @@ const Login = () => {
         rootDispatch(clearAlerts());
       } else {
         dispatch({ type: REQUEST_FAILED, error: errors });
-        handleFailedRequest(errors[0], 8000);
+        triggerSnackBarAlert(capitalize(errors[0]), "error");
       }
     } catch (error) {
       dispatch({ type: REQUEST_FAILED, error: error });
-      handleFailedRequest(error, 8000);
+      triggerSnackBarAlert(error, "error");
     }
   };
 

@@ -551,7 +551,7 @@ const Requests = () => {
             <div>
               <SectionItem sectionTitle="Request Summary">
                 <StackItem
-                  title="Product Name"
+                  title="Product"
                   value={selectedOffer?.requestSummary?.productName}
                 />
                 <StackItem
