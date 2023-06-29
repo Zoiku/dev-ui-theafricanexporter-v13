@@ -62,6 +62,7 @@ export const productSpecifications = {
       inputProps: null,
     },
     {
+      required: true,
       type: "text",
       name: "width",
       label: "Width",
