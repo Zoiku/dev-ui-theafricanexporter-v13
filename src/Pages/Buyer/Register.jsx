@@ -105,7 +105,7 @@ const Register = () => {
           type: REQUEST_FAILED,
           error: errors[0].response.data.message,
         });
-        handleFailedRequest(errors[0].response.data.message, 8000);
+        triggerSnackBarAlert(errors[0].response.data.message, "error");
       }
     } catch (error) {}
   };
@@ -144,8 +144,15 @@ const Register = () => {
       );
       if (errors.length === 0) {
         initCounddown();
+      } else {
+        triggerSnackBarAlert(
+          "Problem processing request, please try again",
+          "error"
+        );
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   const handleCodeVerification = async (e) => {
@@ -161,42 +168,20 @@ const Register = () => {
       );
       if (errors.length === 0) {
         setOpenDrawer(false);
-        handleVerificationSuccessfull(
-          "Email address verified, please login",
-          8000
-        );
+        triggerSnackBarAlert("Email address verified, please login", "success");
         dispatch({ type: REQUEST_SUCCESSFUL });
         navigate("/login");
       } else {
-        handleVerificationFailed("Could not verify code", 8000);
+        triggerSnackBarAlert("Could not verify code", "error");
         dispatch({ type: REQUEST_FAILED, error: "Could not verify code" });
       }
     } catch (error) {}
   };
 
-  const handleVerificationSuccessfull = (message, timeOut) => {
+  const triggerSnackBarAlert = (message, severity) => {
     const payload = {
-      severity: "success",
       message,
-      timeOut,
-    };
-    rootDispatch(setAlert(payload));
-  };
-
-  const handleVerificationFailed = (message, timeOut) => {
-    const payload = {
-      severity: "error",
-      message,
-      timeOut,
-    };
-    rootDispatch(setAlert(payload));
-  };
-
-  const handleFailedRequest = (message, timeOut) => {
-    const payload = {
-      severity: "error",
-      message,
-      timeOut,
+      severity,
     };
     rootDispatch(setAlert(payload));
   };
@@ -221,7 +206,7 @@ const Register = () => {
 
   const onFormInvalid = (e) => {
     setErrorBoxes([...errorBoxes, e.target.name]);
-    handleFailedRequest("Please fill all required fields correctly", 8000);
+    triggerSnackBarAlert("Please fill all required fields correctly", "error");
   };
 
   const onFormValid = (e) => {

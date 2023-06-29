@@ -133,6 +133,7 @@ const Requests = () => {
               terms: request?.buyerQuotationIncoterm?.label,
               origin: request?.quotationProducts[0]?.product?.origin?.country,
               destination: request?.destination,
+              validity: request?.validity,
               incoterm: request?.buyerQuotationIncoterm?.label,
               port: request?.port,
               species: request?.quotationProducts[0]?.product?.species?.label,
@@ -252,7 +253,10 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Request Settings">
-              <StackItem title="Validity" value={selectedRequest?.product} />
+              <StackItem
+                title="Validity"
+                value={`${selectedRequest?.validity} Days`}
+              />
             </SectionItem>
 
             <SectionItemCollapsable sectionTitle="Buyer Details">
@@ -270,7 +274,11 @@ const Requests = () => {
                   selectedRequest?.buyer?.createdOn
                 ).toDateString()}
               />
-              <StackItem capitalize={false} title="Email" value={selectedRequest?.buyer?.email} />
+              <StackItem
+                capitalize={false}
+                title="Email"
+                value={selectedRequest?.buyer?.email}
+              />
               <StackItem
                 title="Mobile"
                 value={`+${selectedRequest?.buyer?.mobileNo}`}
