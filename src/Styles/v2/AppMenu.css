@@ -55,3 +55,27 @@
   border-radius: 10px 10px 0 0 !important;
   z-index: 100;
 }
+
+.app-menu-item-tutorial {
+  min-width: 45px;
+  height: 45px;
+}
+
+.tutorial-app-menu-items {
+  position: absolute;
+  bottom: 20px;
+  display: none !important;
+}
+
+.tutorial-app-menu-item {
+  cursor: pointer;
+}
+
+.tutorial-app-menu-icon {
+  background: gray;
+  color: #fff;
+}
+
+.tutorial-app-menu-item:hover .tutorial-app-menu-icon {
+  background: #000;
+}

@@ -407,7 +407,11 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Specifications">
-              <StackItem capitalize={false} title="Length" value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`} />
+              <StackItem
+                capitalize={false}
+                title="Length"
+                value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`}
+              />
               {selectedRequest?.specification?.diameter && (
                 <StackItem
                   capitalize={false}
@@ -564,14 +568,6 @@ const Requests = () => {
                 />
               </SectionItem>
 
-              <SectionItem sectionTitle="Offer Table">
-                <OfferTable
-                  offerRows={selectedOffer?.offerRows}
-                  product={selectedOffer?.requestSummary?.productName}
-                  incoterm={selectedOffer?.requestSummary?.terms}
-                />
-              </SectionItem>
-
               <SectionItemCollapsable sectionTitle="Company Profile">
                 <StackItem
                   title="Merchant Name"
@@ -597,6 +593,14 @@ const Requests = () => {
                   value={selectedOffer?.supplyAbility}
                 />
               </SectionItemCollapsable>
+
+              <SectionItem sectionTitle="Offer Table">
+                <OfferTable
+                  offerRows={selectedOffer?.offerRows}
+                  product={selectedOffer?.requestSummary?.productName}
+                  incoterm={selectedOffer?.requestSummary?.terms}
+                />
+              </SectionItem>
             </div>
           </Box>
         )}

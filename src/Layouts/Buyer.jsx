@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Nav from "../Components/Buyer/Nav";
 import { useState, useEffect } from "react";
-import Tutorial from "../Components/Tutorial";
-
+import Tutorial from "../Components/v2/components/Tutorial";
 import AppLayout from "./AppLayout";
 
 const BuyerLayout = ({ session }) => {
@@ -23,7 +22,10 @@ const BuyerLayout = ({ session }) => {
   }, [user]);
 
   return openTutorialView ? (
-    <Tutorial user={user} openDrawer={openTutorialView} />
+    <Tutorial
+      openTutorialView={openTutorialView}
+      setOpenTutorialView={setOpenTutorialView}
+    />
   ) : (
     <AppLayout nav={<Nav session={session} />} userType="buyer">
       <Outlet />

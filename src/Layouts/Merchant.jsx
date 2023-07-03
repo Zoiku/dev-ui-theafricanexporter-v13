@@ -15,7 +15,7 @@ import {
 import { setAlert } from "../Redux/Features/Alert.js";
 import AppLayout from "./AppLayout";
 import MerchantService from "../Services/Merchant";
-import Tutorial from "../Components/Tutorial";
+import Tutorial from "../Components/v2/components/Tutorial";
 import DrawerModal from "../Components/v2/components/DrawerModal";
 import { xMediumBox } from "../Styles/v2/box";
 import { Box, TextField, Stack } from "@mui/material";
@@ -31,7 +31,7 @@ const CompanyInputRow = ({ children }) => {
 const MerchantLayout = ({ session }) => {
   const user = session?.user;
   const rootDispatch = useDispatch();
-  const [openTutorialView, setOpenTutoralView] = useState(false);
+  const [openTutorialView, setOpenTutorialView] = useState(false);
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
 
   const [openCompanyFormView, setOpenCompanyFormView] = useState(false);
@@ -81,9 +81,9 @@ const MerchantLayout = ({ session }) => {
       const isLoggedBefore = user.profile.user?.isLoggedBefore;
       if (isLoggedBefore !== undefined) {
         if (isLoggedBefore) {
-          setOpenTutoralView(false);
+          setOpenTutorialView(false);
         } else {
-          setOpenTutoralView(true);
+          setOpenTutorialView(true);
         }
       }
     }
@@ -179,7 +179,7 @@ const MerchantLayout = ({ session }) => {
   };
 
   return openTutorialView ? (
-    <Tutorial user={user} openDrawer={openTutorialView} />
+    <Tutorial openTutorialView={openTutorialView} setOpenTutorialView={setOpenTutorialView} />
   ) : (
     <div>
       <DrawerModal
