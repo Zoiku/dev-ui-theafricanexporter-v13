@@ -125,18 +125,20 @@ const AdminNav = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar src="/" sx={{ background: "#ee9b00" }}></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                alt="a"
+                src="/"
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>
@@ -184,18 +186,20 @@ const AdminNav = () => {
                 </StyledBadge>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar src="/" alt="a" sx={{ background: "#ee9b00" }}></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt="a"
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>

@@ -6,7 +6,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
@@ -71,22 +70,20 @@ const MerchantNav = ({ session }) => {
             >
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar
-                  src="/"
-                  alt={session.user?.profile?.user?.firstName}
-                  sx={{ background: "#ee9b00" }}
-                ></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt={session.user?.profile?.user?.firstName}
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>
@@ -115,22 +112,20 @@ const MerchantNav = ({ session }) => {
             >
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar
-                  src="/"
-                  alt={session.user?.profile?.user?.firstName}
-                  sx={{ background: "#ee9b00" }}
-                ></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt={session.user?.profile?.user?.firstName}
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>

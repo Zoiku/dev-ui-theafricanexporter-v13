@@ -8,6 +8,7 @@ import { wideBox } from "../../../Styles/v2/box";
 import { Box, Stack } from "@mui/material";
 import MerchantService from "../../../Services/Merchant";
 import OfferTable from "../../v2/components/OfferTable";
+import { capitalizeText } from "../../Functions";
 
 const Quotations = () => {
   const [rows, setRows] = useState([]);
@@ -86,7 +87,7 @@ const Quotations = () => {
               expiryDate: quotationRequest?.expiryDate,
               productName: quotationProduct?.product?.name,
               terms: quotationRequest?.buyerQuotationIncoterm?.label,
-              destination: quotationRequest?.destination,
+              destination: capitalizeText(quotationRequest?.destination),
               origin: quotationProduct?.product?.origin?.country,
               port: quotationRequest?.port,
               quantity: quote?.offerQuantity,
