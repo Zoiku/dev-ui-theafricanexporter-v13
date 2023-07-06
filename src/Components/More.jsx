@@ -56,6 +56,7 @@ export const MuiMoreV1 = ({ children }) => {
   return (
     <div>
       <Menu
+        elevation={3}
         anchorEl={anchorEl}
         id="account-menu"
         open={open}

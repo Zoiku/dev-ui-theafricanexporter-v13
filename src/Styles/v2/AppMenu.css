@@ -3,9 +3,7 @@
   width: 60px;
   padding: 23px 5px;
   transition: all 0.2s ease-in-out;
-  overflow: clip;
-  position: sticky;
-  top: 80px;
+  overflow: clip;  
 }
 
 .app-menu:hover {
@@ -71,5 +69,6 @@
 }
 
 .tutorial-app-menu-icon {
-  background: #efefef !important;
+  background: #000 !important;
+  color: #fff;
 }

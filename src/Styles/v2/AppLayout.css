@@ -21,6 +21,12 @@
   width: 1000px;
 }
 
+.app-layout-menu {
+  height: calc(100vh - 80px);
+  position: sticky;
+  top: 80px;
+}
+
 .app-layout-bottom-menu {
   display: none;
 }

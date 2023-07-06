@@ -39,6 +39,7 @@ const MerchantNav = ({ session }) => {
   return (
     <div className="Nav">
       <Menu
+        elevation={3}
         anchorEl={anchorEl}
         id="account-menu"
         open={open}

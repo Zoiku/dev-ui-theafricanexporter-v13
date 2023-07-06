@@ -35,14 +35,14 @@ const AdminNav = () => {
   );
 
   const [anchorElPopOver, setAnchorElPopOver] = useState(null);
+  const openPopOver = Boolean(anchorElPopOver);
+  const popOverId = openPopOver ? "simple-popover" : undefined;
   const handleClickPopOver = (event) => {
     setAnchorElPopOver(event.currentTarget);
   };
   const handleClosePopOver = () => {
-    setAnchorEl(null);
+    setAnchorElPopOver(null);
   };
-  const openPopOver = Boolean(anchorElPopOver);
-  const popOverId = openPopOver ? "simple-popover" : undefined;
 
   //
 
@@ -91,7 +91,7 @@ const AdminNav = () => {
   return (
     <div className="Nav">
       <Popover
-        sx={{ boxShadow: "none" }}
+        elevation={3}
         id={popOverId}
         open={openPopOver}
         anchorEl={anchorElPopOver}
@@ -114,6 +114,7 @@ const AdminNav = () => {
       </Popover>
 
       <Menu
+        elevation={3}
         anchorEl={anchorEl}
         id="account-menu"
         open={open}

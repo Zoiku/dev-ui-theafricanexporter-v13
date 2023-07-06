@@ -58,15 +58,15 @@ const AppMenu = ({ base }) => {
   return (
     <div>
       <div>
-        {openTutotialVideos && (
-          <DrawerModal
-            title="Tutorial Videos"
-            openState={openTutotialVideos}
-            toggleOpenState={toggleOpenTutorialVideos}
-            boxStyle={tutorialVideos}
-            modalClassName="tutorial_modal_container"
-            leftSlide={true}
-          >
+        <DrawerModal
+          title="Tutorial Videos"
+          openState={openTutotialVideos}
+          toggleOpenState={toggleOpenTutorialVideos}
+          boxStyle={tutorialVideos}
+          modalClassName="tutorial_modal_container"
+          leftSlide={true}
+        >
+          {openTutotialVideos && (
             <Box>
               <Tip>
                 <div>
@@ -78,9 +78,7 @@ const AppMenu = ({ base }) => {
                     >
                       hello@theafricanexporter.com
                     </a>
-                  </strong>{" "}
-                  indicating the issue you would like covered in a tutorial
-                  video.
+                  </strong>
                 </div>
               </Tip>
               <Stack marginY={2} spacing={5}>
@@ -93,8 +91,8 @@ const AppMenu = ({ base }) => {
                 ))}
               </Stack>
             </Box>
-          </DrawerModal>
-        )}
+          )}
+        </DrawerModal>
       </div>
 
       <menu className="app-menu">
@@ -157,31 +155,33 @@ export const AppBottomMenu = ({ base }) => {
           modalClassName="tutorial_modal_container"
           leftSlide={true}
         >
-          <Box>
-            <Tip>
-              <div>
-                Can't find the video you are looking for? Send an email to{" "}
-                <strong>
-                  <a
-                    style={{ color: "#000" }}
-                    href="mailto:hello@theafricanexporter.com"
-                  >
-                    hello@theafricanexporter.com
-                  </a>
-                </strong>{" "}
-                indicating the issue you would like covered in a tutorial video.
-              </div>
-            </Tip>
-            <Stack marginY={2} spacing={5}>
-              {TutorialVideos[base]?.map((video, index) => (
-                <TutorialFrameItem
-                  key={index}
-                  title={video?.title}
-                  iframeSrc={video?.iframeSrc}
-                />
-              ))}
-            </Stack>
-          </Box>
+          {openTutotialVideos && (
+            <Box>
+              <Tip>
+                <div>
+                  Can't find the video you are looking for? Send an email to{" "}
+                  <strong>
+                    <a
+                      style={{ color: "#000" }}
+                      href="mailto:hello@theafricanexporter.com"
+                    >
+                      hello@theafricanexporter.com
+                    </a>
+                  </strong>
+                  .
+                </div>
+              </Tip>
+              <Stack marginY={2} spacing={5}>
+                {TutorialVideos[base]?.map((video, index) => (
+                  <TutorialFrameItem
+                    key={index}
+                    title={video?.title}
+                    iframeSrc={video?.iframeSrc}
+                  />
+                ))}
+              </Stack>
+            </Box>
+          )}
         </DrawerModal>
       </div>
 
