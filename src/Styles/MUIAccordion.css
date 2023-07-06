@@ -5,11 +5,11 @@
 }
 
 .MUIAccordionContent {
-  width: 85%;
+  width: 80%;
 }
 
 .searchContentContainer {
-  margin: 0 0 50px 0;
+  margin: 0 0 30px 0;
 }
 
 .searchContent {
@@ -18,14 +18,14 @@
 }
 
 .searchBoxMaterial {
-  width: 300px;
+  width: 100%;
 }
 
 .resultsAccordion {
   margin: 0 0 20px 0;
   color: gray;
   font-size: small;
-  text-align: center;
+  text-align: left;
 }
 
 .searchedTerm {
@@ -43,7 +43,7 @@
 .cantFindQuestion {
   font-size: small;
   color: gray;
-  text-align: center;
+  text-align: left;
 }
 
 .AccordionRow {
@@ -52,12 +52,8 @@
 
 @media screen and (max-width: 1000px) {
   .MUIAccordionContentContainer {
-    padding: 0 10px;
+    padding: 0 20px;
     margin: 0px 0 0 0;
-  }
-
-  .searchBoxMaterial {
-    width: 100%;
   }
 
   .cantFindQuestion {

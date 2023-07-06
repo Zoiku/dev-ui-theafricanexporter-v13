@@ -25,6 +25,8 @@ import {
 } from "../../Reducers/Actions";
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -101,14 +103,25 @@ const AdminNav = () => {
           horizontal: "left",
         }}
       >
-        <div style={{ padding: 10, width: 200 }}>
+        <div style={{ padding: 10, width: 250 }}>
           {unValidatedUsers.requestState.data?.value ? (
-            <>
-              {unValidatedUsers.requestState.data?.value} merchant users
-              unvalidated
-            </>
+            <Stack direction="row" alignContent="flex-start" spacing={2}>
+              <div>
+                <FeedbackOutlinedIcon />
+              </div>
+              <div>
+                You have{" "}
+                <strong>{unValidatedUsers.requestState.data?.value}</strong>{" "}
+                unvalidated merchant(s)
+              </div>
+            </Stack>
           ) : (
-            <>Good work! There are no unvalidated merchants</>
+            <Stack direction="row" alignContent="flex-start" spacing={2}>
+              <div>
+                <CelebrationIcon />
+              </div>
+              <div>Good work! There are no unvalidated merchant users</div>
+            </Stack>
           )}
         </div>
       </Popover>
@@ -137,7 +150,7 @@ const AdminNav = () => {
         </div>
         <div>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <IconButton aria-label="cart">
+            <IconButton onClick={handleClickPopOver} aria-label="cart">
               <StyledBadge
                 max={10}
                 showZero

@@ -11,7 +11,7 @@ import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 const BuyerNav = ({ session }) => {
   const navigate = useNavigate();
@@ -50,9 +50,9 @@ const BuyerNav = ({ session }) => {
       >
         <MenuItem onClick={toggleRedirect("/buyer/settings")}>
           <ListItemIcon>
-            <PersonRoundedIcon fontSize="small" />
+            <SettingsRoundedIcon fontSize="small" />
           </ListItemIcon>
-          Profile
+          Settings
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
