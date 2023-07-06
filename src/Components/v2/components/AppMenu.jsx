@@ -35,7 +35,15 @@ const TutorialMenuItem = ({ icon, title, onClick }) => (
 const TutorialFrameItem = ({ title, iframeSrc }) => (
   <Stack spacing={1}>
     <div style={{ fontWeight: 500 }}>{title}</div>
-    <Box height={250} style={{ overflow: "clip", borderRadius: 5 }}>
+    <Box
+      height={250}
+      style={{
+        overflow: "clip",
+        borderRadius: 5,
+        position: "relative",
+        background: "gray",
+      }}
+    >
       <iframe
         frameBorder={0}
         width="100%"
