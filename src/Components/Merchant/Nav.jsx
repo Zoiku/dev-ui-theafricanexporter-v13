@@ -11,6 +11,7 @@ import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 const MerchantNav = ({ session }) => {
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ const MerchantNav = ({ session }) => {
     rootDispatch(endSession());
     handleRedirect();
   };
+  const toggleRedirect = (link) => () => {
+    navigate(link);
+  };
 
   return (
     <div className="Nav">
@@ -43,6 +47,12 @@ const MerchantNav = ({ session }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <MenuItem onClick={toggleRedirect("/merchant/settings")}>
+          <ListItemIcon>
+            <PersonRoundedIcon fontSize="small" />
+          </ListItemIcon>
+          Profile
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

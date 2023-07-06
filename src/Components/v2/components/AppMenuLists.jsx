@@ -2,7 +2,6 @@ import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import RequestQuoteRoundedIcon from "@mui/icons-material/RequestQuoteRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import PeopleOutlineRoundedIcon from "@mui/icons-material/PeopleOutlineRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 
@@ -16,7 +15,6 @@ export const menuList = {
       icon: <ShoppingCartCheckoutRoundedIcon />,
       to: "orders",
     },
-    { label: "Settings", icon: <SettingsRoundedIcon />, to: "settings" },
   ],
   merchant: [
     { label: "Dashboard", icon: <BarChartRoundedIcon />, to: "dashboard" },
@@ -31,7 +29,6 @@ export const menuList = {
       icon: <ShoppingCartCheckoutRoundedIcon />,
       to: "orders",
     },
-    { label: "Settings", icon: <SettingsRoundedIcon />, to: "settings" },
   ],
   admin: [
     { label: "Dashboard", icon: <BarChartRoundedIcon />, to: "dashboard" },
@@ -55,7 +52,6 @@ export const bottomMenuList = {
       icon: <ShoppingCartCheckoutRoundedIcon />,
       to: "orders",
     },
-    { label: "Settings", icon: <SettingsRoundedIcon />, to: "settings" },
   ],
   merchant: [
     { label: "Dashboard", icon: <BarChartRoundedIcon />, to: "dashboard" },
@@ -70,7 +66,6 @@ export const bottomMenuList = {
       icon: <ShoppingCartCheckoutRoundedIcon />,
       to: "orders",
     },
-    { label: "Settings", icon: <SettingsRoundedIcon />, to: "settings" },
   ],
   admin: [
     { label: "Home", icon: <HomeRoundedIcon />, to: "" },

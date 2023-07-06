@@ -33,7 +33,6 @@ const MerchantLayout = ({ session }) => {
   const rootDispatch = useDispatch();
   const [openTutorialView, setOpenTutorialView] = useState(false);
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
-
   const [openCompanyFormView, setOpenCompanyFormView] = useState(false);
   const toggleOpenCompanyFormView = (open) => () => {
     setOpenCompanyFormView(open);
@@ -179,7 +178,10 @@ const MerchantLayout = ({ session }) => {
   };
 
   return openTutorialView ? (
-    <Tutorial openTutorialView={openTutorialView} setOpenTutorialView={setOpenTutorialView} />
+    <Tutorial
+      openTutorialView={openTutorialView}
+      setOpenTutorialView={setOpenTutorialView}
+    />
   ) : (
     <div>
       <DrawerModal

@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
-import Nav from "../Components/Buyer/Nav";
 import { useState, useEffect } from "react";
-import Tutorial from "../Components/v2/components/Tutorial";
+import { Outlet } from "react-router-dom";
 import AppLayout from "./AppLayout";
+import Nav from "../Components/Buyer/Nav";
+import Tutorial from "../Components/v2/components/Tutorial";
 
 const BuyerLayout = ({ session }) => {
   const user = session?.user;

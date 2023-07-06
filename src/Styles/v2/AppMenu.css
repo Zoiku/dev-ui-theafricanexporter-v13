@@ -64,7 +64,6 @@
 .tutorial-app-menu-items {
   position: absolute;
   bottom: 20px;
-  display: none !important;
 }
 
 .tutorial-app-menu-item {
@@ -72,10 +71,5 @@
 }
 
 .tutorial-app-menu-icon {
-  background: gray;
-  color: #fff;
-}
-
-.tutorial-app-menu-item:hover .tutorial-app-menu-icon {
-  background: #000;
+  background: #efefef !important;
 }
