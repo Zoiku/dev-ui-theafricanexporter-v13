@@ -14,6 +14,7 @@ import { wideBox } from "../../../Styles/v2/box";
 import { Box, Stack } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
 import OfferTable from "../../v2/components/OfferTable";
+import { capitalizeText } from "../../Functions";
 
 const Requests = () => {
   const [paging, setPaging] = useState({
@@ -132,7 +133,7 @@ const Requests = () => {
               product: request?.quotationProducts[0]?.product?.name,
               terms: request?.buyerQuotationIncoterm?.label,
               origin: request?.quotationProducts[0]?.product?.origin?.country,
-              destination: request?.destination,
+              destination: capitalizeText(request?.destination),
               validity: request?.validity,
               incoterm: request?.buyerQuotationIncoterm?.label,
               port: request?.port,

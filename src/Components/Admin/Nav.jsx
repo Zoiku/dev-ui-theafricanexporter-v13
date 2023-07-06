@@ -1,18 +1,19 @@
 import "../../Styles/Nav.css";
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import {
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Stack,
+  Popover,
+} from "@mui/material/";
 import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { StyledBadge } from "../../Material/Badge";
 import AdminService from "../../Services/Admin";
 import { useEffect } from "react";
@@ -23,6 +24,7 @@ import {
   REQUEST_SUCCESSFUL,
 } from "../../Reducers/Actions";
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
+import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -31,6 +33,19 @@ const AdminNav = () => {
     formReducer,
     INITIAL_STATE
   );
+
+  const [anchorElPopOver, setAnchorElPopOver] = useState(null);
+  const handleClickPopOver = (event) => {
+    setAnchorElPopOver(event.currentTarget);
+  };
+  const handleClosePopOver = () => {
+    setAnchorEl(null);
+  };
+  const openPopOver = Boolean(anchorElPopOver);
+  const popOverId = openPopOver ? "simple-popover" : undefined;
+
+  //
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -75,6 +90,29 @@ const AdminNav = () => {
 
   return (
     <div className="Nav">
+      <Popover
+        sx={{ boxShadow: "none" }}
+        id={popOverId}
+        open={openPopOver}
+        anchorEl={anchorElPopOver}
+        onClose={handleClosePopOver}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <div style={{ padding: 10, width: 200 }}>
+          {unValidatedUsers.requestState.data?.value ? (
+            <>
+              {unValidatedUsers.requestState.data?.value} merchant users
+              unvalidated
+            </>
+          ) : (
+            <>Good work! There are no unvalidated merchants</>
+          )}
+        </div>
+      </Popover>
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -97,47 +135,36 @@ const AdminNav = () => {
           <img onClick={handleRedirect} src={logo} alt="" />
         </div>
         <div>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textAlign: "center",
-              textTransform: "capitalize",
-            }}
-          >
-            <Tooltip sx={{ marginRight: 0.5 }} title="Unvalidated Users">
-              <IconButton
-                className="notification-toggle-animation"
-                aria-label="cart"
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <IconButton aria-label="cart">
+              <StyledBadge
+                max={10}
+                showZero
+                badgeContent={
+                  unValidatedUsers.requestState.data?.value
+                    ? unValidatedUsers.requestState.data?.value
+                    : 0
+                }
+                color="primary"
               >
-                <StyledBadge
-                  max={10}
-                  showZero
-                  badgeContent={
-                    unValidatedUsers.requestState.data?.value
-                      ? unValidatedUsers.requestState.data?.value
-                      : 0
-                  }
-                  color="primary"
-                >
-                  <NotificationsIcon />
-                </StyledBadge>
-              </IconButton>
-            </Tooltip>
+                <NotificationsNoneRoundedIcon fontSize="medium" />
+              </StyledBadge>
+            </IconButton>
 
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar src="/" sx={{ background: "#ee9b00" }}></Avatar>
-              </IconButton>
-            </Tooltip>
-          </Box>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt="a"
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              />
+            </IconButton>
+          </Stack>
         </div>
       </div>
 
@@ -151,52 +178,38 @@ const AdminNav = () => {
           />
         </div>
         <div>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textAlign: "center",
-              textTransform: "capitalize",
-            }}
-          >
-            <div
-              className="nav-hello"
-              style={{ marginRight: 10, fontWeight: 650, fontSize: 14 }}
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <div style={{ fontWeight: 650, fontSize: 14 }}>Hello, Admin</div>
+
+            <IconButton onClick={handleClickPopOver} aria-label="cart">
+              <StyledBadge
+                max={10}
+                showZero
+                badgeContent={
+                  unValidatedUsers.requestState.data?.value
+                    ? unValidatedUsers.requestState.data?.value
+                    : 0
+                }
+                color="primary"
+              >
+                <NotificationsNoneRoundedIcon fontSize="medium" />
+              </StyledBadge>
+            </IconButton>
+
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
             >
-              <span>Hello, Admin</span>{" "}
-            </div>
-            <Tooltip title="Unvalidated Users">
-              <IconButton
-                className="notification-toggle-animation"
-                aria-label="cart"
-              >
-                <StyledBadge
-                  max={10}
-                  showZero
-                  badgeContent={
-                    unValidatedUsers.requestState.data?.value
-                      ? unValidatedUsers.requestState.data?.value
-                      : 0
-                  }
-                  color="primary"
-                >
-                  <NotificationsIcon />
-                </StyledBadge>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar src="/" alt="a" sx={{ background: "#ee9b00" }}></Avatar>
-              </IconButton>
-            </Tooltip>
-          </Box>
+              <Avatar
+                src="/"
+                alt="a"
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              />
+            </IconButton>
+          </Stack>
         </div>
       </div>
     </div>

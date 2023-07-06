@@ -1,3 +1,23 @@
+export const capitalizeText = (str) => {
+  // Check if the string is empty
+  if (str.length === 0) {
+    return str;
+  }
+
+  // Split the string into an array of words
+  let words = str.split(" ");
+
+  // Capitalize the first letter of each word
+  let capitalizedWords = words.map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  });
+
+  // Join the capitalized words back into a string
+  let capitalizedString = capitalizedWords.join(" ");
+
+  return capitalizedString;
+};
+
 export const checkConfirmation = (array) => {
   for (let i = 0; i < array.length; i++) {
     if (array[i] !== "CONFIRMED") {

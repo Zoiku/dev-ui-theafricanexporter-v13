@@ -11,6 +11,11 @@
   overflow-y: auto !important;
 }
 
+.tutorial_modal_container {
+  height: 97%;
+  overflow-y: auto !important;
+}
+
 .drawer_container {
   max-height: 85vh !important;
   overflow-y: auto !important;

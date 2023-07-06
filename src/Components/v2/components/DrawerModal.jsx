@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { IconButton, Stack } from "@mui/material";
 import { Close } from "@mui/icons-material/";
+import Slide from "@mui/material/Slide/Slide";
 import "../../../Styles/v2/DrawerModal.css";
 
 const DrawerModal = ({
@@ -13,6 +14,8 @@ const DrawerModal = ({
   title,
   boxStyle,
   showCloseButton = true,
+  modalClassName = "modal_container",
+  leftSlide = false,
 }) => {
   return (
     <>
@@ -46,25 +49,49 @@ const DrawerModal = ({
         }
         keepMounted
       >
-        <Box className="modal_container" sx={boxStyle}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            className="modal_title_container"
-          >
-            <div>{title}</div>
-            {showCloseButton && (
-              <IconButton
-                onClick={toggleOpenState(false)}
-                sx={{ padding: 0.1 }}
+        {leftSlide ? (
+          <Slide in={openState} direction="left">
+            <Box className={modalClassName} sx={boxStyle}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                className="modal_title_container"
               >
-                <Close />
-              </IconButton>
-            )}
-          </Stack>
-          <div className="modal_body_container">{children}</div>
-        </Box>
+                <div>{title}</div>
+                {showCloseButton && (
+                  <IconButton
+                    onClick={toggleOpenState(false)}
+                    sx={{ padding: 0.1 }}
+                  >
+                    <Close />
+                  </IconButton>
+                )}
+              </Stack>
+              <div className="modal_body_container">{children}</div>
+            </Box>
+          </Slide>
+        ) : (
+          <Box className={modalClassName} sx={boxStyle}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              className="modal_title_container"
+            >
+              <div>{title}</div>
+              {showCloseButton && (
+                <IconButton
+                  onClick={toggleOpenState(false)}
+                  sx={{ padding: 0.1 }}
+                >
+                  <Close />
+                </IconButton>
+              )}
+            </Stack>
+            <div className="modal_body_container">{children}</div>
+          </Box>
+        )}
       </Modal>
     </>
   );

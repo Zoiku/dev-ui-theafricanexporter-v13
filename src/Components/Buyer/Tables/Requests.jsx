@@ -20,6 +20,7 @@ import { MuiLinearProgress } from "../../v2/components/LinearProgress";
 import Tip from "../../v2/components/Tip";
 import MuiDialog from "../../v2/components/Dialog";
 import { Button1 } from "../../v2/components/Buttons";
+import { capitalizeText } from "../../Functions";
 
 const Requests = () => {
   const rootDispatch = useDispatch();
@@ -85,7 +86,7 @@ const Requests = () => {
             return {
               id: offers?.id,
               index: index + 1,
-              companyName: offers?.merchant?.companyName,
+              companyName: capitalizeText(offers?.merchant?.companyName),
               productName: quotationProduct?.product?.name,
               offers: offers?.buyerQuotationRequestIncoterm,
               quantity: offers?.offerQuantity,
@@ -171,7 +172,7 @@ const Requests = () => {
         if (errors.length === 0) {
           const filteredData = data.data.data.map((company) => {
             return {
-              companyName: company?.user?.companyName,
+              companyName: capitalizeText(company?.user?.companyName),
               businessType: company?.type?.label,
               memberSince: new Date(company?.user?.createdOn).toDateString(),
               establishedYear: company?.company?.year,
@@ -291,11 +292,11 @@ const Requests = () => {
     // { field: "productName", headerName: "Product", width: 150 },
     { field: "companyName", headerName: "Company", width: 110 },
     // { field: "date", headerName: "Date", width: 100 },
-    { field: "quantity", headerName: "Quantity", width: 100 },
+    { field: "quantity", headerName: "Quantity", width: 90 },
     {
       field: "action",
       headerName: "",
-      width: 90,
+      width: 80,
       renderCell: ({ row }) => {
         const requestSummary = {
           productName: row?.productName,
@@ -351,7 +352,7 @@ const Requests = () => {
                 id: request?._id,
                 requestNo: request?.requestNo,
                 expiryDate: request?.expiryDate,
-                destination: request?.destination,
+                destination: capitalizeText(request?.destination),
                 offersTotalCount: await getOffersTotalCount(),
                 productName: quotationProduct?.product?.name,
                 origin: quotationProduct?.product?.origin?.country,
@@ -407,7 +408,11 @@ const Requests = () => {
             </SectionItem>
 
             <SectionItem sectionTitle="Specifications">
-              <StackItem capitalize={false} title="Length" value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`} />
+              <StackItem
+                capitalize={false}
+                title="Length"
+                value={`${selectedRequest?.specification?.length} ${selectedRequest?.specification?.lengthUnit}`}
+              />
               {selectedRequest?.specification?.diameter && (
                 <StackItem
                   capitalize={false}
@@ -564,14 +569,6 @@ const Requests = () => {
                 />
               </SectionItem>
 
-              <SectionItem sectionTitle="Offer Table">
-                <OfferTable
-                  offerRows={selectedOffer?.offerRows}
-                  product={selectedOffer?.requestSummary?.productName}
-                  incoterm={selectedOffer?.requestSummary?.terms}
-                />
-              </SectionItem>
-
               <SectionItemCollapsable sectionTitle="Company Profile">
                 <StackItem
                   title="Merchant Name"
@@ -597,6 +594,14 @@ const Requests = () => {
                   value={selectedOffer?.supplyAbility}
                 />
               </SectionItemCollapsable>
+
+              <SectionItem sectionTitle="Offer Table">
+                <OfferTable
+                  offerRows={selectedOffer?.offerRows}
+                  product={selectedOffer?.requestSummary?.productName}
+                  incoterm={selectedOffer?.requestSummary?.terms}
+                />
+              </SectionItem>
             </div>
           </Box>
         )}

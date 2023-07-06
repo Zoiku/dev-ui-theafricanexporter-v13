@@ -10,6 +10,7 @@ import { SectionItem, StackItem } from "../../v2/components/Lists";
 import AvatarProfile from "../../AvatarProfile";
 import MuiSwitch from "../../v2/components/Switch";
 import { setAlert } from "../../../Redux/Features/Alert.js";
+import { capitalizeText } from "../../Functions";
 
 const UsersMerchant = () => {
   const [paging, setPaging] = useState({
@@ -236,7 +237,9 @@ const UsersMerchant = () => {
             return {
               index: paging.size * paging.page - (paging.size - index) + 1,
               id: user?.user?.id,
-              name: user?.user?.firstName + " " + user?.user?.lastName,
+              name: capitalizeText(
+                `${user?.user?.firstName} ${user?.user?.lastName}`
+              ),
               email: user?.user?.email,
               verified: user?.user?.isVerified,
               validated: user?.isValidated,

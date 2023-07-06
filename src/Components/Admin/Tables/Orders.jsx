@@ -20,6 +20,7 @@ import { MenuItem } from "@mui/material";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 import CustomProgress from "../../v2/components/CustomProgress";
+import { capitalizeText } from "../../Functions";
 
 const Orders = () => {
   const [paging, setPaging] = useState({
@@ -246,12 +247,12 @@ const Orders = () => {
               orderNo: doc?.orderNo,
               status: doc?.status,
               origin: quotationProduct?.product?.origin?.country,
-              destination: doc?.request?.destination,
+              destination: capitalizeText(doc?.request?.destination),
               terms: doc?.request?.buyerQuotationIncoterm?.label,
               createdOn: new Date(doc.createdOn),
               expiryDate: new Date(doc?.request?.expiryDate),
               productName: quotationProduct?.product?.name,
-              quantity: doc?.orderQuantity,
+              quantity: quotationProduct?.specification?.quantity,
               shipping: {
                 address: doc?.orderPaymentDetails?.shippingAddress,
                 port: doc?.request?.port,

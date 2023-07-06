@@ -70,3 +70,15 @@ export const widerBox = {
   overflow: "clip",
   fontSize: "15px",
 };
+export const tutorialVideos = {
+  position: "absolute",
+  top: "10px",
+  bottom: 0,
+  right: "10px",
+  width: 400,
+  outline: "none",
+  border: "none",
+  overflow: "clip",
+  backgroundColor: "white",
+  borderRadius: 1,
+};

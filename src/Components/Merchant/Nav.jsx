@@ -6,12 +6,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 const MerchantNav = ({ session }) => {
   const navigate = useNavigate();
@@ -32,6 +32,9 @@ const MerchantNav = ({ session }) => {
     rootDispatch(endSession());
     handleRedirect();
   };
+  const toggleRedirect = (link) => () => {
+    navigate(link);
+  };
 
   return (
     <div className="Nav">
@@ -44,6 +47,12 @@ const MerchantNav = ({ session }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <MenuItem onClick={toggleRedirect("/merchant/settings")}>
+          <ListItemIcon>
+            <PersonRoundedIcon fontSize="small" />
+          </ListItemIcon>
+          Profile
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
@@ -71,22 +80,20 @@ const MerchantNav = ({ session }) => {
             >
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar
-                  src="/"
-                  alt={session.user?.profile?.user?.firstName}
-                  sx={{ background: "#ee9b00" }}
-                ></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt={session.user?.profile?.user?.firstName}
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>
@@ -115,22 +122,20 @@ const MerchantNav = ({ session }) => {
             >
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 0.5 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar
-                  src="/"
-                  alt={session.user?.profile?.user?.firstName}
-                  sx={{ background: "#ee9b00" }}
-                ></Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 0.5 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                src="/"
+                alt={session.user?.profile?.user?.firstName}
+                sx={{ background: "#ee9b00", textTransform: "uppercase" }}
+              ></Avatar>
+            </IconButton>
           </Box>
         </div>
       </div>

@@ -19,7 +19,7 @@ import {
 } from "../../../Material/Button";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
-import { checkConfirmation } from "../../Functions";
+import { capitalizeText, checkConfirmation } from "../../Functions";
 import "../../../Styles/v2/Orders.css";
 import TandCs from "../../v2/components/TandCs";
 import {
@@ -140,7 +140,7 @@ const Orders = () => {
               id: orders?._id,
               index: index + 1,
               productName: quotationProduct?.product?.name,
-              companyName: orders?.merchant?.companyName,
+              companyName: capitalizeText(orders?.merchant?.companyName),
               status: orders?.status,
               quantity: orders?.orderQuantity,
               destination: orders?.request?.destination,
@@ -318,7 +318,7 @@ const Orders = () => {
               offerList: orderOffers?.doc,
               orderNo: order?.orderNo,
               productName: quotationProduct?.product?.name,
-              destination: order?.request?.destination,
+              destination: capitalizeText(order?.request?.destination),
               expiryDate: order?.request?.expiryDate,
               quantity: quotationProduct?.specification?.quantity,
               incoterm: order?.request?.buyerQuotationIncoterm?.label,
