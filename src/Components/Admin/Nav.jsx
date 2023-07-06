@@ -1,6 +1,13 @@
 import "../../Styles/Nav.css";
 import { useState } from "react";
-import { Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material/";
+import {
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Stack,
+  Popover,
+} from "@mui/material/";
 import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
@@ -18,7 +25,6 @@ import {
 } from "../../Reducers/Actions";
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import { Stack } from "@mui/material";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -27,6 +33,19 @@ const AdminNav = () => {
     formReducer,
     INITIAL_STATE
   );
+
+  const [anchorElPopOver, setAnchorElPopOver] = useState(null);
+  const handleClickPopOver = (event) => {
+    setAnchorElPopOver(event.currentTarget);
+  };
+  const handleClosePopOver = () => {
+    setAnchorEl(null);
+  };
+  const openPopOver = Boolean(anchorElPopOver);
+  const popOverId = openPopOver ? "simple-popover" : undefined;
+
+  //
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -71,6 +90,29 @@ const AdminNav = () => {
 
   return (
     <div className="Nav">
+      <Popover
+        sx={{ boxShadow: "none" }}
+        id={popOverId}
+        open={openPopOver}
+        anchorEl={anchorElPopOver}
+        onClose={handleClosePopOver}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <div style={{ padding: 10, width: 200 }}>
+          {unValidatedUsers.requestState.data?.value ? (
+            <>
+              {unValidatedUsers.requestState.data?.value} merchant users
+              unvalidated
+            </>
+          ) : (
+            <>Good work! There are no unvalidated merchants</>
+          )}
+        </div>
+      </Popover>
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -139,7 +181,7 @@ const AdminNav = () => {
           <Stack direction="row" alignItems="center" spacing={1}>
             <div style={{ fontWeight: 650, fontSize: 14 }}>Hello, Admin</div>
 
-            <IconButton aria-label="cart">
+            <IconButton onClick={handleClickPopOver} aria-label="cart">
               <StyledBadge
                 max={10}
                 showZero
