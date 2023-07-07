@@ -56,5 +56,5 @@ export const tutorialVideos = {
   border: "none",
   overflow: "clip",
   backgroundColor: "white",
-  borderRadius: 1,
+  borderRadius: 2,
 };
