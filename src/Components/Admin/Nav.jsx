@@ -1,6 +1,6 @@
 import "../../Styles/Nav.css";
 import { useState } from "react";
-import { Avatar, Menu, MenuItem, ListItemIcon, Stack } from "@mui/material/";
+import { Avatar, MenuItem, ListItemIcon, Stack } from "@mui/material/";
 import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
@@ -19,6 +19,7 @@ import {
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import MuiPopover from "../v2/components/Popover";
+import MuiMenu from "../v2/components/Menu";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -37,13 +38,13 @@ const AdminNav = () => {
     }
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const toggleMenuAchnorEl = (open) => (event) => {
+    if (open) {
+      setMenuAnchorEl(event.currentTarget);
+    } else {
+      setMenuAnchorEl(null);
+    }
   };
 
   const handleRedirect = () => {
@@ -106,23 +107,14 @@ const AdminNav = () => {
         )}
       </MuiPopover>
 
-      <Menu
-        elevation={3}
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
+      <MuiMenu anchorEl={menuAnchorEl} toggleAnchorEl={toggleMenuAchnorEl}>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
         </MenuItem>
-      </Menu>
+      </MuiMenu>
 
       <div className="Mobile-Nav">
         <div className="Nav-logo-tae-container">
@@ -145,13 +137,7 @@ const AdminNav = () => {
               </StyledBadge>
             </IconButton>
 
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
+            <IconButton onClick={toggleMenuAchnorEl(true)} size="small">
               <Avatar
                 src="/"
                 alt="a"
@@ -189,13 +175,7 @@ const AdminNav = () => {
               </StyledBadge>
             </IconButton>
 
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
+            <IconButton onClick={toggleMenuAchnorEl(true)} size="small">
               <Avatar
                 src="/"
                 alt="a"

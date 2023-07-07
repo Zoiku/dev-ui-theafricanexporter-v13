@@ -20,7 +20,7 @@ const MuiPopover = ({ anchorEl, toggleAnchorEl, children, title }) => {
           style={{
             padding: "10px",
             borderBottom: "1px solid #efefef",
-            fontWeight: 700,
+            fontWeight: 600,
           }}
         >
           {title}

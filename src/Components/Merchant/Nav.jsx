@@ -2,7 +2,6 @@ import "../../Styles/Nav.css";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
@@ -11,19 +10,22 @@ import { endSession } from "../../Redux/Features/Session";
 import { useDispatch } from "react-redux";
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import MuiMenu from "../v2/components/Menu";
 
 const MerchantNav = ({ session }) => {
   const navigate = useNavigate();
   const rootDispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const toggleMenuAchnorEl = (open) => (event) => {
+    if (open) {
+      setMenuAnchorEl(event.currentTarget);
+    } else {
+      setMenuAnchorEl(null);
+    }
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
   const handleRedirect = () => {
     navigate("/");
   };
@@ -38,16 +40,7 @@ const MerchantNav = ({ session }) => {
 
   return (
     <div className="Nav">
-      <Menu
-        elevation={3}
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
+      <MuiMenu anchorEl={menuAnchorEl} toggleAnchorEl={toggleMenuAchnorEl}>
         <MenuItem onClick={toggleRedirect("/merchant/settings")}>
           <ListItemIcon>
             <SettingsRoundedIcon fontSize="small" />
@@ -60,7 +53,7 @@ const MerchantNav = ({ session }) => {
           </ListItemIcon>
           Logout
         </MenuItem>
-      </Menu>
+      </MuiMenu>
 
       <div className="Mobile-Nav">
         <div className="Nav-logo-tae-container">
@@ -82,12 +75,9 @@ const MerchantNav = ({ session }) => {
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
             <IconButton
-              onClick={handleClick}
+              onClick={toggleMenuAchnorEl(true)}
               size="small"
               sx={{ ml: 0.5 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
             >
               <Avatar
                 src="/"
@@ -124,12 +114,9 @@ const MerchantNav = ({ session }) => {
               <span>Hello, {session.user?.profile?.user?.firstName}</span>{" "}
             </div>
             <IconButton
-              onClick={handleClick}
+              onClick={toggleMenuAchnorEl(true)}
               size="small"
               sx={{ ml: 0.5 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
             >
               <Avatar
                 src="/"

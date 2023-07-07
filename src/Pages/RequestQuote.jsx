@@ -271,7 +271,7 @@ const RequestQuote = ({ session }) => {
                 value={parsedProduct?.speciesType}
               />
               <StackItem title="Species" value={parsedProduct.species} />
-              <StackItem title="Origin:" value={parsedProduct.origin} />
+              <StackItem title="Origin" value={parsedProduct.origin} />
               <StackItem title="Container size" value="20ft Container" />
             </SectionItem>
 
