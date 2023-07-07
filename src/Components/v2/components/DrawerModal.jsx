@@ -15,7 +15,7 @@ const DrawerModal = ({
   boxStyle,
   showCloseButton = true,
   modalClassName = "modal_container",
-  leftSlide = false,
+  direction = "up",
 }) => {
   return (
     <>
@@ -49,30 +49,8 @@ const DrawerModal = ({
         }
         keepMounted
       >
-        {leftSlide ? (
-          <Slide in={openState} direction="left">
-            <Box className={modalClassName} sx={boxStyle}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                className="modal_title_container"
-              >
-                <div>{title}</div>
-                {showCloseButton && (
-                  <IconButton
-                    onClick={toggleOpenState(false)}
-                    sx={{ padding: 0.1 }}
-                  >
-                    <Close />
-                  </IconButton>
-                )}
-              </Stack>
-              <div className="modal_body_container">{children}</div>
-            </Box>
-          </Slide>
-        ) : (
-          <Box className={modalClassName} sx={boxStyle}>
+        <Slide style={boxStyle} in={openState} direction={direction}>
+          <Box className={modalClassName}>
             <Stack
               direction="row"
               alignItems="center"
@@ -91,7 +69,7 @@ const DrawerModal = ({
             </Stack>
             <div className="modal_body_container">{children}</div>
           </Box>
-        )}
+        </Slide>
       </Modal>
     </>
   );

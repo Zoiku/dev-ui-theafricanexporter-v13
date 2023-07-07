@@ -109,9 +109,11 @@ const AdminNav = () => {
               <div>
                 <FeedbackOutlinedIcon />
               </div>
-              <div>
+              <div style={{ color: "gray" }}>
                 You have{" "}
-                <strong>{unValidatedUsers.requestState.data?.value}</strong>{" "}
+                <strong style={{ color: "black" }}>
+                  {unValidatedUsers.requestState.data?.value}
+                </strong>{" "}
                 unvalidated merchant(s)
               </div>
             </Stack>
@@ -120,7 +122,9 @@ const AdminNav = () => {
               <div>
                 <CelebrationIcon />
               </div>
-              <div>Good work! There are no unvalidated merchant users</div>
+              <div style={{ color: "gray" }}>
+                Good work! There are no unvalidated merchant users
+              </div>
             </Stack>
           )}
         </div>

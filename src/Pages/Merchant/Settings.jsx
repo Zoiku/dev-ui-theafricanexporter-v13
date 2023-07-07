@@ -22,6 +22,7 @@ import {
   Select,
   OutlinedInput,
   InputAdornment,
+  capitalize,
 } from "@mui/material";
 import {
   SettingsPageUpdateButton,
@@ -30,7 +31,10 @@ import {
 } from "../../Material/Button";
 import AvatarProfile from "../../Components/AvatarProfile";
 import { ProfileSection, ProfileSectionRow } from "../SettingsPageSections";
-import { capitalizeFirstLetter } from "../../Components/Functions";
+import {
+  capitalizeFirstLetter,
+  capitalizeText,
+} from "../../Components/Functions";
 import { getStyles, MenuProps } from "../../Material/Select";
 import { useTheme } from "@mui/material/styles";
 import ProductService from "../../Services/Product";
@@ -167,7 +171,9 @@ const Settings = ({ profile }) => {
         />
         <div>
           <div style={{ fontSize: 40, fontWeight: 700 }}>
-            {profile?.user?.firstName} {profile?.user?.lastName}
+            {capitalizeText(
+              `${profile?.user?.firstName} ${profile?.user?.lastName}`
+            )}
           </div>
           <div>{profile?.user?.email}</div>
         </div>
@@ -179,13 +185,13 @@ const Settings = ({ profile }) => {
             <TextField
               fullWidth
               label="First Name"
-              value={profile?.user?.firstName}
+              value={capitalize(profile?.user?.firstName)}
               disabled={true}
             />
             <TextField
               fullWidth
               label="Last Name"
-              value={profile?.user?.lastName}
+              value={capitalize(profile?.user?.lastName)}
               disabled={true}
             />
           </ProfileSectionRow>
@@ -207,7 +213,11 @@ const Settings = ({ profile }) => {
               multiline
               rows={4}
               onChange={handleChange}
-              value={state.payload?.companyIntroduction ?? ""}
+              value={
+                state?.payload?.companyIntroduction
+                  ? capitalize(state.payload?.companyIntroduction)
+                  : ""
+              }
               disabled={!updateProfileButton}
               fullWidth
             />
@@ -216,7 +226,11 @@ const Settings = ({ profile }) => {
             <TextField
               name="companyName"
               label="Company Name"
-              value={profile.user.companyName ?? ""}
+              value={
+                profile.user.companyName
+                  ? capitalizeText(profile?.user?.companyName)
+                  : ""
+              }
               disabled={true}
               fullWidth
             />
@@ -224,7 +238,11 @@ const Settings = ({ profile }) => {
               name="companyAddress"
               label="Company Address"
               onChange={handleChange}
-              value={state?.payload?.companyAddress ?? ""}
+              value={
+                state?.payload?.companyAddress
+                  ? capitalizeText(state?.payload?.companyAddress)
+                  : ""
+              }
               disabled={!updateProfileButton}
               fullWidth
             />
@@ -253,9 +271,7 @@ const Settings = ({ profile }) => {
                 onChange={handleChange}
                 name="businessType"
                 label="Business Type"
-                value={
-                  state.payload?.businessType ?? ""
-                }
+                value={state.payload?.businessType ?? ""}
               >
                 <MenuItem value="Manufacturer/Producer">
                   Manufacturer/Producer

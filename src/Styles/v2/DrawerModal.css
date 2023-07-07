@@ -4,6 +4,9 @@
 
 .ModalComponent {
   display: block;
+  margin-left: 60px;
+  display: grid;
+  place-content: center;
 }
 
 .modal_container {

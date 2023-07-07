@@ -5,7 +5,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material/";
-import { dialogStyle } from "../../../Styles/v2/dialog";
+import "../../../Styles/v2/Dialog.css";
 
 const MuiDialog = ({ dialogTitle, openDialog, toggleOpenDialog, children }) => {
   return (
@@ -15,7 +15,7 @@ const MuiDialog = ({ dialogTitle, openDialog, toggleOpenDialog, children }) => {
       keepMounted
       onClose={toggleOpenDialog(false)}
       aria-describedby="alert-dialog-slide-description"
-      sx={dialogStyle}
+      className="DialogComponent"
     >
       <DialogContent>
         <DialogContentText className="dialog_title_container">

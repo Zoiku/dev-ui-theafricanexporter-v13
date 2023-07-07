@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { MuiTableUsers } from "../../v2/components/Table";
-import { Box, Stack, MenuItem } from "@mui/material";
+import { Box, Stack, MenuItem, capitalize } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import { normalBox } from "../../../Styles/v2/box";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
@@ -252,7 +252,7 @@ const UsersMerchant = () => {
                 city: user?.city,
                 more: user.company
                   ? {
-                      introduction: user.company?.introduction,
+                      introduction: capitalize(user?.company?.introduction),
                       employeeNum: user.company?.noOfEmployees,
                       supplyAbility: user.company?.supplyAbility,
                       joinedSince: user?.company?.year,

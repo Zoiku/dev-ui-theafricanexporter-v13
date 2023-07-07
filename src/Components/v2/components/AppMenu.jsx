@@ -72,7 +72,7 @@ const AppMenu = ({ base }) => {
           toggleOpenState={toggleOpenTutorialVideos}
           boxStyle={tutorialVideos}
           modalClassName="tutorial_modal_container"
-          leftSlide={true}
+          direction="left"
         >
           {openTutotialVideos && (
             <Box>
