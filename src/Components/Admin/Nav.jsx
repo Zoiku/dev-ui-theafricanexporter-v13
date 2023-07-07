@@ -125,7 +125,7 @@ const AdminNav = () => {
             ) : (
               <Stack>
                 <div style={{ color: "gray" }}>
-                  Good work! There are no unvalidated merchant users
+                  Good work! There are no unvalidated merchant(s)
                 </div>
               </Stack>
             )}
