@@ -464,7 +464,7 @@ const Orders = () => {
         openState={openPurchaseAgreement}
         toggleOpenState={toggleOpenPurchaseAgreement}
       >
-        <Stack spacing={2}>
+        <Stack spacing={0.5}>
           <div className="orders_confirmation_document">
             <TandCs />
           </div>
