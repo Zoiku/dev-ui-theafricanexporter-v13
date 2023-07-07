@@ -25,8 +25,6 @@ import {
 } from "../../Reducers/Actions";
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import CelebrationIcon from "@mui/icons-material/Celebration";
-import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -103,30 +101,35 @@ const AdminNav = () => {
           horizontal: "left",
         }}
       >
-        <div style={{ padding: 10, width: 250 }}>
-          {unValidatedUsers.requestState.data?.value ? (
-            <Stack direction="row" alignContent="flex-start" spacing={2}>
-              <div>
-                <FeedbackOutlinedIcon />
-              </div>
-              <div style={{ color: "gray" }}>
-                You have{" "}
-                <strong style={{ color: "black" }}>
-                  {unValidatedUsers.requestState.data?.value}
-                </strong>{" "}
-                unvalidated merchant(s)
-              </div>
-            </Stack>
-          ) : (
-            <Stack direction="row" alignContent="flex-start" spacing={2}>
-              <div>
-                <CelebrationIcon />
-              </div>
-              <div style={{ color: "gray" }}>
-                Good work! There are no unvalidated merchant users
-              </div>
-            </Stack>
-          )}
+        <div style={{ width: 200, fontSize: "small" }}>
+          <div
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #efefef",
+              fontWeight: 500,
+            }}
+          >
+            Unvalidated Users
+          </div>
+          <div style={{ padding: "10px" }}>
+            {unValidatedUsers.requestState.data?.value ? (
+              <Stack>
+                <div style={{ color: "gray" }}>
+                  You have{" "}
+                  <strong style={{ color: "black" }}>
+                    {unValidatedUsers.requestState.data?.value}
+                  </strong>{" "}
+                  unvalidated merchant(s)
+                </div>
+              </Stack>
+            ) : (
+              <Stack>
+                <div style={{ color: "gray" }}>
+                  Good work! There are no unvalidated merchant users
+                </div>
+              </Stack>
+            )}
+          </div>
         </div>
       </Popover>
 
