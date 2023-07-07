@@ -1,13 +1,6 @@
 import "../../Styles/Nav.css";
 import { useState } from "react";
-import {
-  Avatar,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  Stack,
-  Popover,
-} from "@mui/material/";
+import { Avatar, Menu, MenuItem, ListItemIcon, Stack } from "@mui/material/";
 import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
 import { endSession } from "../../Redux/Features/Session";
@@ -25,6 +18,7 @@ import {
 } from "../../Reducers/Actions";
 import { formReducer, INITIAL_STATE } from "../../Reducers/FormReducer";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import MuiPopover from "../v2/components/Popover";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -34,17 +28,14 @@ const AdminNav = () => {
     INITIAL_STATE
   );
 
-  const [anchorElPopOver, setAnchorElPopOver] = useState(null);
-  const openPopOver = Boolean(anchorElPopOver);
-  const popOverId = openPopOver ? "simple-popover" : undefined;
-  const handleClickPopOver = (event) => {
-    setAnchorElPopOver(event.currentTarget);
+  const [popoverAnchorEl, setPopoverAnchorEl] = useState(null);
+  const togglePopoverAnchorEl = (open) => (event) => {
+    if (open) {
+      setPopoverAnchorEl(event.currentTarget);
+    } else {
+      setPopoverAnchorEl(null);
+    }
   };
-  const handleClosePopOver = () => {
-    setAnchorElPopOver(null);
-  };
-
-  //
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -54,6 +45,7 @@ const AdminNav = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleRedirect = () => {
     navigate("/");
   };
@@ -90,48 +82,29 @@ const AdminNav = () => {
 
   return (
     <div className="Nav">
-      <Popover
-        elevation={3}
-        id={popOverId}
-        open={openPopOver}
-        anchorEl={anchorElPopOver}
-        onClose={handleClosePopOver}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
+      <MuiPopover
+        anchorEl={popoverAnchorEl}
+        toggleAnchorEl={togglePopoverAnchorEl}
+        title="Unvalidated Users"
       >
-        <div style={{ width: 200, fontSize: "small" }}>
-          <div
-            style={{
-              padding: "10px",
-              borderBottom: "1px solid #efefef",
-              fontWeight: 500,
-            }}
-          >
-            Unvalidated Users
-          </div>
-          <div style={{ padding: "10px" }}>
-            {unValidatedUsers.requestState.data?.value ? (
-              <Stack>
-                <div style={{ color: "gray" }}>
-                  You have{" "}
-                  <strong style={{ color: "black" }}>
-                    {unValidatedUsers.requestState.data?.value}
-                  </strong>{" "}
-                  unvalidated merchant(s)
-                </div>
-              </Stack>
-            ) : (
-              <Stack>
-                <div style={{ color: "gray" }}>
-                  Good work! There are no unvalidated merchant(s)
-                </div>
-              </Stack>
-            )}
-          </div>
-        </div>
-      </Popover>
+        {unValidatedUsers.requestState.data?.value ? (
+          <Stack>
+            <div style={{ color: "gray" }}>
+              You have{" "}
+              <strong style={{ color: "black" }}>
+                {unValidatedUsers.requestState.data?.value}
+              </strong>{" "}
+              unvalidated merchant(s)
+            </div>
+          </Stack>
+        ) : (
+          <Stack>
+            <div style={{ color: "gray" }}>
+              Good work! There are no unvalidated merchant(s)
+            </div>
+          </Stack>
+        )}
+      </MuiPopover>
 
       <Menu
         elevation={3}
@@ -157,7 +130,7 @@ const AdminNav = () => {
         </div>
         <div>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <IconButton onClick={handleClickPopOver} aria-label="cart">
+            <IconButton onClick={togglePopoverAnchorEl(true)} aria-label="cart">
               <StyledBadge
                 max={10}
                 showZero
@@ -201,8 +174,7 @@ const AdminNav = () => {
         <div>
           <Stack direction="row" alignItems="center" spacing={1}>
             <div style={{ fontWeight: 650, fontSize: 14 }}>Hello, Admin</div>
-
-            <IconButton onClick={handleClickPopOver} aria-label="cart">
+            <IconButton onClick={togglePopoverAnchorEl(true)} aria-label="cart">
               <StyledBadge
                 max={10}
                 showZero
