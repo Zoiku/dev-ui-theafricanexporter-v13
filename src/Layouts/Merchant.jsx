@@ -166,7 +166,7 @@ const MerchantLayout = ({ session }) => {
         </Stack>
         <MuiButton
           label="Complete Profile"
-          buttonType="100"
+          buttonType="111"
           loading={state.requestState.loading}
         />
       </Box>
