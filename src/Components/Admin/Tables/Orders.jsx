@@ -15,12 +15,12 @@ import { ProgressBar } from "../../v2/components/ProgressBar";
 import MuiStepper from "../../v2/components/Stepper";
 import { ORDER_STATUS } from "../../v2/components/OrderStatus";
 import MuiDialog from "../../v2/components/Dialog";
-import { Button1 } from "../../v2/components/Buttons";
 import { MenuItem } from "@mui/material";
 import { setAlert } from "../../../Redux/Features/Alert.js";
 import { useDispatch } from "react-redux";
 import CustomProgress from "../../v2/components/CustomProgress";
-import { capitalizeText } from "../../Functions";
+import { capitalizeString } from "../../Functions";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Orders = () => {
   const [paging, setPaging] = useState({
@@ -247,7 +247,7 @@ const Orders = () => {
               orderNo: doc?.orderNo,
               status: doc?.status,
               origin: quotationProduct?.product?.origin?.country,
-              destination: capitalizeText(doc?.request?.destination),
+              destination: capitalizeString(doc?.request?.destination),
               terms: doc?.request?.buyerQuotationIncoterm?.label,
               createdOn: new Date(doc.createdOn),
               expiryDate: new Date(doc?.request?.expiryDate),
@@ -384,22 +384,18 @@ const Orders = () => {
         toggleOpenDialog={toggleOpenApproveDialog}
         dialogTitle="Do you want to approve the order?"
       >
-        <Button1
+        <MuiButton
+          label="No"
           variant="text"
-          color="inherit"
           disabled={dialogButtonState}
           onClick={toggleOpenApproveDialog(false)}
-        >
-          No
-        </Button1>
-        <Button1
+        />
+        <MuiButton
+          label="Yes"
           variant="text"
-          color="inherit"
           loading={dialogButtonState}
           onClick={dialogActionApprove_Yes}
-        >
-          Yes
-        </Button1>
+        />
       </MuiDialog>
 
       <MuiDialog
@@ -407,22 +403,18 @@ const Orders = () => {
         toggleOpenDialog={toggleOpenUpdateDialog}
         dialogTitle="Do you want to update the status of this order?"
       >
-        <Button1
+        <MuiButton
+          label="No"
           variant="text"
-          color="inherit"
           disabled={dialogButtonState}
           onClick={toggleOpenUpdateDialog(false)}
-        >
-          No
-        </Button1>
-        <Button1
+        />
+        <MuiButton
+          label="Yes"
           variant="text"
-          color="inherit"
           loading={dialogButtonState}
           onClick={dialogActionUpdate_Yes}
-        >
-          Yes
-        </Button1>
+        />
       </MuiDialog>
 
       <DrawerModal

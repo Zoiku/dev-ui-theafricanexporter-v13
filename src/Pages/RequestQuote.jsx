@@ -33,12 +33,6 @@ import {
   Box,
 } from "@mui/material/";
 import {
-  EmptyButton,
-  GenericPrimaryButton,
-  GenericSecondary,
-  SmallSecondary,
-} from "../Material/Button";
-import {
   INPUTING,
   REQUEST_FAILED,
   REQUEST_SUCCESSFUL,
@@ -48,6 +42,7 @@ import {
 } from "../Reducers/Actions";
 import { setAlert } from "../Redux/Features/Alert.js";
 import { Tip } from "../Components/v2/components/Tip";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const endPendingQuoteSession = async () => {
   const pq_session = sessionStorage.getItem("pq_id");
@@ -334,13 +329,11 @@ const RequestQuote = ({ session }) => {
               />
             </SectionItem>
             <Stack>
-              <SmallSecondary
-                type="submit"
+              <MuiButton
+                label="Confirm Request"
+                buttonType="201"
                 loading={state?.requestState?.loading}
-                variant="contained"
-              >
-                Confirm Request
-              </SmallSecondary>
+              />
             </Stack>
           </div>
         </Box>
@@ -363,13 +356,13 @@ const RequestQuote = ({ session }) => {
 
       <div className="request_quote_page_main_inner_container">
         <div className="newGoBackContainer">
-          <EmptyButton
-            onClick={handleRedirect("/")}
+          <MuiButton
+            type="button"
             variant="text"
+            label="Go back"
+            onClick={handleRedirect("/")}
             startIcon={<KeyboardBackspaceRounded />}
-          >
-            Go Back
-          </EmptyButton>
+          />
         </div>
 
         <div className="request-quote-page-header">
@@ -750,12 +743,13 @@ const RequestQuote = ({ session }) => {
           </section>
 
           <Stack spacing={2} direction="row">
-            <GenericPrimaryButton type="submit" variant="contained">
-              Request Quotes
-            </GenericPrimaryButton>
-            <GenericSecondary onClick={() => navigate("/")} variant="text">
-              Back
-            </GenericSecondary>
+            <MuiButton label="Request Quotes" buttonType="201" />
+            <MuiButton
+              type="button"
+              variant="text"
+              label="Go back"
+              onClick={() => navigate("/")}
+            />
           </Stack>
         </Box>
       </div>

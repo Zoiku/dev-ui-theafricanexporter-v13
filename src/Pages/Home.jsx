@@ -2,7 +2,6 @@ import "../Styles/Home.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { PrimaryButton } from "../Material/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import Marquee from "react-fast-marquee";
@@ -14,6 +13,7 @@ import ProgressiveImage from "react-progressive-graceful-image";
 import { IMAGES_TO_DISPLAY } from "../Components/ProductImages";
 import { COMING_SOON } from "../Components/ProductImages";
 import comingsoon from "../Assets/log.jpg";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const Home = ({ session }) => {
   const [products, setProducts] = useState(null);
@@ -88,20 +88,20 @@ const Home = ({ session }) => {
                     {product.description}
                   </div>
                   <div className="specification-button-container">
-                    <PrimaryButton
-                      variant="contained"
+                    <MuiButton
+                      width={200}
+                      buttonType="122"
+                      label="Request Quotes"
+                      onClick={() =>
+                        navigate(`/requestquote?pid=${product.id}`)
+                      }
                       disabled={
                         (session?.user?.role === "MERCHANT") |
                         (session?.user?.role === "ADMIN")
                           ? true
                           : false
                       }
-                      onClick={() =>
-                        navigate(`/requestquote?pid=${product.id}`)
-                      }
-                    >
-                      Request Quotes
-                    </PrimaryButton>
+                    />
                   </div>
                 </div>
               </div>
@@ -130,19 +130,18 @@ const Home = ({ session }) => {
                 </Swiper>
               </div>
               <div className="specification-button-container-mobile">
-                <PrimaryButton
-                  variant="contained"
+                <MuiButton
+                  width={200}
+                  buttonType="122"
+                  label="Request Quotes"
+                  onClick={() => navigate(`/requestquote?pid=${product.id}`)}
                   disabled={
                     (session?.user?.role === "MERCHANT") |
                     (session?.user?.role === "ADMIN")
                       ? true
                       : false
                   }
-                  fullWidth
-                  onClick={() => navigate(`/requestquote?pid=${product.id}`)}
-                >
-                  Request Quotes
-                </PrimaryButton>
+                />
               </div>
             </section>
           ))}

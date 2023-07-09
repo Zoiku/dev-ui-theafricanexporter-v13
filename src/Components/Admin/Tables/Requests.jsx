@@ -8,13 +8,13 @@ import {
   StackItem,
 } from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
-import { SmallPrimary } from "../../../Material/Button";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { wideBox } from "../../../Styles/v2/box";
 import { Box, Stack } from "@mui/material";
 import "../../../Styles/v2/Requests.css";
 import OfferTable from "../../v2/components/OfferTable";
-import { capitalizeText } from "../../Functions";
+import { capitalizeString } from "../../Functions";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Requests = () => {
   const [paging, setPaging] = useState({
@@ -99,15 +99,12 @@ const Requests = () => {
       headerName: "",
       width: 90,
       renderCell: ({ row }) => (
-        <SmallPrimary
-          variant="contained"
-          loading={
-            row.id === rowButtonState.id ? rowButtonState.loading : false
-          }
+        <MuiButton
+          label="View"
+          buttonType="100"
           onClick={handleOpenRequest(row.id)}
-        >
-          View
-        </SmallPrimary>
+          loading={row.id === rowButtonState.id && rowButtonState.loading}
+        />
       ),
     },
   ];
@@ -133,7 +130,7 @@ const Requests = () => {
               product: request?.quotationProducts[0]?.product?.name,
               terms: request?.buyerQuotationIncoterm?.label,
               origin: request?.quotationProducts[0]?.product?.origin?.country,
-              destination: capitalizeText(request?.destination),
+              destination: capitalizeString(request?.destination),
               validity: request?.validity,
               incoterm: request?.buyerQuotationIncoterm?.label,
               port: request?.port,

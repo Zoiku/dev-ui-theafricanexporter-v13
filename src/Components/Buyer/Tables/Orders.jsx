@@ -12,14 +12,9 @@ import {
 } from "../../v2/components/Lists";
 import { widerBox, xMediumBox, xSmallBox } from "../../../Styles/v2/box";
 import DrawerModal from "../../v2/components/DrawerModal";
-import {
-  SmallPrimary,
-  SmallSecondary,
-  TextButton,
-} from "../../../Material/Button";
 import MuiStepper from "../../v2/components/Stepper";
 import { ProgressBar } from "../../v2/components/ProgressBar";
-import { capitalizeText, checkConfirmation } from "../../Functions";
+import { capitalizeString, checkConfirmation } from "../../Functions";
 import "../../../Styles/v2/Orders.css";
 import TandCs from "../../v2/components/TandCs";
 import {
@@ -34,6 +29,7 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import CustomProgress from "../../v2/components/CustomProgress";
 import { Tip } from "../../v2/components/Tip";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const ConfirmationRadios = ({ onChange }) => {
   return (
@@ -140,7 +136,7 @@ const Orders = () => {
               id: orders?._id,
               index: index + 1,
               productName: quotationProduct?.product?.name,
-              companyName: capitalizeText(orders?.merchant?.companyName),
+              companyName: capitalizeString(orders?.merchant?.companyName),
               status: orders?.status,
               quantity: orders?.orderQuantity,
               destination: orders?.request?.destination,
@@ -286,12 +282,12 @@ const Orders = () => {
       width: 90,
       renderCell: ({ row }) => {
         return (
-          <SmallPrimary
+          <MuiButton
+            label="View"
+            type="button"
+            buttonType="100"
             onClick={handleOpenOrderView(row.id)}
-            variant="contained"
-          >
-            View
-          </SmallPrimary>
+          />
         );
       },
     },
@@ -318,7 +314,7 @@ const Orders = () => {
               offerList: orderOffers?.doc,
               orderNo: order?.orderNo,
               productName: quotationProduct?.product?.name,
-              destination: capitalizeText(order?.request?.destination),
+              destination: capitalizeString(order?.request?.destination),
               expiryDate: order?.request?.expiryDate,
               quantity: quotationProduct?.specification?.quantity,
               incoterm: order?.request?.buyerQuotationIncoterm?.label,
@@ -443,14 +439,12 @@ const Orders = () => {
                   />
                 </ConfirmOrderFormSection>
                 <Stack>
-                  <SmallSecondary
-                    variant="contained"
-                    type="submit"
-                    disabled={!purchaseAgreementStatus}
+                  <MuiButton
+                    label="Confirm Order"
+                    buttonType="200"
                     loading={state?.requestState?.loading}
-                  >
-                    Confirm Order
-                  </SmallSecondary>
+                    disabled={!purchaseAgreementStatus}
+                  />
                 </Stack>
               </Stack>
             </Stack>
@@ -469,18 +463,18 @@ const Orders = () => {
             <TandCs />
           </div>
           <Stack direction="row" spacing={1}>
-            <TextButton
+            <MuiButton
+              label="Accept"
               variant="text"
+              type="button"
               onClick={togglePurchaseAgreementStatus(true)}
-            >
-              Accept
-            </TextButton>
-            <TextButton
+            />
+            <MuiButton
+              label="Cancel"
               variant="text"
+              type="button"
               onClick={togglePurchaseAgreementStatus(false)}
-            >
-              Cancel
-            </TextButton>
+            />
           </Stack>
         </Stack>
       </DrawerModal>

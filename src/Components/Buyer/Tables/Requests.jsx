@@ -12,15 +12,14 @@ import {
   StackItem,
   SectionItemCollapsable,
 } from "../../v2/components/Lists";
-import { SmallPrimary, SmallSecondaryV2 } from "../../../Material/Button";
 import OfferTable from "../../v2/components/OfferTable";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 import { MuiLinearProgress } from "../../v2/components/LinearProgress";
 import Tip from "../../v2/components/Tip";
 import MuiDialog from "../../v2/components/Dialog";
-import { Button1 } from "../../v2/components/Buttons";
-import { capitalizeText } from "../../Functions";
+import { capitalizeString } from "../../Functions";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Requests = () => {
   const rootDispatch = useDispatch();
@@ -86,7 +85,7 @@ const Requests = () => {
             return {
               id: offers?.id,
               index: index + 1,
-              companyName: capitalizeText(offers?.merchant?.companyName),
+              companyName: capitalizeString(offers?.merchant?.companyName),
               productName: quotationProduct?.product?.name,
               offers: offers?.buyerQuotationRequestIncoterm,
               quantity: offers?.offerQuantity,
@@ -172,7 +171,7 @@ const Requests = () => {
         if (errors.length === 0) {
           const filteredData = data.data.data.map((company) => {
             return {
-              companyName: capitalizeText(company?.user?.companyName),
+              companyName: capitalizeString(company?.user?.companyName),
               businessType: company?.type?.label,
               memberSince: new Date(company?.user?.createdOn).toDateString(),
               establishedYear: company?.company?.year,
@@ -305,8 +304,9 @@ const Requests = () => {
           destination: row?.destination,
         };
         return (
-          <SmallPrimary
-            variant="contained"
+          <MuiButton
+            label="View"
+            buttonType="100"
             loading={
               row?.merchant?.id === rowButtonState.id && rowButtonState.loading
             }
@@ -315,9 +315,7 @@ const Requests = () => {
               row?.offers,
               requestSummary
             )}
-          >
-            View
-          </SmallPrimary>
+          />
         );
       },
     },
@@ -352,7 +350,7 @@ const Requests = () => {
                 id: request?._id,
                 requestNo: request?.requestNo,
                 expiryDate: request?.expiryDate,
-                destination: capitalizeText(request?.destination),
+                destination: capitalizeString(request?.destination),
                 offersTotalCount: await getOffersTotalCount(),
                 productName: quotationProduct?.product?.name,
                 origin: quotationProduct?.product?.origin?.country,
@@ -477,22 +475,20 @@ const Requests = () => {
         toggleOpenDialog={triggerOpenRepostDialog}
         dialogTitle="Do you want to repost this request?"
       >
-        <Button1
+        <MuiButton
+          label="No"
+          type="button"
           variant="text"
-          color="inherit"
           disabled={dialogButtonState}
           onClick={triggerOpenRepostDialog(false)}
-        >
-          No
-        </Button1>
-        <Button1
+        />
+        <MuiButton
+          label="Yes"
+          type="button"
           variant="text"
-          color="inherit"
           loading={dialogButtonState}
           onClick={dialogActionReposet_Yes}
-        >
-          Yes
-        </Button1>
+        />
       </MuiDialog>
 
       <DrawerModal
@@ -532,14 +528,13 @@ const Requests = () => {
             </Box>
 
             <Stack>
-              <SmallSecondaryV2
-                variant="contained"
+              <MuiButton
+                label="Place Order"
+                buttonType="200"
                 onClick={handleAcceptOrder}
                 loading={placeOrderLoading}
                 disabled={selectedModelQuantity !== buyerRequestedQuantity}
-              >
-                Place Order
-              </SmallSecondaryV2>
+              />
             </Stack>
           </Stack>
         )}

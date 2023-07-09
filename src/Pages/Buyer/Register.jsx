@@ -1,10 +1,7 @@
 import "../../Styles/Register.css";
-import {
-  strictMatch,
-} from "../../Components/Functions/";
+import { capitalizeString, strictMatch } from "../../Components/Functions/";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { PrimaryButton } from "../../Material/Button";
 import { useEffect, useReducer, useState, useRef } from "react";
 import { INITIAL_STATE, formReducer } from "../../Reducers/FormReducer";
 import {
@@ -36,7 +33,7 @@ import Modal from "@mui/material/Modal";
 import { fillScreen } from "../../Styles/Modal";
 import OtpInput from "react-otp-input";
 import successImg from "../../Assets/Charco - High Five.png";
-import { capitalize } from "@mui/material";
+import MuiButton from "../../Components/v2/components/MuiButtons";
 
 const Register = () => {
   const [errorBoxes, setErrorBoxes] = useState([]);
@@ -109,7 +106,7 @@ const Register = () => {
           error: errors[0].response.data.message,
         });
         triggerSnackBarAlert(
-          capitalize(errors[0].response.data.message),
+          capitalizeString(errors[0].response.data.message),
           "error"
         );
       }
@@ -117,8 +114,6 @@ const Register = () => {
       throw error;
     }
   };
-
-  
 
   const initCounddown = () => {
     if (!resendCodeTimerInterval.current) {
@@ -298,17 +293,14 @@ const Register = () => {
         </div>
 
         <div>
-          <PrimaryButton
+          <MuiButton
+            label="Verify"
+            buttonType="101"
+            loading={state.requestState.loading}
             disabled={
               state.payload?.verificationCode?.length === 6 ? false : true
             }
-            loading={state.requestState.loading}
-            type="submit"
-            variant="contained"
-            sx={{ width: "100%" }}
-          >
-            Verify
-          </PrimaryButton>
+          />
         </div>
       </div>
     </Box>
@@ -521,14 +513,12 @@ const Register = () => {
 
             <div className="captcha-container"></div>
 
-            <PrimaryButton
+            <MuiButton
+              label="Sign up"
+              buttonType="111"
               disabled={!consent}
-              type="submit"
-              variant="contained"
               loading={state.requestState.loading}
-            >
-              Sign up
-            </PrimaryButton>
+            />
 
             <div className="quick-links-container">
               <div>

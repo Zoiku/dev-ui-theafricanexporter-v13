@@ -1,7 +1,6 @@
 import "../Styles/ForgotPassword.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { PrimaryButton } from "../Material/Button";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../Services/Auth";
 import { useEffect, useReducer, useState, useMemo } from "react";
@@ -19,6 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const ForgotPassword = () => {
   const navLinkStyle = {
@@ -161,13 +161,11 @@ const ForgotPassword = () => {
                 label="Email"
                 variant="outlined"
               />
-              <PrimaryButton
+              <MuiButton
+                buttonType="111"
+                label="Send Reset Link"
                 loading={state.requestState.loading}
-                variant="contained"
-                type="submit"
-              >
-                Send Reset Link
-              </PrimaryButton>
+              />
             </Box>
           ) : (
             <Box
@@ -203,13 +201,11 @@ const ForgotPassword = () => {
                 label="Password"
                 variant="outlined"
               />
-              <PrimaryButton
+              <MuiButton
+                buttonType="111"
+                label="Update Password"
                 loading={state.requestState.loading}
-                variant="contained"
-                type="submit"
-              >
-                Update Password
-              </PrimaryButton>
+              />
             </Box>
           )}
         </div>

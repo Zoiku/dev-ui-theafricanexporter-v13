@@ -3,9 +3,9 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
-import { TextButton as ValidateButton } from "../Material/Button.js";
 import AdminService from "../Services/Admin";
 import { Stack } from "@mui/material";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const handleGroupValidation = (
   users,
@@ -64,9 +64,10 @@ export const MultipleValidation = (
     >
       <Stack direction="row" spacing={2}>
         <GridToolbarFilterButton />
-        <ValidateButton
+        <MuiButton
+          variant="text"
+          label="Group Validate"
           loading={modelLoading}
-          // startIcon={<GroupAddIcon />}
           disabled={users ? (users.length > 1 ? false : true) : true}
           onClick={() =>
             handleGroupValidation(
@@ -76,11 +77,7 @@ export const MultipleValidation = (
               setModelLoading
             )
           }
-          size="small"
-          variant="text"
-        >
-          Group Validate
-        </ValidateButton>
+        />
       </Stack>
     </GridToolbarContainer>
   );

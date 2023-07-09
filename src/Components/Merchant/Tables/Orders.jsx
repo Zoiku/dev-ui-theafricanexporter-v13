@@ -19,9 +19,10 @@ import {
   ORDER_STATUS_STEPS,
 } from "../../v2/components/OrderStatus";
 import MuiDialog from "../../v2/components/Dialog";
-import { Button1 } from "../../v2/components/Buttons";
+// import { Button1 } from "../../v2/components/Buttons";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Orders = () => {
   const rootDispatch = useDispatch();
@@ -232,7 +233,11 @@ const Orders = () => {
                   title="Full Name"
                   value={`${selectedOrder?.buyer?.firstName} ${selectedOrder?.buyer?.lastName}`}
                 />
-                <StackItem capitalize={false} title="Email" value={selectedOrder?.buyer?.email} />
+                <StackItem
+                  capitalize={false}
+                  title="Email"
+                  value={selectedOrder?.buyer?.email}
+                />
                 <StackItem
                   title="Mobile"
                   value={`+${selectedOrder?.buyer?.mobileNo}`}
@@ -259,22 +264,20 @@ const Orders = () => {
         toggleOpenDialog={toggleOpenConfirmDialog}
         dialogTitle="Do you want to confirm this order?"
       >
-        <Button1
-          color="inherit"
+        <MuiButton
+          label="No"
+          type="button"
           variant="text"
-          onClick={toggleOpenConfirmDialog(false)}
           disabled={dialogButtonLoading}
-        >
-          No
-        </Button1>
-        <Button1
+          onClick={toggleOpenConfirmDialog(false)}
+        />
+        <MuiButton
+          label="Yes"
+          type="button"
           variant="text"
-          color="inherit"
-          onClick={dialogActionConfirm_Yes}
           loading={dialogButtonLoading}
-        >
-          Yes
-        </Button1>
+          onClick={dialogActionConfirm_Yes}
+        />
       </MuiDialog>
 
       <MuiDialog
@@ -282,21 +285,20 @@ const Orders = () => {
         toggleOpenDialog={toggleOpenRejectDialog}
         dialogTitle="Do you want to reject this order?"
       >
-        <Button1
+        <MuiButton
+          label="No"
+          type="button"
+          variant="text"
+          disabled={dialogButtonLoading}
           onClick={toggleOpenRejectDialog(false)}
+        />
+        <MuiButton
+          label="Yes"
+          type="button"
           variant="text"
-          color="inherit"
-        >
-          No
-        </Button1>
-        <Button1
-          onClick={dialogActionReject_Yes}
           loading={dialogButtonLoading}
-          variant="text"
-          color="inherit"
-        >
-          Yes
-        </Button1>
+          onClick={dialogActionReject_Yes}
+        />
       </MuiDialog>
 
       <DrawerModal

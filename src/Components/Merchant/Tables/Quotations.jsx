@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { MuiTableV1 } from "../../v2/components/Table";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
-import { SmallPrimary } from "../../../Material/Button";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { wideBox } from "../../../Styles/v2/box";
 import { Box, Stack } from "@mui/material";
 import MerchantService from "../../../Services/Merchant";
 import OfferTable from "../../v2/components/OfferTable";
-import { capitalizeText } from "../../Functions";
+import { capitalizeString } from "../../Functions";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Quotations = () => {
   const [rows, setRows] = useState([]);
@@ -59,9 +59,11 @@ const Quotations = () => {
       headerName: "",
       width: 90,
       renderCell: ({ row }) => (
-        <SmallPrimary variant="contained" onClick={handleOpenQuote(row.id)}>
-          View
-        </SmallPrimary>
+        <MuiButton
+          buttonType="100"
+          label="View"
+          onClick={handleOpenQuote(row.id)}
+        />
       ),
     },
   ];
@@ -87,7 +89,7 @@ const Quotations = () => {
               expiryDate: quotationRequest?.expiryDate,
               productName: quotationProduct?.product?.name,
               terms: quotationRequest?.buyerQuotationIncoterm?.label,
-              destination: capitalizeText(quotationRequest?.destination),
+              destination: capitalizeString(quotationRequest?.destination),
               origin: quotationProduct?.product?.origin?.country,
               port: quotationRequest?.port,
               quantity: quote?.offerQuantity,

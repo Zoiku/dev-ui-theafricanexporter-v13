@@ -1,7 +1,6 @@
 import "../Styles/Login.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { PrimaryButton } from "../Material/Button";
 import { useEffect, useReducer } from "react";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import {
@@ -15,7 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearPath, startSession } from "../Redux/Features/Session.js";
 import { setAlert, clearAlerts } from "../Redux/Features/Alert.js";
 import { useNavigate, NavLink } from "react-router-dom";
-import { capitalize } from "@mui/material";
+import { capitalizeString } from "../Components/Functions";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const ROLES = {
   ADMIN: "/admin/dashboard",
@@ -64,7 +64,7 @@ const Login = () => {
         rootDispatch(clearAlerts());
       } else {
         dispatch({ type: REQUEST_FAILED, error: errors });
-        triggerSnackBarAlert(capitalize(errors[0]), "error");
+        triggerSnackBarAlert(capitalizeString(errors[0]), "error");
       }
     } catch (error) {
       dispatch({ type: REQUEST_FAILED, error: error });
@@ -145,13 +145,11 @@ const Login = () => {
               </span>
             </div>
             <div className="captcha-container"></div>
-            <PrimaryButton
-              variant="contained"
+            <MuiButton
+              label="Login"
+              buttonType="111"
               loading={state.requestState.loading}
-              type="submit"
-            >
-              Login
-            </PrimaryButton>
+            />
           </Box>
         </div>
       </div>

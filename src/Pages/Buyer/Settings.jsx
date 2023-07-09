@@ -2,7 +2,7 @@ import "../../Styles/v2/SettingsPage.css";
 import { Stack, Box, TextField, capitalize } from "@mui/material";
 import AvatarProfile from "../../Components/AvatarProfile";
 import { ProfileSection, ProfileSectionRow } from "../SettingsPageSections";
-import { capitalizeText } from "../../Components/Functions";
+import { capitalizeString } from "../../Components/Functions";
 const Settings = ({ profile }) => {
   return (
     <Box>
@@ -17,7 +17,7 @@ const Settings = ({ profile }) => {
         />
         <div>
           <div style={{ fontSize: 40, fontWeight: 700 }}>
-            {capitalizeText(`${profile?.firstName} ${profile?.lastName}`)}
+            {capitalizeString(`${profile?.firstName} ${profile?.lastName}`)}
           </div>
           <div>{profile?.email}</div>
         </div>

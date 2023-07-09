@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { initCompany } from "../Redux/Features/Session";
-import { PrimaryButton } from "../Material/Button";
 import { INITIAL_STATE, formReducer } from "../Reducers/FormReducer";
 import {
   INPUTING,
@@ -19,6 +18,7 @@ import Tutorial from "../Components/v2/components/Tutorial";
 import DrawerModal from "../Components/v2/components/DrawerModal";
 import { xMediumBox } from "../Styles/v2/box";
 import { Box, TextField, Stack } from "@mui/material";
+import MuiButton from "../Components/v2/components/MuiButtons";
 
 const CompanyInputRow = ({ children }) => {
   return (
@@ -164,15 +164,11 @@ const MerchantLayout = ({ session }) => {
             />
           </CompanyInputRow>
         </Stack>
-        <PrimaryButton
+        <MuiButton
+          label="Complete Profile"
+          buttonType="100"
           loading={state.requestState.loading}
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ width: "100%" }}
-        >
-          Complete Profile
-        </PrimaryButton>
+        />
       </Box>
     );
   };

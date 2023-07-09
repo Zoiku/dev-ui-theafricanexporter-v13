@@ -44,6 +44,7 @@ import "aos/dist/aos.css";
 import FAQ2 from "./Pages/FAQ2";
 import "./Styles/v2/SectionContent.css";
 import MuiSnackbar from "./Components/v2/components/Snackbar";
+import Test from "./Pages/Test";
 
 AOS.init();
 
@@ -99,7 +100,7 @@ const App = () => {
         } else {
           dispatch({ type: REQUEST_FAILED });
         }
-      } catch (error) { }
+      } catch (error) {}
     };
     session.isLogged && fetchData();
     return () => abortController.abort();
@@ -114,10 +115,14 @@ const App = () => {
     <div>
       <SessionTimeout session={session} />
 
-      {
-        alert.active &&
-        <MuiSnackbar open={openSnackBar} handleClose={handleCloseSnackBar} message={alert?.message} severity={alert?.severity} />
-      }
+      {alert.active && (
+        <MuiSnackbar
+          open={openSnackBar}
+          handleClose={handleCloseSnackBar}
+          message={alert?.message}
+          severity={alert?.severity}
+        />
+      )}
 
       <Routes>
         <Route element={<DefaultLayout session={session} />}>
@@ -171,12 +176,16 @@ const App = () => {
             />
             <Route path="/buyer/requests" element={<BuyerRequests />} />
             <Route path="/buyer/orders" element={<BuyerOrders />} />
-            <Route path="/buyer/settings" element={<BuyerSettings profile={profile} />} />
+            <Route
+              path="/buyer/settings"
+              element={<BuyerSettings profile={profile} />}
+            />
           </Route>
         </Route>
 
         <Route element={<DefaultLayout session={session} />}>
           <Route path="*" element={<Home session={session} />} />
+          <Route path="/test" element={<Test />} />
         </Route>
       </Routes>
     </div>

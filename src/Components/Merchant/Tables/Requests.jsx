@@ -8,17 +8,16 @@ import DrawerModal from "../../v2/components/DrawerModal";
 import { wideBox } from "../../../Styles/v2/box";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import { incotermNote } from "../../v2/components/IncotermNotes";
-import { SmallSecondary } from "../../../Material/Button";
 import { OfferTableV1 } from "../../v2/components/OfferTable";
 import { AddRounded, RemoveRounded } from "@mui/icons-material/";
 import LinearProgress from "@mui/material/LinearProgress";
 import { setAlert } from "../../../Redux/Features/Alert";
 import { useDispatch } from "react-redux";
 import MuiDialog from "../../v2/components/Dialog";
-import { Button1 } from "../../v2/components/Buttons";
 import NoRowsOverlay from "../../../Material/Overlay";
 import TablePagination from "@mui/material/TablePagination";
 import { Skeleton } from "@mui/material";
+import MuiButton from "../../v2/components/MuiButtons";
 
 const Requests = () => {
   const [paging, setPaging] = useState({
@@ -258,22 +257,20 @@ const Requests = () => {
             toggleOpenDialog={toggleOpenPostOfferDialog}
             dialogTitle="Do you want to post this offer to the buyer?"
           >
-            <Button1
+            <MuiButton
+              label="No"
+              type="button"
               variant="text"
-              color="inherit"
               disabled={dialogButtonState}
               onClick={toggleOpenPostOfferDialog(false)}
-            >
-              No
-            </Button1>
-            <Button1
+            />
+            <MuiButton
+              label="Yes"
+              type="button"
               variant="text"
-              color="inherit"
               loading={dialogButtonState}
               onClick={handleSubmit}
-            >
-              Yes
-            </Button1>
+            />
           </MuiDialog>
 
           <div>
@@ -408,9 +405,7 @@ const Requests = () => {
 
                   <Box>{incotermNote(selectedRequest.terms)}</Box>
 
-                  <SmallSecondary type="submit" variant="contained">
-                    Post Quote
-                  </SmallSecondary>
+                  <MuiButton label="Post Quote" buttonType="200" />
                 </Stack>
               </div>
             </Box>

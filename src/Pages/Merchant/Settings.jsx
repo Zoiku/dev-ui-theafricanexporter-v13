@@ -24,20 +24,16 @@ import {
   InputAdornment,
   capitalize,
 } from "@mui/material";
-import {
-  SettingsPageUpdateButton,
-  SettingsPageCancelButton,
-  SettingsPageUpdateButtonSecondary,
-} from "../../Material/Button";
 import AvatarProfile from "../../Components/AvatarProfile";
 import { ProfileSection, ProfileSectionRow } from "../SettingsPageSections";
 import {
   capitalizeFirstLetter,
-  capitalizeText,
+  capitalizeString,
 } from "../../Components/Functions";
 import { getStyles, MenuProps } from "../../Material/Select";
 import { useTheme } from "@mui/material/styles";
 import ProductService from "../../Services/Product";
+import MuiButton from "../../Components/v2/components/MuiButtons";
 
 const Settings = ({ profile }) => {
   const theme = useTheme();
@@ -171,7 +167,7 @@ const Settings = ({ profile }) => {
         />
         <div>
           <div style={{ fontSize: 40, fontWeight: 700 }}>
-            {capitalizeText(
+            {capitalizeString(
               `${profile?.user?.firstName} ${profile?.user?.lastName}`
             )}
           </div>
@@ -228,7 +224,7 @@ const Settings = ({ profile }) => {
               label="Company Name"
               value={
                 profile.user.companyName
-                  ? capitalizeText(profile?.user?.companyName)
+                  ? capitalizeString(profile?.user?.companyName)
                   : ""
               }
               disabled={true}
@@ -240,7 +236,7 @@ const Settings = ({ profile }) => {
               onChange={handleChange}
               value={
                 state?.payload?.companyAddress
-                  ? capitalizeText(state?.payload?.companyAddress)
+                  ? capitalizeString(state?.payload?.companyAddress)
                   : ""
               }
               disabled={!updateProfileButton}
@@ -358,32 +354,27 @@ const Settings = ({ profile }) => {
 
         {updateProfileButton ? (
           <Stack direction="row" spacing={1}>
-            <SettingsPageUpdateButtonSecondary
-              type="submit"
+            <MuiButton
+              buttonType="200"
+              label="Save Changes"
               loading={state.requestState.loading}
-              className="settings-button-controller"
-              variant="contained"
-            >
-              Save Changes
-            </SettingsPageUpdateButtonSecondary>
-            <SettingsPageCancelButton
-              disabled={state.requestState.loading}
-              onClick={toggleUpdate(false)}
-              className="settings-button-controller"
+            />
+            <MuiButton
+              label="Cancel"
               variant="text"
-            >
-              Cancel
-            </SettingsPageCancelButton>
+              onClick={toggleUpdate(false)}
+              disabled={state.requestState.loading}
+              type="button"
+            />
           </Stack>
         ) : (
           <>
-            <SettingsPageUpdateButton
+            <MuiButton
+              label="Update Profile"
+              buttonType="100"
               onClick={toggleUpdate(true)}
-              className="settings-button-controller"
-              variant="contained"
-            >
-              Update Profile
-            </SettingsPageUpdateButton>
+              type="button"
+            />
           </>
         )}
       </div>
