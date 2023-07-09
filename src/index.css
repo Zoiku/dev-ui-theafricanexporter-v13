@@ -15,6 +15,13 @@ html {
   scroll-behavior: smooth;
 }
 
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-cell:focus-within,
+.MuiDataGrid-columnHeader:focus,
+.MuiDataGrid-columnHeader:focus-within {
+  outline: none !important;
+}
+
 .radio-group-controller {
   display: flex;
   align-items: center;

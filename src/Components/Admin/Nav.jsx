@@ -100,9 +100,7 @@ const AdminNav = () => {
           </Stack>
         ) : (
           <Stack>
-            <div style={{ color: "gray" }}>
-              Good work! There are no unvalidated merchant(s)
-            </div>
+            <div style={{ color: "gray" }}>No new notifications</div>
           </Stack>
         )}
       </MuiPopover>
