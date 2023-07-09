@@ -34,6 +34,7 @@ import { fillScreen } from "../../Styles/Modal";
 import OtpInput from "react-otp-input";
 import successImg from "../../Assets/Charco - High Five.png";
 import MuiButton from "../../Components/v2/components/MuiButtons";
+import { Stack } from "@mui/material";
 
 const Register = () => {
   const [errorBoxes, setErrorBoxes] = useState([]);
@@ -292,16 +293,16 @@ const Register = () => {
           </div>
         </div>
 
-        <div>
+        <Stack>
           <MuiButton
             label="Verify"
-            buttonType="101"
+            buttonType="111"
             loading={state.requestState.loading}
             disabled={
               state.payload?.verificationCode?.length === 6 ? false : true
             }
           />
-        </div>
+        </Stack>
       </div>
     </Box>
   );
