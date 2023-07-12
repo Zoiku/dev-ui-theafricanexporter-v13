@@ -742,8 +742,8 @@ const RequestQuote = ({ session }) => {
             </div>
           </section>
 
-          <Stack spacing={2} direction="row">
-            <MuiButton label="Request Quotes" buttonType="201" />
+          <Stack spacing={1} direction="row">
+            <MuiButton label="Request Quotes" buttonType="202" />
             <MuiButton
               type="button"
               variant="text"

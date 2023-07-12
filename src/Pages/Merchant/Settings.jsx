@@ -355,7 +355,7 @@ const Settings = ({ profile }) => {
         {updateProfileButton ? (
           <Stack direction="row" spacing={1}>
             <MuiButton
-              buttonType="200"
+              buttonType="202"
               label="Save Changes"
               loading={state.requestState.loading}
             />
@@ -371,7 +371,7 @@ const Settings = ({ profile }) => {
           <>
             <MuiButton
               label="Update Profile"
-              buttonType="100"
+              buttonType="102"
               onClick={toggleUpdate(true)}
               type="button"
             />
