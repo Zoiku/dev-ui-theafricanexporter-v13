@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MerchantService from "../../../Services/Merchant";
-import { MuiTableV1 } from "../../v2/components/Table";
+import { ClientSideTable } from "../../v2/components/Table";
 import {
   SectionItem,
   SectionItemCollapsable,
@@ -310,11 +310,11 @@ const Orders = () => {
         <OrderView />
       </DrawerModal>
 
-      <MuiTableV1
-        label="Orders"
+      <ClientSideTable
         rows={rows}
-        columns={columns}
+        label="Orders"
         paging={paging}
+        columns={columns}
         rowsLoading={rowsLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}

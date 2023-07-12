@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import Countdown from "../../Countdown";
-import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
+import { ClientSideTable } from "../../v2/components/Table";
 import BuyerService from "../../../Services/Buyer";
 import { Box, Stack, Radio, RadioGroup, TextField } from "@mui/material";
 import { MenuItem } from "@mui/material";
@@ -346,10 +346,12 @@ const Orders = () => {
                 after confirmation from merchant(s)"
             />
             <Box>
-              <MuiTableV2
-                checkboxSelection={false}
+              <ClientSideTable
+                height={300}
+                showToolbar={false}
                 rows={selectedOrders}
                 columns={columnsOrders}
+                checkboxSelection={false}
               />
             </Box>
           </Stack>
@@ -479,7 +481,16 @@ const Orders = () => {
         </Stack>
       </DrawerModal>
 
-      <MuiTableV1
+      {/* <MuiTableV1
+        label="Orders"
+        rows={rows}
+        columns={columns}
+        paging={paging}
+        rowsLoading={rowsLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
+      /> */}
+      <ClientSideTable
         label="Orders"
         rows={rows}
         columns={columns}

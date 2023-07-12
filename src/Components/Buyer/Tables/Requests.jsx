@@ -5,7 +5,7 @@ import { MuiMoreV1 } from "../../More";
 import DrawerModal from "../../v2/components/DrawerModal";
 import { Box, Stack, MenuItem } from "@mui/material";
 import { wideBox, xMediumBox } from "../../../Styles/v2/box";
-import { MuiTableV1, MuiTableV2 } from "../../v2/components/Table";
+import { ClientSideTable } from "../../v2/components/Table";
 import MuiBadge from "../../v2/components/Badge";
 import {
   SectionItem,
@@ -520,7 +520,9 @@ const Requests = () => {
             </Stack>
 
             <Box>
-              <MuiTableV2
+              <ClientSideTable
+                height={280}
+                showToolbar={false}
                 rows={selectedOffers}
                 columns={columnsOffers}
                 handleSelectionModel={handleSelectionModel}
@@ -602,7 +604,7 @@ const Requests = () => {
         )}
       </DrawerModal>
 
-      <MuiTableV1
+      <ClientSideTable
         label="Requests"
         rows={rows}
         columns={columns}

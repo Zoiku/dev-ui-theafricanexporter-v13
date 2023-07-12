@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MuiTableV1 } from "../../v2/components/Table";
+import { ClientSideTable } from "../../v2/components/Table";
 import { SectionItem, StackItem } from "../../v2/components/Lists";
 import Countdown from "../../Countdown";
 import DrawerModal from "../../v2/components/DrawerModal";
@@ -225,11 +225,11 @@ const Quotations = () => {
         <QuoteView />
       </DrawerModal>
 
-      <MuiTableV1
+      <ClientSideTable
         label="Quotations"
         rows={rows}
-        columns={columns}
         paging={paging}
+        columns={columns}
         rowsLoading={rowsLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}

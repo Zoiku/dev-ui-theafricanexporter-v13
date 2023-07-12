@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MuiTable from "../../v2/components/Table";
+import { ServerSideTable } from "../../v2/components/Table";
 import {
   SectionItem,
   SectionItemCollapsable,
@@ -426,12 +426,12 @@ const Orders = () => {
         <OrderView />
       </DrawerModal>
 
-      <MuiTable
+      <ServerSideTable
         rows={rows}
-        rowsLoading={rowsLoading}
-        columns={columns}
         label="Orders"
         paging={paging}
+        columns={columns}
+        rowsLoading={rowsLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}
       />

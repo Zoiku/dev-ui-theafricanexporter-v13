@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import BuyerService from "../../../Services/Buyer";
-import MuiTable from "../../v2/components/Table";
+import { ServerSideTable } from "../../v2/components/Table";
 import {
   SectionItem,
   SectionItemCollapsable,
@@ -333,12 +333,12 @@ const Requests = () => {
         <RequestView />
       </DrawerModal>
 
-      <MuiTable
+      <ServerSideTable
         rows={rows}
-        rowsLoading={rowsLoading}
-        columns={columns}
-        label="Requests"
         paging={paging}
+        label="Requests"
+        columns={columns}
+        rowsLoading={rowsLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}
       />

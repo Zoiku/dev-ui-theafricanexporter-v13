@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import DrawerModal from "../../v2/components/DrawerModal";
-import { MuiTableUsers } from "../../v2/components/Table";
+import { ServerSideTable } from "../../v2/components/Table";
 import { Box, Stack, MenuItem, capitalize } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import { normalBox } from "../../../Styles/v2/box";
@@ -347,20 +347,21 @@ const UsersMerchant = () => {
         <UserView />
       </DrawerModal>
 
-      <MuiTableUsers
+      <ServerSideTable
         rows={rows}
-        rowsLoading={rowsLoading}
-        columns={columns}
-        label="Merchants"
         paging={paging}
+        label="Merchants"
+        columns={columns}
+        users={selectionModel}
+        rowsLoading={rowsLoading}
+        showMerchantToolbar={true}
+        modelLoading={modelLoading}
+        setReloadTable={setReloadTable}
+        setModelLoading={setModelLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}
         handleSelectionModel={handleSelectionModel}
-        users={selectionModel}
-        setReloadTable={setReloadTable}
         triggerSnackBarAlert={triggerSnackBarAlert}
-        modelLoading={modelLoading}
-        setModelLoading={setModelLoading}
       />
     </main>
   );

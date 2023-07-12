@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import AdminService from "../../../Services/Admin";
 import DrawerModal from "../../v2/components/DrawerModal";
-import MuiTable from "../../v2/components/Table";
+import { ServerSideTable } from "../../v2/components/Table";
 import { Box, Stack, MenuItem } from "@mui/material";
 import { MuiMoreV1 } from "../../More";
 import { normalBox } from "../../../Styles/v2/box";
@@ -245,12 +245,12 @@ const UsersBuyer = () => {
         <UserView />
       </DrawerModal>
 
-      <MuiTable
+      <ServerSideTable
         rows={rows}
-        rowsLoading={rowsLoading}
-        columns={columns}
         label="Buyers"
         paging={paging}
+        columns={columns}
+        rowsLoading={rowsLoading}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}
       />

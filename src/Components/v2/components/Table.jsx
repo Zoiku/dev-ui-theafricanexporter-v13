@@ -4,150 +4,9 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Toolbar, { MultipleValidation } from "../../../Material/Toolbar";
 import Overlay from "../../../Material/Overlay";
 import "../../../Styles/v2/Table.css";
+
 const rowsPerPageOptions = [10, 20, 30, 40, 50];
-
-const MuiTable = ({
-  rows,
-  rowsLoading,
-  columns,
-  paging,
-  handlePageChange,
-  handlePageSizeChange,
-  label,
-}) => {
-  return (
-    <DataGrid
-      components={{
-        Toolbar: Toolbar,
-        LoadingOverlay: LinearProgress,
-        NoRowsOverlay: () => <Overlay label={label} />,
-      }}
-      className="main_table_box_standard main_table_all"
-      checkboxSelection
-      disableSelectionOnClick
-      pageSize={paging.size}
-      rows={rows}
-      columns={columns}
-      pagination
-      density="compact"
-      rowsPerPageOptions={[10, 20, 30, 40, 50]}
-      loading={rowsLoading}
-      rowCount={paging.totalCount}
-      paginationMode="server"
-      onPageChange={handlePageChange}
-      onPageSizeChange={handlePageSizeChange}
-    />
-  );
-};
-
-export const MuiTableUsers = ({
-  rows,
-  rowsLoading,
-  columns,
-  paging,
-  handlePageChange,
-  handlePageSizeChange,
-  label,
-  handleSelectionModel = null,
-  users = null,
-  setReloadTable = null,
-  triggerSnackBarAlert = null,
-  modelLoading = null,
-  setModelLoading = null,
-}) => {
-  return (
-    <DataGrid
-      components={{
-        Toolbar: () =>
-          MultipleValidation(
-            users,
-            setReloadTable,
-            triggerSnackBarAlert,
-            modelLoading,
-            setModelLoading
-          ),
-        LoadingOverlay: LinearProgress,
-        NoRowsOverlay: () => <Overlay label={label} />,
-      }}
-      className="main_table_box_standard main_table_all"
-      checkboxSelection
-      disableSelectionOnClick
-      pageSize={paging.size}
-      rows={rows}
-      columns={columns}
-      pagination
-      density="compact"
-      rowsPerPageOptions={[10, 20, 30, 40, 50]}
-      loading={rowsLoading}
-      rowCount={paging.totalCount}
-      paginationMode="server"
-      onPageChange={handlePageChange}
-      onPageSizeChange={handlePageSizeChange}
-      onSelectionModelChange={handleSelectionModel}
-    />
-  );
-};
-
-export const MuiTableV1 = ({
-  rows,
-  rowsLoading,
-  columns,
-  label,
-  checkboxSelection = true,
-  handlePageSizeChange = null,
-  handlePageChange = null,
-  paging,
-}) => {
-  return (
-    <DataGrid
-      components={{
-        Toolbar: Toolbar,
-        LoadingOverlay: LinearProgress,
-        NoRowsOverlay: () => <Overlay label={label} />,
-      }}
-      className="main_table_box_standard main_table_all"
-      checkboxSelection={checkboxSelection}
-      disableSelectionOnClick
-      pageSize={paging.size}
-      rows={rows}
-      columns={columns}
-      pagination
-      density="compact"
-      rowsPerPageOptions={[10, 20, 30, 40, 50]}
-      loading={rowsLoading}
-      onPageChange={handlePageChange}
-      onPageSizeChange={handlePageSizeChange}
-    />
-  );
-};
-
-export const MuiTableV2 = ({
-  rows,
-  rowsLoading,
-  columns,
-  checkboxSelection = true,
-  handleSelectionModel = null,
-}) => {
-  return (
-    <DataGrid
-      components={{
-        LoadingOverlay: LinearProgress,
-      }}
-      className="main_table_box_offerings_table main_table_all"
-      checkboxSelection={checkboxSelection}
-      disableSelectionOnClick
-      rows={rows}
-      columns={columns}
-      pagination
-      density="compact"
-      rowsPerPageOptions={[10, 20, 30, 40, 50]}
-      loading={rowsLoading}
-      onSelectionModelChange={handleSelectionModel}
-    />
-  );
-};
-
-const DataTable = ({
+export const ClientSideTable = ({
   rows,
   label,
   paging,
@@ -157,7 +16,6 @@ const DataTable = ({
   density = "compact",
   rowsLoading = false,
   checkboxSelection = true,
-  paginationMode = "client",
   handlePageChange = undefined,
   handlePageSizeChange = undefined,
   handleSelectionModel = undefined,
@@ -168,10 +26,10 @@ const DataTable = ({
     columns={columns}
     density={density}
     loading={rowsLoading}
-    pageSize={paging.size}
+    pageSize={paging?.size}
+    paginationMode="client"
     disableSelectionOnClick
     onPageChange={handlePageChange}
-    paginationMode={paginationMode}
     sx={{ border: 0, height: height }}
     checkboxSelection={checkboxSelection}
     onPageSizeChange={handlePageSizeChange}
@@ -185,4 +43,57 @@ const DataTable = ({
   />
 );
 
-export default MuiTable;
+export const ServerSideTable = ({
+  rows,
+  label,
+  paging,
+  columns,
+  height = 400,
+  users = undefined,
+  showToolbar = true,
+  density = "compact",
+  rowsLoading = false,
+  modelLoading = undefined,
+  checkboxSelection = true,
+  setReloadTable = undefined,
+  setModelLoading = undefined,
+  showMerchantToolbar = false,
+  handlePageChange = undefined,
+  handlePageSizeChange = undefined,
+  handleSelectionModel = undefined,
+  triggerSnackBarAlert = undefined,
+}) => (
+  <DataGrid
+    pagination
+    rows={rows}
+    columns={columns}
+    density={density}
+    loading={rowsLoading}
+    paginationMode="server"
+    pageSize={paging?.size}
+    disableSelectionOnClick
+    onPageChange={handlePageChange}
+    sx={{ border: 0, height: height }}
+    checkboxSelection={checkboxSelection}
+    onPageSizeChange={handlePageSizeChange}
+    rowsPerPageOptions={rowsPerPageOptions}
+    onSelectionModelChange={handleSelectionModel}
+    rowCount={paging?.totalCount}
+    components={{
+      LoadingOverlay: LinearProgress,
+      Toolbar: showToolbar
+        ? showMerchantToolbar
+          ? () =>
+              MultipleValidation(
+                users,
+                setReloadTable,
+                triggerSnackBarAlert,
+                modelLoading,
+                setModelLoading
+              )
+          : Toolbar
+        : undefined,
+      NoRowsOverlay: () => <Overlay label={label} />,
+    }}
+  />
+);

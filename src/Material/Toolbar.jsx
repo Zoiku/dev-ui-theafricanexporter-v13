@@ -3,9 +3,8 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
+import { LoadingButton } from "@mui/lab";
 import AdminService from "../Services/Admin";
-import { Stack } from "@mui/material";
-import MuiButton from "../Components/v2/components/MuiButtons";
 
 const handleGroupValidation = (
   users,
@@ -62,11 +61,10 @@ export const MultipleValidation = (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
     >
-      <Stack direction="row" spacing={2}>
+      <div>
         <GridToolbarFilterButton />
-        <MuiButton
+        <LoadingButton
           variant="text"
-          label="Group Validate"
           loading={modelLoading}
           disabled={users ? (users.length > 1 ? false : true) : true}
           onClick={() =>
@@ -77,8 +75,10 @@ export const MultipleValidation = (
               setModelLoading
             )
           }
-        />
-      </Stack>
+        >
+          Group Validate
+        </LoadingButton>
+      </div>
     </GridToolbarContainer>
   );
 };
