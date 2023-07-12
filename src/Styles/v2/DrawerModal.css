@@ -37,6 +37,10 @@
   padding: 10px;
 }
 
+.drawer-body-container {
+  min-height: 80vh;
+}
+
 .modal_title_container {
   z-index: 100;
   background: #fff;
