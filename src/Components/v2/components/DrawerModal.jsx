@@ -1,5 +1,5 @@
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { Puller, iOS } from "./SwipeableDrawerComponents";
+import { Puller } from "./SwipeableDrawerComponents";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { IconButton, Stack } from "@mui/material";
@@ -29,8 +29,6 @@ const DrawerModal = ({
         onClose={
           showCloseButton ? toggleOpenState(false) : toggleOpenState(true)
         }
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
       >
         <Box className="drawer_container">
           <div className="drawer-title-container">
