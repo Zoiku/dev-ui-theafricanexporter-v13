@@ -15,11 +15,11 @@ export const TutorialVideos = {
       iframeSrc: "https://www.youtube.com/embed/O_U7Z_BEHlQ",
     },
     {
-      title: "2. How to make an offer",
+      title: "2. How to make an order",
       iframeSrc: "https://www.youtube.com/embed/--WfJcAtCns",
     },
     {
-      title: "3. How to confirm a buyer",
+      title: "3. How to confirm an order",
       iframeSrc: "https://www.youtube.com/embed/EeSpYfOBtko",
     },
   ],
